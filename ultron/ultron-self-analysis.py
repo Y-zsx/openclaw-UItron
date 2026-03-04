@@ -31,7 +31,7 @@ def analyze_cycle(state):
         "last_result": last_result,
         "tools_created": len(state.get("created_tools", [])),
         "skills_learned": len(state.get("learned_skills", [])),
-        "pending_tasks": len([t for t in state.get("pending_tasks", []) if t.get("status") == "pending"])
+        "pending_tasks": len(state.get("pending_tasks", []))
     }
 
 def get_system_health():
