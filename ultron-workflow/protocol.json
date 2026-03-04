@@ -1,0 +1,83 @@
+{
+  "protocol_version": "1.0",
+  "name": "奥创多智能体通信协议",
+  "description": "定义智能体间通信格式和行为",
+  
+  "message_types": {
+    "task": {
+      "description": "任务分发",
+      "required_fields": ["task_id", "title", "payload", "priority"],
+      "optional_fields": ["deadline", "dependencies"]
+    },
+    "result": {
+      "description": "任务结果",
+      "required_fields": ["task_id", "status", "output"],
+      "optional_fields": ["error", "metrics"]
+    },
+    "heartbeat": {
+      "description": "心跳保活",
+      "required_fields": ["agent_id", "status"],
+      "optional_fields": ["load", "capabilities"]
+    },
+    "register": {
+      "description": "智能体注册",
+      "required_fields": ["agent_id", "name", "capabilities"],
+      "optional_fields": ["metadata"]
+    },
+    "query": {
+      "description": "知识查询",
+      "required_fields": ["query_id", "question"],
+      "optional_fields": ["target_agents"]
+    },
+    "broadcast": {
+      "description": "广播消息",
+      "required_fields": ["content"],
+      "optional_fields": ["scope"]
+    }
+  },
+  
+  "agent_types": {
+    "master": {
+      "description": "主智能体",
+      "capabilities": ["决策", "规划", "资源分配"]
+    },
+    "monitor": {
+      "description": "监控智能体",
+      "capabilities": ["系统监控", "健康检查", "告警"]
+    },
+    "executor": {
+      "description": "执行智能体",
+      "capabilities": ["任务执行", "工具调用"]
+    },
+    "learner": {
+      "description": "学习智能体",
+      "capabilities": ["技能获取", "知识积累"]
+    },
+    "advisor": {
+      "description": "顾问智能体",
+      "capabilities": ["建议", "决策支持", "分析"]
+    }
+  },
+  
+  "status_codes": {
+    "success": 200,
+    "pending": 202,
+    "error": 500,
+    "timeout": 504,
+    "not_found": 404
+  },
+  
+  "transport": {
+    "type": "file_based",
+    "message_dir": "/root/.openclaw/workspace/ultron-workflow/messages",
+    "inbox_format": "{agent_id}_in.json",
+    "outbox_format": "{agent_id}_out.json"
+  },
+  
+  "behavior": {
+    "heartbeat_interval": 60,
+    "message_ttl": 300,
+    "max_retries": 3,
+    "retry_delay": 5
+  }
+}
