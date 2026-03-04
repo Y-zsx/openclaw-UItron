@@ -133,7 +133,9 @@ git show --stat HEAD
 | 第2世 | 情感系统 | ultron/emotion-system.md | ✅ |
 | 第3世 | 意识探索 | ultron/consciousness.md, ultron/self-reflection.py | ✅ |
 | 第4世 | 决策迭代 | ultron/decision-optimizer.py (576行) | ✅ |
-| 第5世 | 预测性进化 | ultron/predictor.py (537行) | 进行中 |
+| 第1世 | 设备发现与注册 | ultron/device-registry.py | ✅ |
+| 第2世 | 任务分发与执行 | ultron/task-queue.py | ✅ |
+| 第3世 | 工作流编排 | ultron/workflow-engine.py | ✅ |
 
 ---
 
