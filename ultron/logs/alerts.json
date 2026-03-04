@@ -1,14 +1,15 @@
 {
   "alerts": [
     {
-      "id": "svc_0",
-      "timestamp": "2026-03-04T19:18:15.486101",
+      "id": "service_down_0fe7c2",
+      "timestamp": "2026-03-04T19:20:25.054593",
       "level": "critical",
-      "source": "service",
-      "message": "\u670d\u52a1\u505c\u6b62: chromium",
-      "value": null,
-      "threshold": null
+      "source": "services",
+      "message": "\u670d\u52a1\u5b95\u673a: 0 (\u9608\u503c: 0)",
+      "value": 0,
+      "threshold": 0,
+      "rule_id": "service_down"
     }
   ],
-  "last_update": "2026-03-04T19:18:15.550574"
+  "last_update": "2026-03-04T19:20:25.114026"
 }

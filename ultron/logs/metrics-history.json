@@ -1,34 +1,31 @@
 {
   "metrics": [
     {
-      "timestamp": "2026-03-04T19:18:15.486101",
+      "timestamp": "2026-03-04T19:20:25.054593",
       "cpu": {
-        "load_1m": 0.11,
-        "load_5m": 0.24,
-        "load_15m": 0.29,
-        "running_processes": 3,
-        "total_processes": 323
+        "load_1m": 0.28,
+        "load_5m": 0.3,
+        "load_15m": 0.31,
+        "running_processes": 2,
+        "total_processes": 300
       },
       "memory": {
         "total_gb": 0.01,
         "available_gb": 0.01,
         "used_gb": 0.0,
-        "free_gb": 0.0,
-        "buffers_gb": 0.0,
-        "cached_gb": 0.0,
-        "usage_percent": 18.5
+        "usage_percent": 17.1
       },
       "disk": {
         "total_bytes": 41882943488,
-        "used_bytes": 11717382144,
-        "available_bytes": 28229824512,
+        "used_bytes": 11717513216,
+        "available_bytes": 28229693440,
         "usage_percent": 30,
         "mount_point": "/"
       },
       "network": {
         "error": "invalid literal for int() with base 10: 'TCP:'"
       },
-      "processes": 166,
+      "processes": 164,
       "services": {
         "openclaw": "running",
         "nginx": "running",
@@ -37,5 +34,5 @@
       }
     }
   ],
-  "last_update": "2026-03-04T19:18:15.548733"
+  "last_update": "2026-03-04T19:20:25.112957"
 }

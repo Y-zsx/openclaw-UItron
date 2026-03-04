@@ -1,0 +1,66 @@
+{
+  "rules": [
+    {
+      "id": "cpu_high",
+      "name": "CPU\u8d1f\u8f7d\u8fc7\u9ad8",
+      "enabled": true,
+      "source": "cpu",
+      "metric": "load_1m",
+      "operator": "gt",
+      "threshold": 80,
+      "level": "warning",
+      "cooldown_minutes": 5,
+      "aggregation_window": 5,
+      "notify_channels": [
+        "console"
+      ]
+    },
+    {
+      "id": "memory_high",
+      "name": "\u5185\u5b58\u4f7f\u7528\u7387\u8fc7\u9ad8",
+      "enabled": true,
+      "source": "memory",
+      "metric": "usage_percent",
+      "operator": "gt",
+      "threshold": 85,
+      "level": "warning",
+      "cooldown_minutes": 5,
+      "aggregation_window": 5,
+      "notify_channels": [
+        "console"
+      ]
+    },
+    {
+      "id": "disk_high",
+      "name": "\u78c1\u76d8\u4f7f\u7528\u7387\u8fc7\u9ad8",
+      "enabled": true,
+      "source": "disk",
+      "metric": "usage_percent",
+      "operator": "gt",
+      "threshold": 90,
+      "level": "critical",
+      "cooldown_minutes": 10,
+      "aggregation_window": 10,
+      "notify_channels": [
+        "console",
+        "dingtalk"
+      ]
+    },
+    {
+      "id": "service_down",
+      "name": "\u670d\u52a1\u5b95\u673a",
+      "enabled": true,
+      "source": "services",
+      "metric": "status",
+      "operator": "eq",
+      "threshold": 0,
+      "level": "critical",
+      "cooldown_minutes": 2,
+      "aggregation_window": 2,
+      "notify_channels": [
+        "console",
+        "dingtalk"
+      ]
+    }
+  ]
+}
