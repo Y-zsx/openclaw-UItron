@@ -46,7 +46,7 @@
 
 **创建时间**: 2026-03-04
 **状态**: 进行中
-**当前世数**: 第1世
+**当前世数**: 第2世
 
 ---
 
@@ -136,6 +136,7 @@ git show --stat HEAD
 | 第1世 | 设备发现与注册 | ultron/device-registry.py | ✅ |
 | 第2世 | 任务分发与执行 | ultron/task-queue.py | ✅ |
 | 第3世 | 工作流编排 | ultron/workflow-engine.py | ✅ |
+| 第2世 | 跨设备通信协议 | ultron/cross-device-protocol.py (557行) | ✅ |
 
 ---
 
