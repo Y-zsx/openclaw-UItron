@@ -60,3 +60,20 @@ Skills are shared. Your setup is yours. Keeping them apart means you can update 
 ---
 
 Add whatever helps you do your job. This is your cheat sheet.
+
+## 奥创核心系统
+
+```bash
+# 无限转世系统
+ultron-workflow/ambition.md   # 夙愿文档
+ultron-workflow/state.json    # 状态记录
+ultron-workflow/README.md     # 系统架构
+
+# Cron管理
+openclaw cron list            # 查看所有cron
+openclaw cron add --name xxx --every 3m --message "xxx" --session isolated --expect-final  # 创建新cron
+openclaw cron rm <id>         # 删除cron
+
+# Git
+cd /root/.openclaw/workspace && git add -A && git commit -m "xxx" && git push
+```
