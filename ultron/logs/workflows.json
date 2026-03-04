@@ -1,0 +1,45 @@
+{
+  "workflows": [
+    {
+      "workflow_id": "c655a3a0",
+      "name": "test-workflow",
+      "description": "\u6d4b\u8bd5\u5de5\u4f5c\u6d41",
+      "steps": [
+        {
+          "step_id": "a2f1016a",
+          "name": "step1",
+          "command": "echo 'Step 1'",
+          "target_device": "local",
+          "retry_count": 0,
+          "timeout": 300,
+          "status": "pending",
+          "result": null,
+          "error": null,
+          "started_at": null,
+          "completed_at": null
+        },
+        {
+          "step_id": "60cc8631",
+          "name": "step2",
+          "command": "echo 'Step 2'",
+          "target_device": "local",
+          "retry_count": 0,
+          "timeout": 300,
+          "status": "pending",
+          "result": null,
+          "error": null,
+          "started_at": null,
+          "completed_at": null
+        }
+      ],
+      "status": "running",
+      "created_at": "2026-03-04T18:54:15.716765",
+      "started_at": "2026-03-04T18:54:22.081694",
+      "completed_at": null,
+      "current_step": 0,
+      "on_failure": "stop",
+      "metadata": {}
+    }
+  ],
+  "last_updated": "2026-03-04T18:54:22.081903"
+}
