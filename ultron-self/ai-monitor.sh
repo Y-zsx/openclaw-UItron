@@ -17,5 +17,5 @@ echo "{\"time\":\"$TIMESTAMP\",\"panel\":\"$PANEL\",\"gateway\":\"$GATEWAY\",\"l
 
 # 简单告警
 [ "$PANEL" != "200" ] && echo "[ALERT] Panel down: $PANEL"
-[ "$MEM" -gt 90 ] && echo "[ALERT] Memory high: $MEM%"
+[ "$(echo "$MEM > 90" | bc 2>/dev/null || echo 0)" -eq 1 ] && echo "[ALERT] Memory high: $MEM%"
 [ "$DISK" -gt 90 ] && echo "[ALERT] Disk full: $DISK%"
