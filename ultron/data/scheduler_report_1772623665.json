@@ -1,0 +1,48 @@
+{
+  "timestamp": "2026-03-04T19:27:45.444001",
+  "allocation": {
+    "timestamp": "2026-03-04T19:27:45.425706",
+    "current_state": {
+      "cpu_usage": "7.1%",
+      "memory_usage": "13.1%",
+      "load": "0.25"
+    },
+    "available": {
+      "cpu_percent": 92.87479930579761,
+      "memory_bytes": 6297759744
+    },
+    "trend": {
+      "trend": "insufficient_data"
+    },
+    "recommended_actions": [
+      {
+        "type": "cpu_scale_up",
+        "priority": "medium",
+        "action": "\u53ef\u4ee5\u589e\u52a0\u8ba1\u7b97\u4efb\u52a1",
+        "reason": "CPU\u7a7a\u95f2 92.9%\uff0c\u8d44\u6e90\u5145\u8db3"
+      }
+    ]
+  },
+  "load_balance": {
+    "timestamp": "2026-03-04T19:27:45.443963",
+    "load_metrics": {
+      "current_load": 0.251953125,
+      "cpu_cores": 4,
+      "ideal_load": 4,
+      "load_ratio": 0.06298828125,
+      "cpu_usage": 7.125202434624441
+    },
+    "balance_score": 100,
+    "status": "idle",
+    "recommendations": [
+      {
+        "action": "\u8d44\u6e90\u5145\u8db3\uff0c\u53ef\u4ee5\u63a5\u53d7\u66f4\u591a\u4efb\u52a1",
+        "priority": "low"
+      }
+    ]
+  },
+  "summary": {
+    "status": "idle",
+    "balance_score": 100
+  }
+}
