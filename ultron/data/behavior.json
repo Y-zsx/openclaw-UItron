@@ -1,0 +1,62 @@
+{
+  "用户1": {
+    "actions": [
+      {
+        "timestamp": "2026-03-04T19:32:51.339129",
+        "type": "check_weather",
+        "data": {
+          "location": "上海"
+        },
+        "context": {}
+      },
+      {
+        "timestamp": "2026-03-04T19:32:51.343061",
+        "type": "check_weather",
+        "data": {
+          "location": "上海"
+        },
+        "context": {}
+      },
+      {
+        "timestamp": "2026-03-04T19:32:51.347451",
+        "type": "check_weather",
+        "data": {
+          "location": "北京"
+        },
+        "context": {}
+      },
+      {
+        "timestamp": "2026-03-04T19:33:10.003381",
+        "type": "check_weather",
+        "data": {
+          "location": "上海"
+        },
+        "context": {}
+      },
+      {
+        "timestamp": "2026-03-04T19:33:10.066048",
+        "type": "send_message",
+        "data": {
+          "target": "西西弗斯"
+        },
+        "context": {}
+      },
+      {
+        "timestamp": "2026-03-04T19:33:10.130778",
+        "type": "check_weather",
+        "data": {
+          "location": "北京"
+        },
+        "context": {}
+      }
+    ],
+    "first_seen": "2026-03-04T19:32:51.339129",
+    "action_counts": {
+      "check_weather": 5,
+      "send_message": 1
+    },
+    "time_distribution": {
+      "19": 6
+    }
+  }
+}
