@@ -1,0 +1,25 @@
+[
+  {
+    "timestamp": "2026-03-04T17:28:12.807086",
+    "metrics": {
+      "memory_total": 7266,
+      "memory_used": 1091,
+      "memory_usage": 15.0,
+      "disk_usage": 30,
+      "load_avg": [
+        0.89,
+        0.77,
+        0.68
+      ],
+      "service_status": "up"
+    },
+    "decision": {
+      "id": "a8251a5d",
+      "result": "execute",
+      "action": "系统运行正常",
+      "reason": "低风险决策，可以执行",
+      "level": "low",
+      "confidence": 0.85
+    }
+  }
+]
