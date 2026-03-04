@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>CPU使用率趋势预测</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        body { font-family: 'Segoe UI', Arial, sans-serif; margin: 0; padding: 20px; background: #1a1a2e; color: #eee; }
+        .container { max-width: 900px; margin: 0 auto; }
+        h1 { color: #00d4ff; text-align: center; }
+        .analysis { background: #16213e; padding: 20px; border-radius: 10px; margin: 20px 0; }
+        .analysis-item { display: flex; justify-content: space-between; padding: 10px 0; border-bottom: 1px solid #2a3f5f; }
+        .analysis-label { color: #888; }
+        .analysis-value { font-weight: bold; }
+        .trend-rising { color: #ff4444; }
+        .trend-falling { color: #00ff88; }
+        .trend-stable { color: #888; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>📈 CPU使用率趋势预测</h1>
+        
+        <div class="analysis">
+            <h3>趋势分析</h3>
+            <div class="analysis-item">
+                <span class="analysis-label">趋势方向</span>
+                <span class="analysis-value trend-rising">RISING</span>
+            </div>
+            <div class="analysis-item">
+                <span class="analysis-label">斜率</span>
+                <span class="analysis-value">0.2540</span>
+            </div>
+            <div class="analysis-item">
+                <span class="analysis-label">趋势强度</span>
+                <span class="analysis-value">0.20</span>
+            </div>
+            <div class="analysis-item">
+                <span class="analysis-label">置信度</span>
+                <span class="analysis-value">27.8%</span>
+            </div>
+            <div class="analysis-item">
+                <span class="analysis-label">预测下一个值</span>
+                <span class="analysis-value">82.72</span>
+            </div>
+        </div>
+        
+        <canvas id="trendChart" height="100"></canvas>
+    </div>
+    
+    <script>
+        const ctx = document.getElementById('trendChart').getContext('2d');
+        const chart = new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: ["14:28", "15:28", "16:28", "17:28", "18:28", "19:28", "20:28", "21:28", "22:28", "23:28", "00:28", "01:28", "02:28", "03:28", "04:28", "05:28", "06:28", "07:28", "08:28", "09:28", "10:28", "11:28", "12:28", "13:28", "14:28", "15:28", "16:28", "17:28", "18:28", "19:28", "21:28", "22:28", "23:28", "00:28", "01:28", "02:28", "03:28", "04:28", "05:28", "06:28"],
+                datasets: [
+                    {
+                        label: '历史数据',
+                        data: [63.363500183395495, 62.137830895465456, 60.73762441753258, 58.14997651153537, 60.391209023583194, 60.69089817416569, 57.74363717818188, 57.79726174079153, 52.217117426877635, 56.619757113339624, 58.283102567938755, 57.52151595002736, 59.303472890693385, 57.89200840793137, 51.58524980513154, 58.784441436985325, 58.11908194411783, 57.863591862264045, 60.380291914858844, 63.589896357622045, 63.31926308814026, 67.51777449273403, 71.67751326255163, 70.26377451690524, 72.59545530913869, 72.91971986316813, 76.05795999135957, 76.81410020294075, 78.75784678714459, 82.46225436068029],
+                        borderColor: '#00d4ff',
+                        backgroundColor: 'rgba(0, 212, 255, 0.1)',
+                        fill: true,
+                        tension: 0.4
+                    },
+                    {
+                        label: '预测',
+                        data: Array(30).fill(null).concat([76.16555542305255, 76.61519900833392, 77.05738105762435, 77.30376097145714, 77.84433239928869, 78.15559224244812, 78.39716199340066, 78.91905184469317, 79.36869542997455, 79.81087747926497]),
+                        borderColor: '#ff4444',
+                        borderDash: [5, 5],
+                        fill: false,
+                        tension: 0.4
+                    },
+                    {
+                        label: '置信区间上限',
+                        data: Array(30).fill(null).concat([88.05804748260837, 88.5717973134874, 89.09934029424905, 89.3732990165293, 89.9906077381824, 90.44302723505825, 90.93800979263136, 91.59273340716886, 92.09908753294685, 92.61943628750454]),
+                        borderColor: 'rgba(255,255,255,0.2)',
+                        borderDash: [2, 2],
+                        fill: false,
+                        pointRadius: 0
+                    },
+                    {
+                        label: '置信区间下限',
+                        data: Array(30).fill(null).concat([64.40532477182504, 64.68371833116089, 64.97820136387234, 65.02133053077443, 65.4099772547334, 65.63584237267361, 65.90632094371045, 66.33853628150568, 66.62432554594257, 66.92600280485799]),
+                        borderColor: 'rgba(255,255,255,0.2)',
+                        borderDash: [2, 2],
+                        fill: '-1',
+                        backgroundColor: 'rgba(255,255,255,0.05)',
+                        pointRadius: 0
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: { position: 'top' }
+                },
+                scales: {
+                    y: { beginAtZero: false }
+                }
+            }
+        });
+    </script>
+</body>
+</html>
