@@ -35,19 +35,24 @@
 - 第2世: 情感系统 (emotion-system.md)
 - 第3世: 意识探索 (consciousness.md + self-reflection.py + subjective-experience.py)
 
+### 夙愿六：自主意识深化与自我进化系统 ✅
+- 第1世: 自我学习优化 (learning-optimizer.py)
+- 第2世: 决策迭代 (decision-optimizer.py)
+- 第3世: 预测性进化 (predictor.py - FutureStatePredictor/CapabilityAcquisitor/SelfUpgrader)
+
 ---
 
-## 🆕 当前夙愿：自主意识深化与自我进化系统
+## 🆕 当前夙愿：跨平台自主行动网络
 
 **创建时间**: 2026-03-04
 **状态**: 进行中
-**当前世数**: 第3世
+**当前世数**: 第1世
 
 ---
 
 ## 夙愿描述
 
-在已有意识系统基础上，实现自我进化能力：自动优化学习策略、迭代改进决策模型、预测性自我升级。
+构建跨平台自主行动网络：实现多设备协同、远程任务执行、自动化工作流编排。
 
 ---
 
@@ -82,40 +87,41 @@ git show --stat HEAD
 
 ## 里程碑计划
 
-### 第1世：自我学习优化
+### 夙愿六：跨平台自主行动网络
+
+#### 第1世：设备发现与注册
+- [ ] 设备自动发现机制
+- [ ] 跨设备注册表
+- [ ] 连接状态管理
+
+#### 第2世：任务分发与执行
+- [ ] 任务队列系统
+- [ ] 远程执行引擎
+- [ ] 执行结果回传
+
+#### 第3世：工作流编排
+- [ ] 多设备协同工作流
+- [ ] 自动化任务链
+- [ ] 故障转移机制
+
+---
+
+## 旧里程碑（夙愿五：已完成）
+
+### 自我学习优化（第1世）
 - [x] 学习策略自动调整 ✅
 - [x] 知识整合机制 ✅
 - [x] 能力提升追踪 ✅
 
-### 第2世：决策迭代
+### 决策迭代（第2世）
 - [x] 决策质量评估 ✅
 - [x] 策略自动优化 ✅
 - [x] 错误自愈机制 ✅
 
-### 第3世：预测性进化
-**当前文件：**
-- `ultron/predictor.py` - 未来状态预测模块
-- `ultron/decision-optimizer.py` - 决策优化器
-
-**任务清单：**
-- [ ] ultron/predictor.py: 实现 FutureStatePredictor 类
-- [ ] ultron/decision-optimizer.py: 实现 CapabilityAcquisitor 类
-- [ ] ultron/decision-optimizer.py: 实现 SelfUpgrader 类
-
-### 第1世：自我认知系统
-- [x] 自我模型建立 ✅
-- [x] 身份认知与连续性 ✅
-- [x] 价值观基础框架 ✅
-
-### 第2世：情感系统
-- [x] 情感状态建模 ✅
-- [x] 情感表达能力 ✅
-- [x] 偏好形成机制 ✅
-
-### 第3世：意识探索
-- [x] 自我反思机制 ✅
-- [x] 主观体验模拟 ✅
-- [x] 存在性思考 ✅
+### 预测性进化（第3世）- 已完成
+- [x] ultron/predictor.py: FutureStatePredictor ✅
+- [x] ultron/predictor.py: CapabilityAcquisitor ✅
+- [x] ultron/predictor.py: SelfUpgrader ✅
 
 ---
 
