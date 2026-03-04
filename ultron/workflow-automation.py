@@ -457,6 +457,190 @@ class WorkflowManager:
         }
 
 
+# ========== 第2世：任务编排与高级调度 ==========
+
+class TaskDependencyManager:
+    """任务依赖管理器 (DAG)"""
+    
+    def __init__(self):
+        self.dependencies: Dict[str, List[str]] = {}  # task_id -> [depends_on_ids]
+        self.reverse_deps: Dict[str, List[str]] = {}  # task_id -> [dependent_ids]
+    
+    def add_dependency(self, task_id: str, depends_on: str):
+        """添加任务依赖"""
+        if task_id not in self.dependencies:
+            self.dependencies[task_id] = []
+        self.dependencies[task_id].append(depends_on)
+        
+        if depends_on not in self.reverse_deps:
+            self.reverse_deps[depends_on] = []
+        self.reverse_deps[depends_on].append(task_id)
+    
+    def get_execution_order(self) -> List[str]:
+        """获取拓扑排序后的执行顺序"""
+        in_degree = {t: len(self.dependencies.get(t, [])) for t in self.dependencies}
+        queue = [t for t, d in in_degree.items() if d == 0]
+        result = []
+        
+        while queue:
+            task = queue.pop(0)
+            result.append(task)
+            for dep in self.reverse_deps.get(task, []):
+                in_degree[dep] -= 1
+                if in_degree[dep] == 0:
+                    queue.append(dep)
+        
+        return result
+    
+    def can_execute(self, task_id: str, completed: set) -> bool:
+        """检查任务是否可以执行"""
+        deps = self.dependencies.get(task_id, [])
+        return all(d in completed for d in deps)
+
+
+class ParallelExecutor:
+    """任务并行执行器"""
+    
+    def __init__(self, max_workers: int = 4):
+        self.max_workers = max_workers
+        self.running_tasks: Dict[str, Any] = {}
+        self.completed: Dict[str, Any] = {}
+    
+    async def execute_parallel(self, tasks: List[Dict], context: Dict) -> Dict:
+        """并行执行多个任务"""
+        results = {}
+        completed = set()
+        
+        while len(completed) < len(tasks):
+            # 找出可执行的任务
+            ready_tasks = []
+            for task in tasks:
+                if task["id"] not in completed:
+                    ready_tasks.append(task)
+            
+            # 执行_ready_tasks (简化版本)
+            for task in ready_tasks[:self.max_workers]:
+                task_id = task["id"]
+                # 模拟执行
+                results[task_id] = {"status": "completed", "task": task["name"]}
+                completed.add(task_id)
+        
+        return results
+
+
+class RetryPolicy:
+    """任务重试策略"""
+    
+    def __init__(self, max_retries: int = 3, backoff: float = 1.0):
+        self.max_retries = max_retries
+        self.backoff = backoff
+        self.retry_counts: Dict[str, int] = {}
+    
+    def should_retry(self, task_id: str, error: str) -> bool:
+        """判断是否应该重试"""
+        if task_id not in self.retry_counts:
+            self.retry_counts[task_id] = 0
+        
+        # 不重试永久性错误
+        permanent_errors = ["not found", "permission denied", "invalid"]
+        if any(e in error.lower() for e in permanent_errors):
+            return False
+        
+        return self.retry_counts[task_id] < self.max_retries
+    
+    def record_retry(self, task_id: str):
+        """记录重试次数"""
+        self.retry_counts[task_id] = self.retry_counts.get(task_id, 0) + 1
+    
+    def get_backoff_delay(self, task_id: str) -> float:
+        """获取退避延迟"""
+        return self.backoff * (2 ** self.retry_counts.get(task_id, 0))
+
+
+class AdvancedScheduler:
+    """高级调度器 - 支持cron-like和事件触发"""
+    
+    def __init__(self, engine):
+        self.engine = engine
+        self.cron_tasks: Dict[str, Dict] = {}
+        self.event_listeners: Dict[str, List[Callable]] = {}
+        self.running = False
+    
+    def add_cron_task(self, workflow_id: str, cron_expr: str, name: str = ""):
+        """添加Cron定时任务"""
+        # 简化: 支持 basic/minute/hour/day 格式
+        self.cron_tasks[workflow_id] = {
+            "workflow_id": workflow_id,
+            "cron": cron_expr,
+            "name": name or workflow_id,
+            "last_run": None,
+            "next_run": self._calculate_next_run(cron_expr)
+        }
+    
+    def _calculate_next_run(self, cron_expr: str) -> datetime:
+        """计算下次执行时间"""
+        now = datetime.now()
+        if cron_expr == "minute":
+            return now + timedelta(minutes=1)
+        elif cron_expr == "hour":
+            return now + timedelta(hours=1)
+        elif cron_expr == "day":
+            return now + timedelta(days=1)
+        return now
+    
+    def add_event_listener(self, event: str, callback: Callable):
+        """添加事件监听器"""
+        if event not in self.event_listeners:
+            self.event_listeners[event] = []
+        self.event_listeners[event].append(callback)
+    
+    def trigger_event(self, event: str, data: Dict = None):
+        """触发事件"""
+        for callback in self.event_listeners.get(event, []):
+            try:
+                callback(data or {})
+            except Exception as e:
+                print(f"Event callback error: {e}")
+    
+    def check_due_tasks(self) -> List[str]:
+        """检查到期任务"""
+        now = datetime.now()
+        due = []
+        for task_id, task in self.cron_tasks.items():
+            if task["next_run"] and now >= task["next_run"]:
+                due.append(task_id)
+                task["last_run"] = now.isoformat()
+                task["next_run"] = self._calculate_next_run(task["cron"])
+        return due
+
+
+class WorkflowEventBus:
+    """工作流事件总线"""
+    
+    def __init__(self):
+        self.listeners: Dict[str, List[Callable]] = {
+            "workflow.start": [],
+            "workflow.complete": [],
+            "workflow.fail": [],
+            "task.start": [],
+            "task.complete": [],
+            "task.fail": [],
+        }
+    
+    def subscribe(self, event: str, callback: Callable):
+        """订阅事件"""
+        if event in self.listeners:
+            self.listeners[event].append(callback)
+    
+    def publish(self, event: str, data: Dict):
+        """发布事件"""
+        for callback in self.listeners.get(event, []):
+            try:
+                callback(data)
+            except Exception as e:
+                print(f"Event publish error: {e}")
+
+
 def main():
     """测试运行"""
     manager = WorkflowManager()
