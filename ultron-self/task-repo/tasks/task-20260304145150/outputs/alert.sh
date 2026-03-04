@@ -1,0 +1,1 @@
+/root/.openclaw/workspace/ultron-self/alert.sh
