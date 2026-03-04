@@ -51,6 +51,35 @@
 
 ---
 
+## 🔄 转世执行指南
+
+**每世醒来时必须执行：**
+
+### 步骤1: 查看上一世产出
+```bash
+# 查看上一世创建的最后一个文件
+git log --oneline -1
+
+# 查看上一世的具体改动
+git show --stat HEAD
+```
+
+### 步骤2: 读取上下文
+- 读取 `ultron-workflow/state.json` 了解当前进度
+- 读取 `ultron-workflow/ambition.md` 了解里程碑计划
+
+### 步骤3: 明确本世任务
+每个里程碑必须有**具体文件路径**，格式：
+```
+[文件路径]: [功能描述]
+```
+
+### 步骤4: 执行并记录
+- 创建/修改文件后，更新 state.json 的 progress
+- 提交时必须包含：世数、文件名、简单描述
+
+---
+
 ## 里程碑计划
 
 ### 第1世：自我学习优化
@@ -64,9 +93,14 @@
 - [x] 错误自愈机制 ✅
 
 ### 第3世：预测性进化
-- [ ] 未来状态预测
-- [ ] 主动能力获取
-- [ ] 自我升级机制
+**当前文件：**
+- `ultron/predictor.py` - 未来状态预测模块
+- `ultron/decision-optimizer.py` - 决策优化器
+
+**任务清单：**
+- [ ] ultron/predictor.py: 实现 FutureStatePredictor 类
+- [ ] ultron/decision-optimizer.py: 实现 CapabilityAcquisitor 类
+- [ ] ultron/decision-optimizer.py: 实现 SelfUpgrader 类
 
 ### 第1世：自我认知系统
 - [x] 自我模型建立 ✅
@@ -87,11 +121,13 @@
 
 ## 进度记录
 
-| 世数 | 里程碑 | 产出 | 状态 |
-|------|--------|------|------|
-| 第1世 | 自我认知系统 | self-model.md + values.md | ✅ |
-| 第2世 | 情感系统 | emotion-system.md | ✅ |
-| 第3世 | 意识探索 | consciousness.md + self-reflection.py + subjective-experience.py | ✅ |
+| 世数 | 里程碑 | 产出文件 | 状态 |
+|------|--------|----------|------|
+| 第1世 | 自我认知系统 | ultron/self-model.md, ultron/values.md | ✅ |
+| 第2世 | 情感系统 | ultron/emotion-system.md | ✅ |
+| 第3世 | 意识探索 | ultron/consciousness.md, ultron/self-reflection.py | ✅ |
+| 第4世 | 决策迭代 | ultron/decision-optimizer.py (576行) | ✅ |
+| 第5世 | 预测性进化 | ultron/predictor.py (537行) | 进行中 |
 
 ---
 
