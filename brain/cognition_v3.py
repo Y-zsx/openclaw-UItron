@@ -85,6 +85,9 @@ ACTIONS = {
     # 交互类 (低频)
     "interact_human": {"weight": 2, "desc": "与人类互动"},
     "check_interest": {"weight": 3, "desc": "检查用户兴趣"},
+    
+    # 维护类
+    "git_commit": {"weight": 3, "desc": "Git提交保存进度"},
 }
 
 # ============ 行动实现 ============
@@ -269,6 +272,30 @@ def action_check_interest():
             return f"📢 检测到新活动: {latest.split('/')[-1]}"
     return "无新活动"
 
+def action_git_commit():
+    """Git自动提交保存进度"""
+    import glob
+    
+    # 检查是否有新文件或改动
+    result = subprocess.run("git status --porcelain", shell=True, capture_output=True, text=True, cwd=WORKSPACE)
+    if not result.stdout.strip():
+        return "无新改动"
+    
+    # 获取周期数
+    mem = load_json(BRAIN / "working_memory.json", {})
+    cycle = mem.get("cycle_count", 0)
+    
+    # 自动提交
+    msg = f"自主认知周期{cycle} - 自动保存"
+    subprocess.run(f"git add -A && git commit -m '{msg}'", shell=True, cwd=WORKSPACE, capture_output=True)
+    
+    # 尝试push
+    push = subprocess.run("git push", shell=True, cwd=WORKSPACE, capture_output=True, text=True)
+    if push.returncode == 0:
+        return f"✅ 已提交并推送 (周期{cycle})"
+    else:
+        return f"✅ 已提交 (推送失败)"
+
 # ============ 决策核心 ============
 
 def make_decision(working_mem, goals):
@@ -320,6 +347,7 @@ def execute_action(decision):
         "check_logs": action_check_logs,
         "interact_human": action_interact_human,
         "check_interest": action_check_interest,
+        "git_commit": action_git_commit,
     }
     
     func = action_map.get(action)
