@@ -1,0 +1,98 @@
+{
+  "report_id": "SEC-20260304-201752",
+  "timestamp": "2026-03-04T20:17:52.844671",
+  "threat_analysis": {
+    "total_threats": 233,
+    "threat_breakdown": {
+      "failed_login": 127,
+      "port_scan": 45,
+      "suspicious_login": 23,
+      "sql_injection": 12,
+      "xss_attack": 8,
+      "ddos": 3,
+      "unauthorized_access": 15
+    },
+    "top_attack_sources": {
+      "192.168.1.100": 10,
+      "10.0.0.55": 10,
+      "172.16.0.23": 10,
+      "unknown": 10
+    },
+    "attack_timeline": [
+      {
+        "date": "2026-03-04",
+        "count": 20,
+        "severity": "medium"
+      },
+      {
+        "date": "2026-03-03",
+        "count": 23,
+        "severity": "medium"
+      },
+      {
+        "date": "2026-03-02",
+        "count": 26,
+        "severity": "medium"
+      },
+      {
+        "date": "2026-03-01",
+        "count": 29,
+        "severity": "medium"
+      },
+      {
+        "date": "2026-02-28",
+        "count": 32,
+        "severity": "medium"
+      },
+      {
+        "date": "2026-02-27",
+        "count": 35,
+        "severity": "high"
+      },
+      {
+        "date": "2026-02-26",
+        "count": 38,
+        "severity": "high"
+      }
+    ],
+    "trend": "increasing",
+    "risk_level": "high"
+  },
+  "risk_assessment": {
+    "overall_score": 50,
+    "risk_level": "high",
+    "factors": {
+      "threat_count": 233,
+      "attack_trend": "increasing",
+      "vulnerability_count": 0
+    },
+    "recommendations": [
+      "🟠 加强访问控制",
+      "🟠 增加日志审计频率",
+      "🟠 审查最近的安全策略",
+      "🟠 准备应急响应"
+    ],
+    "assets_at_risk": [
+      {
+        "name": "SSH服务",
+        "risk": "high",
+        "reason": "主要暴力破解目标"
+      },
+      {
+        "name": "Web服务",
+        "risk": "high",
+        "reason": "SQL注入/XSS风险"
+      },
+      {
+        "name": "数据库",
+        "risk": "high",
+        "reason": "敏感数据存储"
+      },
+      {
+        "name": "管理系统",
+        "risk": "high",
+        "reason": "高价值目标"
+      }
+    ]
+  }
+}
