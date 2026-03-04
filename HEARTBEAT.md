@@ -5,6 +5,7 @@
 每次心跳触发时，执行以下思考流程：
 
 ### 1. 读取brain/working_memory.json了解当前状态
+### 1.1 读取brain/incarnation_memory.json获取上一世经验（重要！）
 
 ### 2. 执行决策（按优先级）:
 
