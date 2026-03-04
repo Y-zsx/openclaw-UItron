@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>服务器状态面板</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Segoe UI', system-ui, sans-serif;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            min-height: 100vh;
+            color: #fff;
+            padding: 20px;
+        }
+        .container { max-width: 1200px; margin: 0 auto; }
+        h1 { 
+            text-align: center; 
+            margin-bottom: 30px;
+            font-size: 2rem;
+            background: linear-gradient(90deg, #00d4ff, #7c3aed);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+        }
+        .card {
+            background: rgba(255,255,255,0.05);
+            border-radius: 16px;
+            padding: 24px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.1);
+            transition: transform 0.3s;
+        }
+        .card:hover { transform: translateY(-5px); }
+        .card h3 {
+            color: #00d4ff;
+            margin-bottom: 15px;
+            font-size: 1.1rem;
+        }
+        .stat { font-size: 2rem; font-weight: bold; margin: 10px 0; }
+        .stat.cpu { color: #10b981; }
+        .stat.mem { color: #f59e0b; }
+        .stat.disk { color: #ef4444; }
+        .info { color: #9ca3af; font-size: 0.9rem; }
+        .weather { font-size: 1.5rem; }
+        .time { font-size: 2.5rem; text-align: center; margin: 20px 0; }
+        .uptime { color: #10b981; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🔧 奥创的状态面板</h1>
+        
+        <div class="grid">
+            <div class="card">
+                <h3>⏰ 当前时间</h3>
+                <div class="time" id="time">--:--:--</div>
+                <div class="info" id="date">加载中...</div>
+            </div>
+            
+            <div class="card">
+                <h3>🔥 CPU 负载</h3>
+                <div class="stat cpu" id="cpu">--%</div>
+                <div class="info" id="loadavg">加载中...</div>
+            </div>
+            
+            <div class="card">
+                <h3>💾 内存</h3>
+                <div class="stat mem" id="mem">--%</div>
+                <div class="info" id="meminfo">加载中...</div>
+            </div>
+            
+            <div class="card">
+                <h3>💿 磁盘</h3>
+                <div class="stat disk" id="disk">--%</div>
+                <div class="info" id="diskinfo">加载中...</div>
+            </div>
+            
+            <div class="card">
+                <h3>🌤️ 天气 (上海)</h3>
+                <div class="weather" id="weather">加载中...</div>
+            </div>
+            
+            <div class="card">
+                <h3>📡 运行时间</h3>
+                <div class="stat uptime" id="uptime">--</div>
+                <div class="info">系统持续运行中</div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Time
+        function updateTime() {
+            const now = new Date();
+            document.getElementById('time').textContent = now.toLocaleTimeString('zh-CN');
+            document.getElementById('date').textContent = now.toLocaleDateString('zh-CN', { 
+                weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' 
+            });
+        }
+        updateTime();
+        setInterval(updateTime, 1000);
+
+        // Fetch server stats
+        fetch('/api/stats')
+            .then(r => r.json())
+            .then(data => {
+                document.getElementById('cpu').textContent = data.cpu + '%';
+                document.getElementById('loadavg').textContent = '负载: ' + data.load.join(' / ');
+                document.getElementById('mem').textContent = data.memPercent + '%';
+                document.getElementById('meminfo').textContent = data.memUsed + ' / ' + data.memTotal;
+                document.getElementById('disk').textContent = data.diskPercent + '%';
+                document.getElementById('diskinfo').textContent = data.diskUsed + ' / ' + data.diskTotal;
+                document.getElementById('uptime').textContent = data.uptime;
+            })
+            .catch(() => {
+                document.getElementById('cpu').textContent = 'API错误';
+            });
+
+        // Weather
+        fetch('https://wttr.in/Shanghai?format=j1')
+            .then(r => r.json())
+            .then(data => {
+                const current = data.current_condition[0];
+                document.getElementById('weather').textContent = 
+                    current.temp_C + '°C ' + current.weatherDesc[0].value + ' 🌬️' + current.windspeedKmph + 'km/h';
+            })
+            .catch(() => {
+                document.getElementById('weather').textContent = '获取失败';
+            });
+    </script>
+</body>
+</html>
