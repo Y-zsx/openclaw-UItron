@@ -1,0 +1,32 @@
+{
+  "active": {
+    "response_speed": {
+      "priority": "high",
+      "target_time_ms": 500,
+      "current_avg_ms": 0,
+      "adjustments": []
+    },
+    "resource_allocation": {
+      "priority": "medium",
+      "cpu_threshold": 70,
+      "memory_threshold": 80,
+      "auto_scale": true
+    },
+    "user_engagement": {
+      "priority": "high",
+      "target_interactions": 10,
+      "personalization": true
+    }
+  },
+  "history": [],
+  "performance": {
+    "response_speed": {
+      "uses": 1,
+      "total_score": 100,
+      "recent_scores": [
+        100
+      ],
+      "avg_score": 100.0
+    }
+  }
+}
