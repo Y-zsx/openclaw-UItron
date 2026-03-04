@@ -1,0 +1,9 @@
+{
+  "name": "health-check",
+  "command": "curl -s http://localhost:18789/health || echo 'unhealthy'",
+  "description": "\u5065\u5eb7\u68c0\u67e5",
+  "timeout": 10,
+  "retry": 2,
+  "env": {},
+  "variables": {}
+}

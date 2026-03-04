@@ -1,0 +1,11 @@
+{
+  "name": "backup-data",
+  "command": "tar -czf /root/.openclaw/workspace/ultron/data/backup_$TIMESTAMP.tar.gz /root/.openclaw/workspace/ultron/data/",
+  "description": "\u6570\u636e\u5907\u4efd",
+  "timeout": 300,
+  "retry": 0,
+  "env": {},
+  "variables": {
+    "TIMESTAMP": ""
+  }
+}

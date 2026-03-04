@@ -1,0 +1,11 @@
+{
+  "name": "shell-command",
+  "command": "$COMMAND",
+  "description": "\u901a\u7528Shell\u547d\u4ee4",
+  "timeout": 300,
+  "retry": 0,
+  "env": {},
+  "variables": {
+    "COMMAND": ""
+  }
+}
