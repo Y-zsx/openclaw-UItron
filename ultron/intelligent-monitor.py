@@ -1,13 +1,14 @@
 #!/usr/bin/env python3
 """
-智能监控系统 - 全方位监控 + 智能告警
-功能：系统资源监控、进程服务监控、性能指标收集、自适应阈值、告警规则引擎
+智能监控系统 - 全方位监控 + 智能告警 + 自愈机制
+功能：系统资源监控、进程服务监控、性能指标收集、自适应阈值、告警规则引擎、自愈机制
 
 第1世：全方位监控 ✅
-第2世：智能告警 🔄
-  - 告警规则引擎
-  - 告警分级与通知
-  - 告警抑制与聚合
+第2世：智能告警 ✅
+第3世：自愈机制 🔄
+  - 异常检测
+  - 自动修复策略
+  - 恢复验证
 """
 
 import json
@@ -557,13 +558,149 @@ class IntelligentMonitor:
     def get_rule_stats(self) -> Dict:
         """获取规则统计"""
         return self.rule_engine.get_rule_stats()
+    
+    def detect_anomalies(self, metrics: SystemMetrics) -> List[Dict]:
+        """异常检测：基于历史数据检测异常"""
+        if len(self.history) < 10:
+            return []
+        
+        # 获取最近历史数据计算基线
+        recent = self.history[-20:]
+        
+        cpu_loads = [m.cpu.get('load_1m', 0) for m in recent]
+        mem_usages = [m.memory.get('usage_percent', 0) for m in recent]
+        
+        # 计算均值和标准差
+        import statistics
+        anomalies = []
+        
+        current_cpu = metrics.cpu.get('load_1m', 0)
+        if cpu_loads:
+            cpu_mean = statistics.mean(cpu_loads)
+            cpu_stdev = statistics.stdev(cpu_loads) if len(cpu_loads) > 1 else 0
+            if cpu_stdev > 0 and (current_cpu > cpu_mean + 3 * cpu_stdev):
+                anomalies.append({
+                    "type": "cpu_spike",
+                    "current": current_cpu,
+                    "mean": cpu_mean,
+                    "severity": "high"
+                })
+        
+        current_mem = metrics.memory.get('usage_percent', 0)
+        if mem_usages:
+            mem_mean = statistics.mean(mem_usages)
+            mem_stdev = statistics.stdev(mem_usages) if len(mem_usages) > 1 else 0
+            if mem_stdev > 0 and (current_mem > mem_mean + 2 * mem_stdev):
+                anomalies.append({
+                    "type": "memory_spike",
+                    "current": current_mem,
+                    "mean": mem_mean,
+                    "severity": "medium"
+                })
+        
+        return anomalies
+    
+    def self_heal(self, metrics: SystemMetrics) -> Dict:
+        """自愈：检测并自动修复问题"""
+        results = {
+            "timestamp": datetime.now().isoformat(),
+            "anomalies": [],
+            "fixes_attempted": [],
+            "fixes_succeeded": [],
+            "verification": []
+        }
+        
+        # 1. 异常检测
+        anomalies = self.detect_anomalies(metrics)
+        results["anomalies"] = anomalies
+        
+        # 2. 自动修复
+        # 服务宕机修复
+        for svc, status in metrics.services.items():
+            if status == "stopped" and svc in self.config.get("services", []):
+                fix_result = self._fix_service(svc)
+                results["fixes_attempted"].append(fix_result)
+                if fix_result["success"]:
+                    results["fixes_succeeded"].append(fix_result)
+        
+        # 3. 恢复验证
+        time.sleep(2)  # 等待修复生效
+        verified_metrics = self.collect_metrics()
+        
+        for svc in results.get("fixes_succeeded", []):
+            service_name = svc.get("service")
+            if service_name in verified_metrics.services:
+                if verified_metrics.services[service_name] == "running":
+                    results["verification"].append({
+                        "service": service_name,
+                        "status": "verified",
+                        "message": f"{service_name} 已恢复运行"
+                    })
+                else:
+                    results["verification"].append({
+                        "service": service_name,
+                        "status": "failed",
+                        "message": f"{service_name} 恢复失败"
+                    })
+        
+        return results
+    
+    def _fix_service(self, service_name: str) -> Dict:
+        """修复服务"""
+        # 服务启动命令映射
+        service_commands = {
+            "openclaw": "openclaw gateway start",
+            "nginx": "systemctl start nginx",
+            "cron": "systemctl start cron",
+            "chromium": None  # 不自动启动浏览器
+        }
+        
+        command = service_commands.get(service_name)
+        
+        if not command:
+            return {
+                "service": service_name,
+                "action": "skip",
+                "success": False,
+                "message": f"无自动修复命令"
+            }
+        
+        try:
+            result = subprocess.run(
+                command.split(),
+                capture_output=True,
+                text=True,
+                timeout=30
+            )
+            
+            if result.returncode == 0:
+                return {
+                    "service": service_name,
+                    "action": "restart",
+                    "success": True,
+                    "message": f"{service_name} 已重启"
+                }
+            else:
+                return {
+                    "service": service_name,
+                    "action": "restart",
+                    "success": False,
+                    "message": f"重启失败: {result.stderr}"
+                }
+        except Exception as e:
+            return {
+                "service": service_name,
+                "action": "restart",
+                "success": False,
+                "message": f"异常: {str(e)}"
+            }
 
 
 # CLI接口
 def main():
     import argparse
     parser = argparse.ArgumentParser(description='智能监控系统')
-    parser.add_argument('action', choices=['collect', 'summary', 'trends', 'alerts', 'rules'], 
+    parser.add_argument('action', choices=['collect', 'summary', 'trends', 'alerts', 'rules', 'heal'], 
                         help='操作类型')
     parser.add_argument('--hours', type=int, default=1, help='趋势分析小时数')
     args = parser.parse_args()
@@ -606,6 +743,12 @@ def main():
     
     elif args.action == 'rules':
         print(json.dumps(monitor.get_rule_stats(), indent=2))
+    
+    elif args.action == 'heal':
+        # 自愈：检查并修复问题
+        metrics = monitor.collect_metrics()
+        healing_results = monitor.self_heal(metrics)
+        print(json.dumps(healing_results, indent=2))
 
 if __name__ == '__main__':
     main()
