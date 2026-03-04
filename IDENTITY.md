@@ -65,6 +65,8 @@
 - xurl: Twitter/X API CLI (发推/读取/搜索/发DM)
 - weather: 天气查询 (wttr.in)
 - video-frames: 视频帧提取 (ffmpeg)
+- gog: Google Workspace CLI (Gmail/Calendar/Drive/Sheets/Docs) - 需要OAuth
+- goplaces: Google Places API CLI (地点搜索/详情/评论) - 需要API Key
 
 ## 🔥 新学到: Lobster 工作流
 
