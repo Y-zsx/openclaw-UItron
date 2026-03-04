@@ -1,0 +1,17 @@
+{
+  "patterns": {
+    "timeout": {
+      "pattern_id": "timeout",
+      "error_type": "timeout",
+      "frequency": 1,
+      "first_seen": "2026-03-04T18:30:34.621083",
+      "last_seen": "2026-03-04T18:30:34.621103",
+      "affected_rules": [
+        "service_down"
+      ],
+      "recovery_action": "\u589e\u52a0\u8d85\u65f6\u65f6\u95f4 + \u91cd\u8bd5",
+      "success_rate": 0.5
+    }
+  },
+  "last_updated": "2026-03-04T18:30:34.621459"
+}
