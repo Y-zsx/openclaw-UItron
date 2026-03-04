@@ -1,0 +1,24 @@
+{
+  "tasks": [
+    {
+      "id": "1",
+      "sender": "monitor",
+      "recipient": "executor",
+      "message": "磁盘使用率过高",
+      "type": "task",
+      "timestamp": "2026-03-04T17:32:57.189668",
+      "status": "pending"
+    }
+  ],
+  "messages": [
+    {
+      "id": "2",
+      "sender": "system",
+      "recipient": "messenger",
+      "message": "系统正常",
+      "type": "message",
+      "timestamp": "2026-03-04T17:32:57.190216",
+      "status": "pending"
+    }
+  ]
+}

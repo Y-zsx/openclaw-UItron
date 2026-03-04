@@ -49,11 +49,11 @@
 
 ## 里程碑计划
 
-### 第1世：协作框架基础
-- [ ] Agent Registry (代理注册表)
-- [ ] Message Bus (消息总线)
-- [ ] Task Queue (任务队列)
-- [ ] 基础通信协议
+### 第1世：协作框架基础 ✅ (已完成)
+- [x] Agent Registry (agents/registry.json)
+- [x] Message Bus (agents/message_bus.py)
+- [x] Task Queue (agents/task_queue.json)
+- [x] 基础通信协议 (agents/protocol.json)
 
 ### 第2世：代理专业化
 - [ ] 监控代理 (Monitor Agent)
@@ -73,7 +73,7 @@
 
 | 世数 | 里程碑 | 产出 | 状态 |
 |------|--------|------|------|
-| 第1世 | 协作框架基础 | Registry/Bus/Queue/协议 | 进行中 |
+| 第1世 | 协作框架基础 | Registry/Bus/Queue/协议 | ✅ 已完成 |
 | 第2世 | 代理专业化 | 4类专业化代理 | 待完成 |
 | 第3世 | 协作优化 | 优化算法+分析 | 待完成 |
 

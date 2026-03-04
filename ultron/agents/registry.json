@@ -1,0 +1,37 @@
+{
+  "version": "1.0",
+  "agents": {
+    "monitor": {
+      "name": "Monitor Agent",
+      "role": "监控系统状态",
+      "capabilities": ["health_check", "metrics", "alerting"],
+      "status": "idle",
+      "last_active": null
+    },
+    "executor": {
+      "name": "Executor Agent", 
+      "role": "执行自动化任务",
+      "capabilities": ["task_execution", "auto_fix", "script_run"],
+      "status": "idle",
+      "last_active": null
+    },
+    "learner": {
+      "name": "Learner Agent",
+      "role": "持续学习和优化",
+      "capabilities": ["skill_acquire", "pattern_learn", "optimization"],
+      "status": "idle",
+      "last_active": null
+    },
+    "messenger": {
+      "name": "Messenger Agent",
+      "role": "消息通信",
+      "capabilities": ["notify", "report", "broadcast"],
+      "status": "idle",
+      "last_active": null
+    }
+  },
+  "message_bus": {
+    "enabled": true,
+    "queue_file": "task_queue.json"
+  }
+}

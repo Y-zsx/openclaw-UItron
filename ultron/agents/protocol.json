@@ -1,0 +1,48 @@
+{
+  "version": "1.0",
+  "protocol_name": "多智能体协作协议",
+  "agents": {
+    "monitor": {
+      "name": "Monitor Agent",
+      "responds_to": ["system", "scheduler", "human"],
+      "can_notify": ["executor", "learner", "messenger"]
+    },
+    "executor": {
+      "name": "Executor Agent",
+      "responds_to": ["monitor", "human"],
+      "can_notify": ["monitor", "messenger"]
+    },
+    "learner": {
+      "name": "Learner Agent",
+      "responds_to": ["system", "scheduler"],
+      "can_notify": ["messenger"]
+    },
+    "messenger": {
+      "name": "Messenger Agent",
+      "responds_to": ["monitor", "executor", "learner", "system", "human"],
+      "can_notify": []
+    }
+  },
+  "message_types": {
+    "alert": {
+      "priority": "high",
+      "timeout": 60,
+      "requires_ack": true
+    },
+    "task": {
+      "priority": "normal",
+      "timeout": 300,
+      "requires_ack": true
+    },
+    "report": {
+      "priority": "low",
+      "timeout": 900,
+      "requires_ack": false
+    },
+    "heartbeat": {
+      "priority": "low",
+      "timeout": 30,
+      "requires_ack": false
+    }
+  }
+}
