@@ -1,0 +1,2 @@
+-rwxr-xr-x 1 root root 902 Mar  4 14:21 /root/.openclaw/workspace/ultron-self/ai-monitor.sh
+-rwxr-xr-x 1 root root 725 Mar  4 14:59 /root/.openclaw/workspace/ultron-self/alert.sh
