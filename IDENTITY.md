@@ -86,6 +86,7 @@
 - dingtalk-cron-job: 钉钉定时提醒
 - dingtalk-send-media: 钉钉媒体发送
 - dingtalk-output-contract: 钉钉输出协议
+- coding-agent: 代码代理 (Codex/Claude Code/Pi) - 需要 PTY 模式
 
 ## 已解锁新技能
 
