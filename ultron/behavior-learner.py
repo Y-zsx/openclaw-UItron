@@ -282,6 +282,66 @@ class BehaviorLearner:
             ) if self.preferences else 0,
             "patterns_identified": len(self.patterns)
         }
+    
+    def export_for_integration(self, user_id: str = None) -> dict:
+        """导出数据供其他模块集成使用"""
+        export_data = {
+            "timestamp": datetime.now().isoformat(),
+            "source": "behavior-learner",
+            "version": "1.0"
+        }
+        
+        if user_id:
+            # 导出特定用户数据
+            if user_id in self.behaviors:
+                export_data["user_data"] = {
+                    "behaviors": self.behaviors[user_id],
+                    "preferences": self.preferences.get(user_id, {}),
+                    "patterns": self.patterns.get(user_id, {})
+                }
+            else:
+                export_data["error"] = "User not found"
+        else:
+            # 导出所有数据摘要
+            export_data["summary"] = self.get_stats()
+            export_data["all_patterns"] = self.patterns
+        
+        return export_data
+    
+    def get_recommendations(self, user_id: str) -> dict:
+        """基于行为分析给出建议（供其他模块调用）"""
+        if user_id not in self.behaviors:
+            return {"recommendations": [], "reason": "No data"}
+        
+        analysis = self.analyze_behavior_patterns(user_id)
+        predictions = self.predict_next_action(user_id)
+        
+        recommendations = []
+        
+        # 基于高峰时段推荐
+        if analysis.get("peak_hours"):
+            current_hour = datetime.now().hour
+            for hour, count in analysis["peak_hours"]:
+                if abs(int(hour) - current_hour) <= 2:
+                    recommendations.append({
+                        "type": "timing",
+                        "action": "用户可能即将活跃",
+                        "confidence": count / 10
+                    })
+        
+        # 基于预测推荐
+        if predictions.get("predicted_action"):
+            recommendations.append({
+                "type": "prediction",
+                "action": predictions["predicted_action"],
+                "confidence": predictions.get("confidence", 0)
+            })
+        
+        return {
+            "recommendations": recommendations,
+            "analysis": analysis,
+            "predictions": predictions
+        }
 
 # CLI接口
 def main():
