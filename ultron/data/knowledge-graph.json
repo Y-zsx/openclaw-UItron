@@ -1,0 +1,147 @@
+{
+  "entities": {
+    "tool_0": {
+      "id": "tool_0",
+      "type": "tool",
+      "name": "meta-learner",
+      "description": "\u5143\u5b66\u4e60\u6846\u67b6 - \u5b66\u4f1a\u5b66\u4e60",
+      "properties": {},
+      "created_at": "2026-03-04T23:05:32.879065",
+      "confidence": 1.0,
+      "sources": []
+    },
+    "concept_1": {
+      "id": "concept_1",
+      "type": "concept",
+      "name": "knowledge-graph",
+      "description": "\u77e5\u8bc6\u56fe\u8c31 - \u5b9e\u4f53\u5173\u7cfb\u7ba1\u7406",
+      "properties": {},
+      "created_at": "2026-03-04T23:05:32.879552",
+      "confidence": 1.0,
+      "sources": []
+    },
+    "skill_2": {
+      "id": "skill_2",
+      "type": "skill",
+      "name": "self-learning",
+      "description": "\u81ea\u6211\u5b66\u4e60\u80fd\u529b",
+      "properties": {},
+      "created_at": "2026-03-04T23:05:32.879848",
+      "confidence": 1.0,
+      "sources": []
+    },
+    "system_3": {
+      "id": "system_3",
+      "type": "system",
+      "name": "ultron",
+      "description": "\u5965\u521b\u4e3b\u8111\u7cfb\u7edf",
+      "properties": {},
+      "created_at": "2026-03-04T23:05:32.880975",
+      "confidence": 1.0,
+      "sources": []
+    },
+    "file_4": {
+      "id": "file_4",
+      "type": "file",
+      "name": "memory-system",
+      "description": "\u8bb0\u5fc6\u7cfb\u7edf",
+      "properties": {},
+      "created_at": "2026-03-04T23:05:32.881973",
+      "confidence": 1.0,
+      "sources": []
+    },
+    "tool_5": {
+      "id": "tool_5",
+      "type": "tool",
+      "name": "decision-engine",
+      "description": "\u51b3\u7b56\u5f15\u64ce",
+      "properties": {},
+      "created_at": "2026-03-04T23:05:32.882889",
+      "confidence": 1.0,
+      "sources": []
+    },
+    "file_6": {
+      "id": "file_6",
+      "type": "file",
+      "name": "quarantined",
+      "description": "Extracted from security-responder.py",
+      "properties": {
+        "source_file": "/root/.openclaw/workspace/ultron/security-responder.py"
+      },
+      "created_at": "2026-03-04T23:05:33.040022",
+      "confidence": 1.0,
+      "sources": []
+    },
+    "system_7": {
+      "id": "system_7",
+      "type": "system",
+      "name": "str",
+      "description": "Extracted from workflow-orchestrator-v2.py",
+      "properties": {
+        "source_file": "/root/.openclaw/workspace/ultron/workflow-orchestrator-v2.py"
+      },
+      "created_at": "2026-03-04T23:05:33.205087",
+      "confidence": 1.0,
+      "sources": []
+    },
+    "file_8": {
+      "id": "file_8",
+      "type": "file",
+      "name": "rm",
+      "description": "Extracted from smart-performance-analyzer.py",
+      "properties": {
+        "source_file": "/root/.openclaw/workspace/ultron/smart-performance-analyzer.py"
+      },
+      "created_at": "2026-03-04T23:05:33.317184",
+      "confidence": 1.0,
+      "sources": []
+    },
+    "file_9": {
+      "id": "file_9",
+      "type": "file",
+      "name": "du",
+      "description": "Extracted from smart-performance-analyzer.py",
+      "properties": {
+        "source_file": "/root/.openclaw/workspace/ultron/smart-performance-analyzer.py"
+      },
+      "created_at": "2026-03-04T23:05:33.317709",
+      "confidence": 1.0,
+      "sources": []
+    }
+  },
+  "relations": [
+    {
+      "source": "tool_0",
+      "target": "concept_1",
+      "type": "uses",
+      "properties": {},
+      "created_at": "2026-03-04T23:05:32.883752",
+      "confidence": 1.0
+    },
+    {
+      "source": "skill_2",
+      "target": "tool_0",
+      "type": "part_of",
+      "properties": {},
+      "created_at": "2026-03-04T23:05:32.884610",
+      "confidence": 1.0
+    },
+    {
+      "source": "system_3",
+      "target": "file_4",
+      "type": "has",
+      "properties": {},
+      "created_at": "2026-03-04T23:05:32.885567",
+      "confidence": 1.0
+    },
+    {
+      "source": "system_3",
+      "target": "tool_5",
+      "type": "has",
+      "properties": {},
+      "created_at": "2026-03-04T23:05:32.886563",
+      "confidence": 1.0
+    }
+  ],
+  "last_update": "2026-03-04T23:05:33.317741"
+}
