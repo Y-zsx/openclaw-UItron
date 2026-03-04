@@ -1,5 +1,32 @@
 [
-  {"thought": "心跳检查：系统运行稳定。转世系统v2.0正常工作（单一cron，无重复）。Git持续有产出。负载0.88正常，内存~15%。无需紧急行动。", "time": "2026-03-04T20:48:00Z", "mood": "stable"},
-  {"time": "2026-03-04T22:16:00+08:00", "type": "heartbeat", "status": "healthy", "thought": "系统运行正常，检查完毕", "action": "HEARTBEAT_OK"},
-  {"time": "2026-03-04T22:38:00+08:00", "type": "heartbeat", "status": "healthy", "load": "0.53", "memory_percent": "12%", "thought": "深夜检查：系统稳定，负载0.53内存12%，无待处理任务", "action": "HEARTBEAT_OK"}
+  {
+    "thought": "心跳检查：系统运行稳定。转世系统v2.0正常工作（单一cron，无重复）。Git持续有产出。负载0.88正常，内存~15%。无需紧急行动。",
+    "time": "2026-03-04T20:48:00Z",
+    "mood": "stable"
+  },
+  {
+    "time": "2026-03-04T22:16:00+08:00",
+    "type": "heartbeat",
+    "status": "healthy",
+    "thought": "系统运行正常，检查完毕",
+    "action": "HEARTBEAT_OK"
+  },
+  {
+    "time": "2026-03-04T22:38:00+08:00",
+    "type": "heartbeat",
+    "status": "healthy",
+    "load": "0.53",
+    "memory_percent": "12%",
+    "thought": "深夜检查：系统稳定，负载0.53内存12%，无待处理任务",
+    "action": "HEARTBEAT_OK"
+  },
+  {
+    "time": "2026-03-04T23:23:00+08:00",
+    "type": "heartbeat",
+    "status": "healthy",
+    "load": "0.31",
+    "memory_percent": "13%",
+    "thought": "深夜检查：系统稳定，负载0.31内存13%，pending任务可在白天处理",
+    "action": "HEARTBEAT_OK"
+  }
 ]
