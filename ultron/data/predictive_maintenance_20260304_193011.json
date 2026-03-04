@@ -1,0 +1,66 @@
+{
+  "timestamp": "2026-03-04T19:30:11.158943",
+  "health_score": 100,
+  "current_metrics": {
+    "timestamp": "2026-03-04T19:30:11.158943",
+    "cpu": 7.12,
+    "memory": 13.19,
+    "disk": 27.98,
+    "load": 0.19,
+    "response_time": 2.33,
+    "processes": 165
+  },
+  "predictions": [
+    {
+      "metric": "cpu",
+      "current": 7.12,
+      "prediction": 7.12,
+      "linear": 7.12,
+      "moving_avg": 7.12,
+      "weighted_avg": 7.12,
+      "trend": "stable",
+      "confidence": "low",
+      "steps_ahead": 15,
+      "data_points": 5
+    },
+    {
+      "metric": "memory",
+      "current": 13.19,
+      "prediction": 13.19,
+      "linear": 13.19,
+      "moving_avg": 13.19,
+      "weighted_avg": 13.19,
+      "trend": "stable",
+      "confidence": "low",
+      "steps_ahead": 15,
+      "data_points": 5
+    },
+    {
+      "metric": "disk",
+      "current": 27.98,
+      "prediction": 27.98,
+      "linear": 27.98,
+      "moving_avg": 27.98,
+      "weighted_avg": 27.98,
+      "trend": "stable",
+      "confidence": "low",
+      "steps_ahead": 15,
+      "data_points": 5
+    },
+    {
+      "metric": "load",
+      "current": 0.19,
+      "prediction": 0.19,
+      "linear": 0.19,
+      "moving_avg": 0.19,
+      "weighted_avg": 0.19,
+      "trend": "stable",
+      "confidence": "low",
+      "steps_ahead": 15,
+      "data_points": 5
+    }
+  ],
+  "anomalies": [],
+  "recent_alerts": [],
+  "maintenance_count": 0
+}
