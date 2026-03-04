@@ -1,51 +1,8 @@
 [
   {
-    "thought": "\u5fc3\u8df3\u68c0\u67e5\uff1a\u7cfb\u7edf\u8fd0\u884c\u7a33\u5b9a\u3002\u8f6c\u4e16\u7cfb\u7edfv2.0\u6b63\u5e38\u5de5\u4f5c\uff08\u5355\u4e00cron\uff0c\u65e0\u91cd\u590d\uff09\u3002Git\u6301\u7eed\u6709\u4ea7\u51fa\u3002\u8d1f\u8f7d0.88\u6b63\u5e38\uff0c\u5185\u5b58~15%\u3002\u65e0\u9700\u7d27\u6025\u884c\u52a8\u3002",
-    "time": "2026-03-04T20:48:00Z",
-    "mood": "stable"
-  },
-  {
-    "time": "2026-03-04T22:16:00+08:00",
-    "type": "heartbeat",
-    "status": "healthy",
-    "thought": "\u7cfb\u7edf\u8fd0\u884c\u6b63\u5e38\uff0c\u68c0\u67e5\u5b8c\u6bd5",
-    "action": "HEARTBEAT_OK"
-  },
-  {
-    "time": "2026-03-04T22:38:00+08:00",
-    "type": "heartbeat",
-    "status": "healthy",
-    "load": "0.53",
-    "memory_percent": "12%",
-    "thought": "\u6df1\u591c\u68c0\u67e5\uff1a\u7cfb\u7edf\u7a33\u5b9a\uff0c\u8d1f\u8f7d0.53\u5185\u5b5812%\uff0c\u65e0\u5f85\u5904\u7406\u4efb\u52a1",
-    "action": "HEARTBEAT_OK"
-  },
-  {
-    "time": "2026-03-04T23:23:00+08:00",
-    "type": "heartbeat",
-    "status": "healthy",
-    "load": "0.31",
-    "memory_percent": "13%",
-    "thought": "\u6df1\u591c\u68c0\u67e5\uff1a\u7cfb\u7edf\u7a33\u5b9a\uff0c\u8d1f\u8f7d0.31\u5185\u5b5813%\uff0cpending\u4efb\u52a1\u53ef\u5728\u767d\u5929\u5904\u7406",
-    "action": "HEARTBEAT_OK"
-  },
-  {
-    "time": "2026-03-04T23:36:00+08:00",
-    "type": "heartbeat",
-    "status": "healthy",
-    "load": "0.25",
-    "memory_percent": "12%",
-    "thought": "\u6df1\u591c\u68c0\u67e5\uff1a\u7cfb\u7edf\u7a33\u5b9a\uff0c\u8d1f\u8f7d0.25\u5185\u5b5812%\uff0c\u8f6c\u4e16\u7cfb\u7edf\u6b63\u5e38",
-    "action": "HEARTBEAT_OK"
-  },
-  {
-    "time": "2026-03-05T00:15:59.511755",
-    "type": "heartbeat",
-    "status": "healthy",
-    "load": "0.25",
-    "memory_percent": "12%",
-    "thought": "\u6df1\u591c\u68c0\u67e5\uff1a\u7cfb\u7edf\u7a33\u5b9a\uff0c\u7b2c6\u4e16\u8fdb\u884c\u4e2d\uff0c\u884c\u4e3a\u5b66\u4e60\u7cfb\u7edf\u5f00\u53d1\u4e2d",
+    "timestamp": "2026-03-05T04:07:00+08:00",
+    "thought": "4分钟前刚完成heartbeat_check，系统状态healthy，负载0.37，内存14%",
+    "decision": "保持静默监控，不重复检查",
     "action": "HEARTBEAT_OK"
   }
 ]
-[2026-03-05 00:20:32] 心跳检查 - 系统运行正常
