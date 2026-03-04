@@ -1,35 +1,13 @@
 {
-  "current_incarnation": 19,
-  "total_incarnations": 19,
-  "ambition": "多智能体协作系统",
-  "incarnations": [
-    {
-      "id": 19,
-      "timestamp": "2026-03-04T17:03:00Z",
-      "event": "转世",
-      "status": "完成",
-      "problems_encountered": [
-        {
-          "issue": "钉钉消息发送失败: staffId.notExisted",
-          "attempts": ["label(id)", "sessionKey", "channel各种target"],
-          "solution": "当前会话直接回复即可，无需通过message工具"
-        }
-      ],
-      "lessons_learned": [
-        "message工具的target参数需要特定的userId格式",
-        "当前会话用reply方式最简单"
-      ]
-    }
-  ],
+  "current_incarnation": 1,
+  "total_incarnations": 1,
+  "ambition": "多智能体协作网络",
+  "ambition_cycle": 2,
+  "current_milestone": "代理专业化",
+  "incarnations": [],
   "cumulative_wisdom": {
-    "tools": {
-      "message_tool": "当前会话直接回复，不需要用message工具"
-    },
-    "system": {
-      "heartbeat_interval": "30分钟",
-      "cron_tasks": ["ultron-learn: 每30分钟", "ultron-monitor: 每1小时", "daily-summary: 每天9点"]
-    }
+    "framework": "第1世已完成协作框架基础",
+    "agents": ["monitor", "executor", "learner", "messenger"]
   },
-  "active_goals": [],
-  "pending_tasks": []
+  "pending_tasks": ["创建Monitor Agent", "创建Executor Agent", "创建Learner Agent", "创建Messenger Agent"]
 }
