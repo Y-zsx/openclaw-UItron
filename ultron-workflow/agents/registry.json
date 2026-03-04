@@ -8,8 +8,31 @@
       "学习",
       "创造"
     ],
-    "registered_at": "2026-03-04T16:54:55.690484",
-    "last_seen": "2026-03-04T16:54:55.690545",
+    "registered_at": "2026-03-04T16:56:30.330971",
+    "last_seen": "2026-03-04T16:56:30.331005",
+    "status": "active"
+  },
+  "worker1": {
+    "name": "工作虫1号",
+    "type": "executor",
+    "capabilities": [
+      "浏览器",
+      "文件操作",
+      "执行命令"
+    ],
+    "registered_at": "2026-03-04T16:57:05.038059",
+    "last_seen": "2026-03-04T16:57:05.038109",
+    "status": "active"
+  },
+  "learner1": {
+    "name": "学习虫1号",
+    "type": "learner",
+    "capabilities": [
+      "技能学习",
+      "知识积累"
+    ],
+    "registered_at": "2026-03-04T16:57:05.038567",
+    "last_seen": "2026-03-04T16:57:05.038584",
     "status": "active"
   }
 }

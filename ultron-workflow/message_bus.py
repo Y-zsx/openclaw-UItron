@@ -78,6 +78,18 @@ class MessageBus:
         except:
             return []
     
+    def list_agents(self) -> List[str]:
+        """列出所有活跃智能体"""
+        registry_file = AGENTS_DIR / "registry.json"
+        if not registry_file.exists():
+            return []
+        try:
+            with open(registry_file) as f:
+                registry = json.load(f)
+            return [aid for aid, info in registry.items() if info.get("status") == "active"]
+        except:
+            return []
+    
     def broadcast(self, sender: str, msg_type: str, payload: Dict, exclude: List[str] = None) -> int:
         """广播消息给所有已注册智能体"""
         if exclude is None:
