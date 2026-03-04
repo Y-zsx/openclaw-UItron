@@ -1,0 +1,77 @@
+[
+  {
+    "timestamp": "2026-03-04T19:45:34.337818",
+    "cpu": {
+      "error": "could not convert string to float: 'us,'"
+    },
+    "memory": {
+      "total": 7619645440,
+      "used": 916602880,
+      "free": 1499328512,
+      "available": 6379552768,
+      "usage_percent": 12.03
+    },
+    "disk": {
+      "total": 41882943488,
+      "used": 11719520256,
+      "available": 28227686400,
+      "usage_percent": 27.98
+    },
+    "load": {
+      "1m": 0.21630859375,
+      "5m": 0.46337890625,
+      "15m": 0.4111328125
+    },
+    "network": {
+      "lo": {
+        "rx": 265514724,
+        "tx": 265514724
+      },
+      "eth0": {
+        "rx": 3743035158,
+        "tx": 8659553011
+      },
+      "docker0": {
+        "rx": 0,
+        "tx": 0
+      }
+    },
+    "processes": [
+      {
+        "pid": "2683932",
+        "user": "root",
+        "cpu": 3.9,
+        "mem": 0.6,
+        "command": "/usr/local/aegis/aegis_client/aegis_12_81/AliYunDu"
+      },
+      {
+        "pid": "412502",
+        "user": "root",
+        "cpu": 3.7,
+        "mem": 6.3,
+        "command": "openclaw-gateway"
+      },
+      {
+        "pid": "2683824",
+        "user": "root",
+        "cpu": 0.6,
+        "mem": 0.2,
+        "command": "/usr/local/aegis/aegis_client/aegis_12_81/AliYunDu"
+      },
+      {
+        "pid": "2131595",
+        "user": "root",
+        "cpu": 0.5,
+        "mem": 0.0,
+        "command": "bash openclaw_installer.sh"
+      },
+      {
+        "pid": "2702",
+        "user": "root",
+        "cpu": 0.2,
+        "mem": 0.7,
+        "command": "/usr/bin/containerd"
+      }
+    ]
+  }
+]
