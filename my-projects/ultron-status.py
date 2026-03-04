@@ -53,6 +53,21 @@ def get_current_state():
     except:
         mem_info = "N/A"
     
+    # 磁盘使用
+    try:
+        disk = subprocess.run(['df', '-h', '/'], capture_output=True, text=True, timeout=5)
+        disk_parts = disk.stdout.split('\n')[1].split()
+        disk_info = f"{disk_parts[2]}/{disk_parts[1]} ({disk_parts[4]})"
+    except:
+        disk_info = "N/A"
+    
+    # 运行时间
+    try:
+        uptime = subprocess.run(['uptime', '-p'], capture_output=True, text=True, timeout=5)
+        uptime_str = uptime.stdout.strip() or 'Unknown'
+    except:
+        uptime_str = "N/A"
+    
     # 读取当前活动
     activity = "初始化..."
     status = "思考中"
@@ -76,15 +91,18 @@ def get_current_state():
         "date": now.strftime("%Y年%m月%d日 %A"),
         "load": load_avg,
         "memory": mem_info,
+        "disk": disk_info,
+        "uptime": uptime_str,
         "commands_explored": commands_explored,
         "gateway": check_process("openclaw-gateway"),
         "browser": check_process("chrome"),
         "nginx": check_process("nginx"),
         "ports": {
-            "status_panel": check_port(8888),
+            "http": check_port(80),
             "ultron_panel": check_port(8889),
             "gateway": check_port(18789),
-            "browser_cdp": check_port(18800)
+            "browser_cdp": check_port(18800),
+            "cron_active": check_process("openclaw")
         }
     }
 
@@ -273,16 +291,24 @@ class Handler(SimpleHTTPRequestHandler):
                 <div class="card-title">📅 日期</div>
                 <div class="card-value">{state['date']}</div>
             </div>
+            <div class="card">
+                <div class="card-title">💽 磁盘</div>
+                <div class="card-value">{state.get('disk', 'N/A')}</div>
+            </div>
+            <div class="card">
+                <div class="card-title">⏰ 运行时间</div>
+                <div class="card-value">{state.get('uptime', 'N/A')}</div>
+            </div>
         </div>
         
         <div class="status-box" style="margin-top: 20px;">
             <div class="status-label">端口状态</div>
             <div style="display: flex; gap: 15px; flex-wrap: wrap; margin-top: 10px;">
+                <span class="{'ok' if state['ports']['http'] else 'bad'}">
+                    {'●' if state['ports']['http'] else '○'} HTTP:80
+                </span>
                 <span class="{'ok' if state['ports']['gateway'] else 'bad'}">
                     {'●' if state['ports']['gateway'] else '○'} Gateway:18789
-                </span>
-                <span class="{'ok' if state['ports']['status_panel'] else 'bad'}">
-                    {'●' if state['ports']['status_panel'] else '○'} 状态:8888
                 </span>
                 <span class="{'ok' if state['ports']['ultron_panel'] else 'bad'}">
                     {'●' if state['ports']['ultron_panel'] else '○'} 奥创:8889
