@@ -25,7 +25,11 @@ touch "$LOCK_FILE"
 log "🦞 奥创转世开始..."
 
 # ===== 读取状态 =====
-CURRENT_INCARNATION=$(grep -o '"current_incarnation":[0-9]*' "$STATE_FILE" | cut -d':' -f2)
+CURRENT_INCARNATION=$(grep -o "current_incarnation":[0-9]*" "$STATE_FILE" | cut -d":" -f2)
+if [ -z "$CURRENT_INCARNATION" ]; then
+    CURRENT_INCARNATION=1
+    log "⚠️ current_incarnation为空，初始化为1"
+fi
 CURRENT_AMBITION=$(grep -o '"current_ambition":"[^"]*"' "$STATE_FILE" | cut -d'"' -f4)
 
 log "当前: 第$CURRENT_INCARNATION 世 | 夙愿: $CURRENT_AMBITION"
