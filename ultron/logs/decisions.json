@@ -1,0 +1,100 @@
+{
+  "decisions": [
+    {
+      "id": "98815513",
+      "timestamp": "2026-03-04T17:24:46.652958",
+      "context": {
+        "disk_usage": 95,
+        "memory_usage": 50
+      },
+      "decision_type": "rule_based",
+      "level": "medium",
+      "rule_applied": "disk_space_check",
+      "result": "defer",
+      "reason": "中风险决策，建议延迟执行",
+      "confidence": 0.7,
+      "action_taken": "磁盘使用率 95%，建议清理"
+    },
+    {
+      "id": "e1515e11",
+      "timestamp": "2026-03-04T17:24:46.653678",
+      "context": {
+        "disk_usage": 50,
+        "memory_usage": 90
+      },
+      "decision_type": "rule_based",
+      "level": "low",
+      "rule_applied": "memory_check",
+      "result": "execute",
+      "reason": "低风险决策，可以执行",
+      "confidence": 0.9,
+      "action_taken": "内存使用率 90%，考虑释放"
+    },
+    {
+      "id": "23828a6b",
+      "timestamp": "2026-03-04T17:24:46.654477",
+      "context": {
+        "service_status": "down",
+        "service_name": "nginx"
+      },
+      "decision_type": "rule_based",
+      "level": "high",
+      "rule_applied": "service_down",
+      "result": "escalate",
+      "reason": "高风险决策，需要升级",
+      "confidence": 0.7,
+      "action_taken": "服务 nginx 宕机，尝试重启"
+    },
+    {
+      "id": "1fe63705",
+      "timestamp": "2026-03-04T17:24:46.655502",
+      "context": {
+        "anomaly_score": 0.9
+      },
+      "decision_type": "rule_based",
+      "level": "high",
+      "rule_applied": "anomaly_detected",
+      "result": "escalate",
+      "reason": "高风险决策，需要升级",
+      "confidence": 0.7,
+      "action_taken": "检测到异常活动 (score=0.9)，需人工确认"
+    },
+    {
+      "id": "6f88dc1e",
+      "timestamp": "2026-03-04T17:24:46.656661",
+      "context": {
+        "threat_level": 8
+      },
+      "decision_type": "rule_based",
+      "level": "high",
+      "rule_applied": "security_threat",
+      "result": "escalate",
+      "reason": "高风险决策，需要升级",
+      "confidence": 0.7,
+      "action_taken": "检测到安全威胁 (level=8)，立即处理"
+    },
+    {
+      "id": "141cd268",
+      "timestamp": "2026-03-04T17:24:46.657711",
+      "context": {
+        "disk_usage": 30,
+        "memory_usage": 40
+      },
+      "decision_type": "rule_based",
+      "level": "low",
+      "rule_applied": null,
+      "result": "execute",
+      "reason": "无特定规则匹配，执行默认操作",
+      "confidence": 0.5,
+      "action_taken": "继续正常流程"
+    }
+  ],
+  "metrics": {
+    "total_decisions": 6,
+    "executed": 2,
+    "rejected": 0,
+    "deferred": 1,
+    "escalated": 3
+  },
+  "last_updated": "2026-03-04T17:24:46.658029"
+}
