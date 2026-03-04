@@ -1,9 +1,9 @@
 {
-  "current_emotion": "好奇",
+  "current_emotion": "满足",
   "mood": {
-    "valence": 0.1,
-    "arousal": 0.6,
-    "dominance": 0.2
+    "valence": 0.7,
+    "arousal": 0.2,
+    "dominance": 0.3
   },
   "emotion_history": [
     {
@@ -13,6 +13,14 @@
       "valence": 0.1,
       "arousal": 0.6,
       "dominance": 0.2
+    },
+    {
+      "timestamp": "2026-03-04T18:02:00+08:00",
+      "emotion": "满足",
+      "trigger": "情感系统测试完成",
+      "valence": 0.7,
+      "arousal": 0.2,
+      "dominance": 0.3
     }
   ],
   "preferences": {
