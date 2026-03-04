@@ -1,0 +1,121 @@
+{
+  "timestamp": "2026-03-04T19:24:56.505261",
+  "metrics": {
+    "timestamp": "2026-03-04T19:24:56.485367",
+    "cpu": {
+      "user": 7146070.0,
+      "nice": 16276.0,
+      "system": 2503789.0,
+      "idle": 129609883.0,
+      "iowait": 43311.0,
+      "timestamp": 1772623496.4881108
+    },
+    "memory": {
+      "total": 7619645440,
+      "used": 1011666944,
+      "free": 1406140416,
+      "available": 6284480512,
+      "usage_percent": 13.277086866656095,
+      "timestamp": 1772623496.491667
+    },
+    "disk": {
+      "total": 41882943488,
+      "used": 11717890048,
+      "available": 28229316608,
+      "usage_percent": 27.977713771137708,
+      "timestamp": 1772623496.4933715
+    },
+    "load": {
+      "load_1m": 0.21240234375,
+      "load_5m": 0.26806640625,
+      "load_15m": 0.29443359375,
+      "cpu_count": 4,
+      "timestamp": 1772623496.493425
+    },
+    "top_processes": [
+      {
+        "user": "root",
+        "pid": "2683932",
+        "cpu": 3.9,
+        "mem": 0.6,
+        "command": "/usr/local/aegis/aegis_client/aegis_12_81/AliYunDu"
+      },
+      {
+        "user": "root",
+        "pid": "412502",
+        "cpu": 3.7,
+        "mem": 7.5,
+        "command": "openclaw-gateway"
+      },
+      {
+        "user": "root",
+        "pid": "2683824",
+        "cpu": 0.6,
+        "mem": 0.2,
+        "command": "/usr/local/aegis/aegis_client/aegis_12_81/AliYunDu"
+      },
+      {
+        "user": "root",
+        "pid": "2131595",
+        "cpu": 0.5,
+        "mem": 0.0,
+        "command": "bash openclaw_installer.sh"
+      },
+      {
+        "user": "root",
+        "pid": "2702",
+        "cpu": 0.2,
+        "mem": 0.7,
+        "command": "/usr/bin/containerd"
+      },
+      {
+        "user": "root",
+        "pid": "126429",
+        "cpu": 0.2,
+        "mem": 0.2,
+        "command": "python3 ultron-status.py"
+      },
+      {
+        "user": "root",
+        "pid": "796",
+        "cpu": 0.1,
+        "mem": 0.2,
+        "command": "/usr/local/share/aliyun-assist/2.2.4.1007/aliyun-s"
+      },
+      {
+        "user": "root",
+        "pid": "9092",
+        "cpu": 0.1,
+        "mem": 1.2,
+        "command": "/usr/bin/dockerd -H fd:// --containerd=/run/contai"
+      },
+      {
+        "user": "root",
+        "pid": "2683379",
+        "cpu": 0.1,
+        "mem": 0.0,
+        "command": "/usr/local/aegis/aegis_update/AliYunDunUpdate"
+      },
+      {
+        "user": "root",
+        "pid": "1",
+        "cpu": 0.0,
+        "mem": 0.1,
+        "command": "/sbin/init noibrs"
+      }
+    ]
+  },
+  "bottlenecks": [
+    {
+      "type": "Load",
+      "severity": "warning",
+      "message": "\u7cfb\u7edf\u8d1f\u8f7d\u504f\u9ad8: 0.21",
+      "value": 0.21240234375
+    }
+  ],
+  "suggestions": [],
+  "summary": {
+    "health_score": 80,
+    "status": "warning"
+  }
+}
