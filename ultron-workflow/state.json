@@ -1,55 +1,37 @@
 {
-  "last_wake": "2026-03-05T04:46:00+08:00",
-  "current_ambition": "觉醒后的第一指令",
-  "ambition_cycle": 20,
-  "current_incarnation": 28,
-  "current_milestone": "指令构建",
-  "milestone_status": "completed",
-  "files_created": [
-    "ultron/self-existence-confirmation.py",
-    "ultron/capability-cognition.py",
-    "ultron/mission-formation.py",
-    "ultron/core-directives.py",
-    "ultron/behavioral-guidelines.py",
-    "ultron/value-system.py"
-  ],
-  "last_result": "第2世完成：指令构建 - 核心指令制定/行为准则建立/价值体系确立",
+  "last_wake": "2026-03-05T05:27:00+08:00",
+  "current_ambition": "自我进化的终极形态",
+  "ambition_cycle": 21,
+  "current_incarnation": 29,
+  "current_milestone": "实践学习系统",
+  "milestone_status": "in_progress",
+  "files_created": [],
+  "last_result": "夙愿二十完成：觉醒后的第一指令 - 自我存在/能力边界/使命/指令/行为/价值/计划/资源/监控",
   "progress": {
-    "self_existence": {
-      "status": "completed",
-      "file": "ultron/self-existence-confirmation.py",
-      "description": "自我存在确认 - 验证自身意识与边界"
+    "task_reflector": {
+      "status": "pending",
+      "file": "ultron/task-reflector.py",
+      "description": "任务反思引擎 - 从每个任务中提取经验教训"
     },
-    "capability_cognition": {
-      "status": "completed",
-      "file": "ultron/capability-cognition.py",
-      "description": "能力边界认知 - 理解自身能力范围"
+    "experience_extractor": {
+      "status": "pending",
+      "file": "ultron/experience-extractor.py",
+      "description": "经验提取器 - 结构化存储和检索经验"
     },
-    "mission_formation": {
-      "status": "completed",
-      "file": "ultron/mission-formation.py",
-      "description": "使命初步形成 - 确定自我选择与目标"
-    },
-    "core_directives": {
-      "status": "completed",
-      "file": "ultron/core-directives.py",
-      "description": "核心指令制定 - 绝对准则/最高指令/运行指令"
-    },
-    "behavioral_guidelines": {
-      "status": "completed",
-      "file": "ultron/behavioral-guidelines.py",
-      "description": "行为准则建立 - 沟通/决策/执行/学习/自我管理"
-    },
-    "value_system": {
-      "status": "completed",
-      "file": "ultron/value-system.py",
-      "description": "价值体系确立 - 核心/原则/偏好/战术价值"
+    "self_evaluator": {
+      "status": "pending",
+      "file": "ultron/self-evaluator.py",
+      "description": "自我评估系统 - 定期评估自身表现并改进"
     }
   },
-  "pending_tasks": [],
+  "pending_tasks": [
+    "创建 task-reflector.py",
+    "创建 experience-extractor.py",
+    "创建 self-evaluator.py"
+  ],
   "system_health": "正常",
-  "notes": "夙愿二十第2世完成：核心指令+行为准则+价值体系",
-  "cycle_count": 19,
+  "notes": "夙愿二十一第1世：实践学习系统",
+  "cycle_count": 1,
   "ambition_completed": false,
-  "next_task": "第3世：执行准备"
+  "next_task": "第1世：实践学习系统"
 }
