@@ -1,0 +1,24 @@
+{
+  "name": "\u5965\u521b\u4efb\u52a1\u961f\u5217",
+  "version": "1.0",
+  "queue": [
+    {
+      "id": 2,
+      "name": "Git\u540c\u6b65",
+      "cmd": "cd /root/.openclaw/workspace && git add -A && git commit -m \"\u81ea\u52a8\u63d0\u4ea4\" && git push",
+      "created": 1772592683
+    }
+  ],
+  "completed": [
+    {
+      "id": 1,
+      "name": "\u81ea\u68c0\u7cfb\u7edf",
+      "cmd": "/root/.openclaw/workspace/ultron-self/self-check.sh",
+      "created": 1772592675,
+      "completed_at": "2026-03-04T10:51:33.401814",
+      "output": "\u81ea\u68c0\u5b8c\u6210\n",
+      "returncode": 0
+    }
+  ],
+  "created": "2026-03-04T10:50:00"
+}
