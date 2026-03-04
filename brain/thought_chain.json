@@ -1,8 +1,11 @@
 [
   {
-    "timestamp": "2026-03-05T04:07:00+08:00",
-    "thought": "4分钟前刚完成heartbeat_check，系统状态healthy，负载0.37，内存14%",
-    "decision": "保持静默监控，不重复检查",
-    "action": "HEARTBEAT_OK"
+    "time": "2026-03-05T05:14:32+08:00",
+    "type": "heartbeat",
+    "action": "system_check",
+    "status": "healthy",
+    "load": "0.37",
+    "uptime": "4 days, 11:35",
+    "notes": "凌晨检查：系统运行正常，负载0.37，内存充足。安静时段(05:14)，不打扰人类。"
   }
 ]
