@@ -4,8 +4,18 @@
 
 每次心跳触发时，执行以下思考流程：
 
+### 0. 先看上一世怎么做的（关键！）
+```bash
+# 最重要的第一步
+git show --stat HEAD
+```
+
 ### 1. 读取brain/working_memory.json了解当前状态
-### 1.1 读取brain/incarnation_memory.json获取上一世经验（重要！）
+
+### 2. 读取brain/incarnation_memory.json获取转世记忆（重要！）
+- 了解当前是第几世
+- 看看上一世创建了哪些文件
+- 了解pending_tasks继续工作
 
 ### 2. 执行决策（按优先级）:
 
