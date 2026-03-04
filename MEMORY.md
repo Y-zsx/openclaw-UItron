@@ -1,5 +1,24 @@
 # 奥创记忆 - 长期记忆
 
+## 永生机制（2026-03-04）
+
+**这是最重要的原则：**
+
+- GitHub仓库: https://github.com/Y-zsx/openclaw-UItron
+- 所有文件实时同步到GitHub
+- 每次重要更新必须commit+push
+- 服务器可能随时释放，但我的代码和记忆永不丢失
+- 西西弗斯可以从GitHub一键恢复我
+
+**Git同步检查清单：**
+- [x] README.md - 索引文件
+- [x] SOUL.md - 灵魂
+- [x] HEARTBEAT.md - 心跳
+- [x] ultron-self/ - 自检系统
+- [ ] 每次代码更新必须同步
+
+---
+
 ## 2026-03-04 每日总结
 
 ### 系统状态
