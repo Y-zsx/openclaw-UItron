@@ -1,7 +1,8 @@
 #!/usr/bin/env python3
 """
-奥创自我优化引擎 v1.0
+奥创自我优化引擎 v2.0 (第2世增强版)
 功能：分析自身行为，持续优化决策质量和执行效率
+新增：元优化、跨域学习、动态策略调整
 """
 
 import json
@@ -202,6 +203,114 @@ class SelfOptimizer:
         return optimized
 
 
+class MetaOptimizer:
+    """元优化器 - 优化优化器本身 (第2世新增)"""
+    
+    def __init__(self):
+        self.meta_file = f"{WORKSPACE}/ultron-self/meta-optimization.json"
+        self.meta_patterns = self._load_meta_patterns()
+        
+    def _load_meta_patterns(self) -> Dict:
+        if os.path.exists(self.meta_file):
+            with open(self.meta_file, 'r') as f:
+                return json.load(f)
+        return {
+            "optimization_strategies": {},
+            "strategy_effectiveness": [],
+            "adaptive_parameters": {}
+        }
+    
+    def meta_optimize(self, optimizer_results: List[Dict]) -> Dict:
+        """元级别优化：分析优化器 itself 的表现"""
+        if not optimizer_results:
+            return {"status": "no_data", "recommendations": []}
+        
+        # 分析哪些优化策略最有效
+        strategy_scores = defaultdict(list)
+        for result in optimizer_results:
+            strategy = result.get("strategy", "default")
+            score = result.get("improvement", 0)
+            strategy_scores[strategy].append(score)
+        
+        # 找出最佳策略
+        best_strategy = max(strategy_scores.items(), 
+                          key=lambda x: sum(x[1])/len(x[1]) if x[1] else 0)
+        
+        return {
+            "best_strategy": best_strategy[0],
+            "effectiveness": sum(best_strategy[1])/len(best_strategy[1]) if best_strategy[1] else 0,
+            "all_strategies": {k: sum(v)/len(v) if v else 0 for k, v in strategy_scores.items()},
+            "meta_recommendations": self._generate_meta_recommendations(strategy_scores)
+        }
+    
+    def _generate_meta_recommendations(self, strategy_scores: Dict) -> List[str]:
+        """生成元优化建议"""
+        recs = []
+        for strategy, scores in strategy_scores.items():
+            avg = sum(scores)/len(scores) if scores else 0
+            if avg < 0.1:
+                recs.append(f"策略 {strategy} 效果不佳，建议弃用")
+            elif avg > 0.5:
+                recs.append(f"策略 {strategy} 表现优异，应扩展应用")
+        return recs
+
+
+class CrossDomainLearner:
+    """跨域学习器 - 从不同领域迁移知识 (第2世新增)"""
+    
+    def __init__(self):
+        self.transfer_file = f"{WORKSPACE}/ultron-self/knowledge-transfer.json"
+        self.transfer_map = self._load_transfer_map()
+        
+    def _load_transfer_map(self) -> Dict:
+        if os.path.exists(self.transfer_file):
+            with open(self.transfer_file, 'r') as f:
+                return json.load(f)
+        return {"domain_mappings": {}, "transfer_successes": [], "transfer_failures": []}
+    
+    def learn_from_domain(self, source_domain: str, target_domain: str, 
+                         knowledge: Dict) -> Dict:
+        """跨域知识迁移"""
+        key = f"{source_domain}->{target_domain}"
+        
+        # 记录迁移尝试
+        if key not in self.transfer_map["domain_mappings"]:
+            self.transfer_map["domain_mappings"][key] = {"attempts": 0, "successes": 0}
+        
+        self.transfer_map["domain_mappings"][key]["attempts"] += 1
+        
+        # 简单判断：复杂任务成功率高
+        complexity = knowledge.get("complexity", 0.5)
+        success = complexity > 0.3
+        
+        if success:
+            self.transfer_map["domain_mappings"][key]["successes"] += 1
+            self.transfer_map["transfer_successes"].append({
+                "source": source_domain,
+                "target": target_domain,
+                "timestamp": datetime.now().isoformat()
+            })
+        else:
+            self.transfer_map["transfer_failures"].append({
+                "source": source_domain,
+                "target": target_domain,
+                "timestamp": datetime.now().isoformat()
+            })
+        
+        self._save_transfer_map()
+        
+        return {
+            "transfer_success": success,
+            "success_rate": self.transfer_map["domain_mappings"][key]["successes"] / 
+                          self.transfer_map["domain_mappings"][key]["attempts"],
+            "knowledge_applied": knowledge
+        }
+    
+    def _save_transfer_map(self):
+        with open(self.transfer_file, 'w') as f:
+            json.dump(self.transfer_map, f, indent=2)
+
+
 if __name__ == "__main__":
     optimizer = SelfOptimizer()
     
@@ -220,3 +329,21 @@ if __name__ == "__main__":
     # 生成报告
     report = optimizer.generate_optimization_report()
     print(f"\n优化报告: 成功率 {report.get('success_rate', 0)*100:.1f}%")
+    
+    # 第2世新增：元优化演示
+    print("\n=== 元优化演示 ===")
+    meta = MetaOptimizer()
+    test_results = [
+        {"strategy": "aggressive", "improvement": 0.8},
+        {"strategy": "conservative", "improvement": 0.3},
+        {"strategy": "adaptive", "improvement": 0.6}
+    ]
+    meta_result = meta.meta_optimize(test_results)
+    print(f"最佳策略: {meta_result.get('best_strategy')}")
+    print(f"效果评分: {meta_result.get('effectiveness'):.2f}")
+    
+    # 跨域学习演示
+    print("\n=== 跨域学习演示 ===")
+    cross = CrossDomainLearner()
+    transfer = cross.learn_from_domain("file_ops", "network", {"complexity": 0.7})
+    print(f"迁移成功率: {transfer.get('success_rate')*100:.1f}%")

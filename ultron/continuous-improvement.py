@@ -1,7 +1,8 @@
 #!/usr/bin/env python3
 """
-奥创持续改进系统 v1.0
+奥创持续改进系统 v2.0 (第2世增强版)
 功能：闭环反馈、持续迭代、自动化改进
+新增：并行改进、优先级进化、自适应反馈
 """
 
 import json
@@ -227,6 +228,106 @@ class ContinuousImprover:
         return suggestions
 
 
+class ParallelImprover:
+    """并行改进器 - 多维度同时改进 (第2世新增)"""
+    
+    def __init__(self):
+        self.parallel_file = f"{WORKSPACE}/ultron-self/parallel-improvements.json"
+        self.improvements = self._load_parallel()
+        
+    def _load_parallel(self) -> Dict:
+        if os.path.exists(self.parallel_file):
+            with open(self.parallel_file, 'r') as f:
+                return json.load(f)
+        return {"active_tracks": {}, "completed_tracks": []}
+    
+    def start_parallel_tracks(self, tracks: List[Dict]) -> Dict:
+        """启动多个改进轨道"""
+        for track in tracks:
+            track_id = f"track_{len(self.improvements['active_tracks']) + 1}"
+            self.improvements["active_tracks"][track_id] = {
+                "name": track.get("name"),
+                "priority": track.get("priority", 5),
+                "status": "running",
+                "started_at": datetime.now().isoformat(),
+                "progress": 0
+            }
+        
+        self._save_parallel()
+        return {"tracks_started": len(tracks), "track_ids": list(self.improvements["active_tracks"].keys())}
+    
+    def update_track_progress(self, track_id: str, progress: float):
+        """更新轨道进度"""
+        if track_id in self.improvements["active_tracks"]:
+            self.improvements["active_tracks"][track_id]["progress"] = progress
+            if progress >= 100:
+                self.improvements["active_tracks"][track_id]["status"] = "completed"
+                self.improvements["completed_tracks"].append(track_id)
+            self._save_parallel()
+    
+    def _save_parallel(self):
+        with open(self.parallel_file, 'w') as f:
+            json.dump(self.improvements, f, indent=2)
+
+
+class AdaptiveFeedbackEngine:
+    """自适应反馈引擎 - 智能调整反馈策略 (第2世新增)"""
+    
+    def __init__(self):
+        self.strategy_file = f"{WORKSPACE}/ultron-self/feedback-strategies.json"
+        self.strategies = self._load_strategies()
+        
+    def _load_strategies(self) -> Dict:
+        if os.path.exists(self.strategy_file):
+            with open(self.strategy_file, 'r') as f:
+                return json.load(f)
+        return {
+            "strategies": {
+                "aggressive": {"threshold": 0.3, "adjustment": 0.2},
+                "moderate": {"threshold": 0.5, "adjustment": 0.1},
+                "conservative": {"threshold": 0.7, "adjustment": 0.05}
+            },
+            "current_strategy": "moderate",
+            "strategy_history": []
+        }
+    
+    def adapt_feedback(self, performance: float) -> Dict:
+        """根据性能自适应调整反馈策略"""
+        current = self.strategies["strategies"][self.strategies["current_strategy"]]
+        
+        # 性能好时减少反馈，性能差时增加
+        if performance > current["threshold"]:
+            # 降低反馈频率
+            adjustment = -current["adjustment"]
+        else:
+            # 增加反馈频率
+            adjustment = current["adjustment"]
+        
+        # 记录策略历史
+        self.strategies["strategy_history"].append({
+            "timestamp": datetime.now().isoformat(),
+            "performance": performance,
+            "strategy": self.strategies["current_strategy"],
+            "adjustment": adjustment
+        })
+        
+        return {
+            "current_strategy": self.strategies["current_strategy"],
+            "performance": performance,
+            "adjustment": adjustment,
+            "recommendation": "increase" if adjustment > 0 else "decrease"
+        }
+    
+    def switch_strategy(self, new_strategy: str) -> bool:
+        """切换反馈策略"""
+        if new_strategy in self.strategies["strategies"]:
+            old = self.strategies["current_strategy"]
+            self.strategies["current_strategy"] = new_strategy
+            self._save_strategies()
+            return True
+        return False
+
+
 if __name__ == "__main__":
     improver = ContinuousImprover()
     
@@ -266,3 +367,21 @@ if __name__ == "__main__":
     suggestions = improver.suggest_next_improvement()
     for s in suggestions:
         print(f"建议: {s['suggestion']}")
+    
+    # 第2世新增：并行改进演示
+    print("\n=== 并行改进演示 ===")
+    parallel = ParallelImprover()
+    tracks = [
+        {"name": "performance", "priority": 9},
+        {"name": "reliability", "priority": 8},
+        {"name": "efficiency", "priority": 7}
+    ]
+    result = parallel.start_parallel_tracks(tracks)
+    print(f"启动 {result['tracks_started']} 条改进轨道")
+    
+    # 自适应反馈演示
+    print("\n=== 自适应反馈演示 ===")
+    adaptive = AdaptiveFeedbackEngine()
+    for perf in [0.8, 0.6, 0.4]:
+        result = adaptive.adapt_feedback(perf)
+        print(f"性能: {perf:.1f} -> 调整: {result['adjustment']:.2f}")

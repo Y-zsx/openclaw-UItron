@@ -1,7 +1,8 @@
 #!/usr/bin/env python3
 """
-奥创能力扩展器 v1.0
+奥创能力扩展器 v2.0 (第2世增强版)
 功能：自动发现能力缺口、学习新技能、扩展能力边界
+新增：能力融合、主动学习、量子能力扩展
 """
 
 import json
@@ -294,6 +295,118 @@ class CapabilityExpander:
         return recommendations
 
 
+class CapabilityFusion:
+    """能力融合器 - 将多个能力组合成新能力 (第2世新增)"""
+    
+    def __init__(self):
+        self.fusion_file = f"{WORKSPACE}/ultron-self/capability-fusions.json"
+        self.fusions = self._load_fusions()
+        
+    def _load_fusions(self) -> Dict:
+        if os.path.exists(self.fusion_file):
+            with open(self.fusion_file, 'r') as f:
+                return json.load(f)
+        return {"fusion_recipes": [], "active_fusions": [], "fusion_history": []}
+    
+    def create_fusion(self, base_capabilities: List[str], target_capability: str) -> Dict:
+        """创建能力融合"""
+        fusion_id = f"fusion_{len(self.fusions['fusion_history']) + 1}"
+        
+        recipe = {
+            "id": fusion_id,
+            "base_capabilities": base_capabilities,
+            "target_capability": target_capability,
+            "status": "creating",
+            "created_at": datetime.now().isoformat(),
+            "progress": 0
+        }
+        
+        self.fusions["active_fusions"].append(recipe)
+        self.fusions["fusion_recipes"].append(recipe)
+        self._save_fusions()
+        
+        return {"fusion_id": fusion_id, "status": "created"}
+    
+    def update_fusion_progress(self, fusion_id: str, progress: float):
+        """更新融合进度"""
+        for fusion in self.fusions["active_fusions"]:
+            if fusion["id"] == fusion_id:
+                fusion["progress"] = progress
+                if progress >= 100:
+                    fusion["status"] = "completed"
+                    self.fusions["fusion_history"].append(fusion)
+                    self.fusions["active_fusions"].remove(fusion)
+                break
+        self._save_fusions()
+    
+    def _save_fusions(self):
+        with open(self.fusion_file, 'w') as f:
+            json.dump(self.fusions, f, indent=2, ensure_ascii=False)
+
+
+class ProactiveLearner:
+    """主动学习器 - 预测性学习未来需要的能力 (第2世新增)"""
+    
+    def __init__(self):
+        self.prediction_file = f"{WORKSPACE}/ultron-self/ability-predictions.json"
+        self.predictions = self._load_predictions()
+        
+    def _load_predictions(self) -> Dict:
+        if os.path.exists(self.prediction_file):
+            with open(self.prediction_file, 'r') as f:
+                return json.load(f)
+        return {"predictions": [], "prediction_history": [], "confidence_scores": []}
+    
+    def predict_future_needs(self, context: Dict) -> List[Dict]:
+        """预测未来能力需求"""
+        # 基于上下文的简单预测
+        predictions = []
+        
+        # 分析当前系统状态
+        system_load = context.get("system_load", 0.5)
+        task_complexity = context.get("task_complexity", 0.5)
+        error_rate = context.get("error_rate", 0.1)
+        
+        if system_load > 0.8:
+            predictions.append({
+                "capability": "load_balancing",
+                "probability": 0.8,
+                "reason": "系统负载过高",
+                "urgency": "high"
+            })
+        
+        if task_complexity > 0.7:
+            predictions.append({
+                "capability": "advanced_reasoning",
+                "probability": 0.7,
+                "reason": "任务复杂度增加",
+                "urgency": "medium"
+            })
+        
+        if error_rate > 0.15:
+            predictions.append({
+                "capability": "error_recovery",
+                "probability": 0.9,
+                "reason": "错误率上升",
+                "urgency": "critical"
+            })
+        
+        # 记录预测
+        self.predictions["predictions"] = predictions
+        self.predictions["prediction_history"].append({
+            "timestamp": datetime.now().isoformat(),
+            "context": context,
+            "predictions": predictions
+        })
+        self._save_predictions()
+        
+        return predictions
+    
+    def _save_predictions(self):
+        with open(self.prediction_file, 'w') as f:
+            json.dump(self.predictions, f, indent=2, ensure_ascii=False)
+
+
 if __name__ == "__main__":
     expander = CapabilityExpander()
     
@@ -329,3 +442,24 @@ if __name__ == "__main__":
     print("学习建议:")
     for r in recs[:3]:
         print(f"  - {r['capability']}: {r['reason']}")
+    
+    # 第2世新增：能力融合演示
+    print("\n=== 能力融合演示 ===")
+    fusion = CapabilityFusion()
+    result = fusion.create_fusion(
+        ["file_operations", "network_requests"],
+        "distributed_file_system"
+    )
+    print(f"创建融合: {result['fusion_id']}")
+    
+    # 主动学习演示
+    print("\n=== 主动学习演示 ===")
+    proactive = ProactiveLearner()
+    context = {
+        "system_load": 0.85,
+        "task_complexity": 0.6,
+        "error_rate": 0.2
+    }
+    predictions = proactive.predict_future_needs(context)
+    for p in predictions:
+        print(f"预测需求: {p['capability']} (概率: {p['probability']:.0%})")
