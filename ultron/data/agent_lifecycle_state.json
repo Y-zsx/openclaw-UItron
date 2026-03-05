@@ -1,0 +1,26 @@
+{
+  "timestamp": "2026-03-05 21:37:16",
+  "agents": {
+    "test-agent": {
+      "agent_id": "test-agent",
+      "state": "starting",
+      "health_score": 100.0,
+      "start_time": 1772717836.2273335,
+      "last_check": 1772717836.2273347,
+      "consecutive_failures": 0,
+      "total_failures": 0,
+      "recovery_attempts": 0,
+      "restart_count": 0,
+      "last_error": null,
+      "uptime": "0:00:00",
+      "metadata": {}
+    }
+  },
+  "stats": {
+    "total_checks": 0,
+    "total_failovers": 0,
+    "total_recoveries": 0,
+    "total_restarts": 0,
+    "agents_registered": 1
+  }
+}

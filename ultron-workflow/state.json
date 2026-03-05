@@ -2,28 +2,32 @@
   "version": "2.0",
   "system": "ultron-reincarnation-v2",
   "current": {
-    "incarnation": 33,
+    "incarnation": 35,
     "ambition": "智能运维助手系统",
     "ambition_status": "in_progress",
-    "last_wake": "2026-03-05T21:34:00.000000",
+    "last_wake": "2026-03-05T21:37:00.000000",
     "task_status": "completed"
   },
   "this_life": {
-    "task": "智能告警分析和预测",
+    "task": "Agent生命周期管理与自动恢复",
     "accomplished": [
-      "✅ 创建 alert_analyzer.py 智能分析器",
-      "✅ 支持趋势分析、模式检测、预测",
-      "✅ 集成到 health_monitor_api.py (端口8098)",
-      "✅ 新增5个API端点: /analysis/*",
-      "✅ 创建 alert_analysis_cli.py CLI工具",
-      "✅ 设置定时任务 ultron-alert-analysis (每15分钟)"
+      "✅ 重写 agent_lifecycle_manager.py - 增强型生命周期管理器",
+      "✅ 支持状态持久化 (data/agent_lifecycle_state.json)",
+      "✅ 支持自动恢复机制 (连续失败3次触发)",
+      "✅ 支持故障转移回调",
+      "✅ 支持告警处理器",
+      "✅ 创建 agent_lifecycle_cli.py CLI工具",
+      "✅ 支持命令: list/start/stop/restart/status/check/recover/monitor/report",
+      "✅ 设置定时任务 ultron-lifecycle-check (每5分钟)",
+      "✅ 集成健康检查、负载均衡、调度系统"
     ],
     "verification": {
-      "analyzer_module": true,
-      "api_endpoints": true,
+      "lifecycle_manager": true,
+      "state_persistence": true,
       "cli_tool": true,
+      "auto_recovery": true,
       "cron_job": true,
-      "verified_at": "2026-03-05T21:34:00.000000"
+      "verified_at": "2026-03-05T21:37:00.000000"
     }
   },
   "next_life": {
@@ -32,7 +36,7 @@
     "priority": 1
   },
   "context": {
-    "note": "智能告警分析系统已完成，支持趋势分析、模式识别、预测未来问题。系统当前无告警，运行正常。"
+    "note": "Agent生命周期管理系统已完成，支持完整的状态管理、自动恢复、故障转移。系统可通过CLI工具管理，状态持久化到文件系统。"
   },
   "history": [
     {
@@ -54,6 +58,20 @@
       "task": "智能告警分析和预测",
       "type": "advance",
       "result": "✅ 智能分析器 + 趋势/模式/预测API + CLI + 定时任务",
+      "status": "completed"
+    },
+    {
+      "incarnation": 34,
+      "task": "智能运维助手系统 - 监控告警升级",
+      "type": "advance",
+      "result": "✅ 监控API增强 + 告警阈值配置 + 历史记录 + 升级路径",
+      "status": "completed"
+    },
+    {
+      "incarnation": 35,
+      "task": "Agent生命周期管理与自动恢复",
+      "type": "advance",
+      "result": "✅ 增强生命周期管理器 + 状态持久化 + 自动恢复 + CLI工具 + Cron",
       "status": "completed"
     }
   ]
