@@ -1,0 +1,14 @@
+[Unit]
+Description=Agent Collaboration API Gateway
+After=network.target
+
+[Service]
+Type=simple
+User=root
+WorkingDirectory=/root/.openclaw/workspace/ultron/collab_gateway
+ExecStart=/usr/bin/python3 /root/.openclaw/workspace/ultron/collab_gateway/collab_api_gateway.py
+Restart=always
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target

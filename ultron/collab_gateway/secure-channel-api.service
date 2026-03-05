@@ -1,0 +1,16 @@
+[Unit]
+Description=Ultron Secure Channel API
+After=network.target
+
+[Service]
+Type=simple
+User=root
+WorkingDirectory=/root/.openclaw/workspace/ultron
+ExecStart=/usr/bin/python3 /root/.openclaw/workspace/ultron/collab_gateway/secure_channel_api.py
+Restart=always
+RestartSec=10
+
+Environment=PYTHONPATH=/root/.openclaw/workspace/ultron
+
+[Install]
+WantedBy=multi-user.target

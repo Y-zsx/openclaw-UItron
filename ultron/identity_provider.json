@@ -1,0 +1,94 @@
+{
+  "identities": {
+    "ultron-main": {
+      "agent_id": "ultron-main",
+      "name": "Ultron Main",
+      "auth_level": 4,
+      "permissions": [
+        "read",
+        "write",
+        "execute",
+        "admin"
+      ],
+      "public_key": "main-key-001",
+      "created_at": "2026-03-05T17:47:58.553519",
+      "last_auth": "2026-03-05T17:47:58.553533",
+      "trusted_agents": [
+        "agent-gateway",
+        "agent-monitor"
+      ]
+    },
+    "agent-gateway": {
+      "agent_id": "agent-gateway",
+      "name": "API Gateway",
+      "auth_level": 3,
+      "permissions": [
+        "read",
+        "write",
+        "execute"
+      ],
+      "public_key": "gateway-key-001",
+      "created_at": "2026-03-05T17:47:58.554029",
+      "last_auth": "2026-03-05T17:47:58.554038",
+      "trusted_agents": []
+    },
+    "agent-monitor": {
+      "agent_id": "agent-monitor",
+      "name": "Monitor Agent",
+      "auth_level": 2,
+      "permissions": [
+        "read"
+      ],
+      "public_key": "monitor-key-001",
+      "created_at": "2026-03-05T17:47:58.554940",
+      "last_auth": "2026-03-05T17:47:58.554949",
+      "trusted_agents": []
+    },
+    "agent-worker-1": {
+      "agent_id": "agent-worker-1",
+      "name": "Worker Agent 1",
+      "auth_level": 1,
+      "permissions": [
+        "execute"
+      ],
+      "public_key": "worker-key-001",
+      "created_at": "2026-03-05T17:47:58.555778",
+      "last_auth": "2026-03-05T17:47:58.555788",
+      "trusted_agents": []
+    }
+  },
+  "policies": {
+    "admin-resources": {
+      "policy_id": "admin-resources",
+      "resource": "system/*",
+      "required_permissions": [
+        "admin"
+      ],
+      "required_auth_level": 4,
+      "allowed_agents": [
+        "ultron-main"
+      ]
+    },
+    "api-gateway": {
+      "policy_id": "api-gateway",
+      "resource": "api/*",
+      "required_permissions": [
+        "execute"
+      ],
+      "required_auth_level": 2,
+      "allowed_agents": [
+        "agent-gateway",
+        "ultron-main"
+      ]
+    },
+    "monitor-read": {
+      "policy_id": "monitor-read",
+      "resource": "metrics/*",
+      "required_permissions": [
+        "read"
+      ],
+      "required_auth_level": 1,
+      "allowed_agents": []
+    }
+  }
+}

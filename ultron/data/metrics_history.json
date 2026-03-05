@@ -259,5 +259,34 @@
         "dropout": 0
       }
     }
+  },
+  {
+    "timestamp": "2026-03-06T01:25:37.796561",
+    "data": {
+      "timestamp": "2026-03-06T01:25:37.796561",
+      "cpu": {
+        "usage_percent": 5.3
+      },
+      "memory": {
+        "percent": 32.0
+      },
+      "disk": {
+        "disks": [
+          {
+            "percent": 29.9
+          }
+        ]
+      },
+      "network": {
+        "bytes_sent": 10329756461,
+        "bytes_recv": 4584746010,
+        "packets_sent": 15393529,
+        "packets_recv": 9356891,
+        "errin": 0,
+        "errout": 0,
+        "dropin": 0,
+        "dropout": 0
+      }
+    }
   }
 ]

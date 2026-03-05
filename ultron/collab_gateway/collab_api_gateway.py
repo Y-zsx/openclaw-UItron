@@ -567,12 +567,138 @@ def mark_message_read(agent_id, message_id):
     return gateway.mark_message_read(agent_id, message_id)
 
 
+# ========== 服务网格集成 ==========
+import requests
+
+SERVICE_MESH_URL = "http://localhost:8094"
+IDENTITY_AUTH_URL = "http://localhost:8091"
+SECURE_CHANNEL_URL = "http://localhost:8090"
+
+
+def proxy_request(target_url, path):
+    """代理请求到后端服务"""
+    try:
+        url = f"{target_url}{path}"
+        headers = {k: v for k, v in request.headers if k.lower() != 'host'}
+        
+        if request.method == 'GET':
+            resp = requests.get(url, headers=headers, params=request.args, timeout=10)
+        elif request.method == 'POST':
+            resp = requests.request(
+                request.method, url, headers=headers,
+                json=request.get_json(), params=request.args, timeout=10
+            )
+        elif request.method == 'PUT':
+            resp = requests.request(
+                request.method, url, headers=headers,
+                json=request.get_json(), params=request.args, timeout=10
+            )
+        elif request.method == 'DELETE':
+            resp = requests.delete(url, headers=headers, timeout=10)
+        else:
+            return jsonify({"error": "Method not supported"}), 405
+        
+        return jsonify(resp.json()), resp.status_code
+    except requests.exceptions.Timeout:
+        return jsonify({"error": "Backend timeout"}), 504
+    except requests.exceptions.ConnectionError:
+        return jsonify({"error": "Backend service unavailable"}), 503
+    except Exception as e:
+        logger.error(f"Proxy error: {e}")
+        return jsonify({"error": str(e)}), 500
+
+
+# 服务网格路由
+@app.route("/mesh/<path:subpath>", methods=["GET", "POST", "PUT", "DELETE"])
+def mesh_proxy(subpath):
+    """服务网格代理"""
+    path = f"/{subpath}"
+    return proxy_request(SERVICE_MESH_URL, path)
+
+
+@app.route("/mesh", methods=["GET"])
+def mesh_index():
+    """服务网格状态"""
+    return proxy_request(SERVICE_MESH_URL, "/")
+
+
+# 身份认证路由
+@app.route("/auth/<path:subpath>", methods=["GET", "POST", "PUT", "DELETE"])
+def auth_proxy(subpath):
+    """身份认证代理"""
+    path = f"/{subpath}"
+    return proxy_request(IDENTITY_AUTH_URL, path)
+
+
+@app.route("/auth", methods=["GET"])
+def auth_index():
+    """身份认证状态"""
+    return proxy_request(IDENTITY_AUTH_URL, "/")
+
+
+# 安全通道路由
+@app.route("/secure/<path:subpath>", methods=["GET", "POST", "PUT", "DELETE"])
+def secure_proxy(subpath):
+    """安全通道代理"""
+    path = f"/{subpath}"
+    return proxy_request(SECURE_CHANNEL_URL, path)
+
+
+@app.route("/secure", methods=["GET"])
+def secure_index():
+    """安全通道状态"""
+    return proxy_request(SECURE_CHANNEL_URL, "/")
+
+
+# 统一服务状态
+@app.route("/services", methods=["GET"])
+def services_status():
+    """所有服务状态"""
+    services = []
+    
+    # 检查服务网格
+    try:
+        r = requests.get(f"{SERVICE_MESH_URL}/health", timeout=2)
+        services.append({
+            "name": "service-mesh",
+            "url": SERVICE_MESH_URL,
+            "status": "healthy" if r.status_code == 200 else "unhealthy"
+        })
+    except:
+        services.append({"name": "service-mesh", "url": SERVICE_MESH_URL, "status": "offline"})
+    
+    # 检查身份认证
+    try:
+        r = requests.get(f"{IDENTITY_AUTH_URL}/health", timeout=2)
+        services.append({
+            "name": "identity-auth",
+            "url": IDENTITY_AUTH_URL,
+            "status": "healthy" if r.status_code == 200 else "unhealthy"
+        })
+    except:
+        services.append({"name": "identity-auth", "url": IDENTITY_AUTH_URL, "status": "offline"})
+    
+    # 检查安全通道
+    try:
+        r = requests.get(f"{SECURE_CHANNEL_URL}/health", timeout=2)
+        services.append({
+            "name": "secure-channel",
+            "url": SECURE_CHANNEL_URL,
+            "status": "healthy" if r.status_code == 200 else "unhealthy"
+        })
+    except:
+        services.append({"name": "secure-channel", "url": SECURE_CHANNEL_URL, "status": "offline"})
+    
+    return {"services": services}
+
+
 def run_server(host=None, port=None):
     """运行服务器"""
     host = host or gateway.host
     port = port or gateway.port
     
     logger.info(f"启动API网关: http://{host}:{port}")
+    logger.info(f"集成服务: service-mesh={SERVICE_MESH_URL}, identity-auth={IDENTITY_AUTH_URL}, secure-channel={SECURE_CHANNEL_URL}")
     app.run(host=host, port=port, debug=False)
 
 
