@@ -1,0 +1,13 @@
+{
+  "sites": [
+    {"url": "https://www.baidu.com", "name": "百度", "interval": 60, "enabled": true},
+    {"url": "https://httpbin.org/status/200", "name": "测试API-正常", "interval": 30, "enabled": true},
+    {"url": "https://httpbin.org/status/500", "name": "测试API-异常", "interval": 30, "enabled": false}
+  ],
+  "alert_settings": {
+    "dingtalk_webhook": "",
+    "email_to": "",
+    "retry_count": 3,
+    "retry_interval": 60
+  }
+}
