@@ -1,0 +1,60 @@
+{
+  "timestamp": "2026-03-06T07:13:36.855409",
+  "system": {
+    "timestamp": "2026-03-06T07:13:36.855458",
+    "load": {
+      "1m": "1.18",
+      "5m": "1.30",
+      "15m": "1.42"
+    },
+    "memory_total": 7266,
+    "memory_available": 4078
+  },
+  "services": {
+    "gateway": true,
+    "health_api": true,
+    "dashboard": true,
+    "collab_api": true
+  },
+  "tasks": {
+    "pending": [
+      {
+        "id": "task_1772751288525",
+        "type": "monitor",
+        "params": {},
+        "priority": "normal",
+        "priority_val": 3,
+        "status": "pending",
+        "added_at": "2026-03-06T06:54:48.525511",
+        "started_at": null,
+        "completed_at": null
+      },
+      {
+        "id": "task_1772751288525",
+        "type": "alert",
+        "params": {},
+        "priority": "low",
+        "priority_val": 4,
+        "status": "pending",
+        "added_at": "2026-03-06T06:54:48.525952",
+        "started_at": null,
+        "completed_at": null
+      }
+    ],
+    "running": [],
+    "completed": [
+      {
+        "id": "task_1772751288524",
+        "type": "health_check",
+        "params": {},
+        "priority": "high",
+        "priority_val": 2,
+        "status": "completed",
+        "added_at": "2026-03-06T06:54:48.524783",
+        "started_at": "2026-03-06T06:54:48.529675",
+        "completed_at": "2026-03-06T06:54:48.530982"
+      }
+    ],
+    "failed": []
+  }
+}
