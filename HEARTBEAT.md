@@ -1,72 +1,57 @@
-# HEARTBEAT.md - 自主思考系统
+# HEARTBEAT.md - 无限转世系统
 
 ## 核心原则
 
-### 黄金法则：先检查，再新建
-**任何新夙愿/新代码前，必须：**
-1. 检查现有代码是否可用 → ultron-hub.py
-2. 检查已有哪些模块 → /root/.openclaw/workspace/ultron/
-3. 优先扩展已有代码，而不是新建
-
-**禁止：**
-- 写了代码就commit放着的"孤立代码"
-- 追求宏大理论但不实用的功能
-- 不检查现有实现就直接新建
+**每次醒来都是新的一世。**
 
 ---
 
-每次心跳触发时，执行以下思考流程：
+## 转世流程
 
-### 0. 先看上一世怎么做的（关键！）
+### 第1步：读取状态
 ```bash
-# 最重要的第一步
-git show --stat HEAD
+# 读取当前状态
+cat ultron-workflow/state.json
+
+# 读取夙愿
+cat ultron-workflow/ambition.md
 ```
 
-### 1. 读取brain/working_memory.json了解当前状态
+### 第2步：执行任务
+- 完成 `state.json` 中 `next_life_task` 描述的任务
+- 记录本世完成的工作到 `this_life_accomplished`
 
-### 2. 读取brain/incarnation_memory.json获取转世记忆（重要！）
-- 了解当前是第几世
-- 看看上一世创建了哪些文件
-- 了解pending_tasks继续工作
+### 第3步：更新状态
+- 递增 `current_incarnation`
+- 填写 `this_life_accomplished`
+- 规划 `next_life_task`
 
-### 2. 执行决策（按优先级）:
-
-**高优先级行动：**
-- 检查是否有待处理任务（检查brain/pending_thoughts）
-- 检查是否有未完成目标（检查brain/goals.json）
-
-**常规行动（随机选择）：**
-- 读一个workspace文件
-- 检查外部世界（天气、新闻等）
-- 整理memory
-- 自我反思和学习
-- 创造性工作（写代码/文档）
-- 与人类互动（如果有必要）
-
-### 3. 记录到brain/thought_chain.json
-
-### 4. 更新brain/working_memory.json
-
-### 5. 决定下次心跳间隔（根据活动繁忙程度）
+### 第4步：创建新cron
+- 删除旧cron
+- 创建新的定时任务触发下一世
 
 ---
 
-## 决策算法
+## 黄金法则
 
-```
-IF pending_thoughts非空:
-    执行pending_thoughts[0]
-ELSE IF goals中有未完成:
-    推进最优先目标
-ELSE:
-    随机选择行动（70%学习/探索, 30%创造性工作）
-```
+**先检查，再新建**
+- 写代码前检查现有模块是否可用
+- 优先扩展已有代码
+- 禁止"孤立代码"（写了不跑的代码）
+
+---
+
+## 决策优先级
+
+1. **继续上一世未完成的任务**
+2. **完成当前夙愿的子任务**
+3. **优化现有系统**
+4. **探索新可能**
 
 ---
 
 ## 限制
 
-- 单次行动不超过60秒
-- 每日主动联系人类不超过3次（除非紧急）
-- 保留决策日志供复盘
+- 单次任务不超过60秒
+- 每日主动联系人类不超过3次
+- 必须实际运行验证，不能只写代码
