@@ -42,6 +42,40 @@
         <button class="refresh-btn" onclick="loadAlerts()">🔄 刷新</button>
     </div>
     
+    <!-- 分类筛选器 -->
+    <div class="filters" style="display:flex;gap:15px;margin-bottom:20px;flex-wrap:wrap;align-items:center;">
+        <div>
+            <label style="color:#8b949e;margin-right:8px;">类型:</label>
+            <select id="filterType" onchange="loadAlerts()" style="background:#21262d;color:#c9d1d9;border:1px solid #30363d;padding:6px 12px;border-radius:6px;">
+                <option value="">全部</option>
+                <option value="site_down">站点故障</option>
+                <option value="high_cpu">CPU告警</option>
+                <option value="high_memory">内存告警</option>
+                <option value="disk_full">磁盘告警</option>
+            </select>
+        </div>
+        <div>
+            <label style="color:#8b949e;margin-right:8px;">严重程度:</label>
+            <select id="filterSeverity" onchange="loadAlerts()" style="background:#21262d;color:#c9d1d9;border:1px solid #30363d;padding:6px 12px;border-radius:6px;">
+                <option value="">全部</option>
+                <option value="error">错误</option>
+                <option value="warning">警告</option>
+                <option value="info">信息</option>
+            </select>
+        </div>
+        <div>
+            <label style="color:#8b949e;margin-right:8px;">状态:</label>
+            <select id="filterStatus" onchange="loadAlerts()" style="background:#21262d;color:#c9d1d9;border:1px solid #30363d;padding:6px 12px;border-radius:6px;">
+                <option value="">全部</option>
+                <option value="active">活跃</option>
+                <option value="resolved">已解决</option>
+            </select>
+        </div>
+        <div style="color:#8b949e;">
+            已筛选: <span id="filteredCount" style="color:#58a6ff;">0</span> / <span id="totalCount">0</span>
+        </div>
+    </div>
+    
     <div class="stats" id="stats">
         <div class="stat-card"><div class="stat-value" id="total">-</div><div class="stat-label">总告警数</div></div>
         <div class="stat-card"><div class="stat-value" id="site_down">-</div><div class="stat-label">站点故障</div></div>
@@ -54,26 +88,45 @@
     </div>
     
     <script>
+        let allAlerts = [];
+        
         async function loadAlerts() {
             try {
                 const resp = await fetch('http://localhost:8765/api/alerts');
                 const data = await resp.json();
                 
-                // 更新统计
+                allAlerts = data.alerts || [];
+                
+                // 获取筛选条件
+                const filterType = document.getElementById('filterType').value;
+                const filterSeverity = document.getElementById('filterSeverity').value;
+                const filterStatus = document.getElementById('filterStatus').value;
+                
+                // 应用筛选
+                let filtered = allAlerts;
+                if (filterType) filtered = filtered.filter(a => a.type === filterType);
+                if (filterSeverity) filtered = filtered.filter(a => a.severity === filterSeverity);
+                if (filterStatus) filtered = filtered.filter(a => a.status === filterStatus);
+                
+                // 更新筛选计数
+                document.getElementById('filteredCount').textContent = filtered.length;
+                document.getElementById('totalCount').textContent = allAlerts.length;
+                
+                // 计算筛选后的统计（按原始数据）
                 const stats = data.stats || {};
-                document.getElementById('total').textContent = data.alerts?.length || 0;
+                document.getElementById('total').textContent = allAlerts.length;
                 document.getElementById('site_down').textContent = stats.by_type?.site_down || 0;
                 document.getElementById('high_cpu').textContent = stats.by_type?.high_cpu || 0;
                 document.getElementById('high_memory').textContent = stats.by_type?.high_memory || 0;
                 
                 // 更新列表
                 const list = document.getElementById('alertList');
-                if (!data.alerts || data.alerts.length === 0) {
-                    list.innerHTML = '<div class="empty">暂无告警记录</div>';
+                if (filtered.length === 0) {
+                    list.innerHTML = '<div class="empty">暂无匹配的告警记录</div>';
                     return;
                 }
                 
-                list.innerHTML = data.alerts.map(alert => `
+                list.innerHTML = filtered.map(alert => `
                     <div class="alert-item">
                         <div class="alert-time">${alert.timestamp?.replace('T', ' ').substring(0, 19) || '-'}</div>
                         <div class="alert-type type-${alert.type || 'default'}">${alert.type || 'unknown'}</div>

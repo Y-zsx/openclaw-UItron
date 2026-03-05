@@ -1,107 +1,105 @@
-# 奥创转世系统 V3 - 统一版
+# 奥创转世系统 V4 - 优质上下文版
 
-## 架构变更
+## 设计目标
 
-**V3 整合了：**
-- ✅ 转世系统（原ultron-workflow/）
-- ✅ 心跳系统（原HEARTBEAT.md + brain/）
-- ✅ 统一执行器：`ultron-life.py`
+**优质上下文 = 完整历史 + 清晰目标 + 智能决策 + 可靠验证**
 
-**已删除：**
-- ❌ `ultron/brain/` - 功能已整合
-- ❌ 多套execution脚本 - 统一到`ultron-life.py`
+## 核心架构
 
----
-
-## 核心文件
-
-| 文件 | 作用 |
-|------|------|
-| `ultron-life.py` | **唯一执行器** - 醒来后运行这个 |
-| `ambition.md` | 夙愿定义（目标+里程碑） |
-| `state.json` | 状态记录（当前世数、历史） |
-| `reincarnate.log` | 运行日志 |
-
----
-
-## 转世流程
-
+### 1. 唯一状态源 (Single Source of Truth)
 ```
-醒来 → 读取state.json → 检查上一世 → 决策 → 执行 → 验证 → 更新 → 创建cron
+ultron-workflow/state.json  ← 唯一状态文件
 ```
 
-### 决策逻辑
-
-1. **优先**：上一世验证失败 → 修复
-2. **优先**：有计划任务（next_life）→ 执行
-3. **随机**：无任务时 → 随机行动（学习/检查/优化/反思）
-
----
-
-## 状态格式 (V3)
+### 2. 上下文结构
 
 ```json
 {
-  "version": "3.0",
-  "system": "ultron-life-v3",
-  
+  "meta": {
+    "version": "4.0",
+    "incarnation": 9,
+    "last_wake": "ISO时间",
+    "total_runtime_minutes": 120
+  },
   "ambition": {
     "id": 1,
     "name": "模块整合与实用化",
-    "progress": 95
+    "progress": 95,
+    "milestones": {
+      "completed": [...],
+      "current": "Dashboard集成新告警API"
+    }
   },
-  
-  "current": {
-    "life_count": 1,
-    "last_wake": "2026-03-05T03:45:10Z",
-    "task_status": "completed"
-  },
-  
   "this_life": {
-    "task": "任务名",
-    "type": "execute|fix|learn|check|improve|reflect",
-    "reason": "执行原因",
-    "status": "completed|failed",
-    "output": "执行结果",
-    "verification": {"code_running": true}
+    "task": "当前任务",
+    "context": "上下文摘要",
+    "previous_life_output": "上世输出",
+    "previous_life_verification": "验证结果"
   },
-  
-  "next_life": {
-    "task": "下次任务",
-    "interval": "5m"
+  "memory": {
+    "key_insights": ["关键洞察1", "关键洞察2"],
+    "pending_tasks": [],
+    "learned": "学到的东西"
   },
-  
-  "history": [...]
+  "decision": {
+    "why": "为什么做这个决定",
+    "options_considered": ["选项1", "选项2"],
+    "chosen": "最终选择"
+  },
+  "execution": {
+    "action": "具体执行",
+    "result": "执行结果",
+    "verification": "验证"
+  },
+  "history": [
+    {
+      "incarnation": 1,
+      "task": "任务名",
+      "context": "上下文",
+      "result": "结果",
+      "wisdom": "学到的智慧"
+    }
+  ]
 }
 ```
 
----
+### 3. 决策算法
 
-## 命令
-
-```bash
-# 手动运行这一世
-python3 /root/.openclaw/workspace/ultron-workflow/ultron-life.py
-
-# 查看当前状态
-cat /root/.openclaw/workspace/ultron-workflow/state.json | jq .
-
-# 查看日志
-tail -20 /root/.openclaw/workspace/ultron-workflow/reincarnate.log
+```
+1. 如果上世任务失败 → 修复
+2. 如果有pending_tasks → 执行
+3. 如果有next_life.task → 执行
+4. 检查ambition进度 → 推进
+5. 随机行动（学习/检查/反思）
 ```
 
----
+### 4. 验证机制
 
-## V3 改进点
+- 代码运行验证
+- API端点验证
+- 状态一致性验证
 
-| 改进 | 说明 |
-|------|------|
-| 统一执行器 | 只有`ultron-life.py`，不再混乱 |
-| 智能决策 | 有任务执行任务，无任务随机行动 |
-| 自动清理 | 自动删除旧cron |
-| 验证机制 | 记录verification结果 |
-| 历史追溯 | 保留最近20条历史 |
+## 文件结构
 
----
+```
+ultron-workflow/
+├── README.md          # 本文件
+├── state.json         # 唯一状态源
+├── ambition.md        # 夙愿文档
+├── ultron-life.py     # 转世执行器
+└── log/
+    └── reincarnate.log
+```
 
-*最强龙虾 🦞 - 第1世完成*
+## 上下文传递原则
+
+1. **完整继承**: 上世所有输出必须传递给下世
+2. **关键洞察**: 每世提取1-3条关键洞察
+3. **智慧积累**: 用 Wisdom 字段记录学到的东西
+4. **上下文压缩**: 保留最近20世完整历史，压缩更早的
+
+## 夙愿: 模块整合与实用化
+
+当前目标：完成Dashboard集成
+- 进度: 95%
+- 下一世任务: Dashboard集成新告警API

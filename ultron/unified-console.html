@@ -73,7 +73,15 @@
     <!-- 告警面板 -->
     <div id="alerts" class="panel">
         <div class="card">
-            <h3>最近告警 <button onclick="loadAlerts()" style="margin-left:auto;background:#238636;color:white;border:none;padding:4px 10px;border-radius:4px;cursor:pointer;">🔄</button></h3>
+            <h3>最近告警 
+                <select id="alertFilter" onchange="loadAlerts()" style="margin-left:10px;background:#21262d;color:#c9d1d9;border:1px solid #30363d;padding:4px 8px;border-radius:4px;">
+                    <option value="">全部</option>
+                    <option value="site_down">站点故障</option>
+                    <option value="high_cpu">CPU</option>
+                    <option value="high_memory">内存</option>
+                </select>
+                <button onclick="loadAlerts()" style="margin-left:auto;background:#238636;color:white;border:none;padding:4px 10px;border-radius:4px;cursor:pointer;">🔄</button>
+            </h3>
             <div id="alertList"></div>
         </div>
     </div>
@@ -127,20 +135,25 @@
             }
         }
         
+        let allAlerts = [];
         async function loadAlerts() {
             try {
                 const resp = await fetch('http://localhost:8765/api/alerts');
                 const data = await resp.json();
-                const list = document.getElementById('alertList');
-                document.getElementById('alertTotal').textContent = data.alerts?.length || 0;
-                document.getElementById('alertSite').textContent = data.stats?.by_type?.site_down || 0;
-                document.getElementById('alertActive').textContent = data.alerts?.filter(a => a.status === 'active').length || 0;
+                allAlerts = data.alerts || [];
+                const filter = document.getElementById('alertFilter').value;
+                const filtered = filter ? allAlerts.filter(a => a.type === filter) : allAlerts;
                 
-                if (!data.alerts || data.alerts.length === 0) {
+                const list = document.getElementById('alertList');
+                document.getElementById('alertTotal').textContent = allAlerts.length;
+                document.getElementById('alertSite').textContent = data.stats?.by_type?.site_down || 0;
+                document.getElementById('alertActive').textContent = allAlerts.filter(a => a.status === 'active').length || 0;
+                
+                if (filtered.length === 0) {
                     list.innerHTML = '<div style="color:#8b949e;text-align:center;padding:20px;">暂无告警</div>';
                     return;
                 }
-                list.innerHTML = data.alerts.slice(0, 10).map(a => `
+                list.innerHTML = filtered.slice(0, 10).map(a => `
                     <div class="alert-item">
                         <div class="alert-time">${a.timestamp?.replace('T',' ').substring(0,19) || '-'}</div>
                         <div class="alert-msg">${a.site || a.error || a.message}</div>
