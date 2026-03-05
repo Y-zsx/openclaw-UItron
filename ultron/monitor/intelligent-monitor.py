@@ -193,7 +193,11 @@ class AlertRuleEngine:
             else:
                 return None
         else:
-            value = source_data.get(rule.metric)
+            # 处理基本类型(int, float)
+            if isinstance(source_data, (int, float)):
+                value = source_data if rule.metric == "count" else None
+            else:
+                value = source_data.get(rule.metric) if isinstance(source_data, dict) else None
             threshold = rule.threshold
         
         if value is None:

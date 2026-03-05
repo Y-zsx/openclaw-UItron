@@ -58,6 +58,24 @@
       "status": "completed",
       "result": "{\"action\": \"unknown_alert\", \"result\": \"\\u672a\\u5904\\u7406\", \"task_id\": \"monitor->executor:9\", \"original_alert\": \"\\u78c1\\u76d8\\u544a\\u8b66\"}",
       "completed_at": "2026-03-05T14:23:35.882922"
+    },
+    {
+      "id": "16",
+      "sender": "monitor",
+      "recipient": "executor",
+      "message": "test alert",
+      "type": "task",
+      "timestamp": "2026-03-05T14:48:17.859858",
+      "status": "pending"
+    },
+    {
+      "id": "19",
+      "sender": "monitor",
+      "recipient": "executor",
+      "message": "预测告警: ['load']",
+      "type": "task",
+      "timestamp": "2026-03-05T15:08:31.848022",
+      "status": "pending"
     }
   ],
   "messages": [
@@ -128,6 +146,61 @@
       "message": "状态报告: Load=0.3, Mem=15.9%, Disk=30%",
       "type": "message",
       "timestamp": "2026-03-05T14:23:35.406559",
+      "status": "pending"
+    },
+    {
+      "id": "13",
+      "sender": "monitor",
+      "recipient": "messenger",
+      "message": "状态报告: Load=0.41, Mem=16.7%, Disk=30%",
+      "type": "message",
+      "timestamp": "2026-03-05T14:47:38.733346",
+      "status": "pending"
+    },
+    {
+      "id": "14",
+      "sender": "monitor",
+      "recipient": "messenger",
+      "message": "状态报告: Load=0.34, Mem=14.1%, Disk=30%",
+      "type": "message",
+      "timestamp": "2026-03-05T14:47:47.535022",
+      "status": "pending"
+    },
+    {
+      "id": "monitor->test_agent:14",
+      "sender": "monitor",
+      "recipient": "test_agent",
+      "message": "Test message",
+      "type": "message",
+      "payload": {},
+      "timestamp": "2026-03-05T14:47:55.297147",
+      "status": "pending"
+    },
+    {
+      "id": "17",
+      "sender": "monitor",
+      "recipient": "messenger",
+      "message": "状态报告: Load=0.26, Mem=15.5%, Disk=30%",
+      "type": "message",
+      "timestamp": "2026-03-05T14:51:52.943695",
+      "status": "pending"
+    },
+    {
+      "id": "18",
+      "sender": "monitor",
+      "recipient": "messenger",
+      "message": "状态报告: Load=0.48, Mem=14.8%, Disk=30%",
+      "type": "message",
+      "timestamp": "2026-03-05T15:08:31.838644",
+      "status": "pending"
+    },
+    {
+      "id": "20",
+      "sender": "monitor",
+      "recipient": "messenger",
+      "message": "状态报告: Load=0.38, Mem=14.8%, Disk=30%",
+      "type": "message",
+      "timestamp": "2026-03-05T15:08:53.719080",
       "status": "pending"
     }
   ],

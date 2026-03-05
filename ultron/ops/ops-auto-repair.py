@@ -135,7 +135,9 @@ class ClearDiskSpace(RepairBase):
     
     def can_handle(self, alert: Dict) -> bool:
         message = alert.get("message", "").lower()
-        return "disk" in message and ("full" in message or "usage" in message)
+        # 支持中英文关键字
+        return ("disk" in message or "磁盘" in message) and \
+               ("full" in message or "usage" in message or "使用" in message or "高" in message)
     
     def execute(self, alert: Dict, context: Dict) -> Dict:
         actions_taken = []
@@ -205,7 +207,9 @@ class FreeMemory(RepairBase):
     
     def can_handle(self, alert: Dict) -> bool:
         message = alert.get("message", "").lower()
-        return "memory" in message and ("high" in message or "low" in message or "oom" in message)
+        # 支持中英文关键字 (CPU和内存都可能导致高负载)
+        return ("memory" in message or "内存" in message or "cpu" in message or "CPU" in message) and \
+               ("high" in message or "over" in message or "usage" in message or "使用" in message or "高" in message or "超过" in message)
     
     def execute(self, alert: Dict, context: Dict) -> Dict:
         actions_taken = []

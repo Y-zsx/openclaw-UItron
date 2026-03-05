@@ -1,0 +1,26 @@
+[
+  {
+    "timestamp": "2026-03-05T15:13:49.848386",
+    "alert_id": "CPU使用率过高",
+    "alert_message": "CPU使用率超过90%",
+    "repair_result": {
+      "success": true,
+      "action": "memory_free",
+      "details": [
+        "清除页面缓存"
+      ]
+    }
+  },
+  {
+    "timestamp": "2026-03-05T15:13:49.935096",
+    "alert_id": "内存使用率过高",
+    "alert_message": "内存使用率超过85%",
+    "repair_result": {
+      "success": true,
+      "action": "memory_free",
+      "details": [
+        "清除页面缓存"
+      ]
+    }
+  }
+]

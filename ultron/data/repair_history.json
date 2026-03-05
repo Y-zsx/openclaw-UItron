@@ -1,23 +1,19 @@
 [
   {
-    "timestamp": "2026-03-05T14:16:30.125062",
-    "alert_id": "test1",
-    "strategy": "ClearDiskSpace",
+    "timestamp": "2026-03-05T15:13:49.843962",
+    "alert_id": null,
+    "strategy": "FreeMemory",
     "result": {
       "success": true,
-      "action": "disk_cleanup",
+      "action": "memory_free",
       "details": [
-        "清理7天前日志文件",
-        "清理7天前日志文件",
-        "清理/tmp下1天未访问文件",
-        "清理/var/tmp下1天未访问文件",
-        "清理Python缓存"
+        "清除页面缓存"
       ]
     }
   },
   {
-    "timestamp": "2026-03-05T14:16:30.333354",
-    "alert_id": "test2",
+    "timestamp": "2026-03-05T15:13:49.931562",
+    "alert_id": null,
     "strategy": "FreeMemory",
     "result": {
       "success": true,

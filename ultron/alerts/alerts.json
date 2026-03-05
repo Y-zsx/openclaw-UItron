@@ -70,5 +70,18 @@
     "timestamp": "2026-03-05T14:28:34.248841",
     "_id": "alert_1772692114251",
     "_created_at": 1772692114.251547
+  },
+  {
+    "rule": "预测:load",
+    "metric": "load",
+    "value": 0.48,
+    "threshold": 4,
+    "condition": "预测将达到",
+    "level": "WARNING",
+    "message": "load 预测将达到 4.6，超过警告阈值 4",
+    "prediction": 4.6,
+    "timestamp": "2026-03-05T15:08:31.843336",
+    "_id": "alert_1772694511845",
+    "_created_at": 1772694511.8451884
   }
 ]

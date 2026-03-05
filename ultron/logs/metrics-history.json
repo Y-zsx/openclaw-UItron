@@ -1,38 +1,41 @@
 {
   "metrics": [
     {
-      "timestamp": "2026-03-05T11:50:37.434854",
-      "cpu": {
-        "load_1m": 0.2,
-        "load_5m": 0.5,
-        "load_15m": 0.56,
-        "running_processes": 1,
-        "total_processes": 384
-      },
-      "memory": {
-        "total_gb": 0.01,
-        "available_gb": 0.01,
-        "used_gb": 0.0,
-        "usage_percent": 19.6
-      },
-      "disk": {
-        "total_bytes": 41882943488,
-        "used_bytes": 11789905920,
-        "available_bytes": 28157300736,
-        "usage_percent": 30,
-        "mount_point": "/"
-      },
-      "network": {
-        "error": "invalid literal for int() with base 10: 'TCP:'"
-      },
-      "processes": 175,
-      "services": {
-        "openclaw": "running",
-        "nginx": "running",
-        "chrome": "running",
-        "cron": "running"
-      }
+      "timestamp": "2026-03-05T15:09:02.642654",
+      "load": 0.35,
+      "memory_pct": 14.8,
+      "disk_pct": 30
+    },
+    {
+      "timestamp": "2026-03-05T15:09:02.666414",
+      "load": 0.35,
+      "memory_pct": 14.8,
+      "disk_pct": 30
+    },
+    {
+      "timestamp": "2026-03-05T15:09:02.690304",
+      "load": 0.35,
+      "memory_pct": 14.8,
+      "disk_pct": 30
+    },
+    {
+      "timestamp": "2026-03-05T15:09:02.711360",
+      "load": 0.35,
+      "memory_pct": 14.8,
+      "disk_pct": 30
+    },
+    {
+      "timestamp": "2026-03-05T15:09:02.733877",
+      "load": 0.35,
+      "memory_pct": 14.8,
+      "disk_pct": 30
+    },
+    {
+      "timestamp": "2026-03-05T15:09:02.758215",
+      "load": 0.35,
+      "memory_pct": 14.8,
+      "disk_pct": 30
     }
   ],
-  "last_update": "2026-03-05T11:50:37.487317"
+  "last_update": "2026-03-05T15:09:02.758288"
 }
