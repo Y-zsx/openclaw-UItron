@@ -248,34 +248,52 @@ def get_monitor() -> HealthMonitor:
     global _monitor
     if _monitor is None:
         _monitor = HealthMonitor()
-        # 默认注册已知服务
+        # 默认注册已知服务 - 包含自动恢复配置
         _monitor.add_service(ServiceEndpoint(
             name="api-gateway",
             port=8090,
             health_check_path="/health",
             process_name="agent_api_gateway",
-            max_response_time=1.0
+            restart_command="cd /root/.openclaw/workspace/ultron && python3 -c 'import asyncio; from tools.agent_api_gateway import AgentAPIGateway; asyncio.run(AgentAPIGateway().start())'",
+            max_response_time=1.0,
+            max_failures=3
         ))
         _monitor.add_service(ServiceEndpoint(
             name="service-mesh",
             port=8094,
             health_check_path="/health",
-            process_name="service_mesh_api",
-            max_response_time=1.5
+            process_name="service_mesh_api.py",
+            restart_command="cd /root/.openclaw/workspace/ultron/agents && python3 service_mesh_api.py",
+            max_response_time=1.5,
+            max_failures=3
         ))
         _monitor.add_service(ServiceEndpoint(
             name="agent-deployer",
             port=8096,
             health_check_path="/health",
-            process_name="agent_deployer",
-            max_response_time=2.0
+            process_name="agent_deployer.py",
+            restart_command="cd /root/.openclaw/workspace/ultron/tools && python3 agent_deployer.py",
+            max_response_time=2.0,
+            max_failures=3
         ))
         _monitor.add_service(ServiceEndpoint(
             name="agent-orchestrator",
             port=8097,
             health_check_path="/health",
-            process_name="agent_orchestrator",
-            max_response_time=2.0
+            process_name="agent_orchestrator.py",
+            restart_command="cd /root/.openclaw/workspace/ultron/tools && python3 agent_orchestrator.py",
+            max_response_time=2.0,
+            max_failures=3
+        ))
+        # 新增: workflow engine
+        _monitor.add_service(ServiceEndpoint(
+            name="workflow-engine",
+            port=8099,
+            health_check_path="/health",
+            process_name="workflow_api.py",
+            restart_command="cd /root/.openclaw/workspace/ultron/tools && python3 workflow_api.py",
+            max_response_time=2.0,
+            max_failures=3
         ))
     return _monitor
 

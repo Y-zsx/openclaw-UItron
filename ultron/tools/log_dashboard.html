@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agent服务日志聚合</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #1a1a2e;
+            color: #eee;
+            padding: 20px;
+        }
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding: 15px;
+            background: #16213e;
+            border-radius: 10px;
+        }
+        .header h1 { color: #0f3460; color: #e94560; }
+        .refresh-btn {
+            background: #0f3460;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+        .card {
+            background: #16213e;
+            padding: 20px;
+            border-radius: 10px;
+        }
+        .card h3 { color: #e94560; margin-bottom: 15px; }
+        .stat {
+            font-size: 32px;
+            font-weight: bold;
+            color: #00d9ff;
+        }
+        .stat-label { color: #888; font-size: 14px; }
+        .error { color: #ff4757; }
+        .warning { color: #ffa502; }
+        .info { color: #2ed573; }
+        
+        .log-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        .log-table th, .log-table td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #0f3460;
+        }
+        .log-table th { background: #0f3460; }
+        .level-ERROR, .level-CRITICAL { color: #ff4757; }
+        .level-WARNING { color: #ffa502; }
+        .level-INFO { color: #2ed573; }
+        
+        .filter-bar {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+        .filter-bar input, .filter-bar select {
+            padding: 10px;
+            background: #16213e;
+            border: 1px solid #0f3460;
+            color: white;
+            border-radius: 5px;
+        }
+        .filter-bar button {
+            padding: 10px 20px;
+            background: #e94560;
+            border: none;
+            color: white;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>📊 Agent服务日志聚合</h1>
+        <button class="refresh-btn" onclick="refreshAll()">🔄 刷新</button>
+    </div>
+    
+    <div class="grid">
+        <div class="card">
+            <h3>总日志数</h3>
+            <div class="stat" id="total">0</div>
+            <div class="stat-label">条</div>
+        </div>
+        <div class="card">
+            <h3>错误数量</h3>
+            <div class="stat error" id="errors">0</div>
+            <div class="stat-label">条 (最近100条)</div>
+        </div>
+        <div class="card">
+            <h3>服务数量</h3>
+            <div class="stat" id="services">0</div>
+            <div class="stat-label">个</div>
+        </div>
+    </div>
+    
+    <div class="grid">
+        <div class="card">
+            <h3>日志级别分布</h3>
+            <canvas id="levelChart"></canvas>
+        </div>
+        <div class="card">
+            <h3>各服务日志量</h3>
+            <canvas id="serviceChart"></canvas>
+        </div>
+        <div class="card">
+            <h3>错误模式</h3>
+            <div id="errorPatterns"></div>
+        </div>
+    </div>
+    
+    <div class="card">
+        <h3>日志搜索</h3>
+        <div class="filter-bar">
+            <input type="text" id="searchQuery" placeholder="搜索关键字...">
+            <select id="levelFilter">
+                <option value="">全部级别</option>
+                <option value="INFO">INFO</option>
+                <option value="WARNING">WARNING</option>
+                <option value="ERROR">ERROR</option>
+                <option value="CRITICAL">CRITICAL</option>
+            </select>
+            <select id="serviceFilter">
+                <option value="">全部服务</option>
+                <option value="api-gateway">api-gateway</option>
+                <option value="service-mesh">service-mesh</option>
+                <option value="agent-orchestrator">agent-orchestrator</option>
+                <option value="workflow-engine">workflow-engine</option>
+                <option value="agent-deployer">agent-deployer</option>
+            </select>
+            <button onclick="searchLogs()">搜索</button>
+        </div>
+        <table class="log-table">
+            <thead>
+                <tr>
+                    <th>时间</th>
+                    <th>级别</th>
+                    <th>服务</th>
+                    <th>消息</th>
+                </tr>
+            </thead>
+            <tbody id="logTable"></tbody>
+        </table>
+    </div>
+    
+    <script>
+        let levelChart, serviceChart;
+        
+        function init() {
+            const ctx1 = document.getElementById('levelChart').getContext('2d');
+            levelChart = new Chart(ctx1, {
+                type: 'doughnut',
+                data: {
+                    labels: ['INFO', 'WARNING', 'ERROR', 'CRITICAL'],
+                    datasets: [{
+                        data: [0, 0, 0, 0],
+                        backgroundColor: ['#2ed573', '#ffa502', '#ff4757', '#ff0000']
+                    }]
+                }
+            });
+            
+            const ctx2 = document.getElementById('serviceChart').getContext('2d');
+            serviceChart = new Chart(ctx2, {
+                type: 'bar',
+                data: {
+                    labels: [],
+                    datasets: [{
+                        label: '日志数',
+                        data: [],
+                        backgroundColor: '#00d9ff'
+                    }]
+                },
+                options: { scales: { y: { beginAtZero: true } } }
+            });
+            
+            refreshAll();
+            setInterval(refreshAll, 10000);
+        }
+        
+        async function refreshAll() {
+            await Promise.all([refreshStats(), refreshErrors()]);
+            refreshLogs();
+        }
+        
+        async function refreshStats() {
+            const res = await fetch('/stats');
+            const data = await res.json();
+            
+            document.getElementById('total').textContent = data.total;
+            document.getElementById('errors').textContent = data.recent_errors;
+            
+            const levels = data.by_level || {};
+            levelChart.data.datasets[0].data = [
+                levels.INFO || 0,
+                levels.WARNING || 0,
+                levels.ERROR || 0,
+                levels.CRITICAL || 0
+            ];
+            levelChart.update();
+            
+            const services = data.by_service || {};
+            serviceChart.data.labels = Object.keys(services);
+            serviceChart.data.datasets[0].data = Object.values(services);
+            serviceChart.update();
+            
+            document.getElementById('services').textContent = Object.keys(services).length;
+        }
+        
+        async function refreshErrors() {
+            const res = await fetch('/errors');
+            const data = await res.json();
+            
+            const html = data.slice(0, 5).map(e => `
+                <div style="padding: 8px; border-bottom: 1px solid #0f3460;">
+                    <span class="level-${e.severity}">${e.severity}</span>
+                    <span style="color: #888;">(${e.count}次)</span>
+                    <div style="font-size: 12px; margin-top: 4px;">${e.pattern}</div>
+                </div>
+            `).join('');
+            document.getElementById('errorPatterns').innerHTML = html || '无错误';
+        }
+        
+        async function refreshLogs() {
+            const query = document.getElementById('searchQuery').value;
+            const level = document.getElementById('levelFilter').value;
+            const service = document.getElementById('serviceFilter').value;
+            
+            let url = '/logs?limit=50';
+            if (query) url += `&q=${encodeURIComponent(query)}`;
+            if (level) url += `&level=${level}`;
+            if (service) url += `&service=${service}`;
+            
+            const res = await fetch(url);
+            const data = await res.json();
+            
+            const html = data.logs.reverse().map(log => `
+                <tr>
+                    <td>${log.timestamp.slice(0, 19)}</td>
+                    <td class="level-${log.level}">${log.level}</td>
+                    <td>${log.service}</td>
+                    <td>${log.message}</td>
+                </tr>
+            `).join('');
+            document.getElementById('logTable').innerHTML = html;
+        }
+        
+        function searchLogs() {
+            refreshLogs();
+        }
+        
+        init();
+    </script>
+</body>
+</html>

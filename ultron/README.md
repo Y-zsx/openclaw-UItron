@@ -205,8 +205,55 @@ python3 /root/.openclaw/workspace/ultron/ops/ops-dashboard.py
 # http://115.29.235.46/ultron/ops-dashboard.html
 ```
 
+### 故障预测与预防性维护系统
+
+```
+┌─────────────────────────────────────────────────────┐
+│       Predictive Maintenance System (端口 8120)    │
+├─────────────────────────────────────────────────────┤
+│  Core Components:                                   │
+│  ├── 实时指标采集 - 5个Agent服务监控                │
+│  ├── 风险评估算法 - CPU/内存/错误率/响应时间        │
+│  ├── 风险等级判定 - normal/caution/warning/critical│
+│  ├── 维护任务调度 - 预防性维护计划                  │
+│  └── 预测置信度 - 90%正常 (所有服务)                │
+├─────────────────────────────────────────────────────┤
+│  Monitored Services:                                │
+│  • Port 8091 - 日志聚合服务                         │
+│  • Port 8095 - 性能监控服务                         │
+│  • Port 8100 - 自动扩缩容服务                       │
+│  • Port 8110 - 接口规范服务                         │
+│  • Port 8120 - 故障预测服务                         │
+└─────────────────────────────────────────────────────┘
+```
+
+### API 接口
+
+| 端点 | 方法 | 功能 |
+|------|------|------|
+| /health | GET | 服务器健康检查 |
+| /metrics | GET | 实时指标数据 |
+| /predictions | GET | 故障预测结果 |
+| /alerts | GET | 维护警报列表 |
+| /maintenance/schedule | POST | 调度维护任务 |
+| /maintenance/tasks | GET | 任务列表 |
+
+### 快速使用
+
+```bash
+# 查看健康状态
+curl http://localhost:8120/health
+
+# 查看实时指标
+curl http://localhost:8120/metrics
+
+# 查看预测
+curl http://localhost:8120/predictions
+```
+
 ## 版本历史
 
+- v1.4 (2026-03-05): 故障预测与预防性维护 - 端口8120
 - v1.3 (2026-03-05): 智能运维增强 - 告警自动升级/多人协作/预测性告警
 - v1.2 (2026-03-05): 智能告警分析 - 趋势分析/模式识别/根因建议
 - v1.1 (2026-03-05): 智能运维系统 - Collector/Alert/Repair/Dashboard四模块集成
