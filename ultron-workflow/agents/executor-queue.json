@@ -1,0 +1,22 @@
+{
+  "pending": [],
+  "completed": [
+    {
+      "task_id": "test-001",
+      "result": {
+        "task_id": "test-001",
+        "status": "success",
+        "output": {
+          "stdout": "Hello from Executor Agent\n",
+          "stderr": "",
+          "returncode": 0
+        },
+        "error": null,
+        "duration_ms": 1,
+        "retry_count": 0
+      },
+      "completed_at": "2026-03-05T13:36:37.795125"
+    }
+  ],
+  "failed": []
+}

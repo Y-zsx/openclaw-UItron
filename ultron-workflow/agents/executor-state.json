@@ -1,0 +1,27 @@
+{
+  "agent_id": "agent-executor",
+  "type": "execute",
+  "status": "idle",
+  "capabilities": [
+    "shell",
+    "message",
+    "browser",
+    "http"
+  ],
+  "last_heartbeat": "2026-03-05T13:36:37.794800",
+  "executing": null,
+  "results": {
+    "test-001": {
+      "task_id": "test-001",
+      "status": "success",
+      "output": {
+        "stdout": "Hello from Executor Agent\n",
+        "stderr": "",
+        "returncode": 0
+      },
+      "error": null,
+      "duration_ms": 1,
+      "retry_count": 0
+    }
+  }
+}
