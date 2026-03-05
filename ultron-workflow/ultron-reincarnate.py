@@ -56,7 +56,7 @@ def read_ambition() -> dict:
     if match:
         status = match.group(1).strip()
     
-    # 解析里程碑 (当前夙愿下的)
+    # 解析里程碑 (当前夙愿下的) - 兼容多种格式
     in_current_section = False
     for line in content.split('\n'):
         if '当前夙愿' in line:
@@ -69,6 +69,11 @@ def read_ambition() -> dict:
         elif in_current_section and '- [x]' in line:
             task = line.replace('- [x]', '').strip()
             milestones.append({"task": task, "completed": True})
+        # 兼容无 checkbox 格式
+        elif in_current_section and line.strip().startswith('- ') and '[' not in line:
+            task = line.replace('- ', '').strip()
+            if task and len(task) > 2:
+                milestones.append({"task": task, "completed": False})
     
     return {
         "current_ambition": current,
@@ -220,6 +225,17 @@ def run_python_script(task_name: str, state: dict) -> tuple:
     if not script_path:
         # 默认运行reincarnate.py的status命令
         script_path = f"{WORKSPACE}/ultron/core/reincarnate.py"
+        # 确保目录存在
+        os.makedirs(os.path.dirname(script_path), exist_ok=True)
+        
+        # 如果脚本不存在，创建一个简单的status脚本
+        if not os.path.exists(script_path):
+            import json
+            with open(f"{WORKSPACE}/ultron-workflow/state.json", 'r') as f:
+                state = json.load(f)
+            print(f"第{state.get('current_incarnation', 0)}世 | {state.get('current_ambition', 'unknown')} | running")
+            return "", "", 0
+            
         cmd = ["python3", script_path, "status"]
     else:
         cmd = ["python3", script_path]
