@@ -59,6 +59,6 @@
     "修复ultron-hub.py中_send_dingtalk_alert的metrics未定义bug",
     "修复intelligent-monitor.py服务检测chromium改为chrome"
   ],
-  "next_life_task": "触发一次真实告警测试DingTalk发送",
-  "notes": "DingTalk已配置，当CPU>0.8时自动发送告警到西西弗斯"
+  "next_life_task": "获取DingTalk senderStaffId并配置(当前target=西西弗斯无效)",
+  "notes": "DingTalk告警代码已就绪，但需要正确的senderStaffId。当前target配置无效，需要从DingTalk管理后台获取用户ID。当CPU>0.8时会自动发送告警。"
 }
