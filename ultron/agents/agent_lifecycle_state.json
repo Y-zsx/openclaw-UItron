@@ -1,0 +1,75 @@
+{
+  "agents": {
+    "monitor-agent": {
+      "name": "monitor-agent",
+      "agent_type": "python",
+      "script_path": "/root/.openclaw/workspace/ultron/agents/monitor_agent.py",
+      "command": "",
+      "env": {},
+      "cwd": "",
+      "auto_restart": true,
+      "max_restarts": 3,
+      "health_check_interval": 30,
+      "startup_timeout": 10
+    },
+    "executor-agent": {
+      "name": "executor-agent",
+      "agent_type": "python",
+      "script_path": "/root/.openclaw/workspace/ultron/agents/executor_agent.py",
+      "command": "",
+      "env": {},
+      "cwd": "",
+      "auto_restart": true,
+      "max_restarts": 3,
+      "health_check_interval": 30,
+      "startup_timeout": 10
+    },
+    "test-agent": {
+      "name": "test-agent",
+      "agent_type": "shell",
+      "script_path": "",
+      "command": "sleep 60",
+      "env": {},
+      "cwd": "",
+      "auto_restart": true,
+      "max_restarts": 3,
+      "health_check_interval": 30,
+      "startup_timeout": 10
+    }
+  },
+  "statuses": {
+    "monitor-agent": {
+      "state": "failed",
+      "pid": null,
+      "start_time": null,
+      "last_heartbeat": null,
+      "restart_count": 0,
+      "last_error": "\u542f\u52a8\u540e\u7acb\u5373\u9000\u51fa",
+      "cpu_percent": 0.0,
+      "memory_mb": 0.0,
+      "health_score": 100.0
+    },
+    "executor-agent": {
+      "state": "failed",
+      "pid": null,
+      "start_time": null,
+      "last_heartbeat": null,
+      "restart_count": 0,
+      "last_error": "\u542f\u52a8\u540e\u7acb\u5373\u9000\u51fa",
+      "cpu_percent": 0.0,
+      "memory_mb": 0.0,
+      "health_score": 100.0
+    },
+    "test-agent": {
+      "state": "stopped",
+      "pid": null,
+      "start_time": "2026-03-05T14:24:05.090018",
+      "last_heartbeat": "2026-03-05T14:24:05.090018",
+      "restart_count": 0,
+      "last_error": null,
+      "cpu_percent": 0.0,
+      "memory_mb": 0.95703125,
+      "health_score": 100.0
+    }
+  }
+}

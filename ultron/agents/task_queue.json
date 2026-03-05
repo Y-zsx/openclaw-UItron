@@ -9,7 +9,7 @@
       "timestamp": "2026-03-04T17:32:57.189668",
       "status": "completed",
       "result": "{\"action\": \"unknown_alert\", \"result\": \"\\u672a\\u5904\\u7406\", \"task_id\": \"1\", \"original_alert\": \"\\u78c1\\u76d8\\u4f7f\\u7528\\u7387\\u8fc7\\u9ad8\"}",
-      "completed_at": "2026-03-05T13:54:28.987120"
+      "completed_at": "2026-03-05T14:23:35.879458"
     },
     {
       "id": "5",
@@ -29,7 +29,7 @@
       "timestamp": "2026-03-05T13:50:38.401004",
       "status": "completed",
       "result": "{\"action\": \"unknown_alert\", \"result\": \"\\u672a\\u5904\\u7406\", \"task_id\": \"6\", \"original_alert\": \"\\u78c1\\u76d8\\u6ee1\"}",
-      "completed_at": "2026-03-05T13:54:28.987840"
+      "completed_at": "2026-03-05T14:23:35.880504"
     },
     {
       "id": "monitor->executor:7",
@@ -43,7 +43,7 @@
       "timestamp": "2026-03-05T13:51:12.690546",
       "status": "completed",
       "result": "{\"action\": \"unknown_alert\", \"result\": \"\\u672a\\u5904\\u7406\", \"task_id\": \"monitor->executor:7\", \"original_alert\": \"\\u78c1\\u76d8\\u544a\\u8b66\"}",
-      "completed_at": "2026-03-05T13:54:28.988960"
+      "completed_at": "2026-03-05T14:23:35.881858"
     },
     {
       "id": "monitor->executor:9",
@@ -57,7 +57,7 @@
       "timestamp": "2026-03-05T13:51:37.950942",
       "status": "completed",
       "result": "{\"action\": \"unknown_alert\", \"result\": \"\\u672a\\u5904\\u7406\", \"task_id\": \"monitor->executor:9\", \"original_alert\": \"\\u78c1\\u76d8\\u544a\\u8b66\"}",
-      "completed_at": "2026-03-05T13:54:28.989990"
+      "completed_at": "2026-03-05T14:23:35.882922"
     }
   ],
   "messages": [
@@ -119,6 +119,15 @@
         "load": 0.5
       },
       "timestamp": "2026-03-05T13:51:37.952097",
+      "status": "pending"
+    },
+    {
+      "id": "12",
+      "sender": "monitor",
+      "recipient": "messenger",
+      "message": "状态报告: Load=0.3, Mem=15.9%, Disk=30%",
+      "type": "message",
+      "timestamp": "2026-03-05T14:23:35.406559",
       "status": "pending"
     }
   ],
