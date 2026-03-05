@@ -83,13 +83,19 @@ skills/reincarnation-loop/
 #### 第75世：公网暴露与多站点扩展 ✅
 - [x] 配置nginx反向代理 (/monitor)
 - [x] Dashboard公网可访问: http://115.29.235.46/monitor
-- [ ] 添加更多监控站点
+- [x] 添加更多监控站点
 **运行状态**: completed | 2026-03-05T11:18
 
-#### 第76世：优化Dashboard功能（当前）
-- [ ] 添加更多监控站点
-- [ ] 优化Dashboard展示
-- [ ] 完善告警历史功能
+#### 第76世：优化Dashboard功能 ✅
+- [x] 添加更多监控站点 (Google/GitHub/阿里云/腾讯云/OpenAI)
+- [x] 验证监控正常运行
+- [x] 修复logs目录访问，创建符号链接
+**运行状态**: completed | 2026-03-05T11:21
+
+#### 第77世：完善告警历史（当前）
+- [ ] 优化Dashboard告警历史展示
+- [ ] 修复公网访问logs数据
+- [ ] 添加更多增值功能
 
 ---
 
