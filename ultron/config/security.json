@@ -1,0 +1,33 @@
+{
+  "api_keys": {
+    "default": {
+      "key": "03113c2ea3454895fb423938d723a342",
+      "name": "default",
+      "created": "2026-03-05T21:41:22.934048",
+      "rate_limit": [
+        100,
+        60
+      ]
+    }
+  },
+  "rate_limits": {
+    "/api/status": [
+      60,
+      60
+    ],
+    "/api/full": [
+      30,
+      60
+    ],
+    "/api/exec": [
+      10,
+      60
+    ],
+    "/api/agent": [
+      30,
+      60
+    ]
+  },
+  "allowed_ips": [],
+  "blocked_ips": []
+}
