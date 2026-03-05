@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agent服务网格控制台</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #0d1117;
+            color: #c9d1d9;
+            min-height: 100vh;
+        }
+        .header {
+            background: #161b22;
+            padding: 20px;
+            border-bottom: 1px solid #30363d;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .header h1 { color: #58a6ff; font-size: 24px; }
+        .status-badge {
+            padding: 5px 12px;
+            border-radius: 12px;
+            font-size: 12px;
+            background: #238636;
+            color: #fff;
+        }
+        .container {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+            padding: 20px;
+        }
+        .card {
+            background: #161b22;
+            border: 1px solid #30363d;
+            border-radius: 8px;
+            padding: 16px;
+        }
+        .card h3 {
+            color: #8b949e;
+            font-size: 12px;
+            text-transform: uppercase;
+            margin-bottom: 12px;
+        }
+        .metric {
+            font-size: 32px;
+            font-weight: bold;
+            color: #58a6ff;
+        }
+        .metric.green { color: #3fb950; }
+        .metric.red { color: #f85149; }
+        .metric.yellow { color: #d29922; }
+        .section-title {
+            grid-column: 1 / -1;
+            font-size: 18px;
+            margin: 20px 0 10px;
+            color: #fff;
+        }
+        .circuit-list, .route-list {
+            grid-column: 1 / -1;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 16px;
+        }
+        .circuit-card {
+            background: #161b22;
+            border: 1px solid #30363d;
+            border-radius: 8px;
+            padding: 16px;
+        }
+        .circuit-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+        }
+        .circuit-name { font-weight: bold; color: #fff; }
+        .circuit-state {
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-size: 11px;
+            font-weight: bold;
+        }
+        .state-closed { background: #238636; color: #fff; }
+        .state-open { background: #f85149; color: #fff; }
+        .state-half { background: #d29922; color: #000; }
+        .circuit-stats {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px;
+            font-size: 12px;
+        }
+        .circuit-stats span { color: #8b949e; }
+        .route-card {
+            background: #161b22;
+            border: 1px solid #30363d;
+            border-radius: 8px;
+            padding: 16px;
+        }
+        .route-type {
+            display: inline-block;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 10px;
+            background: #388bfd;
+            color: #fff;
+            margin-bottom: 8px;
+        }
+        .target-list {
+            margin-top: 8px;
+            font-size: 12px;
+        }
+        .target-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 4px 0;
+            border-bottom: 1px solid #21262d;
+        }
+        .logs {
+            grid-column: 1 / -1;
+            background: #161b22;
+            border: 1px solid #30363d;
+            border-radius: 8px;
+            padding: 16px;
+            max-height: 300px;
+            overflow-y: auto;
+        }
+        .log-entry {
+            font-family: monospace;
+            font-size: 12px;
+            padding: 4px 0;
+            border-bottom: 1px solid #21262d;
+        }
+        .log-time { color: #8b949e; margin-right: 8px; }
+        .log-success { color: #3fb950; }
+        .log-fail { color: #f85149; }
+        .btn {
+            background: #238636;
+            color: #fff;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+        .btn:hover { background: #2ea043; }
+        .btn-danger { background: #f85149; }
+        .btn-danger:hover { background: #da3633; }
+        .chart-container {
+            grid-column: span 2;
+            height: 200px;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>🕸️ Agent服务网格控制台</h1>
+        <span class="status-badge">运行中</span>
+    </div>
+    
+    <div class="container">
+        <div class="card">
+            <h3>熔断器</h3>
+            <div class="metric" id="circuitCount">0</div>
+        </div>
+        <div class="card">
+            <h3>限流器</h3>
+            <div class="metric" id="limiterCount">0</div>
+        </div>
+        <div class="card">
+            <h3>路由规则</h3>
+            <div class="metric" id="routeCount">0</div>
+        </div>
+        <div class="card">
+            <h3>服务实例</h3>
+            <div class="metric" id="serviceCount">0</div>
+        </div>
+        
+        <div class="section-title">🔥 熔断器状态</div>
+        <div class="circuit-list" id="circuitList"></div>
+        
+        <div class="section-title">🔀 流量路由</div>
+        <div class="route-list" id="routeList"></div>
+        
+        <div class="section-title">📊 流量趋势</div>
+        <div class="chart-container">
+            <canvas id="trafficChart"></canvas>
+        </div>
+        <div class="chart-container">
+            <canvas id="latencyChart"></canvas>
+        </div>
+        
+        <div class="section-title">📝 事件日志</div>
+        <div class="logs" id="logs"></div>
+    </div>
+    
+    <script>
+        const API_BASE = 'http://localhost:8094';
+        let trafficChart, latencyChart;
+        
+        async function fetchStatus() {
+            try {
+                const r = await fetch(`${API_BASE}/api/status`);
+                return await r.json();
+            } catch (e) {
+                console.error('API错误:', e);
+                return null;
+            }
+        }
+        
+        function addLog(message, type = 'info') {
+            const logs = document.getElementById('logs');
+            const entry = document.createElement('div');
+            entry.className = 'log-entry';
+            const time = new Date().toLocaleTimeString();
+            entry.innerHTML = `<span class="log-time">${time}</span><span class="log-${type}">${message}</span>`;
+            logs.insertBefore(entry, logs.firstChild);
+            if (logs.children.length > 50) logs.lastChild.remove();
+        }
+        
+        function renderCircuits(status) {
+            const container = document.getElementById('circuitList');
+            const circuits = status?.circuit_breakers || {};
+            document.getElementById('circuitCount').textContent = Object.keys(circuits).length;
+            
+            container.innerHTML = '';
+            for (const [name, stats] of Object.entries(circuits)) {
+                const stateClass = stats.state === 'closed' ? 'state-closed' : 
+                                   stats.state === 'open' ? 'state-open' : 'state-half';
+                const card = document.createElement('div');
+                card.className = 'circuit-card';
+                card.innerHTML = `
+                    <div class="circuit-header">
+                        <span class="circuit-name">${name}</span>
+                        <span class="circuit-state ${stateClass}">${stats.state}</span>
+                    </div>
+                    <div class="circuit-stats">
+                        <div><span>请求数</span><br>${stats.total_requests}</div>
+                        <div><span>失败率</span><br>${(stats.failure_rate * 100).toFixed(1)}%</div>
+                    </div>
+                `;
+                container.appendChild(card);
+            }
+        }
+        
+        function renderRoutes(status) {
+            const container = document.getElementById('routeList');
+            const routes = status?.routes || [];
+            document.getElementById('routeCount').textContent = routes.length;
+            
+            container.innerHTML = '';
+            routes.forEach(service => {
+                fetch(`${API_BASE}/api/route/${service}`)
+                    .then(r => r.json())
+                    .then(data => {
+                        const card = document.createElement('div');
+                        card.className = 'route-card';
+                        const targets = data.targets?.map(t => 
+                            `<div class="target-item"><span>${t.version || t.endpoint}</span><span>${data.weights?.[data.targets.indexOf(t)] || 100}%</span></div>`
+                        ).join('') || '';
+                        
+                        card.innerHTML = `
+                            <span class="route-type">${data.type}</span>
+                            <div class="circuit-name">${service}</div>
+                            <div class="target-list">${targets}</div>
+                        `;
+                        container.appendChild(card);
+                    });
+            });
+        }
+        
+        async function updateCharts() {
+            try {
+                const r = await fetch(`${API_BASE}/api/stats/traffic/agent-service?window=60`);
+                const stats = await r.json();
+                
+                if (trafficChart) {
+                    trafficChart.data.labels.push(new Date().toLocaleTimeString());
+                    trafficChart.data.datasets[0].data.push(stats.requests);
+                    trafficChart.data.datasets[1].data.push(stats.success_rate * 100);
+                    if (trafficChart.data.labels.length > 20) {
+                        trafficChart.data.labels.shift();
+                        trafficChart.data.datasets[0].data.shift();
+                        trafficChart.data.datasets[1].data.shift();
+                    }
+                    trafficChart.update('none');
+                }
+            } catch (e) {}
+        }
+        
+        async function init() {
+            addLog('控制台初始化', 'info');
+            
+            // 初始化图表
+            const trafficCtx = document.getElementById('trafficChart').getContext('2d');
+            trafficChart = new Chart(trafficCtx, {
+                type: 'line',
+                data: {
+                    labels: [],
+                    datasets: [{
+                        label: '请求数',
+                        data: [],
+                        borderColor: '#58a6ff',
+                        backgroundColor: 'rgba(88,166,255,0.1)',
+                        fill: true
+                    }, {
+                        label: '成功率%',
+                        data: [],
+                        borderColor: '#3fb950',
+                        borderDash: [5, 5]
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: { legend: { labels: { color: '#8b949e' } } },
+                    scales: {
+                        x: { ticks: { color: '#8b949e' }, grid: { color: '#21262d' } },
+                        y: { ticks: { color: '#8b949e' }, grid: { color: '#21262d' } }
+                    }
+                }
+            });
+            
+            const latencyCtx = document.getElementById('latencyChart').getContext('2d');
+            latencyChart = new Chart(latencyCtx, {
+                type: 'line',
+                data: {
+                    labels: [],
+                    datasets: [{
+                        label: 'P95延迟(ms)',
+                        data: [],
+                        borderColor: '#d29922',
+                        backgroundColor: 'rgba(210,153,34,0.1)',
+                        fill: true
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: { legend: { labels: { color: '#8b949e' } } },
+                    scales: {
+                        x: { ticks: { color: '#8b949e' }, grid: { color: '#21262d' } },
+                        y: { ticks: { color: '#8b949e' }, grid: { color: '#21262d' } }
+                    }
+                }
+            });
+            
+            // 定期刷新
+            setInterval(async () => {
+                const status = await fetchStatus();
+                if (status) {
+                    renderCircuits(status);
+                    renderRoutes(status);
+                }
+                updateCharts();
+            }, 3000);
+            
+            addLog('已连接到服务网格', 'success');
+        }
+        
+        init();
+    </script>
+</body>
+</html>

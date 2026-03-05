@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Agent部署与编排面板</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #0d1117; color: #c9d1d9; min-height: 100vh; }
+        .header { background: #161b22; padding: 20px; border-bottom: 1px solid #30363d; display: flex; justify-content: space-between; align-items: center; }
+        .header h1 { color: #58a6ff; font-size: 24px; }
+        .header .badge { background: #238636; padding: 4px 12px; border-radius: 12px; font-size: 12px; }
+        .container { padding: 20px; max-width: 1400px; margin: 0 auto; }
+        .tabs { display: flex; gap: 10px; margin-bottom: 20px; }
+        .tab { background: #21262d; padding: 10px 20px; border: none; border-radius: 6px; color: #c9d1d9; cursor: pointer; }
+        .tab.active { background: #58a6ff; color: #fff; }
+        .card { background: #161b22; border: 1px solid #30363d; border-radius: 8px; padding: 20px; margin-bottom: 20px; }
+        .card h3 { color: #58a6ff; margin-bottom: 15px; font-size: 16px; }
+        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; }
+        .stat { text-align: center; padding: 20px; }
+        .stat-value { font-size: 32px; font-weight: bold; color: #58a6ff; }
+        .stat-label { color: #8b949e; font-size: 14px; margin-top: 5px; }
+        .agent-list { max-height: 400px; overflow-y: auto; }
+        .agent-item { display: flex; justify-content: space-between; align-items: center; padding: 12px; background: #21262d; border-radius: 6px; margin-bottom: 8px; }
+        .agent-name { font-weight: bold; }
+        .agent-status { padding: 4px 8px; border-radius: 4px; font-size: 12px; }
+        .status-running { background: #238636; }
+        .status-stopped { background: #da3633; }
+        .status-deploying { background: #d29922; }
+        .btn { background: #238636; color: #fff; border: none; padding: 8px 16px; border-radius: 6px; cursor: pointer; margin: 2px; }
+        .btn-danger { background: #da3633; }
+        .btn:hover { opacity: 0.9; }
+        input, select { background: #0d1117; border: 1px solid #30363d; color: #c9d1d9; padding: 8px; border-radius: 6px; }
+        .form-group { margin-bottom: 15px; }
+        .form-group label { display: block; margin-bottom: 5px; color: #8b949e; }
+        .form-group input { width: 100%; }
+        .hidden { display: none; }
+        table { width: 100%; border-collapse: collapse; }
+        th, td { padding: 10px; text-align: left; border-bottom: 1px solid #30363d; }
+        th { color: #8b949e; font-weight: normal; }
+        .pulse { animation: pulse 2s infinite; }
+        @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.5; } }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>🚀 Agent 部署与编排中心</h1>
+        <span class="badge">第48世</span>
+    </div>
+    
+    <div class="container">
+        <div class="tabs">
+            <button class="tab active" onclick="showTab('deploy')">部署管理</button>
+            <button class="tab" onclick="showTab('orch')">编排中心</button>
+            <button class="tab" onclick="showTab('workflows')">工作流</button>
+            <button class="tab" onclick="showTab('stats')">统计</button>
+        </div>
+        
+        <!-- 部署管理 -->
+        <div id="deploy-tab">
+            <div class="grid">
+                <div class="card">
+                    <h3>📊 部署概览</h3>
+                    <div class="grid" style="grid-template-columns: repeat(3, 1fr);">
+                        <div class="stat">
+                            <div class="stat-value" id="total-agents">-</div>
+                            <div class="stat-label">总Agent数</div>
+                        </div>
+                        <div class="stat">
+                            <div class="stat-value" id="running-agents">-</div>
+                            <div class="stat-label">运行中</div>
+                        </div>
+                        <div class="stat">
+                            <div class="stat-value" id="stopped-agents">-</div>
+                            <div class="stat-label">已停止</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="grid">
+                <div class="card">
+                    <h3>➕ 创建部署</h3>
+                    <div class="form-group">
+                        <label>Agent名称</label>
+                        <input type="text" id="agent-name" placeholder="my-agent">
+                    </div>
+                    <div class="form-group">
+                        <label>副本数</label>
+                        <input type="number" id="agent-replicas" value="1" min="1" max="10">
+                    </div>
+                    <div class="form-group">
+                        <label>CPU配额</label>
+                        <input type="text" id="agent-cpu" value="100m">
+                    </div>
+                    <div class="form-group">
+                        <label>内存配额</label>
+                        <input type="text" id="agent-memory" value="128Mi">
+                    </div>
+                    <button class="btn" onclick="createDeployment()">创建</button>
+                </div>
+                
+                <div class="card">
+                    <h3>📋 Agent列表</h3>
+                    <div class="agent-list" id="agent-list">
+                        <div style="color: #8b949e; text-align: center; padding: 20px;">加载中...</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 编排中心 -->
+        <div id="orch-tab" class="hidden">
+            <div class="grid">
+                <div class="card">
+                    <h3>🤖 注册Agent</h3>
+                    <div class="form-group">
+                        <label>Agent ID</label>
+                        <input type="text" id="orch-agent-id" placeholder="agent-001">
+                    </div>
+                    <div class="form-group">
+                        <label>能力 (逗号分隔)</label>
+                        <input type="text" id="orch-capabilities" placeholder="compute,storage,network">
+                    </div>
+                    <div class="form-group">
+                        <label>端点</label>
+                        <input type="text" id="orch-endpoint" placeholder="http://localhost:8000">
+                    </div>
+                    <button class="btn" onclick="registerAgent()">注册</button>
+                </div>
+                
+                <div class="card">
+                    <h3>👥 已注册Agent</h3>
+                    <div class="agent-list" id="orch-agents"></div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 工作流 -->
+        <div id="workflows-tab" class="hidden">
+            <div class="grid">
+                <div class="card">
+                    <h3>📝 创建工作流</h3>
+                    <div class="form-group">
+                        <label>工作流名称</label>
+                        <input type="text" id="wf-name" placeholder="data-processing">
+                    </div>
+                    <div class="form-group">
+                        <label>步骤 (格式: step1:type;step2:type)</label>
+                        <input type="text" id="wf-steps" placeholder="fetch:agent;process:transform;save:aggregate">
+                    </div>
+                    <button class="btn" onclick="createWorkflow()">创建</button>
+                </div>
+                
+                <div class="card">
+                    <h3>📋 工作流列表</h3>
+                    <div id="workflow-list"></div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 统计 -->
+        <div id="stats-tab" class="hidden">
+            <div class="grid">
+                <div class="card">
+                    <h3>📈 部署趋势</h3>
+                    <canvas id="deployChart" height="200"></canvas>
+                </div>
+                <div class="card">
+                    <h3>🔄 编排统计</h3>
+                    <canvas id="orchChart" height="200"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        const DEPLOYER_URL = "http://localhost:8096";
+        const ORCHESTRATOR_URL = "http://localhost:8097";
+        
+        let deployChart, orchChart;
+        
+        function showTab(tab) {
+            document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+            event.target.classList.add('active');
+            document.querySelectorAll('[id$="-tab"]').forEach(t => t.classList.add('hidden'));
+            document.getElementById(tab + '-tab').classList.remove('hidden');
+            if (tab === 'deploy') loadDeployments();
+            if (tab === 'orch') loadOrchAgents();
+            if (tab === 'workflows') loadWorkflows();
+            if (tab === 'stats') loadStats();
+        }
+        
+        // 部署管理
+        async function loadDeployments() {
+            try {
+                const r = await fetch(DEPLOYER_URL + '/api/deployments');
+                const data = await r.json();
+                
+                const total = data.length;
+                const running = data.filter(d => d.status === 'running').length;
+                const stopped = data.filter(d => d.status === 'stopped').length;
+                
+                document.getElementById('total-agents').textContent = total;
+                document.getElementById('running-agents').textContent = running;
+                document.getElementById('stopped-agents').textContent = stopped;
+                
+                const list = document.getElementById('agent-list');
+                if (data.length === 0) {
+                    list.innerHTML = '<div style="color: #8b949e; text-align: center; padding: 20px;">暂无部署</div>';
+                } else {
+                    list.innerHTML = data.map(a => `
+                        <div class="agent-item">
+                            <div>
+                                <div class="agent-name">${a.name}</div>
+                                <div style="color: #8b949e; font-size: 12px;">v${a.version} • ${a.replicas}副本</div>
+                            </div>
+                            <div>
+                                <span class="agent-status status-${a.status}">${a.status}</span>
+                                <button class="btn" onclick="deployAgent('${a.name}')">部署</button>
+                                <button class="btn btn-danger" onclick="deleteAgent('${a.name}')">删除</button>
+                            </div>
+                        </div>
+                    `).join('');
+                }
+            } catch(e) {
+                document.getElementById('agent-list').innerHTML = '<div style="color: #da3633;">服务未启动</div>';
+            }
+        }
+        
+        async function createDeployment() {
+            const name = document.getElementById('agent-name').value;
+            if (!name) return alert('请输入名称');
+            
+            await fetch(DEPLOYER_URL + '/api/deployments', {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({
+                    name: name,
+                    config: {
+                        replicas: parseInt(document.getElementById('agent-replicas').value),
+                        resources: {
+                            cpu: document.getElementById('agent-cpu').value,
+                            memory: document.getElementById('agent-memory').value
+                        }
+                    }
+                })
+            });
+            loadDeployments();
+        }
+        
+        async function deployAgent(name) {
+            await fetch(DEPLOYER_URL + '/api/deployments/' + name + '/deploy', {method: 'POST'});
+            loadDeployments();
+        }
+        
+        async function deleteAgent(name) {
+            if (!confirm('确定删除?')) return;
+            await fetch(DEPLOYER_URL + '/api/deployments/' + name, {method: 'DELETE'});
+            loadDeployments();
+        }
+        
+        // 编排
+        async function loadOrchAgents() {
+            try {
+                const r = await fetch(ORCHESTRATOR_URL + '/api/agents');
+                const data = await r.json();
+                const list = document.getElementById('orch-agents');
+                if (data.length === 0) {
+                    list.innerHTML = '<div style="color: #8b949e; text-align: center; padding: 20px;">暂无Agent</div>';
+                } else {
+                    list.innerHTML = data.map(a => `
+                        <div class="agent-item">
+                            <div>
+                                <div class="agent-name">${a.id}</div>
+                                <div style="color: #8b949e; font-size: 12px;">${a.capabilities.join(', ')}</div>
+                            </div>
+                            <span class="agent-status status-${a.status}">${a.status}</span>
+                        </div>
+                    `).join('');
+                }
+            } catch(e) {
+                document.getElementById('orch-agents').innerHTML = '<div style="color: #da3633;">服务未启动</div>';
+            }
+        }
+        
+        async function registerAgent() {
+            const id = document.getElementById('orch-agent-id').value;
+            if (!id) return alert('请输入ID');
+            
+            await fetch(ORCHESTRATOR_URL + '/api/agents', {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({
+                    agent_id: id,
+                    capabilities: document.getElementById('orch-capabilities').value.split(',').filter(c => c),
+                    endpoint: document.getElementById('orch-endpoint').value
+                })
+            });
+            loadOrchAgents();
+        }
+        
+        // 工作流
+        async function loadWorkflows() {
+            try {
+                const r = await fetch(ORCHESTRATOR_URL + '/api/workflows');
+                const data = await r.json();
+                document.getElementById('workflow-list').innerHTML = data.length ? 
+                    data.map(w => `<div class="agent-item"><div><b>${w.name}</b></div><span>${w.steps.length}步</span></div>`).join('') :
+                    '<div style="color: #8b949e;">暂无工作流</div>';
+            } catch(e) {
+                document.getElementById('workflow-list').innerHTML = '<div style="color: #da3633;">服务未启动</div>';
+            }
+        }
+        
+        async function createWorkflow() {
+            const name = document.getElementById('wf-name').value;
+            if (!name) return alert('请输入名称');
+            
+            const stepsStr = document.getElementById('wf-steps').value;
+            const steps = stepsStr.split(';').filter(s => s).map(s => {
+                const [stepName, stepType] = s.split(':');
+                return {name: stepName, type: stepType || 'transform'};
+            });
+            
+            await fetch(ORCHESTRATOR_URL + '/api/workflows', {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({name, steps})
+            });
+            loadWorkflows();
+        }
+        
+        // 统计
+        function loadStats() {
+            const ctx1 = document.getElementById('deployChart').getContext('2d');
+            const ctx2 = document.getElementById('orchChart').getContext('2d');
+            
+            if (deployChart) deployChart.destroy();
+            if (orchChart) orchChart.destroy();
+            
+            deployChart = new Chart(ctx1, {
+                type: 'bar',
+                data: {
+                    labels: ['注册', '运行中', '已停止', '部署中'],
+                    datasets: [{
+                        label: 'Agent状态',
+                        data: [0, 0, 0, 0],
+                        backgroundColor: ['#58a6ff', '#238636', '#da3633', '#d29922']
+                    }]
+                }
+            });
+            
+            orchChart = new Chart(ctx2, {
+                type: 'doughnut',
+                data: {
+                    labels: ['工作流', '执行中', '已完成'],
+                    datasets: [{
+                        data: [0, 0, 0],
+                        backgroundColor: ['#58a6ff', '#d29922', '#238636']
+                    }]
+                }
+            });
+            
+            // 加载实际数据
+            fetch(DEPLOYER_URL + '/api/deployments').then(r => r.json()).then(data => {
+                const running = data.filter(d => d.status === 'running').length;
+                const stopped = data.filter(d => d.status === 'stopped').length;
+                const deploying = data.filter(d => d.status === 'deploying').length;
+                deployChart.data.datasets[0].data = [data.length, running, stopped, deploying];
+                deployChart.update();
+            });
+        }
+        
+        // 初始化
+        loadDeployments();
+        setInterval(loadDeployments, 10000);
+    </script>
+</body>
+</html>

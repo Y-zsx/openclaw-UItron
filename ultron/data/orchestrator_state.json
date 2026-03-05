@@ -1,0 +1,123 @@
+{
+  "workflows": {
+    "568bc8c1": {
+      "id": "568bc8c1",
+      "name": "etl-pipeline",
+      "steps": [
+        {
+          "name": "extract",
+          "type": "agent",
+          "requires_agent": "compute"
+        },
+        {
+          "name": "transform",
+          "type": "transform"
+        },
+        {
+          "name": "load",
+          "type": "aggregate"
+        }
+      ],
+      "created_at": "2026-03-05T20:25:54.360939",
+      "status": "active"
+    }
+  },
+  "tasks": {},
+  "executions": {
+    "bafca806": {
+      "id": "bafca806",
+      "workflow_id": "568bc8c1",
+      "workflow_name": "etl-pipeline",
+      "inputs": {
+        "data": {
+          "source": "db",
+          "extract": {
+            "status": "success",
+            "output": {
+              "agent": "processor-01",
+              "processed": true
+            },
+            "agent_id": "processor-01"
+          }
+        }
+      },
+      "status": "completed",
+      "started_at": "2026-03-05T20:26:02.230508",
+      "steps": [
+        {
+          "step": 0,
+          "name": "extract",
+          "status": "completed",
+          "result": {
+            "status": "success",
+            "output": {
+              "agent": "processor-01",
+              "processed": true
+            },
+            "agent_id": "processor-01"
+          }
+        },
+        {
+          "step": 1,
+          "name": "transform",
+          "status": "completed",
+          "result": {
+            "status": "success",
+            "output": {
+              "source": "db",
+              "extract": {
+                "status": "success",
+                "output": {
+                  "agent": "processor-01",
+                  "processed": true
+                },
+                "agent_id": "processor-01"
+              }
+            }
+          }
+        },
+        {
+          "step": 2,
+          "name": "load",
+          "status": "completed",
+          "result": {
+            "status": "success",
+            "output": {}
+          }
+        }
+      ],
+      "current_step": 2,
+      "total_steps": 3,
+      "completed_at": "2026-03-05T20:26:02.230575",
+      "results": {
+        "extract": {
+          "status": "success",
+          "output": {
+            "agent": "processor-01",
+            "processed": true
+          },
+          "agent_id": "processor-01"
+        },
+        "transform": {
+          "status": "success",
+          "output": {
+            "source": "db",
+            "extract": {
+              "status": "success",
+              "output": {
+                "agent": "processor-01",
+                "processed": true
+              },
+              "agent_id": "processor-01"
+            }
+          }
+        },
+        "load": {
+          "status": "success",
+          "output": {}
+        }
+      }
+    }
+  },
+  "last_update": "2026-03-05T20:26:02.230580"
+}

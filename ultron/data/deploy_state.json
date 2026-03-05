@@ -1,0 +1,41 @@
+{
+  "deployments": {
+    "data-processor": {
+      "name": "data-processor",
+      "status": "running",
+      "config": {
+        "replicas": 2,
+        "resources": {
+          "cpu": "200m",
+          "memory": "256Mi"
+        }
+      },
+      "created_at": "2026-03-05T20:25:44.420845",
+      "version": "1.0.0",
+      "replicas": 2,
+      "resources": {
+        "cpu": "200m",
+        "memory": "256Mi"
+      },
+      "health_check": {
+        "enabled": true,
+        "interval": 30
+      },
+      "auto_scale": {
+        "enabled": false,
+        "min_replicas": 1,
+        "max_replicas": 3
+      },
+      "deploying_version": "1.0.0",
+      "deployed_at": "2026-03-05T20:26:08.201652",
+      "last_deploy": "2026-03-05T20:26:08.703730"
+    }
+  },
+  "history": [],
+  "versions": {
+    "data-processor": [
+      "1.0.0"
+    ]
+  },
+  "last_update": "2026-03-05T20:26:08.703754"
+}

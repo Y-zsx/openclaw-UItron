@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>工作流引擎控制台</title>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            min-height: 100vh;
+            color: #eee;
+            padding: 20px;
+        }
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid #333;
+        }
+        .header h1 { color: #00d4ff; font-size: 28px; }
+        .status { color: #00ff88; font-size: 14px; }
+        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 20px; }
+        .card {
+            background: rgba(255,255,255,0.05);
+            border-radius: 12px;
+            padding: 20px;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+        .card h2 {
+            color: #00d4ff;
+            margin-bottom: 15px;
+            font-size: 18px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .workflow-list { max-height: 400px; overflow-y: auto; }
+        .workflow-item {
+            padding: 12px;
+            margin-bottom: 8px;
+            background: rgba(0,0,0,0.3);
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .workflow-item:hover { background: rgba(0,212,255,0.1); }
+        .workflow-item .name { font-weight: bold; color: #fff; }
+        .workflow-item .meta { font-size: 12px; color: #888; margin-top: 4px; }
+        .status-badge {
+            display: inline-block;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 11px;
+            font-weight: bold;
+        }
+        .status-created { background: #666; }
+        .status-running { background: #f39c12; }
+        .status-completed { background: #27ae60; }
+        .status-failed { background: #e74c3c; }
+        .task-list { margin-top: 15px; }
+        .task-item {
+            padding: 8px 12px;
+            margin: 4px 0;
+            background: rgba(0,0,0,0.2);
+            border-radius: 6px;
+            font-size: 13px;
+        }
+        .task-status { float: right; }
+        .form-group { margin-bottom: 15px; }
+        .form-group label { display: block; margin-bottom: 5px; color: #aaa; font-size: 13px; }
+        .form-group input, .form-group textarea {
+            width: 100%;
+            padding: 10px;
+            background: rgba(0,0,0,0.3);
+            border: 1px solid #444;
+            border-radius: 6px;
+            color: #fff;
+            font-family: monospace;
+        }
+        .btn {
+            padding: 10px 20px;
+            background: #00d4ff;
+            color: #000;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.2s;
+        }
+        .btn:hover { background: #00a8cc; }
+        .btn-success { background: #27ae60; }
+        .btn-danger { background: #e74c3c; }
+        #detail-panel { display: none; }
+        pre { background: rgba(0,0,0,0.4); padding: 10px; border-radius: 6px; overflow-x: auto; font-size: 12px; }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>🔄 工作流引擎控制台</h1>
+        <div class="status">● 运行中 | 端口 8099</div>
+    </div>
+    
+    <div class="grid">
+        <div class="card">
+            <h2>📋 工作流列表</h2>
+            <div class="workflow-list" id="workflow-list">
+                <div style="color:#666;text-align:center;padding:20px;">加载中...</div>
+            </div>
+        </div>
+        
+        <div class="card" id="detail-panel">
+            <h2>📄 工作流详情</h2>
+            <div id="workflow-detail"></div>
+        </div>
+        
+        <div class="card">
+            <h2>➕ 创建工作流</h2>
+            <div class="form-group">
+                <label>工作流名称</label>
+                <input type="text" id="wf-name" placeholder="如：部署流程">
+            </div>
+            <div class="form-group">
+                <label>描述</label>
+                <input type="text" id="wf-desc" placeholder="工作流描述">
+            </div>
+            <div class="form-group">
+                <label>任务 (JSON格式)</label>
+                <textarea id="wf-tasks" rows="8" placeholder='[
+  {"name": "检查环境", "command": "shell:echo check"},
+  {"name": "部署服务", "command": "shell:echo deploy", "depends_on": ["检查环境"]}
+]'></textarea>
+            </div>
+            <button class="btn" onclick="createWorkflow()">创建</button>
+        </div>
+    </div>
+
+    <script>
+        const API = "http://localhost:8099";
+        
+        async function fetchJSON(url) {
+            try {
+                const r = await fetch(url);
+                return await r.json();
+            } catch { return null; }
+        }
+        
+        async function loadWorkflows() {
+            const data = await fetchJSON(`${API}/workflows`);
+            const list = document.getElementById("workflow-list");
+            
+            if (!data || !data.workflows || data.workflows.length === 0) {
+                list.innerHTML = '<div style="color:#666;text-align:center;padding:20px;">暂无工作流</div>';
+                return;
+            }
+            
+            list.innerHTML = data.workflows.map(wf => `
+                <div class="workflow-item" onclick="showDetail('${wf.id}')">
+                    <div class="name">${wf.name}</div>
+                    <div class="meta">
+                        <span class="status-badge status-${wf.status}">${wf.status}</span>
+                        ${wf.completed}/${wf.tasks_count} 任务
+                    </div>
+                </div>
+            `).join("");
+        }
+        
+        async function showDetail(id) {
+            const data = await fetchJSON(`${API}/workflow/${id}`);
+            const panel = document.getElementById("detail-panel");
+            const detail = document.getElementById("workflow-detail");
+            
+            panel.style.display = "block";
+            
+            if (!data) {
+                detail.innerHTML = "<p>加载失败</p>";
+                return;
+            }
+            
+            detail.innerHTML = `
+                <div style="margin-bottom:15px;">
+                    <strong>${data.name}</strong>
+                    <span class="status-badge status-${data.status}">${data.status}</span>
+                </div>
+                <p style="color:#888;font-size:13px;margin-bottom:15px;">${data.description}</p>
+                <div class="task-list">
+                    ${data.tasks.map(t => `
+                        <div class="task-item">
+                            <span class="task-status status-badge status-${t.status}">${t.status}</span>
+                            ${t.name}
+                            ${t.depends_on.length ? `<span style="color:#666;font-size:11px;">⬅ ${t.depends_on.join(", ")}</span>` : ""}
+                            ${t.error ? `<div style="color:#e74c3c;font-size:11px;margin-top:4px;">${t.error}</div>` : ""}
+                        </div>
+                    `).join("")}
+                </div>
+                ${data.result ? `<pre style="margin-top:15px;">${JSON.stringify(data.result, null, 2)}</pre>` : ""}
+                <div style="margin-top:15px;">
+                    ${data.status === "created" ? `<button class="btn btn-success" onclick="runWorkflow('${data.id}')">▶ 运行</button>` : ""}
+                    ${data.status === "running" ? `<button class="btn btn-danger" onclick="cancelWorkflow('${data.id}')">■ 取消</button>` : ""}
+                </div>
+            `;
+        }
+        
+        async function createWorkflow() {
+            const name = document.getElementById("wf-name").value;
+            const desc = document.getElementById("wf-desc").value;
+            const tasksJson = document.getElementById("wf-tasks").value;
+            
+            if (!name || !tasksJson) {
+                alert("请填写名称和任务");
+                return;
+            }
+            
+            try {
+                const tasks = JSON.parse(tasksJson);
+                const r = await fetch(`${API}/workflows/create`, {
+                    method: "POST",
+                    headers: {"Content-Type": "application/json"},
+                    body: JSON.stringify({name, description: desc, tasks})
+                });
+                const result = await r.json();
+                if (result.success) {
+                    alert(`创建成功: ${result.workflow_id}`);
+                    loadWorkflows();
+                } else {
+                    alert("创建失败: " + JSON.stringify(result));
+                }
+            } catch(e) {
+                alert("JSON格式错误: " + e.message);
+            }
+        }
+        
+        async function runWorkflow(id) {
+            const r = await fetch(`${API}/workflows/run`, {
+                method: "POST",
+                headers: {"Content-Type": "application/json"},
+                body: JSON.stringify({workflow_id: id})
+            });
+            const result = await r.json();
+            showDetail(id);
+            loadWorkflows();
+        }
+        
+        async function cancelWorkflow(id) {
+            await fetch(`${API}/workflows/cancel`, {
+                method: "POST",
+                headers: {"Content-Type": "application/json"},
+                body: JSON.stringify({workflow_id: id})
+            });
+            showDetail(id);
+            loadWorkflows();
+        }
+        
+        // 初始化
+        loadWorkflows();
+        setInterval(loadWorkflows, 5000);
+    </script>
+</body>
+</html>
