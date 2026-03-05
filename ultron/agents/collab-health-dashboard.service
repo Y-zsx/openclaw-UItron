@@ -1,0 +1,16 @@
+[Unit]
+Description=Collab Health Dashboard - Multi-Agent Network Monitoring
+After=network.target
+
+[Service]
+Type=simple
+User=root
+WorkingDirectory=/root/.openclaw/workspace/ultron/agents
+ExecStart=/usr/bin/python3 /root/.openclaw/workspace/ultron/agents/collab_health_dashboard.py
+Restart=always
+RestartSec=10
+StandardOutput=append:/root/.openclaw/workspace/ultron/logs/collab-health-dashboard.log
+StandardError=append:/root/.openclaw/workspace/ultron/logs/collab-health-dashboard.log
+
+[Install]
+WantedBy=multi-user.target

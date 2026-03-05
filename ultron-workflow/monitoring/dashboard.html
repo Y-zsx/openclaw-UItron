@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Agent监控仪表板</title>
+    <style>
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; margin: 0; padding: 20px; background: #1a1a2e; color: #eee; }
+        .container { max-width: 1200px; margin: 0 auto; }
+        h1 { color: #00d4ff; }
+        .status { padding: 15px; border-radius: 8px; margin-bottom: 20px; }
+        .status.healthy { background: #1b4332; border: 2px solid #2d6a4f; }
+        .status.degraded { background: #3d2c00; border: 2px solid #b8860b; }
+        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 15px; }
+        .card { background: #16213e; padding: 15px; border-radius: 8px; border: 1px solid #0f3460; }
+        .card h3 { margin-top: 0; color: #00d4ff; }
+        .metric { display: flex; justify-content: space-between; padding: 8px 0; border-bottom: 1px solid #0f3460; }
+        .metric:last-child { border-bottom: none; }
+        .value { color: #00d4ff; font-weight: bold; }
+        .value.warning { color: #f39c12; }
+        .value.error { color: #e74c3c; }
+        .alert { padding: 10px; margin: 5px 0; border-radius: 5px; }
+        .alert.warning { background: #3d2c00; border-left: 4px solid #f39c12; }
+        .alert.error { background: #3d0a0a; border-left: 4px solid #e74c3c; }
+        .alert.critical { background: #3d0a0a; border-left: 4px solid #ff0000; animation: pulse 1s infinite; }
+        @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.7; } }
+        .issues { background: #3d0a0a; padding: 10px; border-radius: 5px; margin-bottom: 20px; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🤖 Agent服务监控</h1>
+        
+        <div class="status healthy">
+            <h2>状态: HEALTHY</h2>
+            <div>✓ 所有系统正常</div>
+        </div>
+        
+        <div class="grid">
+            <div class="card">
+                <h3>系统资源</h3>
+                <div class="metric"><span>CPU</span><span class="">52.0%</span></div>
+                <div class="metric"><span>内存</span><span class="">40.8%</span></div>
+                <div class="metric"><span>磁盘</span><span class="">30.1%</span></div>
+                <div class="metric"><span>负载</span><span>0.90</span></div>
+            </div>
+            
+            <div class="card">
+                <h3>Gateway状态</h3>
+                <div class="metric"><span>可达</span><span class="">是</span></div>
+                <div class="metric"><span>服务</span><span>运行中</span></div>
+                <div class="metric"><span>Agent数</span><span>0</span></div>
+                <div class="metric"><span>会话数</span><span>0</span></div>
+            </div>
+            
+            <div class="card">
+                <h3>Agent状态</h3>
+                <div class="metric"><span>Coordinator</span><span>idle</span></div>
+                <div class="metric"><span>Executor</span><span>idle</span></div>
+                <div class="metric"><span>Analyzer</span><span>idle</span></div>
+                <div class="metric"><span>Monitor</span><span>idle</span></div>
+            </div>
+        </div>
+        
+        <div class="card" style="margin-top: 20px;">
+            <h3>最近告警</h3>
+            <div>无告警记录</div>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,19 @@
+{
+  "enabled": true,
+  "channels": [
+    "console"
+  ],
+  "dingtalk": {
+    "webhook": null,
+    "secret": null
+  },
+  "email": {
+    "smtp": null,
+    "to": []
+  },
+  "levels": [
+    "warning",
+    "error",
+    "critical"
+  ]
+}

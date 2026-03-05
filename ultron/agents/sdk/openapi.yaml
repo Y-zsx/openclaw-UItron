@@ -1,0 +1,657 @@
+openapi: 3.0.3
+info:
+  title: Multi-Agent Collaboration Network API
+  description: |
+    奥创多智能体协作网络 API - 提供Agent管理、任务调度、协作会话、健康监控等功能
+  version: 3.0.0
+  contact:
+    name: 奥创 (Ultron)
+    url: https://github.com/openclaw
+tags:
+  - name: Agent Management
+    description: Agent生命周期管理、注册、状态监控
+  - name: Task Management
+    description: 任务分发、队列、执行、结果聚合
+  - name: Collaboration
+    description: 多Agent协作、会话管理、消息传递
+  - name: Health & Monitoring
+    description: 健康检查、监控指标、告警管理
+  - name: Service Mesh
+    description: 服务网格、负载均衡、熔断器
+  - name: Mobile API
+    description: 移动端API、离线同步、GraphQL查询
+
+servers:
+  - url: http://localhost:18789/api/v3
+    description: 本地开发服务器
+  - url: http://115.29.235.46:18789/api/v3
+    description: 生产服务器
+
+paths:
+  # ========== Agent Management ==========
+  /agents:
+    get:
+      tags: [Agent Management]
+      summary: 获取所有Agent列表
+      operationId: listAgents
+      parameters:
+        - name: status
+          in: query
+          schema:
+            type: string
+            enum: [active, idle, busy, offline]
+        - name: capability
+          in: query
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Agent列表
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  agents:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Agent'
+                  total:
+                    type: integer
+    post:
+      tags: [Agent Management]
+      summary: 注册新Agent
+      operationId: registerAgent
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AgentRegistration'
+      responses:
+        '201':
+          description: Agent注册成功
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Agent'
+
+  /agents/{agentId}:
+    get:
+      tags: [Agent Management]
+      summary: 获取指定Agent详情
+      operationId: getAgent
+      parameters:
+        - name: agentId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Agent详情
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AgentDetail'
+        '404':
+          description: Agent不存在
+    put:
+      tags: [Agent Management]
+      summary: 更新Agent信息
+      operationId: updateAgent
+      parameters:
+        - name: agentId
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AgentUpdate'
+      responses:
+        '200':
+          description: 更新成功
+    delete:
+      tags: [Agent Management]
+      summary: 注销Agent
+      operationId: unregisterAgent
+      parameters:
+        - name: agentId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '204':
+          description: 注销成功
+
+  # ========== Task Management ==========
+  /tasks:
+    get:
+      tags: [Task Management]
+      summary: 获取任务列表
+      operationId: listTasks
+      parameters:
+        - name: status
+          in: query
+          schema:
+            type: string
+            enum: [pending, running, completed, failed]
+        - name: limit
+          in: query
+          schema:
+            type: integer
+            default: 50
+      responses:
+        '200':
+          description: 任务列表
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  tasks:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Task'
+                  total:
+                    type: integer
+    post:
+      tags: [Task Management]
+      summary: 创建新任务
+      operationId: createTask
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TaskCreate'
+      responses:
+        '201':
+          description: 任务创建成功
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Task'
+
+  /tasks/{taskId}:
+    get:
+      tags: [Task Management]
+      summary: 获取任务详情
+      operationId: getTask
+      parameters:
+        - name: taskId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: 任务详情
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TaskDetail'
+    delete:
+      tags: [Task Management]
+      summary: 取消任务
+      operationId: cancelTask
+      parameters:
+        - name: taskId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '204':
+          description: 取消成功
+
+  /tasks/{taskId}/results:
+    get:
+      tags: [Task Management]
+      summary: 获取任务结果
+      operationId: getTaskResults
+      parameters:
+        - name: taskId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: 任务结果
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TaskResults'
+
+  # ========== Collaboration ==========
+  /collaboration/sessions:
+    get:
+      tags: [Collaboration]
+      summary: 获取协作会话列表
+      operationId: listSessions
+      parameters:
+        - name: status
+          in: query
+          schema:
+            type: string
+            enum: [active, paused, completed]
+      responses:
+        '200':
+          description: 会话列表
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  sessions:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/CollaborationSession'
+    post:
+      tags: [Collaboration]
+      summary: 创建协作会话
+      operationId: createSession
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SessionCreate'
+      responses:
+        '201':
+          description: 会话创建成功
+
+  /collaboration/sessions/{sessionId}:
+    get:
+      tags: [Collaboration]
+      summary: 获取会话详情
+      operationId: getSession
+      parameters:
+        - name: sessionId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: 会话详情
+    delete:
+      tags: [Collaboration]
+      summary: 结束会话
+      operationId: endSession
+      parameters:
+        - name: sessionId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '204':
+          description: 会话已结束
+
+  # ========== Health & Monitoring ==========
+  /health:
+    get:
+      tags: [Health & Monitoring]
+      summary: 系统健康检查
+      operationId: healthCheck
+      responses:
+        '200':
+          description: 健康状态
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HealthStatus'
+
+  /metrics:
+    get:
+      tags: [Health & Monitoring]
+      summary: 获取监控指标
+      operationId: getMetrics
+      parameters:
+        - name: period
+          in: query
+          schema:
+            type: string
+            enum: [1m, 5m, 15m, 1h, 24h]
+            default: 5m
+      responses:
+        '200':
+          description: 指标数据
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Metrics'
+
+  /alerts:
+    get:
+      tags: [Health & Monitoring]
+      summary: 获取告警列表
+      operationId: listAlerts
+      parameters:
+        - name: severity
+          in: query
+          schema:
+            type: string
+            enum: [info, warning, critical]
+        - name: status
+          in: query
+          schema:
+            type: string
+            enum: [active, acknowledged, resolved]
+      responses:
+        '200':
+          description: 告警列表
+
+  # ========== Service Mesh ==========
+  /mesh/services:
+    get:
+      tags: [Service Mesh]
+      summary: 获取服务列表
+      operationId: listServices
+      responses:
+        '200':
+          description: 服务列表
+
+  /mesh/circuit-breaker:
+    get:
+      tags: [Service Mesh]
+      summary: 获取熔断器状态
+      operationId: getCircuitBreakers
+      responses:
+        '200':
+          description: 熔断器状态
+
+  # ========== Mobile API ==========
+  /query:
+    post:
+      tags: [Mobile API]
+      summary: GraphQL风格查询
+      operationId: executeQuery
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                query:
+                  type: string
+                variables:
+                  type: object
+      responses:
+        '200':
+          description: 查询结果
+
+  /batch:
+    post:
+      tags: [Mobile API]
+      summary: 批量操作
+      operationId: batchOperation
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BatchRequest'
+      responses:
+        '200':
+          description: 批量操作结果
+
+  /sync/token:
+    post:
+      tags: [Mobile API]
+      summary: 获取离线同步令牌
+      operationId: getSyncToken
+      responses:
+        '200':
+          description: 同步令牌
+
+  /sync/changes:
+    get:
+      tags: [Mobile API]
+      summary: 获取增量变更
+      operationId: getChanges
+      parameters:
+        - name: since
+          in: query
+          required: true
+          schema:
+            type: string
+      responses:
+          '200':
+            description: 变更列表
+
+  /connection:
+    post:
+      tags: [Mobile API]
+      summary: 注册连接/心跳
+      operationId: registerConnection
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                deviceId:
+                  type: string
+                platform:
+                  type: string
+      responses:
+        '200':
+          description: 连接已注册
+
+components:
+  schemas:
+    Agent:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        status:
+          type: string
+          enum: [active, idle, busy, offline]
+        capabilities:
+          type: array
+          items:
+            type: string
+        metadata:
+          type: object
+
+    AgentDetail:
+      allOf:
+        - $ref: '#/components/schemas/Agent'
+        - type: object
+          properties:
+            uptime:
+              type: integer
+            tasksCompleted:
+              type: integer
+            currentTasks:
+              type: array
+              items:
+                type: string
+
+    AgentRegistration:
+      type: object
+      required:
+        - name
+        - capabilities
+      properties:
+        name:
+          type: string
+        capabilities:
+          type: array
+          items:
+            type: string
+        metadata:
+          type: object
+
+    AgentUpdate:
+      type: object
+      properties:
+        name:
+          type: string
+        capabilities:
+          type: array
+          items:
+            type: string
+        metadata:
+          type: object
+
+    Task:
+      type: object
+      properties:
+        id:
+          type: string
+        type:
+          type: string
+        status:
+          type: string
+          enum: [pending, running, completed, failed]
+        createdAt:
+          type: string
+          format: date-time
+
+    TaskDetail:
+      allOf:
+        - $ref: '#/components/schemas/Task'
+        - type: object
+          properties:
+            result:
+              type: object
+            error:
+              type: string
+            assignedAgent:
+              type: string
+
+    TaskCreate:
+      type: object
+      required:
+        - type
+        - payload
+      properties:
+        type:
+          type: string
+        payload:
+          type: object
+        priority:
+          type: integer
+          default: 5
+        timeout:
+          type: integer
+          default: 300
+
+    TaskResults:
+      type: object
+      properties:
+        taskId:
+          type: string
+        results:
+          type: array
+          items:
+            type: object
+        aggregated:
+          type: object
+        stats:
+          type: object
+
+    CollaborationSession:
+      type: object
+      properties:
+        id:
+          type: string
+        status:
+          type: string
+        participants:
+          type: array
+          items:
+            type: string
+        createdAt:
+          type: string
+          format: date-time
+
+    SessionCreate:
+      type: object
+      required:
+        - participants
+      properties:
+        participants:
+          type: array
+          items:
+            type: string
+        strategy:
+          type: string
+          enum: [parallel, sequential, pipeline]
+        checkpointEnabled:
+          type: boolean
+          default: false
+
+    HealthStatus:
+      type: object
+      properties:
+        status:
+          type: string
+          enum: [healthy, degraded, unhealthy]
+        version:
+          type: string
+        uptime:
+          type: integer
+        components:
+          type: object
+
+    Metrics:
+      type: object
+      properties:
+        period:
+          type: string
+        cpu:
+          type: number
+        memory:
+          type: number
+        requests:
+          type: integer
+        errors:
+          type: integer
+
+    BatchRequest:
+      type: object
+      required:
+        - operations
+      properties:
+        operations:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type: string
+              method:
+                type: string
+              path:
+                type: string
+              body:
+                type: object
+
+security:
+  - BearerAuth: []
+  - ApiKeyAuth: []
+
+securitySchemes:
+  BearerAuth:
+    type: http
+    scheme: bearer
+    bearerFormat: JWT
+  ApiKeyAuth:
+    type: apiKey
+    in: header
+    name: X-API-Key

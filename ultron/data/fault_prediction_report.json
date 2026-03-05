@@ -1,0 +1,21 @@
+{
+  "report_time": "2026-03-06T04:05:00+08:00",
+  "system_status": "HEALTHY",
+  "current_metrics": {
+    "cpu_percent": 25.7,
+    "memory_percent": 37.5,
+    "disk_percent": 30.2,
+    "load_avg": [1.41, 0.99, 1.01],
+    "process_count": 252,
+    "network_connections": 165
+  },
+  "predictions": [],
+  "trends": {
+    "cpu": "stable",
+    "memory": "stable", 
+    "disk": "stable",
+    "network": "stable"
+  },
+  "maintenance_actions": [],
+  "summary": "系统运行正常，未检测到即将发生的故障"
+}

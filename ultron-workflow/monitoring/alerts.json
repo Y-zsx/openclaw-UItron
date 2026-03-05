@@ -1,0 +1,16 @@
+[
+  {
+    "rule_id": "high_cpu",
+    "rule_name": "CPU使用率高",
+    "level": "warning",
+    "message": "CPU使用率 95% 过高!",
+    "timestamp": "2026-03-06T03:49:44.082725",
+    "context": {
+      "cpu_percent": 95,
+      "memory_percent": 40,
+      "disk_percent": 30,
+      "gateway_reachable": true
+    },
+    "status": "active"
+  }
+]

@@ -1,0 +1,80 @@
+[
+  {
+    "rule_id": "agent_down",
+    "name": "Agent离线",
+    "metric": "agent_status",
+    "condition": "==",
+    "value": "down",
+    "level": "critical",
+    "message": "Agent {agent_id} 已离线!",
+    "enabled": true,
+    "cooldown": 60
+  },
+  {
+    "rule_id": "high_memory",
+    "name": "内存使用率高",
+    "metric": "memory_percent",
+    "condition": ">",
+    "value": 85,
+    "level": "warning",
+    "message": "内存使用率 {memory_percent}% 超过阈值!",
+    "enabled": true,
+    "cooldown": 300
+  },
+  {
+    "rule_id": "high_cpu",
+    "name": "CPU使用率高",
+    "metric": "cpu_percent",
+    "condition": ">",
+    "value": 90,
+    "level": "warning",
+    "message": "CPU使用率 {cpu_percent}% 过高!",
+    "enabled": true,
+    "cooldown": 300,
+    "last_triggered": "2026-03-06T03:49:44.082725"
+  },
+  {
+    "rule_id": "gateway_unreachable",
+    "name": "Gateway不可达",
+    "metric": "gateway_reachable",
+    "condition": "==",
+    "value": false,
+    "level": "critical",
+    "message": "Gateway服务不可达!",
+    "enabled": true,
+    "cooldown": 60
+  },
+  {
+    "rule_id": "session_overflow",
+    "name": "会话数过多",
+    "metric": "session_count",
+    "condition": ">",
+    "value": 1000,
+    "level": "error",
+    "message": "会话数 {session_count} 超过阈值!",
+    "enabled": true,
+    "cooldown": 600
+  },
+  {
+    "rule_id": "agent_heartbeat_timeout",
+    "name": "Agent心跳超时",
+    "metric": "heartbeat_age",
+    "condition": ">",
+    "value": 300,
+    "level": "error",
+    "message": "Agent {agent_id} 心跳超时 {heartbeat_age}秒!",
+    "enabled": true,
+    "cooldown": 120
+  },
+  {
+    "rule_id": "disk_low",
+    "name": "磁盘空间不足",
+    "metric": "disk_percent",
+    "condition": ">",
+    "value": 90,
+    "level": "warning",
+    "message": "磁盘使用率 {disk_percent}% 过高!",
+    "enabled": true,
+    "cooldown": 600
+  }
+]
