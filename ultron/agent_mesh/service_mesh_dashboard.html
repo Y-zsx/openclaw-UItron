@@ -197,6 +197,12 @@
         
         <div class="section-title">📝 事件日志</div>
         <div class="logs" id="logs"></div>
+        
+        <!-- 服务拓扑图 -->
+        <div class="section-title">🔗 服务拓扑图</div>
+        <div class="topology-container" id="topologyContainer" style="grid-column: 1 / -1; background: #161b22; border: 1px solid #30363d; border-radius: 8px; padding: 20px; min-height: 400px; position: relative;">
+            <svg id="topologySvg" width="100%" height="400" style="display: block;"></svg>
+        </div>
     </div>
     
     <script>
@@ -293,6 +299,117 @@
             } catch (e) {}
         }
         
+        // ========== 拓扑图渲染 ==========
+        async function renderTopology() {
+            try {
+                const response = await fetch(`${API_BASE}/api/topology/graph`);
+                const data = await response.json();
+                
+                const svg = document.getElementById('topologySvg');
+                const width = svg.clientWidth || 800;
+                const height = 400;
+                
+                // 清空SVG
+                svg.innerHTML = '';
+                
+                // 节点位置计算 (简单的圆形布局)
+                const nodeCount = data.nodes.length;
+                const centerX = width / 2;
+                const centerY = height / 2;
+                const radius = Math.min(width, height) / 3;
+                
+                const nodePositions = {};
+                const serviceNodes = data.nodes.filter(n => n.group === 'service');
+                const endpointNodes = data.nodes.filter(n => n.group === 'endpoint');
+                
+                // 服务节点在外圈
+                serviceNodes.forEach((node, i) => {
+                    const angle = (2 * Math.PI * i) / serviceNodes.length - Math.PI / 2;
+                    nodePositions[node.id] = {
+                        x: centerX + radius * Math.cos(angle),
+                        y: centerY + radius * Math.sin(angle),
+                        node: node
+                    };
+                });
+                
+                // Endpoint节点在内圈
+                endpointNodes.forEach((node, i) => {
+                    const parentPos = nodePositions[node.service];
+                    if (parentPos) {
+                        const offset = 60;
+                        const angle = (2 * Math.PI * i) / endpointNodes.length;
+                        nodePositions[node.id] = {
+                            x: parentPos.x + offset * Math.cos(angle),
+                            y: parentPos.y + offset * Math.sin(angle),
+                            node: node
+                        };
+                    }
+                });
+                
+                // 绘制边
+                const links = svg.querySelector('links') || document.createElementNS('http://www.w3.org/2000/svg', 'g');
+                links.innerHTML = '';
+                
+                data.links.forEach(link => {
+                    const from = nodePositions[link.source];
+                    const to = nodePositions[link.target];
+                    if (from && to) {
+                        const line = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+                        line.setAttribute('x1', from.x);
+                        line.setAttribute('y1', from.y);
+                        line.setAttribute('x2', to.x);
+                        line.setAttribute('y2', to.y);
+                        line.setAttribute('stroke', '#30363d');
+                        line.setAttribute('stroke-width', '2');
+                        line.setAttribute('marker-end', 'url(#arrow)');
+                        links.appendChild(line);
+                    }
+                });
+                svg.appendChild(links);
+                
+                // 绘制节点
+                const nodesGroup = document.createElementNS('http://www.w3.org/2000/svg', 'g');
+                
+                // 定义箭头
+                const defs = document.createElementNS('http://www.w3.org/2000/svg', 'defs');
+                defs.innerHTML = `
+                    <marker id="arrow" markerWidth="10" markerHeight="10" refX="20" refY="3" orient="auto" markerUnits="strokeWidth">
+                        <path d="M0,0 L0,6 L9,3 z" fill="#30363d" />
+                    </marker>
+                `;
+                svg.appendChild(defs);
+                
+                for (const [id, pos] of Object.entries(nodePositions)) {
+                    const node = pos.node;
+                    const isService = node.group === 'service';
+                    const color = isService ? '#58a6ff' : (node.healthy ? '#3fb950' : '#f85149');
+                    
+                    // 节点圆
+                    const circle = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+                    circle.setAttribute('cx', pos.x);
+                    circle.setAttribute('cy', pos.y);
+                    circle.setAttribute('r', isService ? 25 : 18);
+                    circle.setAttribute('fill', color);
+                    circle.setAttribute('opacity', '0.8');
+                    nodesGroup.appendChild(circle);
+                    
+                    // 节点文字
+                    const text = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+                    text.setAttribute('x', pos.x);
+                    text.setAttribute('y', pos.y + (isService ? 40 : 30));
+                    text.setAttribute('text-anchor', 'middle');
+                    text.setAttribute('fill', '#c9d1d9');
+                    text.setAttribute('font-size', '11');
+                    text.textContent = node.name || id;
+                    nodesGroup.appendChild(text);
+                }
+                svg.appendChild(nodesGroup);
+                
+            } catch (e) {
+                console.error('拓扑图加载失败:', e);
+            }
+        }
+        
         async function init() {
             addLog('控制台初始化', 'info');
             
@@ -359,6 +476,10 @@
                 }
                 updateCharts();
             }, 3000);
+            
+            // 定期更新拓扑图
+            setInterval(renderTopology, 10000);
+            renderTopology();
             
             addLog('已连接到服务网格', 'success');
         }

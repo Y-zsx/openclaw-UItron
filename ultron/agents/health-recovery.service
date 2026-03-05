@@ -1,0 +1,14 @@
+[Unit]
+Description=Agent Health Check and Auto-Recovery Service
+After=network.target
+
+[Service]
+Type=simple
+User=root
+WorkingDirectory=/root/.openclaw/workspace/ultron/agents
+ExecStart=/usr/bin/python3 /root/.openclaw/workspace/ultron/agents/health_recovery_api.py
+Restart=always
+RestartSec=10
+
+[Install]
+WantedBy=multi-user.target

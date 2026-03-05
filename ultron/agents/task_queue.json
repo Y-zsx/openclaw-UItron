@@ -382,6 +382,60 @@
       "type": "message",
       "timestamp": "2026-03-05T19:26:26.861391",
       "status": "pending"
+    },
+    {
+      "id": "41",
+      "sender": "executor",
+      "recipient": "messenger",
+      "message": "执行完成: 6个任务",
+      "type": "message",
+      "timestamp": "2026-03-05T22:19:07.009419",
+      "status": "pending"
+    },
+    {
+      "id": "42",
+      "sender": "monitor",
+      "recipient": "messenger",
+      "message": "状态报告: Load=0.5, Mem=20.7%, Disk=30%",
+      "type": "message",
+      "timestamp": "2026-03-05T22:19:07.097918",
+      "status": "pending"
+    },
+    {
+      "id": "43",
+      "sender": "executor",
+      "recipient": "messenger",
+      "message": "执行完成: 6个任务",
+      "type": "message",
+      "timestamp": "2026-03-05T22:19:16.998784",
+      "status": "pending"
+    },
+    {
+      "id": "44",
+      "sender": "monitor",
+      "recipient": "messenger",
+      "message": "状态报告: Load=0.43, Mem=20.7%, Disk=30%",
+      "type": "message",
+      "timestamp": "2026-03-05T22:19:17.076976",
+      "status": "pending"
+    },
+    {
+      "id": "45",
+      "sender": "executor",
+      "recipient": "messenger",
+      "message": "执行完成: 6个任务",
+      "type": "message",
+      "timestamp": "2026-03-05T22:19:27.023909",
+      "status": "pending"
+    },
+    {
+      "id": "46",
+      "sender": "monitor",
+      "recipient": "messenger",
+      "message": "状态报告: Load=0.36, Mem=19.0%, Disk=30%",
+      "type": "message",
+      "timestamp": "2026-03-05T22:19:27.083150",
+      "status": "pending"
     }
   ],
   "events": [

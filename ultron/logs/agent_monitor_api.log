@@ -13,6 +13,275 @@
 2026-03-05 21:45:35,162 [INFO] werkzeug: 127.0.0.1 - - [05/Mar/2026 21:45:35] "GET /api/monitor/summary HTTP/1.1" 200 -
 2026-03-05 21:45:39,341 [INFO] werkzeug: 127.0.0.1 - - [05/Mar/2026 21:45:39] "GET /api/agents HTTP/1.1" 200 -
 2026-03-05 21:46:05,982 [INFO] werkzeug: 127.0.0.1 - - [05/Mar/2026 21:46:05] "GET /api/monitor/summary HTTP/1.1" 200 -
+2026-03-05 22:16:51,400 [INFO] werkzeug: 127.0.0.1 - - [05/Mar/2026 22:16:51] "[33mGET /api/health HTTP/1.1[0m" 404 -
+2026-03-05 22:16:53,259 [INFO] werkzeug: 127.0.0.1 - - [05/Mar/2026 22:16:53] "[33mGET /api/status HTTP/1.1[0m" 404 -
+2026-03-05 22:16:56,297 [INFO] werkzeug: 127.0.0.1 - - [05/Mar/2026 22:16:56] "[33mGET / HTTP/1.1[0m" 404 -
+2026-03-05 22:17:05,823 [INFO] werkzeug: 127.0.0.1 - - [05/Mar/2026 22:17:05] "[33mGET /api/monitor/agents HTTP/1.1[0m" 404 -
+2026-03-05 22:17:11,901 [INFO] werkzeug: 127.0.0.1 - - [05/Mar/2026 22:17:11] "GET /api/monitor/summary HTTP/1.1" 200 -
+2026-03-05 22:17:14,781 [INFO] werkzeug: 127.0.0.1 - - [05/Mar/2026 22:17:14] "GET /api/agents HTTP/1.1" 200 -
+2026-03-05 22:17:18,057 [INFO] werkzeug: 127.0.0.1 - - [05/Mar/2026 22:17:18] "GET /api/alerts HTTP/1.1" 200 -
+
+ * Debug mode: off
+ * Serving Flask app 'agent_monitor_api'
+ * Debug mode: off
+ * Serving Flask app 'agent_monitor_api'
+ * Debug mode: off
+ * Serving Flask app 'agent_monitor_api'
+ * Debug mode: off
+ * Serving Flask app 'agent_monitor_api'
+ * Debug mode: off
+ * Serving Flask app 'agent_monitor_api'
+ * Debug mode: off
+ * Serving Flask app 'agent_monitor_api'
+ * Debug mode: off
+ * Serving Flask app 'agent_monitor_api'
+ * Debug mode: off
+ * Serving Flask app 'agent_monitor_api'
+ * Debug mode: off
+ * Serving Flask app 'agent_monitor_api'
+ * Debug mode: off
+ * Serving Flask app 'agent_monitor_api'
+ * Debug mode: off
+ * Serving Flask app 'agent_monitor_api'
+ * Debug mode: off
+ * Serving Flask app 'agent_monitor_api'
+ * Debug mode: off
+ * Serving Flask app 'agent_monitor_api'
+ * Debug mode: off
+ * Serving Flask app 'agent_monitor_api'
+ * Debug mode: off
+ * Serving Flask app 'agent_monitor_api'
+ * Debug mode: off
+ * Serving Flask app 'agent_monitor_api'
+ * Debug mode: off
+ * Serving Flask app 'agent_monitor_api'
+ * Debug mode: off
+ * Serving Flask app 'agent_monitor_api'
+ * Debug mode: off
+ * Serving Flask app 'agent_monitor_api'
+ * Debug mode: off
+ * Serving Flask app 'agent_monitor_api'
+ * Debug mode: off
+ * Serving Flask app 'agent_monitor_api'
+ * Debug mode: off
+ * Serving Flask app 'agent_monitor_api'
+ * Debug mode: off
+ * Serving Flask app 'agent_monitor_api'
+ * Debug mode: off
+ * Serving Flask app 'agent_monitor_api'
+ * Debug mode: off
+ * Serving Flask app 'agent_monitor_api'
+ * Debug mode: off
+ * Serving Flask app 'agent_monitor_api'
+ * Debug mode: off
+ * Serving Flask app 'agent_monitor_api'
+ * Debug mode: off
+ * Serving Flask app 'agent_monitor_api'
+ * Debug mode: off
+ * Serving Flask app 'agent_monitor_api'
+ * Debug mode: off
+ * Serving Flask app 'agent_monitor_api'
+ * Debug mode: off
+ * Serving Flask app 'agent_monitor_api'
+ * Debug mode: off
+ * Serving Flask app 'agent_monitor_api'
+ * Debug mode: off
+ * Serving Flask app 'agent_monitor_api'
+ * Debug mode: off
+ * Serving Flask app 'agent_monitor_api'
+ * Debug mode: off
+ * Serving Flask app 'agent_monitor_api'
+ * Debug mode: off
+ * Serving Flask app 'agent_monitor_api'
+ * Debug mode: off
+ * Serving Flask app 'agent_monitor_api'
+ * Debug mode: off
+ * Serving Flask app 'agent_monitor_api'
+ * Debug mode: off
+ * Serving Flask app 'agent_monitor_api'
+ * Debug mode: off
+ * Serving Flask app 'agent_monitor_api'
+ * Debug mode: off
+ * Serving Flask app 'agent_monitor_api'
+ * Debug mode: off
+ * Serving Flask app 'agent_monitor_api'
+ * Debug mode: off
+ * Serving Flask app 'agent_monitor_api'
+ * Debug mode: off
+ * Serving Flask app 'agent_monitor_api'
+ * Debug mode: off
+ * Serving Flask app 'agent_monitor_api'
+ * Debug mode: off
+ * Serving Flask app 'agent_monitor_api'
+ * Debug mode: off
+ * Serving Flask app 'agent_monitor_api'
+ * Debug mode: off
+ * Serving Flask app 'agent_monitor_api'
+ * Debug mode: off
+ * Serving Flask app 'agent_monitor_api'
+ * Debug mode: off
+ * Serving Flask app 'agent_monitor_api'
+ * Debug mode: off
+ * Serving Flask app 'agent_monitor_api'
+ * Debug mode: off
+ * Serving Flask app 'agent_monitor_api'
+ * Debug mode: off
+ * Serving Flask app 'agent_monitor_api'
+ * Debug mode: off
+ * Serving Flask app 'agent_monitor_api'
+ * Debug mode: off
+ * Serving Flask app 'agent_monitor_api'
+ * Debug mode: off
+ * Serving Flask app 'agent_monitor_api'
+ * Debug mode: off
+ * Serving Flask app 'agent_monitor_api'
+ * Debug mode: off
+ * Serving Flask app 'agent_monitor_api'
+ * Debug mode: off
+ * Serving Flask app 'agent_monitor_api'
+ * Debug mode: off
+ * Serving Flask app 'agent_monitor_api'
+ * Debug mode: off
+ * Serving Flask app 'agent_monitor_api'
+ * Debug mode: off
+ * Serving Flask app 'agent_monitor_api'
+ * Debug mode: off
+ * Serving Flask app 'agent_monitor_api'
+ * Debug mode: off
+ * Serving Flask app 'agent_monitor_api'
+ * Debug mode: off
+ * Serving Flask app 'agent_monitor_api'
+ * Debug mode: off
+ * Serving Flask app 'agent_monitor_api'
+ * Debug mode: off
+ * Serving Flask app 'agent_monitor_api'
+ * Debug mode: off
+ * Serving Flask app 'agent_monitor_api'
+ * Debug mode: off
+ * Serving Flask app 'agent_monitor_api'
+ * Debug mode: off
+ * Serving Flask app 'agent_monitor_api'
+ * Debug mode: off
+ * Serving Flask app 'agent_monitor_api'
+ * Debug mode: off
+ * Serving Flask app 'agent_monitor_api'
+ * Debug mode: off
+ * Serving Flask app 'agent_monitor_api'
+ * Debug mode: off
+ * Serving Flask app 'agent_monitor_api'
+ * Debug mode: off
+ * Serving Flask app 'agent_monitor_api'
+ * Debug mode: off
+ * Serving Flask app 'agent_monitor_api'
+ * Debug mode: off
+ * Serving Flask app 'agent_monitor_api'
+ * Debug mode: off
+ * Serving Flask app 'agent_monitor_api'
+ * Debug mode: off
+ * Serving Flask app 'agent_monitor_api'
+ * Debug mode: off
+ * Serving Flask app 'agent_monitor_api'
+ * Debug mode: off
+ * Serving Flask app 'agent_monitor_api'
+ * Debug mode: off
+ * Serving Flask app 'agent_monitor_api'
+ * Debug mode: off
+ * Serving Flask app 'agent_monitor_api'
+ * Debug mode: off
+ * Serving Flask app 'agent_monitor_api'
+ * Debug mode: off
+ * Serving Flask app 'agent_monitor_api'
+ * Debug mode: off
+ * Serving Flask app 'agent_monitor_api'
+ * Debug mode: off
+ * Serving Flask app 'agent_monitor_api'
+ * Debug mode: off
+ * Serving Flask app 'agent_monitor_api'
+ * Debug mode: off
+ * Serving Flask app 'agent_monitor_api'
+ * Debug mode: off
+ * Serving Flask app 'agent_monitor_api'
+ * Debug mode: off
+ * Serving Flask app 'agent_monitor_api'
+ * Debug mode: off
+ * Serving Flask app 'agent_monitor_api'
+ * Debug mode: off
+ * Serving Flask app 'agent_monitor_api'
+ * Debug mode: off
+ * Serving Flask app 'agent_monitor_api'
+ * Debug mode: off
+ * Serving Flask app 'agent_monitor_api'
+ * Debug mode: off
+ * Serving Flask app 'agent_monitor_api'
+ * Debug mode: off
+ * Serving Flask app 'agent_monitor_api'
+ * Debug mode: off
+ * Serving Flask app 'agent_monitor_api'
+ * Debug mode: off
+ * Serving Flask app 'agent_monitor_api'
+ * Debug mode: off
+ * Serving Flask app 'agent_monitor_api'
+ * Debug mode: off
+ * Serving Flask app 'agent_monitor_api'
+ * Debug mode: off
+ * Serving Flask app 'agent_monitor_api'
+ * Debug mode: off
+ * Serving Flask app 'agent_monitor_api'
+ * Debug mode: off
+ * Serving Flask app 'agent_monitor_api'
+ * Debug mode: off
+ * Serving Flask app 'agent_monitor_api'
+ * Debug mode: off
+ * Serving Flask app 'agent_monitor_api'
+ * Debug mode: off
+ * Serving Flask app 'agent_monitor_api'
+ * Debug mode: off
+ * Serving Flask app 'agent_monitor_api'
+ * Debug mode: off
+ * Serving Flask app 'agent_monitor_api'
+ * Debug mode: off
+ * Serving Flask app 'agent_monitor_api'
+ * Debug mode: off
+ * Serving Flask app 'agent_monitor_api'
+ * Debug mode: off
+ * Serving Flask app 'agent_monitor_api'
+ * Debug mode: off
+ * Serving Flask app 'agent_monitor_api'
+ * Debug mode: off
+ * Serving Flask app 'agent_monitor_api'
+ * Debug mode: off
+ * Serving Flask app 'agent_monitor_api'
+ * Debug mode: off
+ * Serving Flask app 'agent_monitor_api'
+ * Debug mode: off
+ * Serving Flask app 'agent_monitor_api'
+ * Debug mode: off
+ * Serving Flask app 'agent_monitor_api'
+ * Debug mode: off
+ * Serving Flask app 'agent_monitor_api'
+ * Debug mode: off
+ * Serving Flask app 'agent_monitor_api'
+ * Debug mode: off
+ * Serving Flask app 'agent_monitor_api'
+ * Debug mode: off
+ * Serving Flask app 'agent_monitor_api'
+ * Debug mode: off
+ * Serving Flask app 'agent_monitor_api'
+ * Debug mode: off
+ * Serving Flask app 'agent_monitor_api'
+ * Debug mode: off
+ * Serving Flask app 'agent_monitor_api'
+ * Debug mode: off
+ * Serving Flask app 'agent_monitor_api'
+ * Debug mode: off
+ * Serving Flask app 'agent_monitor_api'
+ * Debug mode: off
+ * Serving Flask app 'agent_monitor_api'
+ * Debug mode: off
+ * Serving Flask app 'agent_monitor_api'
+ * Debug mode: off
+ * Serving Flask app 'agent_monitor_api'
+ * Debug mode: off
  * Serving Flask app 'agent_monitor_api'
  * Debug mode: off
  * Serving Flask app 'agent_monitor_api'

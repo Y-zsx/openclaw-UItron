@@ -1,0 +1,17 @@
+[Unit]
+Description=Ultron Load Balancer API Service
+After=network.target
+
+[Service]
+Type=simple
+User=root
+WorkingDirectory=/root/.openclaw/workspace/ultron/agents
+ExecStart=/usr/bin/python3 load_balancer_api.py
+Restart=always
+RestartSec=10
+
+StandardOutput=append:/var/log/ultron_load_balancer.log
+StandardError=append:/var/log/ultron_load_balancer.log
+
+[Install]
+WantedBy=multi-user.target
