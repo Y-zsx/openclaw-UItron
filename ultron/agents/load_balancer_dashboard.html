@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agent集群负载均衡监控</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #0d1117; color: #c9d1d9; padding: 20px; }
+        .header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
+        .header h1 { color: #58a6ff; font-size: 24px; }
+        .status { display: inline-block; padding: 4px 12px; border-radius: 12px; font-size: 12px; }
+        .status.healthy { background: #238636; color: #fff; }
+        .status.degraded { background: #9e6a03; color: #fff; }
+        .status.unhealthy { background: #da3633; color: #fff; }
+        
+        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 16px; margin-bottom: 20px; }
+        .card { background: #161b22; border: 1px solid #30363d; border-radius: 6px; padding: 16px; }
+        .card h3 { color: #8b949e; font-size: 14px; margin-bottom: 12px; }
+        
+        .stat { display: flex; justify-content: space-between; align-items: center; padding: 8px 0; border-bottom: 1px solid #30363d; }
+        .stat:last-child { border-bottom: none; }
+        .stat-label { color: #8b949e; }
+        .stat-value { font-size: 20px; font-weight: 600; color: #58a6ff; }
+        
+        .agent-list { max-height: 400px; overflow-y: auto; }
+        .agent-item { display: flex; justify-content: space-between; align-items: center; padding: 12px; background: #21262d; border-radius: 6px; margin-bottom: 8px; }
+        .agent-item:last-child { margin-bottom: 0; }
+        .agent-info { flex: 1; }
+        .agent-name { font-weight: 600; color: #fff; }
+        .agent-meta { font-size: 12px; color: #8b949e; margin-top: 4px; }
+        .agent-stats { text-align: right; }
+        .agent-load { font-size: 18px; font-weight: 600; }
+        .agent-rate { font-size: 12px; color: #3fb950; }
+        
+        .chart-container { height: 200px; }
+        
+        .btn { background: #238636; color: #fff; border: none; padding: 8px 16px; border-radius: 6px; cursor: pointer; font-size: 14px; }
+        .btn:hover { background: #2ea043; }
+        .btn-secondary { background: #30363d; }
+        .btn-secondary:hover { background: #484f58; }
+        
+        .controls { display: flex; gap: 8px; margin-bottom: 16px; }
+        select, input { background: #0d1117; border: 1px solid #30363d; color: #c9d1d9; padding: 8px 12px; border-radius: 6px; }
+        
+        .log-container { background: #0d1117; border: 1px solid #30363d; border-radius: 6px; padding: 12px; max-height: 200px; overflow-y: auto; font-family: monospace; font-size: 12px; }
+        .log-entry { padding: 4px 0; border-bottom: 1px solid #21262d; }
+        .log-entry.error { color: #f85149; }
+        .log-entry.success { color: #3fb950; }
+        .log-entry.warn { color: #d29922; }
+        
+        .refresh-indicator { font-size: 12px; color: #8b949e; }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>🦞 Agent集群负载均衡监控</h1>
+        <span class="refresh-indicator">自动刷新: <span id="refreshTime">--</span></span>
+    </div>
+    
+    <div class="controls">
+        <select id="strategySelect">
+            <option value="least_load">最低负载</option>
+            <option value="least_connections">最少连接</option>
+            <option value="round_robin">轮询</option>
+            <option value="performance">性能最优</option>
+            <option value="random">随机</option>
+            <option value="weighted">加权</option>
+        </select>
+        <button class="btn" onclick="refreshData()">🔄 刷新</button>
+    </div>
+    
+    <div class="grid">
+        <div class="card">
+            <h3>📊 集群概览</h3>
+            <div class="stat">
+                <span class="stat-label">总Agent数</span>
+                <span class="stat-value" id="totalAgents">0</span>
+            </div>
+            <div class="stat">
+                <span class="stat-label">健康Agent</span>
+                <span class="stat-value" id="healthyAgents">0</span>
+            </div>
+            <div class="stat">
+                <span class="stat-label">当前策略</span>
+                <span class="stat-value" id="currentStrategy">--</span>
+            </div>
+        </div>
+        
+        <div class="card">
+            <h3>⚡ 故障转移状态</h3>
+            <div class="stat">
+                <span class="stat-label">失败任务</span>
+                <span class="stat-value" id="failedTasks">0</span>
+            </div>
+            <div class="stat">
+                <span class="stat-label">离线Agent</span>
+                <span class="stat-value" id="offlineAgents">0</span>
+            </div>
+            <div class="stat">
+                <span class="stat-label">自动故障转移</span>
+                <span class="stat-value" id="autoFailover">--</span>
+            </div>
+        </div>
+        
+        <div class="card">
+            <h3>📈 负载分布</h3>
+            <div class="chart-container">
+                <canvas id="loadChart"></canvas>
+            </div>
+        </div>
+    </div>
+    
+    <div class="grid">
+        <div class="card">
+            <h3>🤖 Agent列表</h3>
+            <div class="agent-list" id="agentList"></div>
+        </div>
+        
+        <div class="card">
+            <h3>📋 事件日志</h3>
+            <div class="log-container" id="logContainer"></div>
+        </div>
+    </div>
+    
+    <script>
+        let loadChart = null;
+        
+        function initChart() {
+            const ctx = document.getElementById('loadChart').getContext('2d');
+            loadChart = new Chart(ctx, {
+                type: 'doughnut',
+                data: {
+                    labels: ['健康', '降级', '不健康'],
+                    datasets: [{
+                        data: [0, 0, 0],
+                        backgroundColor: ['#238636', '#9e6a03', '#da3633'],
+                        borderWidth: 0
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: { position: 'right', labels: { color: '#c9d1d9' } }
+                    }
+                }
+            });
+        }
+        
+        async function refreshData() {
+            try {
+                const [statsResp, agentsResp, failoverResp] = await Promise.all([
+                    fetch('/api/stats'),
+                    fetch('/api/agents'),
+                    fetch('/api/failover/status')
+                ]);
+                
+                const stats = await statsResp.json();
+                const agents = await agentsResp.json();
+                const failover = await failoverResp.json();
+                
+                // 更新集群概览
+                document.getElementById('totalAgents').textContent = stats.load_balancer.total_agents || 0;
+                document.getElementById('healthyAgents').textContent = stats.load_balancer.healthy_agents || 0;
+                document.getElementById('currentStrategy').textContent = stats.load_balancer.strategy || '--';
+                
+                // 更新故障转移
+                document.getElementById('failedTasks').textContent = failover.failed_tasks || 0;
+                document.getElementById('offlineAgents').textContent = failover.offline_agents?.length || 0;
+                document.getElementById('autoFailover').textContent = failover.config?.auto_failover ? '已启用' : '已禁用';
+                
+                // 更新图表
+                const agentList = Object.values(stats.load_balancer.agents || {});
+                const healthy = agentList.filter(a => a.success_rate >= 70).length;
+                const degraded = agentList.filter(a => a.success_rate >= 50 && a.success_rate < 70).length;
+                const unhealthy = agentList.filter(a => a.success_rate < 50).length;
+                
+                loadChart.data.datasets[0].data = [healthy, degraded, Math.max(0, agentList.length - healthy - degraded)];
+                loadChart.update();
+                
+                // 更新Agent列表
+                const agentListEl = document.getElementById('agentList');
+                agentListEl.innerHTML = agentList.map(a => {
+                    const status = a.success_rate >= 70 ? 'healthy' : a.success_rate >= 50 ? 'degraded' : 'unhealthy';
+                    return `
+                        <div class="agent-item">
+                            <div class="agent-info">
+                                <div class="agent-name">${a.agent_id}</div>
+                                <div class="agent-meta">
+                                    成功率: ${a.success_rate}% | 平均响应: ${a.avg_execution_time}ms | 权重: ${a.weight}
+                                </div>
+                            </div>
+                            <div class="agent-stats">
+                                <div class="agent-load">${a.current_load}</div>
+                                <div class="agent-rate">${a.completed_tasks} 任务</div>
+                            </div>
+                            <span class="status ${status}" style="margin-left: 12px;">${a.success_rate}%</span>
+                        </div>
+                    `;
+                }).join('');
+                
+                // 更新时间
+                document.getElementById('refreshTime').textContent = new Date().toLocaleTimeString();
+                
+            } catch (e) {
+                addLog('error', '获取数据失败: ' + e.message);
+            }
+        }
+        
+        function addLog(type, message) {
+            const container = document.getElementById('logContainer');
+            const entry = document.createElement('div');
+            entry.className = `log-entry ${type}`;
+            entry.textContent = `[${new Date().toLocaleTimeString()}] ${message}`;
+            container.insertBefore(entry, container.firstChild);
+            if (container.children.length > 50) container.removeChild(container.lastChild);
+        }
+        
+        // 策略切换
+        document.getElementById('strategySelect').addEventListener('change', async (e) => {
+            try {
+                await fetch('/api/strategy', {
+                    method: 'PUT',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify({strategy: e.target.value})
+                });
+                addLog('success', `策略已切换: ${e.target.value}`);
+                refreshData();
+            } catch (e) {
+                addLog('error', '策略切换失败');
+            }
+        });
+        
+        initChart();
+        refreshData();
+        setInterval(refreshData, 5000);
+    </script>
+</body>
+</html>

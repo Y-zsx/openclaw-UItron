@@ -1,10 +1,13 @@
-[
-  {
-    "time": "2026-03-05T19:02:00Z",
-    "type": "heartbeat",
-    "status": "healthy",
-    "load": "low",
-    "action": "system_check",
-    "note": "系统运行正常，转世系统已关闭，保留监控"
-  }
-]
+{
+  "timestamp": "2026-03-05T20:08:00Z",
+  "heartbeat": true,
+  "status": "healthy",
+  "load": 0.43,
+  "memory_percent": 14,
+  "actions_taken": [
+    "checked_working_memory",
+    "checked_incarnation_memory", 
+    "verified_openclaw_status"
+  ],
+  "conclusion": "系统运行正常，无待处理任务，第6世行为学习系统进行中"
+}
