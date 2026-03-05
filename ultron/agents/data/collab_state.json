@@ -1,0 +1,71 @@
+{
+  "agents": [
+    {
+      "name": "Monitor-Agent",
+      "type": "monitor",
+      "status": "active",
+      "capabilities": ["监控", "告警", "指标收集"],
+      "last_heartbeat": "2026-03-05T19:40:00"
+    },
+    {
+      "name": "Executor-Agent",
+      "type": "executor",
+      "status": "active",
+      "capabilities": ["任务执行", "自动化", "脚本运行"],
+      "last_heartbeat": "2026-03-05T19:40:00"
+    },
+    {
+      "name": "Analyzer-Agent",
+      "type": "analyzer",
+      "status": "active",
+      "capabilities": ["数据分析", "决策支持", "趋势预测"],
+      "last_heartbeat": "2026-03-05T19:40:00"
+    },
+    {
+      "name": "Communicator-Agent",
+      "type": "communicator",
+      "status": "active",
+      "capabilities": ["消息路由", "通知", "协调"],
+      "last_heartbeat": "2026-03-05T19:40:00"
+    },
+    {
+      "name": "Orchestrator-Agent",
+      "type": "orchestrator",
+      "status": "active",
+      "capabilities": ["任务编排", "工作流", "Agent协调"],
+      "last_heartbeat": "2026-03-05T19:40:00"
+    }
+  ],
+  "tasks": [
+    {
+      "id": "task-001",
+      "title": "系统健康检查",
+      "agent": "Monitor-Agent",
+      "status": "completed",
+      "created_at": "2026-03-05T19:30:00"
+    },
+    {
+      "id": "task-002",
+      "title": "数据备份任务",
+      "agent": "Executor-Agent",
+      "status": "running",
+      "created_at": "2026-03-05T19:35:00"
+    },
+    {
+      "id": "task-003",
+      "title": "性能分析报告",
+      "agent": "Analyzer-Agent",
+      "status": "pending",
+      "created_at": "2026-03-05T19:40:00"
+    },
+    {
+      "id": "task-004",
+      "title": "日志收集",
+      "agent": "Communicator-Agent",
+      "status": "pending",
+      "created_at": "2026-03-05T19:41:00"
+    }
+  ],
+  "messages": [],
+  "last_update": "2026-03-05T19:44:00"
+}

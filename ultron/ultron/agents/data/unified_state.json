@@ -1,0 +1,45 @@
+{
+  "agents": {
+    "agent-09ebdfb3": {
+      "agent_id": "agent-09ebdfb3",
+      "name": "测试Agent",
+      "capabilities": [
+        "monitor",
+        "execute",
+        "analyze"
+      ],
+      "status": "active",
+      "load": 0,
+      "health_score": 100,
+      "metadata": {},
+      "registered_at": "2026-03-05T19:42:41.477538",
+      "last_heartbeat": "2026-03-05T19:42:41.477569"
+    }
+  },
+  "tasks": {
+    "task-00980715": {
+      "task_id": "task-00980715",
+      "type": "data_analysis",
+      "description": "分析服务器日志",
+      "status": "pending",
+      "priority": 8,
+      "assigned_agent": null,
+      "payload": {},
+      "created_at": "2026-03-05T19:42:50.940886",
+      "result": null,
+      "error": null
+    }
+  },
+  "messages": [
+    {
+      "message_id": "msg-3317c22c",
+      "from": "agent-09ebdfb3",
+      "to": "agent-09ebdfb3",
+      "content": "测试消息",
+      "type": "text",
+      "timestamp": "2026-03-05T19:42:55.973474",
+      "read": false
+    }
+  ],
+  "last_update": "2026-03-05T19:42:55.973504"
+}

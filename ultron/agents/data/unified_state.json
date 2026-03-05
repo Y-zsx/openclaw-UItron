@@ -1,0 +1,44 @@
+{
+  "agents": {
+    "agent-57487bc2": {
+      "agent_id": "agent-57487bc2",
+      "name": "监控Agent",
+      "capabilities": [
+        "monitor",
+        "analyze"
+      ],
+      "status": "active",
+      "load": 0,
+      "health_score": 100,
+      "metadata": {},
+      "registered_at": "2026-03-05T19:43:33.938865",
+      "last_heartbeat": "2026-03-05T19:43:33.938892"
+    }
+  },
+  "tasks": {
+    "task-63785cf3": {
+      "task_id": "task-63785cf3",
+      "type": "test",
+      "description": "测试任务",
+      "status": "pending",
+      "priority": 5,
+      "assigned_agent": null,
+      "payload": {},
+      "created_at": "2026-03-05T19:43:55.949180",
+      "result": null,
+      "error": null
+    }
+  },
+  "messages": [
+    {
+      "message_id": "msg-8f425732",
+      "from": "agent-57487bc2",
+      "to": "agent-57487bc2",
+      "content": "Hello from unified CLI",
+      "type": "text",
+      "timestamp": "2026-03-05T19:44:05.420656",
+      "read": false
+    }
+  ],
+  "last_update": "2026-03-05T19:44:05.420722"
+}
