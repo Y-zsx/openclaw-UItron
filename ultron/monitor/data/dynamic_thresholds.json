@@ -1,0 +1,56 @@
+{
+  "cpu_usage": {
+    "metric_name": "cpu_usage",
+    "base_threshold": 80,
+    "current_threshold": 80,
+    "min_threshold": 60,
+    "max_threshold": 95,
+    "adaptation_factor": 0.1,
+    "last_updated": 1772710334.0865192
+  },
+  "memory_usage": {
+    "metric_name": "memory_usage",
+    "base_threshold": 85,
+    "current_threshold": 85,
+    "min_threshold": 70,
+    "max_threshold": 95,
+    "adaptation_factor": 0.1,
+    "last_updated": 1772710334.0865266
+  },
+  "disk_usage": {
+    "metric_name": "disk_usage",
+    "base_threshold": 90,
+    "current_threshold": 90,
+    "min_threshold": 80,
+    "max_threshold": 98,
+    "adaptation_factor": 0.05,
+    "last_updated": 1772710334.0865285
+  },
+  "load_1m": {
+    "metric_name": "load_1m",
+    "base_threshold": 5.0,
+    "current_threshold": 5.0,
+    "min_threshold": 2.0,
+    "max_threshold": 10.0,
+    "adaptation_factor": 0.15,
+    "last_updated": 1772710334.0865295
+  },
+  "task_queue_length": {
+    "metric_name": "task_queue_length",
+    "base_threshold": 100,
+    "current_threshold": 100,
+    "min_threshold": 50,
+    "max_threshold": 200,
+    "adaptation_factor": 0.2,
+    "last_updated": 1772710334.086531
+  },
+  "message_latency": {
+    "metric_name": "message_latency",
+    "base_threshold": 10.0,
+    "current_threshold": 10.0,
+    "min_threshold": 5.0,
+    "max_threshold": 30.0,
+    "adaptation_factor": 0.15,
+    "last_updated": 1772710334.086532
+  }
+}
