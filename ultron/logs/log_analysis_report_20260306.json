@@ -1,0 +1,28 @@
+{
+  "generated_at": "2026-03-06T07:36:00",
+  "incarnation": 58,
+  "task": "决策引擎日志聚合与分析平台",
+  "summary": {
+    "total_alerts": 2893,
+    "decision_executions": 88,
+    "http_200": 1140
+  },
+  "alerts_by_level": {
+    "info": 5,
+    "critical": 1,
+    "unknown": 2887
+  },
+  "alerts_by_source": {
+    "cpu": 1,
+    "memory": 2,
+    "disk": 2,
+    "services": 1,
+    "portal-cn": 199
+  },
+  "decision_engine": {
+    "executions": 88,
+    "success_rate": "100%",
+    "http_200": 1140
+  },
+  "health_status": "HEALTHY"
+}

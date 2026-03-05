@@ -1,0 +1,340 @@
+{
+  "timestamp": "2026-03-06T07:14:07.852310",
+  "logs_analyzed": [
+    {
+      "file": "task_monitor.log",
+      "size_bytes": 99,
+      "line_count": 2,
+      "error_count": 0,
+      "warning_count": 0,
+      "info_count": 0,
+      "last_modified": "2026-03-06T06:57:10.316269"
+    },
+    {
+      "file": "task_scheduler.log",
+      "size_bytes": 394,
+      "line_count": 8,
+      "error_count": 0,
+      "warning_count": 0,
+      "info_count": 0,
+      "last_modified": "2026-03-06T06:28:35.698533"
+    },
+    {
+      "file": "health_scheduler.log",
+      "size_bytes": 553,
+      "line_count": 10,
+      "error_count": 0,
+      "warning_count": 2,
+      "info_count": 0,
+      "last_modified": "2026-03-06T06:51:51.359482"
+    },
+    {
+      "file": "queue_manager.log",
+      "size_bytes": 379,
+      "line_count": 5,
+      "error_count": 0,
+      "warning_count": 0,
+      "info_count": 0,
+      "last_modified": "2026-03-06T06:54:48.530141"
+    },
+    {
+      "file": "cron_sync.log",
+      "size_bytes": 181,
+      "line_count": 3,
+      "error_count": 0,
+      "warning_count": 0,
+      "info_count": 0,
+      "last_modified": "2026-03-06T06:33:01.366522"
+    },
+    {
+      "file": "health_api.log",
+      "size_bytes": 446,
+      "line_count": 9,
+      "error_count": 1,
+      "warning_count": 0,
+      "info_count": 0,
+      "last_modified": "2026-03-06T06:23:51.562267"
+    },
+    {
+      "file": "cron_health_trigger.log",
+      "size_bytes": 907,
+      "line_count": 11,
+      "error_count": 2,
+      "warning_count": 0,
+      "info_count": 0,
+      "last_modified": "2026-03-06T06:51:51.359482"
+    },
+    {
+      "file": "metrics_collector.log",
+      "size_bytes": 320,
+      "line_count": 4,
+      "error_count": 0,
+      "warning_count": 0,
+      "info_count": 0,
+      "last_modified": "2026-03-06T06:28:35.562531"
+    },
+    {
+      "file": "agent_executor.log",
+      "size_bytes": 118,
+      "line_count": 2,
+      "error_count": 0,
+      "warning_count": 0,
+      "info_count": 0,
+      "last_modified": "2026-03-06T06:51:51.371482"
+    },
+    {
+      "file": "task_analysis.json",
+      "size_bytes": 1461,
+      "line_count": 59,
+      "error_count": 7,
+      "warning_count": 7,
+      "info_count": 6,
+      "last_modified": "2026-03-06T06:36:03.509257"
+    },
+    {
+      "file": "scheduled_tasks.json",
+      "size_bytes": 605,
+      "line_count": 20,
+      "error_count": 0,
+      "warning_count": 0,
+      "info_count": 0,
+      "last_modified": "2026-03-06T06:28:35.694533"
+    },
+    {
+      "file": "task_queue.json",
+      "size_bytes": 942,
+      "line_count": 41,
+      "error_count": 1,
+      "warning_count": 0,
+      "info_count": 0,
+      "last_modified": "2026-03-06T06:54:48.526141"
+    },
+    {
+      "file": "cron_sync.json",
+      "size_bytes": 1678,
+      "line_count": 17,
+      "error_count": 0,
+      "warning_count": 0,
+      "info_count": 0,
+      "last_modified": "2026-03-06T06:33:01.366522"
+    },
+    {
+      "file": "health_alerts.json",
+      "size_bytes": 186,
+      "line_count": 10,
+      "error_count": 0,
+      "warning_count": 0,
+      "info_count": 0,
+      "last_modified": "2026-03-06T06:45:44.157972"
+    },
+    {
+      "file": "health_check_log.json",
+      "size_bytes": 574,
+      "line_count": 34,
+      "error_count": 3,
+      "warning_count": 3,
+      "info_count": 0,
+      "last_modified": "2026-03-06T06:51:51.359482"
+    },
+    {
+      "file": "dashboard_data.json",
+      "size_bytes": 1516,
+      "line_count": 69,
+      "error_count": 2,
+      "warning_count": 3,
+      "info_count": 0,
+      "last_modified": "2026-03-06T06:41:57.166565"
+    },
+    {
+      "file": "monitoring_dashboard.json",
+      "size_bytes": 1396,
+      "line_count": 60,
+      "error_count": 1,
+      "warning_count": 0,
+      "info_count": 0,
+      "last_modified": "2026-03-06T07:13:37.019083"
+    },
+    {
+      "file": "alert_history.json",
+      "size_bytes": 430,
+      "line_count": 20,
+      "error_count": 0,
+      "warning_count": 0,
+      "info_count": 1,
+      "last_modified": "2026-03-06T06:45:44.157972"
+    },
+    {
+      "file": "enhanced_metrics.json",
+      "size_bytes": 1534,
+      "line_count": 80,
+      "error_count": 2,
+      "warning_count": 0,
+      "info_count": 0,
+      "last_modified": "2026-03-06T06:28:35.542531"
+    },
+    {
+      "file": "task_metrics.json",
+      "size_bytes": 284,
+      "line_count": 17,
+      "error_count": 1,
+      "warning_count": 0,
+      "info_count": 0,
+      "last_modified": "2026-03-06T06:57:10.316269"
+    }
+  ],
+  "summary": {
+    "task_monitor.log": {
+      "lines": 2,
+      "errors": 0,
+      "warnings": 0
+    },
+    "task_scheduler.log": {
+      "lines": 8,
+      "errors": 0,
+      "warnings": 0
+    },
+    "health_scheduler.log": {
+      "lines": 10,
+      "errors": 0,
+      "warnings": 2
+    },
+    "queue_manager.log": {
+      "lines": 5,
+      "errors": 0,
+      "warnings": 0
+    },
+    "cron_sync.log": {
+      "lines": 3,
+      "errors": 0,
+      "warnings": 0
+    },
+    "health_api.log": {
+      "lines": 9,
+      "errors": 1,
+      "warnings": 0
+    },
+    "cron_health_trigger.log": {
+      "lines": 11,
+      "errors": 2,
+      "warnings": 0
+    },
+    "metrics_collector.log": {
+      "lines": 4,
+      "errors": 0,
+      "warnings": 0
+    },
+    "agent_executor.log": {
+      "lines": 2,
+      "errors": 0,
+      "warnings": 0
+    },
+    "task_analysis.json": {
+      "lines": 59,
+      "errors": 7,
+      "warnings": 7
+    },
+    "scheduled_tasks.json": {
+      "lines": 20,
+      "errors": 0,
+      "warnings": 0
+    },
+    "task_queue.json": {
+      "lines": 41,
+      "errors": 1,
+      "warnings": 0
+    },
+    "cron_sync.json": {
+      "lines": 17,
+      "errors": 0,
+      "warnings": 0
+    },
+    "health_alerts.json": {
+      "lines": 10,
+      "errors": 0,
+      "warnings": 0
+    },
+    "health_check_log.json": {
+      "lines": 34,
+      "errors": 3,
+      "warnings": 3
+    },
+    "dashboard_data.json": {
+      "lines": 69,
+      "errors": 2,
+      "warnings": 3
+    },
+    "monitoring_dashboard.json": {
+      "lines": 60,
+      "errors": 1,
+      "warnings": 0
+    },
+    "alert_history.json": {
+      "lines": 20,
+      "errors": 0,
+      "warnings": 0
+    },
+    "enhanced_metrics.json": {
+      "lines": 80,
+      "errors": 2,
+      "warnings": 0
+    },
+    "task_metrics.json": {
+      "lines": 17,
+      "errors": 1,
+      "warnings": 0
+    }
+  },
+  "alerts": [
+    {
+      "file": "health_api.log",
+      "type": "error",
+      "count": 1
+    },
+    {
+      "file": "cron_health_trigger.log",
+      "type": "error",
+      "count": 2
+    },
+    {
+      "file": "task_analysis.json",
+      "type": "error",
+      "count": 7
+    },
+    {
+      "file": "task_queue.json",
+      "type": "error",
+      "count": 1
+    },
+    {
+      "file": "health_check_log.json",
+      "type": "error",
+      "count": 3
+    },
+    {
+      "file": "dashboard_data.json",
+      "type": "error",
+      "count": 2
+    },
+    {
+      "file": "monitoring_dashboard.json",
+      "type": "error",
+      "count": 1
+    },
+    {
+      "file": "enhanced_metrics.json",
+      "type": "error",
+      "count": 2
+    },
+    {
+      "file": "task_metrics.json",
+      "type": "error",
+      "count": 1
+    }
+  ],
+  "metrics": {
+    "status": "healthy",
+    "total_errors": 0,
+    "total_warnings": 0,
+    "logs_count": 20
+  }
+}

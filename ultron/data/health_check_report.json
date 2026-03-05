@@ -1,0 +1,62 @@
+{
+  "timestamp": "2026-03-06T07:27:50.628652",
+  "endpoints": [
+    {
+      "name": "Agent API",
+      "status": "healthy",
+      "latency_ms": 11.0,
+      "code": "200"
+    },
+    {
+      "name": "Agent Gateway",
+      "status": "degraded",
+      "latency_ms": 11.3,
+      "code": "404"
+    },
+    {
+      "name": "Workflow Engine",
+      "status": "degraded",
+      "latency_ms": 11.2,
+      "code": "404"
+    },
+    {
+      "name": "Task Queue",
+      "status": "healthy",
+      "latency_ms": 9.3,
+      "code": "200"
+    },
+    {
+      "name": "Service Mesh",
+      "status": "degraded",
+      "latency_ms": 10.8,
+      "code": "404"
+    },
+    {
+      "name": "Orchestrator",
+      "status": "degraded",
+      "latency_ms": 10.1,
+      "code": "404"
+    },
+    {
+      "name": "Deployment Manager",
+      "status": "healthy",
+      "latency_ms": 11.3,
+      "code": "200"
+    },
+    {
+      "name": "Monitor API",
+      "status": "healthy",
+      "latency_ms": 11.7,
+      "code": "200"
+    },
+    {
+      "name": "Agent Healer",
+      "status": "healthy",
+      "latency_ms": 25.3,
+      "code": "200"
+    }
+  ],
+  "processes_running": 10,
+  "health_score": 55.6,
+  "recommendation": "\u9700\u8981\u5173\u6ce8"
+}

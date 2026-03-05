@@ -1,0 +1,33 @@
+{
+  "report_time": "2026-03-06T07:29:00.844978",
+  "analysis": {
+    "timestamp": "2026-03-06T07:29:00.844940",
+    "total_agents": 1,
+    "total_capacity": 3,
+    "total_load": 0,
+    "utilization_rate": 0.0,
+    "agents": {
+      "worker1": {
+        "status": "active",
+        "capacity": 3,
+        "load": 0,
+        "utilization": 0.0,
+        "available_slots": 3
+      }
+    },
+    "task_stats": {
+      "worker1": {
+        "tasks_completed": 1,
+        "tasks_failed": 0,
+        "avg_completion_time": 5.2,
+        "success_rate": 100.0,
+        "last_task": "2026-03-06T03:06:56.571713"
+      }
+    }
+  },
+  "recommendations": [
+    "\ud83d\udcc9 Low utilization (<20%) - system is underutilized",
+    "\ud83d\udca1 Consider scaling down or consolidating agents"
+  ],
+  "optimization_score": 0.0
+}

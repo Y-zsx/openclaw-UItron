@@ -1,0 +1,28 @@
+{
+  "reports": [
+    {
+      "timestamp": "2026-03-05T23:17:37.284507",
+      "system": {
+        "cpu_percent": 7.5,
+        "memory_percent": 43.0,
+        "memory_available_gb": 4.04,
+        "disk_percent": 30.8,
+        "disk_free_gb": 25.75
+      },
+      "network": {
+        "bytes_sent": 10958365839,
+        "bytes_recv": 4847912965,
+        "packets_sent": 16702203,
+        "packets_recv": 10708034
+      },
+      "services": {
+        "decision-engine": "healthy",
+        "automation": "healthy",
+        "workflow": "healthy",
+        "agent-executor": "healthy",
+        "agent-network": "healthy"
+      },
+      "overall_health": "healthy"
+    }
+  ]
+}

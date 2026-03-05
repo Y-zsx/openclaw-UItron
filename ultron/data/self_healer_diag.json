@@ -1,0 +1,30 @@
+{
+  "timestamp": "2026-03-06T07:35:20.597117",
+  "ports": {
+    "workflow_engine": true,
+    "decision_engine": true,
+    "automation": true,
+    "agent_network": true,
+    "agent_executor": true,
+    "feedback_learning": false,
+    "ops_dashboard": true,
+    "executor_api": true
+  },
+  "processes": {
+    "agent_api_gateway.py": true,
+    "workflow_engine.py": true,
+    "decision_engine.py": false,
+    "automation.py": true,
+    "agent_network.py": false,
+    "agent_orchestrator.py": true
+  },
+  "resources": {
+    "cpu": 10.7,
+    "memory_percent": 49.6,
+    "disk_percent": 30.9,
+    "issues": []
+  },
+  "health_score": 78.6,
+  "healthy_items": 11,
+  "total_items": 14
+}

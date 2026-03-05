@@ -1,0 +1,83 @@
+{
+  "timestamp": "2026-03-06T07:29:31.708689",
+  "endpoints": {
+    "GET:http://localhost:18131/agents": {
+      "iterations": 10,
+      "success": 10,
+      "min_ms": 2.668619155883789,
+      "max_ms": 4.58073616027832,
+      "avg_ms": 2.99,
+      "median_ms": 2.8
+    },
+    "GET:http://localhost:18131/metrics": {
+      "iterations": 10,
+      "success": 10,
+      "min_ms": 103.53970527648926,
+      "max_ms": 106.71377182006836,
+      "avg_ms": 105.49,
+      "median_ms": 105.78
+    },
+    "GET:http://localhost:18100/health": {
+      "iterations": 10,
+      "success": 10,
+      "min_ms": 3.6025047302246094,
+      "max_ms": 5.749225616455078,
+      "avg_ms": 4.35,
+      "median_ms": 4.19
+    },
+    "GET:http://localhost:18120/health": {
+      "iterations": 10,
+      "success": 0,
+      "min_ms": 0,
+      "max_ms": 0,
+      "avg_ms": 0,
+      "median_ms": 0
+    }
+  },
+  "agent_stats": {
+    "total_agents": 5,
+    "active_agents": 5,
+    "agents": {
+      "worker-1": {
+        "type": "worker",
+        "instances": 1,
+        "status": "active",
+        "cpu": 10.0,
+        "memory": 90,
+        "registered_at": "2026-03-05T23:13:48.275595"
+      },
+      "worker-2": {
+        "type": "worker",
+        "instances": 3,
+        "status": "active",
+        "cpu": 5,
+        "memory": 30,
+        "registered_at": "2026-03-05T23:13:48.275631"
+      },
+      "api-1": {
+        "type": "api",
+        "instances": 2,
+        "status": "active",
+        "cpu": 100,
+        "memory": 65,
+        "registered_at": "2026-03-05T23:13:48.275636"
+      },
+      "monitor-1": {
+        "type": "monitor",
+        "instances": 1,
+        "status": "active",
+        "cpu": 5,
+        "memory": 34,
+        "registered_at": "2026-03-05T23:13:48.275639"
+      },
+      "ultron-core": {
+        "type": "core",
+        "instances": 2,
+        "status": "active",
+        "cpu": 10.0,
+        "memory": 76,
+        "registered_at": "2026-03-05T23:13:48.275643"
+      }
+    }
+  }
+}

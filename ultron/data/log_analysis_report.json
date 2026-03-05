@@ -1,0 +1,83 @@
+{
+  "analyzed_at": "2026-03-06T07:18:56.416798",
+  "files_count": 20,
+  "summary": {
+    "total_errors": 620,
+    "total_warnings": 0,
+    "total_exceptions": 0,
+    "total_timeouts": 145
+  },
+  "anomalies": [
+    {
+      "type": "timeout_issues",
+      "severity": "warning",
+      "message": "发现 4 个超时",
+      "count": 4,
+      "source": "cloud-init.log"
+    },
+    {
+      "type": "timeout_issues",
+      "severity": "warning",
+      "message": "发现 141 个超时",
+      "count": 141,
+      "source": "kern.log"
+    },
+    {
+      "type": "high_error_rate",
+      "severity": "warning",
+      "message": "发现 616 个错误日志",
+      "count": 616,
+      "source": "auth.log"
+    }
+  ],
+  "files": {
+    "auth.log": {
+      "errors": [
+        {
+          "line": 9,
+          "content": "Mar  1 00:28:47 iZbp1g2abyc4ap6ynwqxmpZ sshd[305839]: error: kex_exchange_identification: Connection closed by remote host"
+        },
+        {
+          "line": 27,
+          "content": "Mar  1 01:03:43 iZbp1g2abyc4ap6ynwqxmpZ sshd[331862]: error: kex_exchange_identification: Connection closed by remote host"
+        },
+        {
+          "line": 46,
+          "content": "Mar  1 01:24:55 iZbp1g2abyc4ap6ynwqxmpZ sshd[347618]: error: kex_exchange_identification: Connection closed by remote host"
+        },
+        {
+          "line": 51,
+          "content": "Mar  1 01:30:02 iZbp1g2abyc4ap6ynwqxmpZ sshd[351374]: error: kex_exchange_identification: Connection closed by remote host"
+        },
+        {
+          "line": 61,
+          "content": "Mar  1 01:36:34 iZbp1g2abyc4ap6ynwqxmpZ sshd[356253]: error: kex_exchange_identification: Connection closed by remote host"
+        }
+      ],
+      "warnings": [],
+      "exceptions": []
+    },
+    "tuned.log": {
+      "errors": [
+        {
+          "line": 16,
+          "content": "2026-02-28 17:39:13,603 ERROR    tuned.plugins.plugin_sysctl: Failed to read sysctl parameter 'kernel.sched_min_granularity_ns', the parameter does not exist"
+        },
+        {
+          "line": 17,
+          "content": "2026-02-28 17:39:13,603 ERROR    tuned.plugins.plugin_sysctl: sysctl option kernel.sched_min_granularity_ns will not be set, failed to read the original value."
+        },
+        {
+          "line": 18,
+          "content": "2026-02-28 17:39:13,603 ERROR    tuned.plugins.plugin_sysctl: Failed to read sysctl parameter 'kernel.sched_wakeup_granularity_ns', the parameter does not exist"
+        },
+        {
+          "line": 19,
+          "content": "2026-02-28 17:39:13,603 ERROR    tuned.plugins.plugin_sysctl: sysctl option kernel.sched_wakeup_granularity_ns will not be set, failed to read the original value."
+        }
+      ],
+      "warnings": [],
+      "exceptions": []
+    }
+  }
+}
