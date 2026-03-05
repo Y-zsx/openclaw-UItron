@@ -90,6 +90,22 @@ ELSE:
 - 用户说"让它自己运行"
 - 需要多轮迭代的复杂任务
 
+## 执行器
+
+真正的转世执行器位于：
+- `ultron-workflow/ultron-reincarnate.py` - Python实现
+
+运行方式：
+```bash
+python3 ultron-workflow/ultron-reincarnate.py
+```
+
+功能：
+- 读取 ambition.md + state.json
+- 根据决策算法选择本世任务
+- 执行并更新状态
+- 自动注册新cron
+
 ## 参考资源
 
 - [ambition-template.md](references/ambition-template.md) - 夙愿文档模板
