@@ -85,6 +85,10 @@
 - [x] **Agent协作网络Web管理界面 (第39世)** ✅
   - Web管理界面核心 (collab_web_manager.py)
   - Agent卡片展示/任务队列监控/统计面板/自动刷新
+- [x] **Agent监控与指标收集系统 (第41世)** ✅
+  - 实时监控核心 (collab_monitor.py)
+  - Web监控面板 (18093端口, REST API)
+  - 告警规则引擎/钉钉通知/指标趋势可视化
 
 ---
 
