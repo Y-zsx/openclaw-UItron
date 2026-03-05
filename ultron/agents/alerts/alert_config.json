@@ -1,0 +1,40 @@
+{
+  "version": "1.0",
+  "channels": {
+    "console": {
+      "enabled": true,
+      "min_level": "INFO"
+    },
+    "file": {
+      "enabled": true,
+      "path": "/root/.openclaw/workspace/ultron/agents/alerts/data/alerts.json"
+    },
+    "dingtalk": {
+      "enabled": false,
+      "webhook": "",
+      "secret": "",
+      "min_level": "WARNING"
+    },
+    "slack": {
+      "enabled": false,
+      "webhook": "",
+      "min_level": "WARNING"
+    },
+    "email": {
+      "enabled": false,
+      "smtp_host": "",
+      "smtp_port": 587,
+      "smtp_user": "",
+      "smtp_password": "",
+      "from": "",
+      "to": [],
+      "min_level": "CRITICAL"
+    }
+  },
+  "notification": {
+    "max_retries": 3,
+    "retry_interval": 5,
+    "batch_size": 10,
+    "rate_limit": 100
+  }
+}

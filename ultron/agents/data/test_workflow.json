@@ -1,0 +1,42 @@
+[
+  {
+    "task_id": "task1",
+    "name": "监控服务器状态",
+    "depends_on": [],
+    "agent_id": "monitor_1",
+    "capability": "monitor",
+    "payload": {"target": "server1", "metrics": ["cpu", "memory", "disk"]}
+  },
+  {
+    "task_id": "task2",
+    "name": "分析监控数据",
+    "depends_on": ["task1"],
+    "agent_id": "executor_1",
+    "capability": "analyze",
+    "payload": {"data_source": "task1_result"}
+  },
+  {
+    "task_id": "task3",
+    "name": "发送告警通知",
+    "depends_on": ["task2"],
+    "agent_id": "messenger_1",
+    "capability": "send",
+    "payload": {"message": "分析完成", "recipients": ["admin"]}
+  },
+  {
+    "task_id": "task4",
+    "name": "并行任务A",
+    "depends_on": [],
+    "agent_id": "executor_1",
+    "capability": "execute",
+    "payload": {"action": "backup"}
+  },
+  {
+    "task_id": "task5",
+    "name": "并行任务B",
+    "depends_on": [],
+    "agent_id": "monitor_1",
+    "capability": "monitor",
+    "payload": {"target": "server2"}
+  }
+]

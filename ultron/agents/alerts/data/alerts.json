@@ -107,6 +107,20 @@
       },
       "_id": "alert_1772704432969",
       "_created_at": 1772704432.9692743
+    },
+    {
+      "rule_id": "cli_test",
+      "rule_name": "CLI测试",
+      "level": "INFO",
+      "message": "第29世告警通知渠道验证完成",
+      "metric": "cli.test",
+      "value": 100,
+      "threshold": 80,
+      "condition": "gt",
+      "state": "firing",
+      "timestamp": "2026-03-05T18:42:05.050416",
+      "_id": "alert_1772707325050",
+      "_created_at": 1772707325.050743
     }
   ],
   "updated_at": "2026-03-05T17:53:48.293425"

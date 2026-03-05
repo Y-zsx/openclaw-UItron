@@ -1,0 +1,41 @@
+{
+  "type": "daily",
+  "generated_at": "2026-03-05T19:01:32.511773",
+  "period": {
+    "start": "2026-03-04T19:01:32.511798",
+    "end": "2026-03-05T19:01:32.511810"
+  },
+  "current_status": {
+    "cpu_percent": 46.5,
+    "memory_percent": 23.1,
+    "disk_percent": 29.5
+  },
+  "statistics_24h": {
+    "cpu": {
+      "min": 0.8,
+      "max": 35.8,
+      "avg": 16.059999999999995,
+      "count": 5
+    },
+    "memory": {
+      "min": 17.9,
+      "max": 22.7,
+      "avg": 19.94,
+      "count": 5
+    },
+    "sample_count": 5,
+    "hours": 24
+  },
+  "health_score": {
+    "overall": 76.7,
+    "details": {
+      "cpu": 53.5,
+      "memory": 76.9,
+      "disk": 70.5,
+      "network": 100.0,
+      "services": 100
+    },
+    "grade": "C (\u4e00\u822c)"
+  },
+  "alerts_24h": 0
+}

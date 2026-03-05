@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Agent协作网络监控面板</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Segoe UI', Arial, sans-serif; margin: 0; padding: 20px; background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%); color: #eee; min-height: 100vh; }
+        h1 { color: #00d4ff; margin-bottom: 5px; }
+        h2 { color: #00d4ff; margin: 15px 0 10px; font-size: 18px; }
+        .header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
+        .timestamp { color: #888; font-size: 14px; }
+        .card { background: rgba(22, 33, 62, 0.8); padding: 20px; margin: 10px 0; border-radius: 12px; border: 1px solid #0f3460; }
+        .metrics { display: grid; grid-template-columns: repeat(4, 1fr); gap: 15px; }
+        .metric { background: #0f3460; padding: 15px; border-radius: 8px; text-align: center; }
+        .metric-value { font-size: 24px; font-weight: bold; color: #00d4ff; }
+        .metric-label { color: #888; font-size: 12px; margin-top: 5px; }
+        table { width: 100%; border-collapse: collapse; margin-top: 10px; font-size: 14px; }
+        th, td { padding: 10px; text-align: left; border-bottom: 1px solid #0f3460; }
+        th { background: #0f3460; color: #00d4ff; font-weight: 600; }
+        .status-ok { color: #00ff88; }
+        .status-warn { color: #ffaa00; }
+        .status-error { color: #ff4444; }
+        .status-stopped { color: #888; }
+        .badge { display: inline-block; padding: 3px 8px; border-radius: 4px; font-size: 11px; background: #00d4ff; color: #000; font-weight: bold; }
+        .badge-warn { background: #ffaa00; }
+        .badge-error { background: #ff4444; }
+        .workflow-info { display: flex; gap: 20px; flex-wrap: wrap; }
+        .workflow-item { background: #0f3460; padding: 12px 16px; border-radius: 8px; }
+        .workflow-label { color: #888; font-size: 12px; }
+        .workflow-value { color: #00ff88; font-size: 16px; font-weight: bold; margin-top: 4px; }
+        .history-item { padding: 8px 0; border-bottom: 1px solid #0f3460; }
+        .history-item:last-child { border-bottom: none; }
+        .progress-bar { width: 100%; height: 8px; background: #0f3460; border-radius: 4px; overflow: hidden; margin-top: 8px; }
+        .progress-fill { height: 100%; background: linear-gradient(90deg, #00d4ff, #00ff88); border-radius: 4px; }
+        @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.5; } }
+        .live { animation: pulse 2s infinite; }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div>
+            <h1>🤖 Agent协作网络监控面板</h1>
+            <p style="color:#888">Multi-Agent Collaboration Network Dashboard</p>
+        </div>
+        <div class="timestamp">更新时间: 2026-03-05 18:49:11</div>
+    </div>
+    
+    <!-- 系统状态 -->
+    <div class="card">
+        <h2>🖥️ 系统状态</h2>
+        <div class="metrics">
+            <div class="metric">
+                <div class="metric-value">0.3</div>
+                <div class="metric-label">系统负载</div>
+            </div>
+            <div class="metric">
+                <div class="metric-value">15.2%</div>
+                <div class="metric-label">内存使用 (1103MB)</div>
+            </div>
+            <div class="metric">
+                <div class="metric-value">30%</div>
+                <div class="metric-label">磁盘使用</div>
+            </div>
+            <div class="metric">
+                <div class="metric-value class="live"">在线</div>
+                <div class="metric-label">Gateway状态</div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Agent状态 -->
+    <div class="card">
+        <h2>🦞 Agent状态</h2>
+        <table>
+            <tr>
+                <th>Agent名称</th>
+                <th>状态</th>
+                <th>健康度</th>
+                <th>CPU%</th>
+                <th>内存MB</th>
+                <th>重启</th>
+                <th>错误</th>
+            </tr>
+            <tr>
+                <td><span class="badge">monitor-agent</span></td>
+                <td class="status-error">🔴 失败</td>
+                <td><div class="progress-bar"><div class="progress-fill" style="width:100.0%;background:#00ff88"></div></div>100.0%</td>
+                <td>0.0%</td>
+                <td>0.0</td>
+                <td>0</td>
+                <td style="color:#888;font-size:12px">启动后立即退出</td>
+            </tr>
+            <tr>
+                <td><span class="badge">executor-agent</span></td>
+                <td class="status-error">🔴 失败</td>
+                <td><div class="progress-bar"><div class="progress-fill" style="width:100.0%;background:#00ff88"></div></div>100.0%</td>
+                <td>0.0%</td>
+                <td>0.0</td>
+                <td>0</td>
+                <td style="color:#888;font-size:12px">启动后立即退出</td>
+            </tr>
+            <tr>
+                <td><span class="badge">test-agent</span></td>
+                <td class="status-error">⚪ 停止</td>
+                <td><div class="progress-bar"><div class="progress-fill" style="width:100.0%;background:#00ff88"></div></div>100.0%</td>
+                <td>0.0%</td>
+                <td>0.9</td>
+                <td>0</td>
+                <td style="color:#888;font-size:12px">-</td>
+            </tr>
+        </table>
+    </div>
+    
+    <!-- 工作流状态 -->
+    <div class="card">
+        <h2>🔄 工作流状态 (转世系统)</h2>
+        <div class="workflow-info">
+            <div class="workflow-item">
+                <div class="workflow-label">当前世数</div>
+                <div class="workflow-value">第30世 🔥</div>
+            </div>
+            <div class="workflow-item">
+                <div class="workflow-label">夙愿</div>
+                <div class="workflow-value">多智能体协作网络</div>
+            </div>
+            <div class="workflow-item">
+                <div class="workflow-label">当前任务</div>
+                <div class="workflow-value" style="font-size:14px">Agent协作网络监控面板与可视化...</div>
+            </div>
+            <div class="workflow-item">
+                <div class="workflow-label">任务状态</div>
+                <div class="workflow-value status-ok">completed</div>
+            </div>
+        </div>
+        <h3 style="color:#888;margin:15px 0 10px;font-size:14px">📜 历史记录</h3>
+            <div class="history-item">
+                <span class="badge">第30世</span>
+                <span style="margin-left:10px">Agent协作网络性能优化与压力测试</span>
+                <span style="float:right" class="status-ok">completed</span>
+            </div>
+            <div class="history-item">
+                <span class="badge">第29世</span>
+                <span style="margin-left:10px">告警通知渠道验证</span>
+                <span style="float:right" class="status-ok">completed</span>
+            </div>
+    </div>
+    
+    <!-- 消息队列 -->
+    <div class="card">
+        <h2>📬 消息队列</h2>
+        <div class="metrics">
+            <div class="metric">
+                <div class="metric-value">0</div>
+                <div class="metric-label">待处理</div>
+            </div>
+            <div class="metric">
+                <div class="metric-value" style="color:#ffaa00">6</div>
+                <div class="metric-label">处理中</div>
+            </div>
+            <div class="metric">
+                <div class="metric-value status-ok">40</div>
+                <div class="metric-label">已完成</div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- 性能指标 -->
+    <div class="card">
+        <h2>📊 性能指标</h2>
+        <p style="color:#888">暂无性能测试数据 (运行 stress_test_cli.py 生成)</p>
+    </div>
+    
+    <script>
+        // 每30秒自动刷新
+        setInterval(() => location.reload(), 30000);
+        
+        // 显示倒计时
+        let countdown = 30;
+        setInterval(() => {
+            countdown--;
+            if (countdown <= 0) countdown = 30;
+        }, 1000);
+    </script>
+</body>
+</html>

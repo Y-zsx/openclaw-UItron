@@ -1,15 +1,10 @@
-{
-  "timestamp": "2026-03-05T17:50:00Z",
-  "heartbeat_count": 47,
-  "thoughts": [
-    {
-      "time": "17:50",
-      "type": "routine_check",
-      "observation": "系统运行正常: uptime 5天, load 0.43, 内存14%, 磁盘30%",
-      "decision": "无待处理任务，执行例行检查后记录",
-      "action": "system_health_check"
-    }
-  ],
-  "status": "healthy",
-  "next_heartbeat": "30m"
-}
+[
+  {
+    "time": "2026-03-05T19:02:00Z",
+    "type": "heartbeat",
+    "status": "healthy",
+    "load": "low",
+    "action": "system_check",
+    "note": "系统运行正常，转世系统已关闭，保留监控"
+  }
+]

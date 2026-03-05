@@ -1,0 +1,87 @@
+{
+  "agents": {
+    "agent-a7127f8a": {
+      "agent_id": "agent-a7127f8a",
+      "name": "Monitor",
+      "capabilities": [
+        "monitor"
+      ],
+      "status": "idle",
+      "load": 0.0,
+      "reliability": 1.0,
+      "metadata": {}
+    },
+    "agent-9d6d9b81": {
+      "agent_id": "agent-9d6d9b81",
+      "name": "Monitor-Agent",
+      "capabilities": [
+        "monitor",
+        "communicate"
+      ],
+      "status": "idle",
+      "load": 0.0,
+      "reliability": 1.0,
+      "metadata": {}
+    },
+    "agent-b580eb78": {
+      "agent_id": "agent-b580eb78",
+      "name": "Executor-Agent",
+      "capabilities": [
+        "execute",
+        "repair"
+      ],
+      "status": "idle",
+      "load": 0.0,
+      "reliability": 1.0,
+      "metadata": {}
+    },
+    "agent-3249673c": {
+      "agent_id": "agent-3249673c",
+      "name": "Analyzer-Agent",
+      "capabilities": [
+        "analyze",
+        "orchestrate"
+      ],
+      "status": "idle",
+      "load": 0.0,
+      "reliability": 1.0,
+      "metadata": {}
+    },
+    "agent-913f34e5": {
+      "agent_id": "agent-913f34e5",
+      "name": "Monitor-Agent",
+      "capabilities": [
+        "monitor",
+        "communicate"
+      ],
+      "status": "idle",
+      "load": 0.0,
+      "reliability": 1.0,
+      "metadata": {}
+    },
+    "agent-c28b1ae2": {
+      "agent_id": "agent-c28b1ae2",
+      "name": "Executor-Agent",
+      "capabilities": [
+        "execute",
+        "repair"
+      ],
+      "status": "idle",
+      "load": 0.0,
+      "reliability": 1.0,
+      "metadata": {}
+    },
+    "agent-6dc4ed7b": {
+      "agent_id": "agent-6dc4ed7b",
+      "name": "Analyzer-Agent",
+      "capabilities": [
+        "analyze",
+        "orchestrate"
+      ],
+      "status": "idle",
+      "load": 0.0,
+      "reliability": 1.0,
+      "metadata": {}
+    }
+  }
+}

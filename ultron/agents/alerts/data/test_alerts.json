@@ -1,0 +1,19 @@
+{
+  "alerts": [
+    {
+      "rule_id": "test_notification",
+      "rule_name": "通知渠道测试",
+      "level": "INFO",
+      "message": "告警通知渠道测试成功",
+      "metric": "test.notification",
+      "value": 1.0,
+      "threshold": 0,
+      "condition": "gt",
+      "state": "firing",
+      "timestamp": "2026-03-05T18:39:00.000000",
+      "_id": "alert_1772707243687",
+      "_created_at": 1772707243.6876686
+    }
+  ],
+  "version": "1.0"
+}

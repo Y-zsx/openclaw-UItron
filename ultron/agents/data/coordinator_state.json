@@ -1,0 +1,177 @@
+{
+  "mode": "sequential",
+  "agents": {
+    "monitor_1": {
+      "name": "监控Agent",
+      "capabilities": [
+        "monitor",
+        "analyze"
+      ],
+      "status": "active",
+      "registered_at": "2026-03-05T19:13:05.387007",
+      "current_task": null,
+      "completed_tasks": 13
+    },
+    "executor_1": {
+      "name": "执行Agent",
+      "capabilities": [
+        "execute",
+        "analyze"
+      ],
+      "status": "active",
+      "registered_at": "2026-03-05T19:13:05.387515",
+      "current_task": null,
+      "completed_tasks": 0
+    },
+    "messenger_1": {
+      "name": "通信Agent",
+      "capabilities": [
+        "send",
+        "communicate"
+      ],
+      "status": "active",
+      "registered_at": "2026-03-05T19:13:05.388543",
+      "current_task": null,
+      "completed_tasks": 0
+    },
+    "agent1": {
+      "name": "Agent 1",
+      "capabilities": [
+        "execute"
+      ],
+      "status": "active",
+      "registered_at": "2026-03-05T19:13:20.656948",
+      "current_task": null,
+      "completed_tasks": 0
+    },
+    "agent2": {
+      "name": "Agent 2",
+      "capabilities": [
+        "execute"
+      ],
+      "status": "active",
+      "registered_at": "2026-03-05T19:13:20.657410",
+      "current_task": null,
+      "completed_tasks": 0
+    },
+    "agent-0": {
+      "name": "Worker-0",
+      "capabilities": [
+        "execute",
+        "compute"
+      ],
+      "status": "active",
+      "registered_at": "2026-03-05T19:17:34.831002",
+      "current_task": null,
+      "completed_tasks": 3,
+      "weight": 100
+    },
+    "agent-1": {
+      "name": "Worker-1",
+      "capabilities": [
+        "execute",
+        "compute"
+      ],
+      "status": "active",
+      "registered_at": "2026-03-05T19:17:34.831666",
+      "current_task": null,
+      "completed_tasks": 4,
+      "weight": 80
+    },
+    "agent-2": {
+      "name": "Worker-2",
+      "capabilities": [
+        "execute",
+        "compute"
+      ],
+      "status": "active",
+      "registered_at": "2026-03-05T19:17:34.832588",
+      "current_task": null,
+      "completed_tasks": 0,
+      "weight": 60
+    },
+    "agent-3": {
+      "name": "Worker-3",
+      "capabilities": [
+        "execute",
+        "compute"
+      ],
+      "status": "active",
+      "registered_at": "2026-03-05T19:17:34.833556",
+      "current_task": null,
+      "completed_tasks": 1,
+      "weight": 40
+    },
+    "agent-a": {
+      "name": "Agent-A",
+      "capabilities": [
+        "execute"
+      ],
+      "status": "active",
+      "registered_at": "2026-03-05T19:17:44.736528",
+      "current_task": "fail-task",
+      "completed_tasks": 0,
+      "weight": 100
+    },
+    "agent-b": {
+      "name": "Agent-B",
+      "capabilities": [
+        "execute"
+      ],
+      "status": "active",
+      "registered_at": "2026-03-05T19:17:44.737165",
+      "current_task": null,
+      "completed_tasks": 0,
+      "weight": 100
+    }
+  },
+  "dependencies": {
+    "task1": {
+      "depends_on": [],
+      "status": "completed"
+    },
+    "task2": {
+      "depends_on": [
+        "task1"
+      ],
+      "status": "completed"
+    },
+    "task3": {
+      "depends_on": [
+        "task1"
+      ],
+      "status": "completed"
+    },
+    "task4": {
+      "depends_on": [
+        "task2",
+        "task3"
+      ],
+      "status": "completed"
+    },
+    "task5": {
+      "depends_on": [],
+      "status": "completed"
+    },
+    "init": {
+      "depends_on": [],
+      "status": "completed"
+    },
+    "process": {
+      "depends_on": [
+        "init"
+      ],
+      "status": "completed"
+    },
+    "finalize": {
+      "depends_on": [
+        "process"
+      ],
+      "status": "completed"
+    },
+    "fail-task": {
+      "depends_on": [],
+      "status": "running"
+    }
+  }
+}

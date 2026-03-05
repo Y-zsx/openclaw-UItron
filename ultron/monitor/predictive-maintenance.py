@@ -139,7 +139,8 @@ class TimeSeriesAnalyzer:
                 direction=TrendDirection.STABLE,
                 velocity=0,
                 predicted_value=current_value,
-                confidence=0
+                confidence=0,
+                time_to_threshold=None
             )
         
         slope, intercept, r_squared = self._linear_regression(list(history))
