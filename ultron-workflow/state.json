@@ -7,23 +7,23 @@
     "progress": 95
   },
   "current": {
-    "life_count": 2,
-    "last_wake": "2026-03-05T03:46:07.957561+00:00",
+    "life_count": 3,
+    "last_wake": "2026-03-05T03:50:37.434854+00:00",
     "task_status": "completed"
   },
   "this_life": {
-    "task": "系统健康检查",
-    "type": "check",
-    "reason": "随机行动",
+    "task": "网站监控",
+    "type": "monitor",
+    "reason": "cron定时任务",
     "status": "completed",
-    "output": "Gateway | Dashboard❌",
+    "output": "CPU:0.2 内存:19.6% 磁盘:30% 服务:全部运行",
     "verification": {
       "code_running": true,
-      "verified_at": "2026-03-05T03:46:07.957407+00:00"
+      "verified_at": "2026-03-05T03:50:37.434854+00:00"
     }
   },
   "next_life": {
-    "task": "",
+    "task": "系统健康检查",
     "interval": "5m"
   },
   "history": [
@@ -66,6 +66,12 @@
       "task": "系统健康检查",
       "status": "completed",
       "output": "Gateway | Dashboard❌"
+    },
+    {
+      "life": 2,
+      "task": "网站监控",
+      "status": "completed",
+      "output": "CPU:0.2 内存:19.6% 磁盘:30% 服务:全部运行"
     }
   ]
 }

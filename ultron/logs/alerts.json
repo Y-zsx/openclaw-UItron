@@ -1,64 +1,15 @@
 {
   "alerts": [
     {
-      "id": "alert_001",
-      "timestamp": "2026-03-05T11:25:26",
-      "level": "error",
-      "source": "monitor",
-      "site": "OpenAI API",
-      "url": "https://api.openai.com",
-      "message": "OpenAI API: down (Connection error)",
-      "error": "Connection error: HTTPSConnectionPool"
-    },
-    {
-      "id": "alert_002",
-      "timestamp": "2026-03-05T11:25:16",
-      "level": "warning",
-      "source": "monitor",
-      "site": "GitHub",
-      "url": "https://github.com",
-      "message": "GitHub: down (Timeout)",
-      "error": "Timeout"
-    },
-    {
-      "id": "alert_003",
-      "timestamp": "2026-03-05T11:25:06",
-      "level": "error",
-      "source": "monitor",
-      "site": "Google",
-      "url": "https://www.google.com",
-      "message": "Google: down (Connection error)",
-      "error": "Connection error: HTTPSConnectionPool"
-    },
-    {
-      "id": "alert_004",
-      "timestamp": "2026-03-05T11:24:39",
-      "level": "error",
-      "source": "monitor",
-      "site": "OpenAI API",
-      "url": "https://api.openai.com",
-      "message": "OpenAI API: down (Connection error)",
-      "error": "Connection error: HTTPSConnectionPool"
-    },
-    {
-      "id": "alert_005",
-      "timestamp": "2026-03-05T11:24:28",
-      "level": "error",
-      "source": "monitor",
-      "site": "Google",
-      "url": "https://www.google.com",
-      "message": "Google: down (Connection error)",
-      "error": "Connection error: HTTPSConnectionPool"
+      "id": "service_down_c39956",
+      "timestamp": "2026-03-05T11:50:37.434854",
+      "level": "critical",
+      "source": "services",
+      "message": "\u670d\u52a1\u5b95\u673a: 0 (\u9608\u503c: 0)",
+      "value": 0,
+      "threshold": 0,
+      "rule_id": "service_down"
     }
   ],
-  "last_update": "2026-03-05T11:25:26",
-  "stats": {
-    "total": 5,
-    "error": 4,
-    "warning": 1
-  }
-}{"type": "site_down", "site": "Google", "url": "https://www.google.com", "timestamp": "2026-03-05T11:30:03.891910", "error": "Connection error: HTTPSConnectionPool(host='www.google.com', port=44"}
-{"type": "site_down", "site": "OpenAI API", "url": "https://api.openai.com", "timestamp": "2026-03-05T11:30:14.857780", "error": "Connection error: HTTPSConnectionPool(host='api.openai.com', port=44"}
-{"type": "site_down", "site": "Google", "url": "https://www.google.com", "timestamp": "2026-03-05T11:35:03.149229", "error": "Connection error: HTTPSConnectionPool(host='www.google.com', port=44"}
-{"type": "site_down", "site": "GitHub", "url": "https://github.com", "timestamp": "2026-03-05T11:35:13.160574", "error": "Timeout"}
-{"type": "site_down", "site": "OpenAI API", "url": "https://api.openai.com", "timestamp": "2026-03-05T11:35:23.704614", "error": "Connection error: HTTPSConnectionPool(host='api.openai.com', port=44"}
+  "last_update": "2026-03-05T11:50:37.487863"
+}
