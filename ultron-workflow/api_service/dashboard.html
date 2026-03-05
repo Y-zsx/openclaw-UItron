@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agent服务管理面板 - 自动扩缩容与负载均衡</title>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #0f172a; color: #e2e8f0; min-height: 100vh; }
+        .container { max-width: 1400px; margin: 0 auto; padding: 20px; }
+        h1 { color: #38bdf8; margin-bottom: 10px; display: flex; align-items: center; gap: 10px; }
+        h2 { color: #94a3b8; font-size: 1.2rem; margin: 20px 0 15px; }
+        .card { background: #1e293b; border-radius: 12px; padding: 20px; margin-bottom: 20px; border: 1px solid #334155; }
+        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; }
+        .stat { display: flex; justify-content: space-between; padding: 10px 0; border-bottom: 1px solid #334155; }
+        .stat:last-child { border-bottom: none; }
+        .stat-label { color: #94a3b8; }
+        .stat-value { color: #38bdf8; font-weight: bold; }
+        .status-healthy { color: #22c55e; }
+        .status-unhealthy { color: #ef4444; }
+        .btn { background: #3b82f6; color: white; border: none; padding: 8px 16px; border-radius: 6px; cursor: pointer; font-size: 14px; }
+        .btn:hover { background: #2563eb; }
+        .btn-danger { background: #ef4444; }
+        .btn-danger:hover { background: #dc2626; }
+        .input { background: #0f172a; border: 1px solid #334155; color: #e2e8f0; padding: 8px 12px; border-radius: 6px; width: 100%; }
+        .badge { padding: 2px 8px; border-radius: 10px; font-size: 12px; }
+        .badge-blue { background: #3b82f6; }
+        .badge-green { background: #22c55e; }
+        .badge-red { background: #ef4444; }
+        table { width: 100%; border-collapse: collapse; }
+        th, td { text-align: left; padding: 12px; border-bottom: 1px solid #334155; }
+        th { color: #94a3b8; font-weight: 500; }
+        .refresh-btn { float: right; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🦞 Agent服务管理面板 <button class="btn refresh-btn" onclick="refreshAll()">🔄 刷新</button></h1>
+        
+        <div class="grid">
+            <!-- 自动扩缩容 -->
+            <div class="card">
+                <h2>📈 自动扩缩容 (端口 18143)</h2>
+                <div id="scalerConfig">
+                    <div class="stat"><span class="stat-label">服务状态</span><span class="stat-value status-healthy">运行中</span></div>
+                </div>
+                <div style="margin-top: 15px;">
+                    <button class="btn" onclick="showRegisterModal()">+ 注册Agent</button>
+                </div>
+                <h3 style="margin-top: 20px; color: #94a3b8;">已注册Agent</h3>
+                <table id="scalerAgents">
+                    <thead><tr><th>Agent ID</th><th>实例数</th><th>范围</th></tr></thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+            
+            <!-- 负载均衡 -->
+            <div class="card">
+                <h2>⚖️ 负载均衡 (端口 18144)</h2>
+                <div id="lbConfig">
+                    <div class="stat"><span class="stat-label">服务状态</span><span class="stat-value status-healthy">运行中</span></div>
+                </div>
+                <div style="margin-top: 15px;">
+                    <button class="btn" onclick="showServiceModal()">+ 添加服务</button>
+                </div>
+                <h3 style="margin-top: 20px; color: #94a3b8;">服务列表</h3>
+                <table id="lbServices">
+                    <thead><tr><th>服务名</th><th>算法</th><th>后端数</th><th>健康</th></tr></thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+            
+            <!-- 统计 -->
+            <div class="card">
+                <h2>📊 扩缩容历史</h2>
+                <div id="scalingHistory">
+                    <p style="color: #64748b;">暂无历史记录</p>
+                </div>
+            </div>
+            
+            <div class="card">
+                <h2>🔧 配置参数</h2>
+                <div class="stat"><span class="stat-label">扩容阈值</span><span class="stat-value">75%</span></div>
+                <div class="stat"><span class="stat-label">缩容阈值</span><span class="stat-value">25%</span></div>
+                <div class="stat"><span class="stat-label">扩容冷却</span><span class="stat-value">60秒</span></div>
+                <div class="stat"><span class="stat-label">缩容冷却</span><span class="stat-value">180秒</span></div>
+                <div class="stat"><span class="stat-label">最小实例</span><span class="stat-value">1</span></div>
+                <div class="stat"><span class="stat-label">最大实例</span><span class="stat-value">10</span></div>
+                <div class="stat"><span class="stat-label">检查间隔</span><span class="stat-value">15秒</span></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const SCALER_API = 'http://localhost:18143';
+        const LB_API = 'http://localhost:18144';
+
+        async function refreshAll() {
+            await Promise.all([loadScalerData(), loadLBData(), loadHistory()]);
+        }
+
+        async function loadScalerData() {
+            try {
+                const resp = await fetch(`${SCALER_API}/history?limit=10`);
+                const data = await resp.json();
+                
+                // Update agent list
+                const tbody = document.querySelector('#scalerAgents tbody');
+                tbody.innerHTML = data.history.length ? '' : '<tr><td colspan="3" style="text-align:center;color:#64748b;">暂无注册</td></tr>';
+                data.history.forEach(h => {
+                    tbody.innerHTML += `<tr><td>${h.agent_id}</td><td>${h.old_count} → ${h.new_count}</td><td>${h.reason}</td></tr>`;
+                });
+            } catch(e) { console.error(e); }
+        }
+
+        async function loadLBData() {
+            try {
+                const resp = await fetch(`${LB_API}/services`);
+                const data = await resp.json();
+                
+                const tbody = document.querySelector('#lbServices tbody');
+                tbody.innerHTML = '';
+                
+                if (data.services && data.services.length > 0) {
+                    for (const svc of data.services) {
+                        const infoResp = await fetch(`${LB_API}/service/${svc}`);
+                        const info = await infoResp.json();
+                        tbody.innerHTML += `<tr>
+                            <td>${svc}</td>
+                            <td><span class="badge badge-blue">${info.algorithm_name || info.algorithm}</span></td>
+                            <td>${info.backends?.length || 0}</td>
+                            <td><span class="badge badge-green">${info.healthy_count} 健康</span></td>
+                        </tr>`;
+                    }
+                } else {
+                    tbody.innerHTML = '<tr><td colspan="4" style="text-align:center;color:#64748b;">暂无服务</td></tr>';
+                }
+            } catch(e) { console.error(e); }
+        }
+
+        async function loadHistory() {
+            try {
+                const resp = await fetch(`${SCALER_API}/history?limit=10`);
+                const data = await resp.json();
+                const container = document.getElementById('scalingHistory');
+                
+                if (!data.history || data.history.length === 0) {
+                    container.innerHTML = '<p style="color: #64748b;">暂无历史记录</p>';
+                    return;
+                }
+                
+                container.innerHTML = data.history.map(h => `
+                    <div class="stat">
+                        <span>${h.agent_id}</span>
+                        <span class="badge ${h.event === 'scale_up' ? 'badge-blue' : 'badge-green'}">${h.old_count} → ${h.new_count}</span>
+                    </div>
+                `).join('');
+            } catch(e) { console.error(e); }
+        }
+
+        function showRegisterModal() {
+            const agentId = prompt('请输入Agent ID:');
+            if (agentId) {
+                fetch(`${SCALER_API}/register`, {
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify({agent_id: agentId})
+                }).then(() => refreshAll());
+            }
+        }
+
+        function showServiceModal() {
+            const serviceName = prompt('请输入服务名:');
+            if (serviceName) {
+                fetch(`${LB_API}/service`, {
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify({
+                        service: serviceName,
+                        algorithm: 'round_robin',
+                        backends: []
+                    })
+                }).then(() => refreshAll());
+            }
+        }
+
+        // Auto refresh
+        setInterval(refreshAll, 30000);
+        refreshAll();
+    </script>
+</body>
+</html>

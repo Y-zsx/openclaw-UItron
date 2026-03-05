@@ -12,5 +12,31 @@
       "gateway_reachable": true
     },
     "status": "active"
+  },
+  {
+    "rule_id": "high_memory",
+    "rule_name": "内存使用率高",
+    "level": "warning",
+    "message": "内存使用率 90% 超过阈值!",
+    "timestamp": "2026-03-06T04:33:16.403737",
+    "context": {
+      "cpu_percent": 95,
+      "memory_percent": 90,
+      "disk_percent": 85
+    },
+    "status": "active"
+  },
+  {
+    "rule_id": "high_cpu",
+    "rule_name": "CPU使用率高",
+    "level": "warning",
+    "message": "CPU使用率 95% 过高!",
+    "timestamp": "2026-03-06T04:33:16.403797",
+    "context": {
+      "cpu_percent": 95,
+      "memory_percent": 90,
+      "disk_percent": 85
+    },
+    "status": "active"
   }
 ]

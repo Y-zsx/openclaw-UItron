@@ -1,19 +1,31 @@
 {
   "enabled": true,
   "channels": [
-    "console"
+    "console",
+    "dingtalk"
   ],
   "dingtalk": {
     "webhook": null,
     "secret": null
   },
   "email": {
-    "smtp": null,
+    "smtp": {
+      "host": "smtp.example.com",
+      "port": 25,
+      "username": null,
+      "password": null,
+      "from": "ultron@localhost",
+      "use_tls": false
+    },
     "to": []
   },
   "levels": [
     "warning",
     "error",
     "critical"
-  ]
+  ],
+  "rate_limit": {
+    "enabled": true,
+    "max_per_minute": 10
+  }
 }

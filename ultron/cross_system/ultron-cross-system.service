@@ -1,0 +1,14 @@
+[Unit]
+Description=Ultron Cross System Workflow Automation
+After=network.target
+
+[Service]
+Type=simple
+User=root
+WorkingDirectory=/root/.openclaw/workspace/ultron/cross_system
+ExecStart=/usr/bin/python3 cross_system_api.py
+Restart=always
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target

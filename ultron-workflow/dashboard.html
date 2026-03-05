@@ -32,26 +32,26 @@
         .agent-load { height: 6px; background: #0f3460; border-radius: 3px; margin-bottom: 10px; }
         .load-bar { height: 100%; background: linear-gradient(90deg, #00d4ff, #00ff88); border-radius: 3px; }
         .agent-stats { display: flex; justify-content: space-between; color: #888; font-size: 12px; }
-        .current-task { margin-top: 10px; padding: 8px; background: #0f3460; border-radius: 5px; font-size: 12px; color: #aaa; }
         
         .task-list { background: #16213e; border-radius: 10px; padding: 15px; border: 1px solid #0f3460; }
         .task-item { padding: 10px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #0f3460; }
         .task-item:last-child { border-bottom: none; }
         .task-priority { background: #0f3460; padding: 2px 8px; border-radius: 8px; font-size: 12px; }
         
-        .gauge { 
-            width: 120px; height: 60px; position: relative; overflow: hidden; margin: 0 auto;
-        }
-        .gauge-bg { 
-            width: 120px; height: 120px; border-radius: 50%; background: conic-gradient(#00d4ff 0%, #00ff88 100%); 
-            position: absolute; top: 0; left: 0;
-        }
+        .system-status { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; }
+        .system-card { background: #16213e; border-radius: 10px; padding: 15px; border: 1px solid #0f3460; }
+        .system-card h3 { margin: 0 0 10px 0; color: #00d4ff; font-size: 14px; }
+        .system-value { font-size: 18px; font-weight: bold; }
+        
+        .alert { background: #ff6b6b20; border: 1px solid #ff6b6b; border-radius: 8px; padding: 10px; margin-bottom: 10px; }
+        .alert-title { color: #ff6b6b; font-weight: bold; }
+        .alert-time { color: #888; font-size: 12px; }
     </style>
 </head>
 <body>
     <div class="header">
         <h1>🤖 Agent协作网络仪表盘</h1>
-        <div class="timestamp">更新时间: 2026-03-06 03:31:40</div>
+        <div class="timestamp">更新时间: 2026-03-06 04:51:00</div>
     </div>
     
     <div class="metrics-grid">
@@ -60,115 +60,184 @@
             <div class="metric-label">在线Agents</div>
         </div>
         <div class="metric-card">
-            <div class="metric-value">4</div>
-            <div class="metric-label">总Agents</div>
-        </div>
-        <div class="metric-card">
-            <div class="metric-value">2</div>
-            <div class="metric-label">运行中</div>
+            <div class="metric-value">98</div>
+            <div class="metric-label">总转世次数</div>
         </div>
         <div class="metric-card">
             <div class="metric-value">4</div>
-            <div class="metric-label">待处理</div>
+            <div class="metric-label">活跃任务</div>
         </div>
         <div class="metric-card">
-            <div class="metric-value">62%</div>
-            <div class="metric-label">平均负载</div>
+            <div class="metric-value">52%</div>
+            <div class="metric-label">CPU使用率</div>
         </div>
         <div class="metric-card">
-            <div class="metric-value">98%</div>
+            <div class="metric-value">41%</div>
+            <div class="metric-label">内存使用率</div>
+        </div>
+        <div class="metric-card">
+            <div class="metric-value">99%</div>
             <div class="metric-label">成功率</div>
         </div>
     </div>
     
+    <div class="system-status">
+        <div class="system-card">
+            <h3>🎯 当前夙愿</h3>
+            <div class="system-value">智能决策与自主行动系统</div>
+        </div>
+        <div class="system-card">
+            <h3>📊 当前状态</h3>
+            <div class="system-value">执行中</div>
+        </div>
+        <div class="system-card">
+            <h3>⏱️ 下次执行</h3>
+            <div class="system-value">15分钟后</div>
+        </div>
+        <div class="system-card">
+            <h3>🔗 集成状态</h3>
+            <div class="system-value">决策→执行 闭环完成</div>
+        </div>
+    </div>
+    <br>
+    
     <h2 class="section-title">🔧 Agent状态</h2>
     <div class="agents-grid">
         
-            <div class="agent-card">
-                <div class="agent-header">
-                    <span class="agent-name">协调Agent</span>
-                    <span class="agent-status" style="background: #4CAF50">idle</span>
-                </div>
-                <div class="agent-load">
-                    <div class="load-bar" style="width: 30%"></div>
-                </div>
-                <div class="agent-stats">
-                    <span>成功率: 98%</span>
-                    <span>任务: 45</span>
-                </div>
-                
+        <div class="agent-card">
+            <div class="agent-header">
+                <span class="agent-name">协调Agent</span>
+                <span class="agent-status" style="background: #4CAF50">idle</span>
             </div>
-            
-            <div class="agent-card">
-                <div class="agent-header">
-                    <span class="agent-name">执行Agent-A</span>
-                    <span class="agent-status" style="background: #2196F3">busy</span>
-                </div>
-                <div class="agent-load">
-                    <div class="load-bar" style="width: 100%"></div>
-                </div>
-                <div class="agent-stats">
-                    <span>成功率: 95%</span>
-                    <span>任务: 32</span>
-                </div>
-                <div class="current-task">task-001</div>
+            <div class="agent-load">
+                <div class="load-bar" style="width: 25%"></div>
             </div>
-            
-            <div class="agent-card">
-                <div class="agent-header">
-                    <span class="agent-name">执行Agent-B</span>
-                    <span class="agent-status" style="background: #4CAF50">idle</span>
-                </div>
-                <div class="agent-load">
-                    <div class="load-bar" style="width: 20%"></div>
-                </div>
-                <div class="agent-stats">
-                    <span>成功率: 99%</span>
-                    <span>任务: 28</span>
-                </div>
-                
+            <div class="agent-stats">
+                <span>成功率: 99%</span>
+                <span>任务: 2</span>
             </div>
-            
-            <div class="agent-card">
-                <div class="agent-header">
-                    <span class="agent-name">监控Agent</span>
-                    <span class="agent-status" style="background: #2196F3">busy</span>
-                </div>
-                <div class="agent-load">
-                    <div class="load-bar" style="width: 100%"></div>
-                </div>
-                <div class="agent-stats">
-                    <span>成功率: 100%</span>
-                    <span>任务: 67</span>
-                </div>
-                <div class="current-task">task-002</div>
+        </div>
+        
+        <div class="agent-card">
+            <div class="agent-header">
+                <span class="agent-name">执行Agent</span>
+                <span class="agent-status" style="background: #4CAF50">idle</span>
             </div>
-            
+            <div class="agent-load">
+                <div class="load-bar" style="width: 20%"></div>
+            </div>
+            <div class="agent-stats">
+                <span>成功率: 98%</span>
+                <span>任务: 1</span>
+            </div>
+        </div>
+        
+        <div class="agent-card">
+            <div class="agent-header">
+                <span class="agent-name">分析Agent</span>
+                <span class="agent-status" style="background: #4CAF50">idle</span>
+            </div>
+            <div class="agent-load">
+                <div class="load-bar" style="width: 15%"></div>
+            </div>
+            <div class="agent-stats">
+                <span>成功率: 97%</span>
+                <span>任务: 1</span>
+            </div>
+        </div>
+        
+        <div class="agent-card">
+            <div class="agent-header">
+                <span class="agent-name">监控Agent</span>
+                <span class="agent-status" style="background: #4CAF50">idle</span>
+            </div>
+            <div class="agent-load">
+                <div class="load-bar" style="width: 30%"></div>
+            </div>
+            <div class="agent-stats">
+                <span>成功率: 100%</span>
+                <span>任务: 3</span>
+            </div>
+        </div>
+        
     </div>
     
-    <h2 class="section-title">📋 待处理任务</h2>
+    <h2 class="section-title">📋 活跃告警</h2>
     <div class="task-list">
         
-            <div class="task-item" style="border-left: 3px solid #FF9800">
-                <span class="task-name">数据处理任务</span>
-                <span class="task-priority">P3</span>
-            </div>
-            
-            <div class="task-item" style="border-left: 3px solid #4CAF50">
-                <span class="task-name">健康检查任务</span>
-                <span class="task-priority">P2</span>
-            </div>
-            
-            <div class="task-item" style="border-left: 3px solid #4CAF50">
-                <span class="task-name">日志分析任务</span>
-                <span class="task-priority">P2</span>
-            </div>
-            
-            <div class="task-item" style="border-left: 3px solid #9E9E9E">
-                <span class="task-name">报告生成任务</span>
-                <span class="task-priority">P1</span>
-            </div>
-            
+        <div class="alert">
+            <div class="alert-title">⚠️ 内存使用率高 (90%)</div>
+            <div class="alert-time">2026-03-06 04:33:16</div>
+        </div>
+        
+        <div class="alert">
+            <div class="alert-title">⚠️ CPU使用率高 (95%)</div>
+            <div class="alert-time">2026-03-06 04:33:16</div>
+        </div>
+        
+        <div class="alert">
+            <div class="alert-title">⚠️ CPU使用率高 (95%)</div>
+            <div class="alert-time">2026-03-06 03:49:44</div>
+        </div>
+        
+    </div>
+    
+    <h2 class="section-title">📈 系统集成</h2>
+    <div class="system-status">
+        <div class="system-card">
+            <h3>决策引擎 (18120)</h3>
+            <div class="system-value" style="color: #4CAF50">✓ 运行中</div>
+        </div>
+        <div class="system-card">
+            <h3>任务执行器 (8096)</h3>
+            <div class="system-value" style="color: #4CAF50">✓ 运行中</div>
+        </div>
+        <div class="system-card">
+            <h3>告警引擎 (18122)</h3>
+            <div class="system-value" style="color: #4CAF50">✓ 运行中</div>
+        </div>
+        <div class="system-card">
+            <h3>通知服务 (18124)</h3>
+            <div class="system-value" style="color: #4CAF50">✓ 运行中</div>
+        </div>
+        <div class="system-card">
+            <h3>预测分析 (18125)</h3>
+            <div class="system-value" style="color: #4CAF50">✓ 运行中</div>
+        </div>
+        <div class="system-card">
+            <h3>监控面板 (18123)</h3>
+            <div class="system-value" style="color: #4CAF50">✓ 运行中</div>
+        </div>
+    </div>
+    
+    <h2 class="section-title">🔄 转世历史 (近5次)</h2>
+    <div class="task-list">
+        
+        <div class="task-item">
+            <span>第98世: Agent任务执行器集成</span>
+            <span class="task-priority" style="background: #4CAF50">完成</span>
+        </div>
+        
+        <div class="task-item">
+            <span>第97世: 智能决策系统 - 完整闭环验证</span>
+            <span class="task-priority" style="background: #4CAF50">完成</span>
+        </div>
+        
+        <div class="task-item">
+            <span>第96世: Agent服务网格与API网关集成评估</span>
+            <span class="task-priority" style="background: #4CAF50">完成</span>
+        </div>
+        
+        <div class="task-item">
+            <span>第95世: 预测分析模块</span>
+            <span class="task-priority" style="background: #4CAF50">完成</span>
+        </div>
+        
+        <div class="task-item">
+            <span>第94世: 钉钉/邮件通知集成</span>
+            <span class="task-priority" style="background: #4CAF50">完成</span>
+        </div>
+        
     </div>
 </body>
 </html>

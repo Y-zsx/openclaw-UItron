@@ -78,6 +78,9 @@ class AlertNotifier:
             if channel == "dingtalk":
                 result = self.notify_dingtalk(alert)
                 results.append({"channel": "dingtalk", "result": result})
+            elif channel == "email":
+                result = self.notify_email(alert)
+                results.append({"channel": "email", "result": result})
             elif channel == "console":
                 result = self.notify_console(alert)
                 results.append({"channel": "console", "result": result})
@@ -103,10 +106,11 @@ class AlertNotifier:
     
     def notify_dingtalk(self, alert):
         """钉钉通知"""
-        webhook = self.config.get("dingtalk", {}).get("webhook")
+        dingtalk_config = self.config.get("dingtalk", {})
+        webhook = dingtalk_config.get("webhook")
         
         if not webhook:
-            return {"status": "error", "reason": "no_webhook_configured"}
+            return {"status": "skipped", "reason": "no_webhook_configured"}
         
         level = alert.get("level", "info")
         message = alert.get("message", "")
@@ -130,6 +134,20 @@ class AlertNotifier:
             }
         }
         
+        # 如果有密钥，使用签名
+        secret = dingtalk_config.get("secret")
+        if secret:
+            import hmac
+            import hashlib
+            import base64
+            import urllib.parse
+            
+            timestamp = str(int(datetime.now().timestamp() * 1000))
+            sign_str = f"{timestamp}\n{secret}"
+            sign = base64.b64encode(hmac.new(secret.encode(), sign_str.encode(), hashlib.sha256).digest()).decode()
+            sign = urllib.parse.quote_plus(sign)
+            webhook = f"{webhook}&timestamp={timestamp}&sign={sign}"
+        
         try:
             # 使用curl发送
             cmd = [
@@ -151,6 +169,109 @@ class AlertNotifier:
         except Exception as e:
             self.log("error", f"钉钉通知异常: {str(e)}")
             return {"status": "error", "reason": str(e)}
+    
+    def notify_email(self, alert):
+        """邮件通知"""
+        email_config = self.config.get("email", {})
+        smtp_config = email_config.get("smtp", {})
+        
+        if not smtp_config:
+            return {"status": "skipped", "reason": "no_smtp_configured"}
+        
+        recipients = email_config.get("to", [])
+        if not recipients:
+            return {"status": "skipped", "reason": "no_recipients_configured"}
+        
+        level = alert.get("level", "info")
+        message = alert.get("message", "")
+        timestamp = alert.get("timestamp", datetime.now().isoformat())
+        
+        # 邮件主题
+        level_emoji = {"info": "ℹ️", "warning": "⚠️", "error": "❌", "critical": "🚨"}
+        subject = f"{level_emoji.get(level, 'ℹ️')} 奥创告警: {level.upper()}"
+        
+        # 邮件正文
+        body = f"""
+<html>
+<body>
+<h2>🤖 奥创智能告警系统</h2>
+<table style="border-collapse: collapse; width: 100%; max-width: 600px;">
+<tr>
+    <td style="padding: 8px; border: 1px solid #ddd; background: #f5f5f5;"><b>告警级别</b></td>
+    <td style="padding: 8px; border: 1px solid #ddd;"><span style="color: {self._get_level_color(level)}; font-weight: bold;">{level.upper()}</span></td>
+</tr>
+<tr>
+    <td style="padding: 8px; border: 1px solid #ddd; background: #f5f5f5;"><b>消息</b></td>
+    <td style="padding: 8px; border: 1px solid #ddd;">{message}</td>
+</tr>
+<tr>
+    <td style="padding: 8px; border: 1px solid #ddd; background: #f5f5f5;"><b>时间</b></td>
+    <td style="padding: 8px; border: 1px solid #ddd;">{timestamp}</td>
+</tr>
+<tr>
+    <td style="padding: 8px; border: 1px solid #ddd; background: #f5f5f5;"><b>详情</b></td>
+    <td style="padding: 8px; border: 1px solid #ddd;"><pre>{json.dumps(alert.get('context', {}), indent=2, ensure_ascii=False)}</pre></td>
+</tr>
+</table>
+<hr>
+<p style="color: #888; font-size: 12px;">此邮件由奥创智能告警系统自动发送</p>
+</body>
+</html>
+"""
+        
+        try:
+            import smtplib
+            from email.mime.text import MIMEText
+            from email.mime.multipart import MIMEMultipart
+            
+            msg = MIMEMultipart('alternative')
+            msg['Subject'] = subject
+            msg['From'] = smtp_config.get("from", "ultron@localhost")
+            msg['To'] = ", ".join(recipients)
+            
+            # 添加HTML和纯文本版本
+            text_body = f"告警级别: {level.upper()}\n消息: {message}\n时间: {timestamp}\n详情: {json.dumps(alert.get('context', {}), ensure_ascii=False)}"
+            msg.attach(MIMEText(text_body, 'plain', 'utf-8'))
+            msg.attach(MIMEText(body, 'html', 'utf-8'))
+            
+            # 连接SMTP服务器发送
+            host = smtp_config.get("host", "localhost")
+            port = smtp_config.get("port", 25)
+            username = smtp_config.get("username")
+            password = smtp_config.get("password")
+            use_tls = smtp_config.get("use_tls", False)
+            
+            server = smtplib.SMTP(host, port, timeout=10)
+            if use_tls:
+                server.starttls()
+            if username and password:
+                server.login(username, password)
+            
+            server.sendmail(
+                smtp_config.get("from", "ultron@localhost"),
+                recipients,
+                msg.as_string()
+            )
+            server.quit()
+            
+            self.log("info", f"邮件通知发送成功 to {recipients}")
+            return {"status": "ok", "recipients": recipients}
+        
+        except ImportError:
+            return {"status": "error", "reason": "smtplib not available"}
+        except Exception as e:
+            self.log("error", f"邮件通知失败: {str(e)}")
+            return {"status": "error", "reason": str(e)}
+    
+    def _get_level_color(self, level):
+        """获取级别对应的颜色"""
+        colors = {
+            "info": "#2196F3",
+            "warning": "#FF9800",
+            "error": "#F44336",
+            "critical": "#9C27B0"
+        }
+        return colors.get(level, "#666666")
     
     def notify_batch(self, alerts):
         """批量通知"""

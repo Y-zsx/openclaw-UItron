@@ -19,7 +19,8 @@
     "level": "warning",
     "message": "内存使用率 {memory_percent}% 超过阈值!",
     "enabled": true,
-    "cooldown": 300
+    "cooldown": 300,
+    "last_triggered": "2026-03-06T04:33:16.403737"
   },
   {
     "rule_id": "high_cpu",
@@ -31,7 +32,7 @@
     "message": "CPU使用率 {cpu_percent}% 过高!",
     "enabled": true,
     "cooldown": 300,
-    "last_triggered": "2026-03-06T03:49:44.082725"
+    "last_triggered": "2026-03-06T04:33:16.403797"
   },
   {
     "rule_id": "gateway_unreachable",
