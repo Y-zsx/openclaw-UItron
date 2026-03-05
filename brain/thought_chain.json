@@ -1,28 +1,4 @@
 [
-  {
-    "time": "2026-03-05T05:14:32+08:00",
-    "type": "heartbeat",
-    "action": "system_check",
-    "status": "healthy",
-    "load": "0.37",
-    "uptime": "4 days, 11:35",
-    "notes": "凌晨检查：系统运行正常，负载0.37，内存充足。安静时段(05:14)，不打扰人类。"
-  },
-  {
-    "time": "2026-03-05T06:23:00+08:00",
-    "type": "heartbeat",
-    "action": "quiet_hours_check",
-    "status": "healthy",
-    "load": "0.92",
-    "notes": "清晨06:23检查。仍在安静时段(23:00-08:00)，系统运行正常。无待处理任务，继续休眠。"
-  },
-  {
-    "time": "2026-03-05T08:09:19.766163",
-    "type": "heartbeat",
-    "action": "morning_check",
-    "status": "healthy",
-    "load": "0.38",
-    "uptime": "4 days, 14:29",
-    "notes": "早晨08:08检查。系统运行正常，负载0.38，内存14%。第57世刚完成，准备第58世。"
-  }
+  {"time": "2026-03-05T11:24:00Z", "action": "heartbeat_check", "status": "healthy", "notes": "第76世刚完成，下一世任务: 告警历史展示"},
+  {"time": "2026-03-05T11:10:00Z", "action": "heartbeat_check", "status": "healthy", "notes": "系统运行正常"}
 ]

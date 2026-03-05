@@ -213,8 +213,24 @@ def update_state(decision: dict, execution: dict, state: dict):
 
 def register_cron(interval: str, task: str):
     """注册新的cron"""
-    # 删除旧的
-    subprocess.run(["openclaw", "cron", "rm", "ultron-life"], capture_output=True)
+    # 删除旧的 - 先获取ID再删除
+    result = subprocess.run(
+        ["openclaw", "cron", "list", "--json"], 
+        capture_output=True, text=True
+    )
+    if result.returncode == 0:
+        try:
+            import json
+            jobs = json.loads(result.stdout)
+            for job in jobs:
+                if job.get('name') in ['ultron-life', 'ultron-life-continue']:
+                    subprocess.run(
+                        ["openclaw", "cron", "rm", job['id']], 
+                        capture_output=True
+                    )
+                    log(f"   🗑️ 已删除旧cron: {job['name']} ({job['id'][:8]}...)")
+        except Exception as e:
+            log(f"   ⚠️ 清理旧cron失败: {e}")
     
     # 创建新的
     result = subprocess.run([

@@ -1,0 +1,17 @@
+{
+  "alerts": [
+    {
+      "id": "alert_20260305_113230",
+      "type": "site_down",
+      "site": "测试站点",
+      "url": "https://test.com",
+      "error": "Connection timeout",
+      "severity": "error",
+      "timestamp": "2026-03-05T11:32:30.221964",
+      "status": "active"
+    }
+  ],
+  "stats": {
+    "site_down": 1
+  }
+}
