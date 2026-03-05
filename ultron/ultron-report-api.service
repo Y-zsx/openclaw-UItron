@@ -1,0 +1,14 @@
+[Unit]
+Description=Ultron Auto Report API Service
+After=network.target
+
+[Service]
+Type=simple
+User=root
+WorkingDirectory=/root/.openclaw/workspace/ultron/tools
+ExecStart=/usr/bin/python3 /root/.openclaw/workspace/ultron/tools/auto_report_api.py --port 18190
+Restart=always
+RestartSec=10
+
+[Install]
+WantedBy=multi-user.target

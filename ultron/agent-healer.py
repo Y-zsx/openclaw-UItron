@@ -1,0 +1,551 @@
+#!/usr/bin/env python3
+"""
+Agent服务异常自动治愈系统
+第83世: 自动检测并治愈Agent服务异常
+"""
+
+import sqlite3
+import json
+import time
+import subprocess
+import requests
+from datetime import datetime, timedelta
+from typing import Dict, List, Optional, Tuple
+import os
+from concurrent.futures import ThreadPoolExecutor, as_completed
+import threading
+
+DB_PATH = "/root/.openclaw/workspace/ultron/agent_healer.db"
+LOG_FILE = "/root/.openclaw/workspace/ultron/logs/agent_healer.log"
+
+# Agent服务配置 (扩展到18个服务)
+AGENT_SERVICES = {
+    18141: {"name": "collab_perf", "health_endpoint": "/health", "restart_cmd": "pkill -f 'collab_perf' && sleep 2 && cd /root/.openclaw/workspace/ultron && nohup python3 collab_perf_api.py > /dev/null 2>&1 &"},
+    18145: {"name": "agent_deploy", "health_endpoint": "/health", "restart_cmd": "pkill -f 'agent_deploy_api' && sleep 2 && cd /root/.openclaw/workspace/ultron && nohup python3 agent_deploy_api.py > /dev/null 2>&1 &"},
+    18146: {"name": "agent_monitor", "health_endpoint": "/health", "restart_cmd": "pkill -f 'agent_monitor_api' && sleep 2 && cd /root/.openclaw/workspace/ultron && nohup python3 agent_monitor_api.py > /dev/null 2>&1 &"},
+    18147: {"name": "agent_log", "health_endpoint": "/health", "restart_cmd": "pkill -f 'agent_log_api' && sleep 2 && cd /root/.openclaw/workspace/ultron && nohup python3 agent_log_api.py > /dev/null 2>&1 &"},
+    18160: {"name": "auto_scaler", "health_endpoint": "/health", "restart_cmd": "pkill -f 'auto_scaler_api' && sleep 2 && cd /root/.openclaw/workspace/ultron && nohup python3 auto_scaler_api.py > /dev/null 2>&1 &"},
+    18161: {"name": "smart_lb", "health_endpoint": "/health", "restart_cmd": "pkill -f 'smart_lb_api' && sleep 2 && cd /root/.openclaw/workspace/ultron && nohup python3 smart_lb_api.py > /dev/null 2>&1 &"},
+    18170: {"name": "fault_prediction", "health_endpoint": "/health", "restart_cmd": "pkill -f 'fault_predictor' && sleep 2 && cd /root/.openclaw/workspace/ultron && nohup python3 fault_predictor.py > /dev/null 2>&1 &"},
+    # 新增服务
+    18120: {"name": "decision_engine", "health_endpoint": "/health", "restart_cmd": "pkill -f 'decision-engine' && sleep 2 && cd /root/.openclaw/workspace/ultron && nohup python3 decision_engine.py > /dev/null 2>&1 &"},
+    18125: {"name": "alert_intelligence", "health_endpoint": "/health", "restart_cmd": "pkill -f 'alert-intelligence' && sleep 2 && cd /root/.openclaw/workspace/ultron && nohup python3 alert_intelligence_api.py > /dev/null 2>&1 &"},
+    18127: {"name": "collab_enhanced", "health_endpoint": "/health", "restart_cmd": "pkill -f 'collab-enhanced' && sleep 2 && cd /root/.openclaw/workspace/ultron && nohup python3 collab_enhanced_api.py > /dev/null 2>&1 &"},
+    18129: {"name": "federation", "health_endpoint": "/health", "restart_cmd": "pkill -f 'federation' && sleep 2 && cd /root/.openclaw/workspace/ultron && nohup python3 federation_api.py > /dev/null 2>&1 &"},
+    18130: {"name": "lifecycle_manager", "health_endpoint": "/health", "restart_cmd": "pkill -f 'lifecycle-manager' && sleep 2 && cd /root/.openclaw/workspace/ultron && nohup python3 lifecycle_manager.py > /dev/null 2>&1 &"},
+    18133: {"name": "service_mesh", "health_endpoint": "/health", "restart_cmd": "pkill -f 'service_mesh' && sleep 2 && cd /root/.openclaw/workspace/ultron && nohup python3 service_mesh_api.py > /dev/null 2>&1 &"},
+    18096: {"name": "gateway_18096", "health_endpoint": "/health", "restart_cmd": "pkill -f 'gateway.18096' && sleep 2 && cd /root/.openclaw/workspace && nohup python3 -m gateway --port 18096 > /dev/null 2>&1 &"},
+    18097: {"name": "gateway_18097", "health_endpoint": "/health", "restart_cmd": "pkill -f 'gateway.18097' && sleep 2 && cd /root/.openclaw/workspace && nohup python3 -m gateway --port 18097 > /dev/null 2>&1 &"},
+    18098: {"name": "agent_monitor_v2", "health_endpoint": "/health", "restart_cmd": "pkill -f 'agent-monitor' && sleep 2 && cd /root/.openclaw/workspace/ultron && nohup python3 agent_monitor_v2.py > /dev/null 2>&1 &"},
+    18099: {"name": "task_queue", "health_endpoint": "/health", "restart_cmd": "pkill -f 'task-queue' && sleep 2 && cd /root/.openclaw/workspace/ultron && nohup python3 task_queue_api.py > /dev/null 2>&1 &"},
+    18100: {"name": "workflow_engine", "health_endpoint": "/health", "restart_cmd": "pkill -f 'workflow-engine' && sleep 2 && cd /root/.openclaw/workspace/ultron && nohup python3 workflow_api.py > /dev/null 2>&1 &"},
+    18102: {"name": "orchestrator", "health_endpoint": "/health", "restart_cmd": "pkill -f 'orchestrator' && sleep 2 && cd /root/.openclaw/workspace/ultron && nohup python3 orchestrator_api.py > /dev/null 2>&1 &"},
+}
+
+def init_db():
+    """初始化数据库"""
+    os.makedirs(os.path.dirname(DB_PATH), exist_ok=True)
+    conn = sqlite3.connect(DB_PATH)
+    c = conn.cursor()
+    
+    # 服务健康状态表
+    c.execute('''CREATE TABLE IF NOT EXISTS service_health (
+        port INTEGER PRIMARY KEY,
+        name TEXT NOT NULL,
+        status TEXT DEFAULT 'unknown',
+        last_check TIMESTAMP,
+        last_heal TIMESTAMP,
+        heal_count INTEGER DEFAULT 0,
+        response_time REAL,
+        error_message TEXT
+    )''')
+    
+    # 治愈历史表
+    c.execute('''CREATE TABLE IF NOT EXISTS heal_history (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        port INTEGER NOT NULL,
+        name TEXT NOT NULL,
+        issue TEXT NOT NULL,
+        action TEXT NOT NULL,
+        result TEXT NOT NULL,
+        timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    )''')
+    
+    # 初始化服务记录
+    for port, config in AGENT_SERVICES.items():
+        c.execute('''INSERT OR IGNORE INTO service_health (port, name) VALUES (?, ?)''',
+                  (port, config["name"]))
+    
+    conn.commit()
+    conn.close()
+
+def log(message: str):
+    """记录日志"""
+    timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+    log_entry = f"[{timestamp}] {message}"
+    print(log_entry)
+    os.makedirs(os.path.dirname(LOG_FILE), exist_ok=True)
+    with open(LOG_FILE, "a") as f:
+        f.write(log_entry + "\n")
+
+def check_service_health(port: int, name: str) -> Tuple[bool, float, str]:
+    """检查服务健康状态"""
+    config = AGENT_SERVICES.get(port, {})
+    endpoint = config.get("health_endpoint", "/health")
+    url = f"http://localhost:{port}{endpoint}"
+    
+    start_time = time.time()
+    try:
+        response = requests.get(url, timeout=5)
+        response_time = (time.time() - start_time) * 1000  # ms
+        
+        if response.status_code == 200:
+            return True, response_time, "OK"
+        else:
+            return False, response_time, f"HTTP {response.status_code}"
+    except requests.exceptions.ConnectionError:
+        return False, 0, "Connection refused"
+    except requests.exceptions.Timeout:
+        return False, 5000, "Timeout"
+    except Exception as e:
+        return False, 0, str(e)
+
+def heal_service(port: int, name: str, issue: str) -> bool:
+    """治愈服务"""
+    log(f"🔧 Attempting to heal {name} (port {port}): {issue}")
+    
+    config = AGENT_SERVICES.get(port, {})
+    restart_cmd = config.get("restart_cmd", "")
+    
+    if not restart_cmd:
+        log(f"⚠️ No restart command for {name}")
+        return False
+    
+    try:
+        # 执行重启命令
+        result = subprocess.run(restart_cmd, shell=True, capture_output=True, timeout=30)
+        
+        if result.returncode == 0:
+            # 等待服务启动
+            time.sleep(3)
+            
+            # 验证服务是否恢复
+            healthy, _, msg = check_service_health(port, name)
+            if healthy:
+                log(f"✅ Successfully healed {name}")
+                return True
+            else:
+                log(f"❌ Failed to heal {name}: {msg}")
+                return False
+        else:
+            log(f"❌ Restart command failed for {name}: {result.stderr.decode()}")
+            return False
+    except Exception as e:
+        log(f"❌ Exception while healing {name}: {e}")
+        return False
+
+def record_heal(port: int, name: str, issue: str, action: str, result: str):
+    """记录治愈历史"""
+    conn = sqlite3.connect(DB_PATH)
+    c = conn.cursor()
+    
+    c.execute('''INSERT INTO heal_history (port, name, issue, action, result) VALUES (?, ?, ?, ?, ?)''',
+              (port, name, issue, action, result))
+    
+    if result == "success":
+        c.execute('''UPDATE service_health 
+                     SET last_heal = datetime('now'), heal_count = heal_count + 1 
+                     WHERE port = ?''', (port,))
+    
+    conn.commit()
+    conn.close()
+
+def check_single_service(port: int) -> Dict:
+    """检查单个服务（用于并发）"""
+    config = AGENT_SERVICES.get(port, {})
+    name = config.get("name", f"service_{port}")
+    healthy, response_time, msg = check_service_health(port, name)
+    return {
+        "port": port,
+        "name": name,
+        "healthy": healthy,
+        "response_time": response_time,
+        "message": msg
+    }
+
+def auto_heal_cycle(concurrent: bool = True, max_workers: int = 10) -> Dict:
+    """自动治愈周期（支持并发优化）"""
+    log(f"🔍 Starting auto-heal cycle... (concurrent={concurrent})")
+    
+    results = {
+        "checked": [],
+        "healed": [],
+        "failed": [],
+        "timing_ms": 0
+    }
+    
+    start_time = time.time()
+    conn = sqlite3.connect(DB_PATH)
+    c = conn.cursor()
+    
+    if concurrent:
+        # 并发健康检查
+        with ThreadPoolExecutor(max_workers=max_workers) as executor:
+            futures = {executor.submit(check_single_service, port): port 
+                      for port in AGENT_SERVICES.keys()}
+            
+            for future in as_completed(futures):
+                try:
+                    result = future.result()
+                    results["checked"].append(result)
+                except Exception as e:
+                    port = futures[future]
+                    results["checked"].append({
+                        "port": port,
+                        "name": AGENT_SERVICES.get(port, {}).get("name", f"service_{port}"),
+                        "healthy": False,
+                        "response_time": 0,
+                        "message": str(e)
+                    })
+    else:
+        # 串行检查（原始逻辑）
+        for port, config in AGENT_SERVICES.items():
+            name = config["name"]
+            healthy, response_time, msg = check_service_health(port, name)
+            results["checked"].append({
+                "port": port,
+                "name": name,
+                "healthy": healthy,
+                "response_time": response_time,
+                "message": msg
+            })
+    
+    # 更新数据库和治愈逻辑（串行执行以避免竞态）
+    for check_result in results["checked"]:
+        port = check_result["port"]
+        name = check_result["name"]
+        healthy = check_result["healthy"]
+        response_time = check_result["response_time"]
+        msg = check_result["message"]
+        
+        c.execute('''UPDATE service_health 
+                     SET status = ?, last_check = datetime('now'), response_time = ?, error_message = ?
+                     WHERE port = ?''',
+                  ("healthy" if healthy else "unhealthy", response_time, msg, port))
+        
+        if not healthy:
+            log(f"⚠️ Service {name} (port {port}) is down: {msg}")
+            success = heal_service(port, name, msg)
+            
+            if success:
+                record_heal(port, name, msg, "restart", "success")
+                results["healed"].append({"port": port, "name": name, "issue": msg})
+            else:
+                record_heal(port, name, msg, "restart", "failed")
+                results["failed"].append({"port": port, "name": name, "issue": msg})
+    
+    conn.commit()
+    conn.close()
+    
+    results["timing_ms"] = int((time.time() - start_time) * 1000)
+    log(f"✅ Auto-heal cycle complete in {results['timing_ms']}ms: {len(results['healed'])} healed, {len(results['failed'])} failed")
+    return results
+
+def get_status() -> Dict:
+    """获取治愈系统状态"""
+    conn = sqlite3.connect(DB_PATH)
+    c = conn.cursor()
+    
+    c.execute('''SELECT port, name, status, last_check, last_heal, heal_count, response_time, error_message 
+                 FROM service_health ORDER BY port''')
+    rows = c.fetchall()
+    
+    services = []
+    for row in rows:
+        services.append({
+            "port": row[0],
+            "name": row[1],
+            "status": row[2],
+            "last_check": row[3],
+            "last_heal": row[4],
+            "heal_count": row[5],
+            "response_time": row[6],
+            "error_message": row[7]
+        })
+    
+    c.execute('''SELECT COUNT(*) FROM heal_history WHERE timestamp > datetime('now', '-1 hour')''')
+    recent_heals = c.fetchone()[0]
+    
+    conn.close()
+    
+    return {
+        "services": services,
+        "recent_heals_1h": recent_heals,
+        "timestamp": datetime.now().isoformat()
+    }
+
+def get_heal_history(limit: int = 20) -> List[Dict]:
+    """获取治愈历史"""
+    conn = sqlite3.connect(DB_PATH)
+    c = conn.cursor()
+    
+    c.execute('''SELECT port, name, issue, action, result, timestamp 
+                 FROM heal_history ORDER BY timestamp DESC LIMIT ?''', (limit,))
+    rows = c.fetchall()
+    
+    history = []
+    for row in rows:
+        history.append({
+            "port": row[0],
+            "name": row[1],
+            "issue": row[2],
+            "action": row[3],
+            "result": row[4],
+            "timestamp": row[5]
+        })
+    
+    conn.close()
+    return history
+
+# HTTP API
+from http.server import HTTPServer, BaseHTTPRequestHandler
+import threading
+
+def get_statistics() -> Dict:
+    """获取统计信息"""
+    conn = sqlite3.connect(DB_PATH)
+    c = conn.cursor()
+    
+    # 服务统计
+    c.execute("SELECT COUNT(*) FROM service_health")
+    total_services = c.fetchone()[0]
+    
+    c.execute("SELECT COUNT(*) FROM service_health WHERE status = 'healthy'")
+    healthy_services = c.fetchone()[0]
+    
+    c.execute("SELECT SUM(heal_count) FROM service_health")
+    total_heals = c.fetchone()[0] or 0
+    
+    # 成功率统计
+    c.execute("SELECT COUNT(*) FROM heal_history WHERE result = 'success' AND timestamp > datetime('now', '-24 hours')")
+    success_24h = c.fetchone()[0]
+    
+    c.execute("SELECT COUNT(*) FROM heal_history WHERE timestamp > datetime('now', '-24 hours')")
+    total_24h = c.fetchone()[0]
+    
+    success_rate = (success_24h / total_24h * 100) if total_24h > 0 else 100.0
+    
+    # 平均响应时间
+    c.execute("SELECT AVG(response_time) FROM service_health WHERE response_time > 0")
+    avg_response = c.fetchone()[0] or 0
+    
+    conn.close()
+    
+    return {
+        "total_services": total_services,
+        "healthy_services": healthy_services,
+        "unhealthy_services": total_services - healthy_services,
+        "total_heals": total_heals,
+        "heals_24h": success_24h,
+        "success_rate_24h": round(success_rate, 2),
+        "avg_response_time_ms": round(avg_response, 2),
+        "timestamp": datetime.now().isoformat()
+    }
+
+# Dashboard HTML
+DASHBOARD_HTML = """<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Agent Healer Dashboard</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; background: #1a1a2e; color: #eee; }
+        h1 { color: #00d4ff; }
+        .stats { display: flex; gap: 20px; margin: 20px 0; }
+        .stat-card { background: #16213e; padding: 20px; border-radius: 10px; min-width: 150px; }
+        .stat-card .value { font-size: 32px; color: #00d4ff; }
+        .stat-card .label { color: #888; }
+        .service-list { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 15px; }
+        .service { background: #16213e; padding: 15px; border-radius: 8px; border-left: 4px solid #444; }
+        .service.healthy { border-left-color: #00ff88; }
+        .service.unhealthy { border-left-color: #ff4444; }
+        .service .name { font-weight: bold; font-size: 16px; }
+        .service .port { color: #888; font-size: 12px; }
+        .service .status { float: right; padding: 3px 10px; border-radius: 12px; font-size: 12px; }
+        .status-healthy { background: #00ff88; color: #000; }
+        .status-unhealthy { background: #ff4444; color: #fff; }
+        .heal-history { margin-top: 30px; }
+        .heal-history table { width: 100%; border-collapse: collapse; }
+        .heal-history th, .heal-history td { padding: 10px; text-align: left; border-bottom: 1px solid #333; }
+        .heal-history th { background: #16213e; }
+        .result-success { color: #00ff88; }
+        .result-failed { color: #ff4444; }
+    </style>
+</head>
+<body>
+    <h1>🤖 Agent Healer Dashboard</h1>
+    <div class="stats">
+        <div class="stat-card">
+            <div class="value" id="total">-</div>
+            <div class="label">Total Services</div>
+        </div>
+        <div class="stat-card">
+            <div class="value" id="healthy">-</div>
+            <div class="label">Healthy</div>
+        </div>
+        <div class="stat-card">
+            <div class="value" id="heals">-</div>
+            <div class="label">Total Heals</div>
+        </div>
+        <div class="stat-card">
+            <div class="value" id="rate">-</div>
+            <div class="label">Success Rate (24h)</div>
+        </div>
+    </div>
+    <h2>Services</h2>
+    <div class="service-list" id="services"></div>
+    <div class="heal-history">
+        <h2>Recent Heal History</h2>
+        <table id="history">
+            <tr><th>Service</th><th>Issue</th><th>Action</th><th>Result</th><th>Time</th></tr>
+        </table>
+    </div>
+    <script>
+        async function loadData() {
+            const [status, stats, history] = await Promise.all([
+                fetch('/status').then(r => r.json()),
+                fetch('/stats').then(r => r.json()),
+                fetch('/history').then(r => r.json())
+            ]);
+            
+            document.getElementById('total').textContent = stats.total_services;
+            document.getElementById('healthy').textContent = stats.healthy_services;
+            document.getElementById('heals').textContent = stats.total_heals;
+            document.getElementById('rate').textContent = stats.success_rate_24h + '%';
+            
+            const servicesDiv = document.getElementById('services');
+            servicesDiv.innerHTML = status.services.map(s => 
+                `<div class="service ${s.status}">
+                    <span class="status status-${s.status}">${s.status}</span>
+                    <div class="name">${s.name}</div>
+                    <div class="port">Port: ${s.port}</div>
+                    <div class="port">Response: ${s.response_time ? s.response_time.toFixed(1) : 0}ms</div>
+                </div>`
+            ).join('');
+            
+            const historyTable = document.getElementById('history');
+            historyTable.innerHTML = '<tr><th>Service</th><th>Issue</th><th>Action</th><th>Result</th><th>Time</th></tr>' + 
+                history.map(h => 
+                    `<tr>
+                        <td>${h.name} (${h.port})</td>
+                        <td>${h.issue}</td>
+                        <td>${h.action}</td>
+                        <td class="result-${h.result}">${h.result}</td>
+                        <td>${h.timestamp}</td>
+                    </tr>`
+                ).join('');
+        }
+        loadData();
+        setInterval(loadData, 10000);
+    </script>
+</body>
+</html>"""
+
+class APIHandler(BaseHTTPRequestHandler):
+    def do_GET(self):
+        if self.path == "/health":
+            self.send_response(200)
+            self.send_header("Content-Type", "application/json")
+            self.end_headers()
+            self.wfile.write(json.dumps({"status": "ok", "service": "agent-healer"}).encode())
+        elif self.path == "/status":
+            status = get_status()
+            self.send_response(200)
+            self.send_header("Content-Type", "application/json")
+            self.end_headers()
+            self.wfile.write(json.dumps(status).encode())
+        elif self.path == "/stats":
+            stats = get_statistics()
+            self.send_response(200)
+            self.send_header("Content-Type", "application/json")
+            self.end_headers()
+            self.wfile.write(json.dumps(stats).encode())
+        elif self.path == "/history":
+            history = get_heal_history()
+            self.send_response(200)
+            self.send_header("Content-Type", "application/json")
+            self.end_headers()
+            self.wfile.write(json.dumps(history).encode())
+        elif self.path == "/heal":
+            results = auto_heal_cycle()
+            self.send_response(200)
+            self.send_header("Content-Type", "application/json")
+            self.end_headers()
+            self.wfile.write(json.dumps(results).encode())
+        elif self.path == "/optimize":
+            # 性能优化：对比串行和并发性能
+            serial_start = time.time()
+            serial_results = auto_heal_cycle(concurrent=False, max_workers=1)
+            serial_time = (time.time() - serial_start) * 1000
+            
+            concurrent_start = time.time()
+            concurrent_results = auto_heal_cycle(concurrent=True, max_workers=10)
+            concurrent_time = (time.time() - concurrent_start) * 1000
+            
+            speedup = serial_time / concurrent_time if concurrent_time > 0 else 1
+            
+            optimization = {
+                "serial_time_ms": int(serial_time),
+                "concurrent_time_ms": int(concurrent_time),
+                "speedup_factor": round(speedup, 2),
+                "services_checked": len(concurrent_results["checked"]),
+                "recommendation": "concurrent" if speedup > 1.5 else "serial",
+                "timestamp": datetime.now().isoformat()
+            }
+            
+            self.send_response(200)
+            self.send_header("Content-Type", "application/json")
+            self.end_headers()
+            self.wfile.write(json.dumps(optimization).encode())
+        elif self.path == "/dashboard" or self.path == "/":
+            self.send_response(200)
+            self.send_header("Content-Type", "text/html")
+            self.end_headers()
+            self.wfile.write(DASHBOARD_HTML.encode())
+        else:
+            self.send_response(404)
+            self.end_headers()
+    
+    def log_message(self, format, *args):
+        pass
+
+def start_api(port: int = 18180):
+    """启动API服务器"""
+    server = HTTPServer(("0.0.0.0", port), APIHandler)
+    log(f"🚀 Agent Healer API running on port {port}")
+    server.serve_forever()
+
+if __name__ == "__main__":
+    import sys
+    
+    if len(sys.argv) > 1:
+        if sys.argv[1] == "api":
+            init_db()
+            start_api()
+        elif sys.argv[1] == "heal":
+            init_db()
+            results = auto_heal_cycle()
+            print(json.dumps(results, indent=2))
+        elif sys.argv[1] == "status":
+            init_db()
+            status = get_status()
+            print(json.dumps(status, indent=2))
+        elif sys.argv[1] == "history":
+            init_db()
+            history = get_heal_history()
+            print(json.dumps(history, indent=2))
+    else:
+        init_db()
+        # 默认运行治愈周期
+        results = auto_heal_cycle()
+        print(json.dumps(results, indent=2))

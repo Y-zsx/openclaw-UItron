@@ -280,6 +280,115 @@ def stats():
     })
 
 
+# 导入工作流集成模块
+import sys
+import os
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+try:
+    from workflow_integration import workflow_integration
+    WORKFLOW_AVAILABLE = True
+except ImportError:
+    WORKFLOW_AVAILABLE = False
+    workflow_integration = None
+    logger.warning("工作流集成模块不可用")
+
+
+@app.route('/workflow/trigger', methods=['POST'])
+def trigger_workflow():
+    """触发工作流接口 - 决策引擎联动"""
+    if not WORKFLOW_AVAILABLE:
+        return jsonify({"success": False, "error": "工作流集成不可用"}), 500
+    
+    data = request.json
+    workflow_id = data.get('workflow_id')
+    context = data.get('context', {})
+    
+    if not workflow_id:
+        return jsonify({"success": False, "error": "缺少workflow_id"}), 400
+    
+    # 添加决策上下文到工作流
+    context['_decision_source'] = 'decision-engine'
+    context['_trigger'] = data.get('trigger', 'api')
+    
+    result = workflow_integration.trigger_workflow(workflow_id, context)
+    
+    if result:
+        return jsonify({
+            "success": True,
+            "workflow_id": workflow_id,
+            "execution": result
+        })
+    else:
+        return jsonify({
+            "success": False,
+            "error": "工作流触发失败"
+        }), 500
+
+
+@app.route('/workflow/list', methods=['GET'])
+def list_workflows():
+    """列出可用工作流"""
+    if not WORKFLOW_AVAILABLE:
+        return jsonify({"success": False, "error": "工作流集成不可用"}), 500
+    
+    workflows = workflow_integration.list_workflows()
+    return jsonify({
+        "success": True,
+        "workflows": workflows,
+        "count": len(workflows)
+    })
+
+
+@app.route('/decide-and-act', methods=['POST'])
+def decide_and_act():
+    """决策并执行工作流 - 一站式接口"""
+    data = request.json
+    trigger = data.get('trigger', 'auto')
+    context_data = data.get('context', {})
+    workflow_id = data.get('workflow_id')  # 可选：指定工作流
+    
+    # 创建决策上下文
+    context = DecisionContext(
+        trigger=trigger,
+        data=context_data,
+        source='decide-and-act'
+    )
+    
+    # 处理决策
+    decision = decision_engine.process(context, auto_approve=True)
+    
+    response = {
+        "success": True,
+        "decision": decision.to_dict() if decision else None,
+        "workflow_triggered": False
+    }
+    
+    # 如果决策成功且配置了工作流，则触发工作流
+    if decision and workflow_id and WORKFLOW_AVAILABLE:
+        # 将决策结果添加到上下文
+        workflow_context = {
+            **context_data,
+            '_decision_action': decision.action,
+            '_decision_status': decision.status.value,
+            '_decision_id': getattr(decision, 'id', 'unknown')
+        }
+        
+        result = workflow_integration.trigger_workflow(workflow_id, workflow_context)
+        if result:
+            response["workflow_triggered"] = True
+            response["workflow_result"] = result
+    
+    # 学习
+    if decision:
+        feedback_loop.learn(
+            context_data,
+            decision.action,
+            decision.status.value == "completed"
+        )
+    
+    return jsonify(response)
+
+
 if __name__ == '__main__':
     port = 18120
     logger.info(f"启动决策引擎API服务器: 端口 {port}")

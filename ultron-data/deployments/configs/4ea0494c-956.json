@@ -1,0 +1,36 @@
+{
+  "config_id": "4ea0494c-956",
+  "name": "monitor-agent",
+  "agent_type": "monitor",
+  "image": "ultron/monitor:latest",
+  "command": [],
+  "env": {},
+  "resources": {
+    "cpu": "100m",
+    "memory": "128Mi",
+    "disk": "500Mi"
+  },
+  "health_check": {
+    "enabled": true,
+    "path": "/health",
+    "port": 8000,
+    "interval": 30,
+    "timeout": 10,
+    "retries": 3
+  },
+  "replicas": 2,
+  "strategy": "RollingUpdate",
+  "canary_percentage": 0,
+  "rollback_enabled": true,
+  "max_rollback_versions": 5,
+  "autoscale": {
+    "enabled": false,
+    "min_replicas": 1,
+    "max_replicas": 3,
+    "target_cpu_percent": 70
+  },
+  "dependencies": [],
+  "volumes": [],
+  "created_at": "2026-03-05T23:58:25.503700",
+  "updated_at": "2026-03-05T23:58:25.503726"
+}

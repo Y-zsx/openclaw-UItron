@@ -1,0 +1,14 @@
+[Unit]
+Description=Mobile Collab API Service
+After=network.target
+
+[Service]
+Type=simple
+User=root
+WorkingDirectory=/root/.openclaw/workspace/ultron/agents
+ExecStart=/usr/bin/python3 /root/.openclaw/workspace/ultron/agents/mobile_collab_api.py
+Restart=always
+RestartSec=10
+
+[Install]
+WantedBy=multi-user.target

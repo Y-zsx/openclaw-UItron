@@ -1,0 +1,106 @@
+{
+  "report": "# 📊 智能运维日报 - 2026年03月06日\n\n## 📈 整体状态\n\n| 指标 | 值 |\n|------|-----|\n| 健康评分 | **85** 📈 上升 |\n| 服务状态 | 10/13 运行中 |\n| 告警数量 | 0 (24h) |\n| 日志数量 | 93 (24h) |\n\n## 🖥️ 系统资源\n\n| 指标 | 值 |\n|------|-----|\n| CPU负载 | 0.73 (1m) / 0.72 (5m) / 0.75 (15m) |\n| 内存 | 29.1% (2115.6MB / 7266.7MB) |\n| 磁盘 | 12G (30%) |\n| 网络 | ↓4346.45MB ↑9781.58MB |\n\n## 🔧 服务状态\n\n| 服务 | 状态 | 端口 |\n|------|------|------|\n| Gateway | ✅ running | 18789 |\n| Agent注册 | ✅ running | 8100 |\n| Agent规范 | ✅ running | 8110 |\n| Agent预测 | ✅ running | 8120 |\n| 健康监控 | ❌ stopped | 18090 |\n| 日志聚合 | ❌ stopped | 18091 |\n| 协作监控 | ❌ stopped | 18093 |\n| 监控告警 | ✅ running | 18146 |\n| 日志分析 | ✅ running | 18147 |\n| 自动扩缩容 | ✅ running | 18160 |\n| 负载均衡 | ✅ running | 18161 |\n| 故障预测 | ✅ running | 18170 |\n| 自动治愈 | ✅ running | 18180 |\n\n## 🚨 告警统计 (过去24小时)\n\n| 级别 | 数量 |\n|------|------|\n| 🔴 Critical | 0 |\n| 🟠 Error | 0 |\n| 🟡 Warning | 0 |\n| 🔵 Info | 0 |\n| **总计** | **0** |\n\n## 📝 日志统计 (过去24小时)\n\n| 级别 | 数量 |\n|------|------|\n| 🔴 Error | 1 |\n| 🟡 Warning | 1 |\n| 🔵 Info | 1 |\n| **总计** | **93** |\n\n\n---\n*报告生成时间: 2026-03-06 00:30:56*\n*🤖 奥创智能运维助手 v2.0*\n",
+  "metadata": {
+    "date": "2026年03月06日",
+    "timestamp": "2026-03-06 00:30:56",
+    "health": {
+      "load": [
+        "0.73",
+        "0.72",
+        "0.75"
+      ],
+      "load_1m": 0.73,
+      "load_5m": 0.72,
+      "load_15m": 0.75,
+      "memory_percent": 29.1,
+      "memory_used_mb": 2115.6,
+      "memory_total_mb": 7266.7,
+      "disk_used": "12G",
+      "disk_percent": "30%",
+      "cpu_count": 4,
+      "network_rx_mb": 4346.45,
+      "network_tx_mb": 9781.58
+    },
+    "services": {
+      "Gateway": {
+        "status": "running",
+        "port": 18789
+      },
+      "Agent注册": {
+        "status": "running",
+        "port": 8100
+      },
+      "Agent规范": {
+        "status": "running",
+        "port": 8110
+      },
+      "Agent预测": {
+        "status": "running",
+        "port": 8120
+      },
+      "健康监控": {
+        "status": "stopped",
+        "port": 18090
+      },
+      "日志聚合": {
+        "status": "stopped",
+        "port": 18091
+      },
+      "协作监控": {
+        "status": "stopped",
+        "port": 18093
+      },
+      "监控告警": {
+        "status": "running",
+        "port": 18146
+      },
+      "日志分析": {
+        "status": "running",
+        "port": 18147
+      },
+      "自动扩缩容": {
+        "status": "running",
+        "port": 18160
+      },
+      "负载均衡": {
+        "status": "running",
+        "port": 18161
+      },
+      "故障预测": {
+        "status": "running",
+        "port": 18170
+      },
+      "自动治愈": {
+        "status": "running",
+        "port": 18180
+      }
+    },
+    "alert_stats": {
+      "total": 0,
+      "critical": 0,
+      "error": 0,
+      "warning": 0,
+      "info": 0
+    },
+    "log_stats": {
+      "total": 93,
+      "error": 1,
+      "warning": 1,
+      "info": 1,
+      "izbp1g2abyc4ap6ynwqxmpz": 90
+    },
+    "trend": {
+      "health_score": 85,
+      "trend": "📈 上升",
+      "status": "healthy",
+      "factors": {
+        "cpu_load": 0.73,
+        "memory_percent": 29.1,
+        "disk_percent": "30%",
+        "stopped_services": 3,
+        "alerts_24h": 0
+      }
+    },
+    "recent_alerts": []
+  }
+}

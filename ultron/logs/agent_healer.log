@@ -1,0 +1,17 @@
+[2026-03-06 00:20:37] 🔍 Starting auto-heal cycle...
+[2026-03-06 00:20:37] ✅ Auto-heal cycle complete: 0 healed, 0 failed
+[2026-03-06 00:20:43] 🚀 Agent Healer API running on port 18180
+[2026-03-06 00:25:34] 🚀 Agent Healer API running on port 18180
+[2026-03-06 00:25:48] 🔍 Starting auto-heal cycle...
+[2026-03-06 00:25:48] ✅ Auto-heal cycle complete: 0 healed, 0 failed
+[2026-03-06 00:28:14] 🚀 Agent Healer API running on port 18180
+[2026-03-06 00:28:28] 🔍 Starting auto-heal cycle... (concurrent=False)
+[2026-03-06 00:28:28] ⚠️ Service gateway_18096 (port 18096) is down: HTTP 503
+[2026-03-06 00:28:28] 🔧 Attempting to heal gateway_18096 (port 18096): HTTP 503
+[2026-03-06 00:28:32] ✅ Successfully healed gateway_18096
+[2026-03-06 00:28:44] 🔍 Starting auto-heal cycle... (concurrent=False)
+[2026-03-06 00:28:45] ✅ Auto-heal cycle complete in 604ms: 0 healed, 0 failed
+[2026-03-06 00:28:45] 🔍 Starting auto-heal cycle... (concurrent=True)
+[2026-03-06 00:28:45] ✅ Auto-heal cycle complete in 567ms: 0 healed, 0 failed
+[2026-03-06 00:28:51] 🔍 Starting auto-heal cycle... (concurrent=True)
+[2026-03-06 00:28:51] ✅ Auto-heal cycle complete in 560ms: 0 healed, 0 failed

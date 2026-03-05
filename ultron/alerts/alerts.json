@@ -137,5 +137,14 @@
     "original_alert_id": "alert_1772699238691",
     "_id": "alert_1772716960149",
     "_created_at": 1772716960.1492372
+  },
+  {
+    "rule": "升级:test_high_cpu",
+    "level": "ERROR",
+    "message": "告警升级: WARNING → ERROR (等待6373.496419秒未响应)",
+    "timestamp": "2026-03-06T00:32:30.566814",
+    "original_alert_id": "alert_1772721977070",
+    "_id": "alert_1772728350567",
+    "_created_at": 1772728350.5670252
   }
 ]

@@ -1,0 +1,49 @@
+{
+  "version_id": "302c2098-e7c",
+  "config_id": "4ea0494c-956",
+  "version": "1.0.0",
+  "build_id": "fddbb826-128",
+  "manifest": {
+    "image": "ultron/monitor:latest",
+    "command": [],
+    "env": {},
+    "resources": {
+      "cpu": "100m",
+      "memory": "128Mi",
+      "disk": "500Mi"
+    },
+    "health_check": {
+      "enabled": true,
+      "path": "/health",
+      "port": 8000,
+      "interval": 30,
+      "timeout": 10,
+      "retries": 3
+    },
+    "replicas": 2,
+    "strategy": "RollingUpdate"
+  },
+  "checksum": "c8a887dd537f0c36",
+  "size": 0,
+  "status": "deployed",
+  "build_log": "[2026-03-05T23:58:29.213970] Starting build fddbb826-128\n[2026-03-05T23:58:29.214010] Pulling image: ultron/monitor:latest\n[2026-03-05T23:58:29.714570] Preparing deployment package\n[2026-03-05T23:58:30.015003] Build completed successfully\n[2026-03-05T23:58:30.015028] Running tests...\n[2026-03-05T23:58:30.515600] All tests passed",
+  "test_results": {
+    "passed": true,
+    "tests": [
+      {
+        "name": "config_validation",
+        "status": "passed"
+      },
+      {
+        "name": "health_check",
+        "status": "passed"
+      },
+      {
+        "name": "resource_limits",
+        "status": "passed"
+      }
+    ]
+  },
+  "deployed_at": "2026-03-05T23:58:34.286179",
+  "created_at": "2026-03-05T23:58:29.212710"
+}

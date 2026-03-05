@@ -1,0 +1,14 @@
+[Unit]
+Description=Agent Fault Prediction and Preventive Maintenance Service
+After=network.target
+
+[Service]
+Type=simple
+User=root
+WorkingDirectory=/root/.openclaw/workspace/ultron
+ExecStart=/usr/bin/python3 tools/fault_predictor.py
+Restart=always
+RestartSec=10
+
+[Install]
+WantedBy=multi-user.target

@@ -1,20 +1,20 @@
 {
-  "time": "2026-03-05T22:59:00Z",
+  "time": "2026-03-06T00:00:00Z",
   "status": "healthy",
   "cron": "running",
-  "load": "0.43",
-  "memory_percent": "14%",
+  "load": "0.35",
+  "memory_percent": "13%",
   "disk_percent": "30%",
   "ambition": "行为学习系统",
   "ambition_id": 6,
   "task_count": 0,
   "pending_tasks": [],
-  "last_action": "heartbeat_check",
-  "last_heartbeat": "2026-03-05T22:59:00Z",
+  "last_action": "heartbeat_check_midnight",
+  "last_heartbeat": "2026-03-06T00:00:00Z",
   "reincarnation_status": {
     "version": "3.0",
     "system": "disabled",
     "note": "用户要求关闭转世系统，保留监控cron"
   },
-  "notes": "深夜(22:59)检查，系统运行正常，即将进入安静时段(23:00-08:00)"
+  "notes": "午夜0点检查，系统运行正常，已进入安静时段"
 }

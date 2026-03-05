@@ -35,6 +35,8 @@
         .progress-fill { height: 100%; background: linear-gradient(90deg, #00d4ff, #00ff88); border-radius: 4px; }
         @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.5; } }
         .live { animation: pulse 2s infinite; }
+        .service-list { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+        .service-item { background: #0f3460; padding: 10px; border-radius: 6px; font-size: 13px; }
     </style>
 </head>
 <body>
@@ -43,7 +45,7 @@
             <h1>🤖 Agent协作网络监控面板</h1>
             <p style="color:#888">Multi-Agent Collaboration Network Dashboard</p>
         </div>
-        <div class="timestamp">更新时间: 2026-03-05 18:49:11</div>
+        <div class="timestamp">更新时间: 2026-03-05 23:39:50</div>
     </div>
     
     <!-- 系统状态 -->
@@ -51,12 +53,12 @@
         <h2>🖥️ 系统状态</h2>
         <div class="metrics">
             <div class="metric">
-                <div class="metric-value">0.3</div>
+                <div class="metric-value">0.95</div>
                 <div class="metric-label">系统负载</div>
             </div>
             <div class="metric">
-                <div class="metric-value">15.2%</div>
-                <div class="metric-label">内存使用 (1103MB)</div>
+                <div class="metric-value">26.1%</div>
+                <div class="metric-label">内存使用 (1900MB)</div>
             </div>
             <div class="metric">
                 <div class="metric-value">30%</div>
@@ -69,106 +71,111 @@
         </div>
     </div>
     
-    <!-- Agent状态 -->
+    <!-- Agent服务状态 -->
     <div class="card">
-        <h2>🦞 Agent状态</h2>
-        <table>
-            <tr>
-                <th>Agent名称</th>
-                <th>状态</th>
-                <th>健康度</th>
-                <th>CPU%</th>
-                <th>内存MB</th>
-                <th>重启</th>
-                <th>错误</th>
-            </tr>
-            <tr>
-                <td><span class="badge">monitor-agent</span></td>
-                <td class="status-error">🔴 失败</td>
-                <td><div class="progress-bar"><div class="progress-fill" style="width:100.0%;background:#00ff88"></div></div>100.0%</td>
-                <td>0.0%</td>
-                <td>0.0</td>
-                <td>0</td>
-                <td style="color:#888;font-size:12px">启动后立即退出</td>
-            </tr>
-            <tr>
-                <td><span class="badge">executor-agent</span></td>
-                <td class="status-error">🔴 失败</td>
-                <td><div class="progress-bar"><div class="progress-fill" style="width:100.0%;background:#00ff88"></div></div>100.0%</td>
-                <td>0.0%</td>
-                <td>0.0</td>
-                <td>0</td>
-                <td style="color:#888;font-size:12px">启动后立即退出</td>
-            </tr>
-            <tr>
-                <td><span class="badge">test-agent</span></td>
-                <td class="status-error">⚪ 停止</td>
-                <td><div class="progress-bar"><div class="progress-fill" style="width:100.0%;background:#00ff88"></div></div>100.0%</td>
-                <td>0.0%</td>
-                <td>0.9</td>
-                <td>0</td>
-                <td style="color:#888;font-size:12px">-</td>
-            </tr>
-        </table>
+        <h2>🦞 Agent服务状态</h2>
+        <div class="service-list">
+            <div class="service-item"><span class="badge">agent_orchestrator</span> <span class="status-ok">运行中</span></div>
+            <div class="service-item"><span class="badge">agent_interface_server</span> <span class="status-ok">运行中</span></div>
+            <div class="service-item"><span class="badge">task_queue</span> <span class="status-ok">运行中</span></div>
+            <div class="service-item"><span class="badge">workflow_engine</span> <span class="status-ok">运行中</span></div>
+            <div class="service-item"><span class="badge">service_mesh</span> <span class="status-ok">运行中</span></div>
+            <div class="service-item"><span class="badge">agent_monitor</span> <span class="status-ok">运行中</span></div>
+            <div class="service-item"><span class="badge">collab_enhanced_api</span> <span class="status-ok">运行中</span></div>
+            <div class="service-item"><span class="badge">federation_api</span> <span class="status-ok">运行中</span></div>
+            <div class="service-item"><span class="badge">agent_lifecycle</span> <span class="status-ok">运行中</span></div>
+            <div class="service-item"><span class="badge">agent_scaling</span> <span class="status-ok">运行中</span></div>
+            <div class="service-item"><span class="badge">agent_dispatcher</span> <span class="status-ok">运行中</span></div>
+            <div class="service-item"><span class="badge">agent_service_mesh</span> <span class="status-ok">运行中</span></div>
+            <div class="service-item"><span class="badge">agent_orchestration</span> <span class="status-ok">运行中</span></div>
+            <div class="service-item"><span class="badge">load_balancer</span> <span class="status-ok">运行中</span></div>
+        </div>
     </div>
     
     <!-- 工作流状态 -->
     <div class="card">
-        <h2>🔄 工作流状态 (转世系统)</h2>
+        <h2>🔄 工作流状态 (转世系统 V2)</h2>
         <div class="workflow-info">
             <div class="workflow-item">
                 <div class="workflow-label">当前世数</div>
-                <div class="workflow-value">第30世 🔥</div>
+                <div class="workflow-value">第76世 🔥</div>
             </div>
             <div class="workflow-item">
                 <div class="workflow-label">夙愿</div>
-                <div class="workflow-value">多智能体协作网络</div>
+                <div class="workflow-value">智能决策与自主行动系统</div>
             </div>
             <div class="workflow-item">
                 <div class="workflow-label">当前任务</div>
-                <div class="workflow-value" style="font-size:14px">Agent协作网络监控面板与可视化...</div>
+                <div class="workflow-value" style="font-size:14px">决策引擎与工作流系统联动</div>
             </div>
             <div class="workflow-item">
                 <div class="workflow-label">任务状态</div>
                 <div class="workflow-value status-ok">completed</div>
             </div>
         </div>
-        <h3 style="color:#888;margin:15px 0 10px;font-size:14px">📜 历史记录</h3>
+        <h3 style="color:#888;margin:15px 0 10px;font-size:14px">📜 最近历史记录</h3>
             <div class="history-item">
-                <span class="badge">第30世</span>
-                <span style="margin-left:10px">Agent协作网络性能优化与压力测试</span>
+                <span class="badge">第76世</span>
+                <span style="margin-left:10px">决策引擎与工作流系统联动</span>
                 <span style="float:right" class="status-ok">completed</span>
             </div>
             <div class="history-item">
-                <span class="badge">第29世</span>
-                <span style="margin-left:10px">告警通知渠道验证</span>
+                <span class="badge">第75世</span>
+                <span style="margin-left:10px">决策引擎与Agent系统集成</span>
+                <span style="float:right" class="status-ok">completed</span>
+            </div>
+            <div class="history-item">
+                <span class="badge">第74世</span>
+                <span style="margin-left:10px">Agent智能决策引擎完善</span>
+                <span style="float:right" class="status-ok">completed</span>
+            </div>
+            <div class="history-item">
+                <span class="badge">第73世</span>
+                <span style="margin-left:10px">分布式追踪与监控增强</span>
                 <span style="float:right" class="status-ok">completed</span>
             </div>
     </div>
     
-    <!-- 消息队列 -->
+    <!-- 决策引擎状态 -->
     <div class="card">
-        <h2>📬 消息队列</h2>
+        <h2>🧠 决策引擎</h2>
         <div class="metrics">
             <div class="metric">
-                <div class="metric-value">0</div>
-                <div class="metric-label">待处理</div>
+                <div class="metric-value">18120</div>
+                <div class="metric-label">API端口</div>
             </div>
             <div class="metric">
-                <div class="metric-value" style="color:#ffaa00">6</div>
-                <div class="metric-label">处理中</div>
+                <div class="metric-value">11</div>
+                <div class="metric-label">端点数量</div>
             </div>
             <div class="metric">
-                <div class="metric-value status-ok">40</div>
-                <div class="metric-label">已完成</div>
+                <div class="metric-value">6</div>
+                <div class="metric-label">决策规则</div>
+            </div>
+            <div class="metric">
+                <div class="metric-value status-ok">在线</div>
+                <div class="metric-label">引擎状态</div>
             </div>
         </div>
     </div>
     
-    <!-- 性能指标 -->
+    <!-- 工作流API -->
     <div class="card">
-        <h2>📊 性能指标</h2>
-        <p style="color:#888">暂无性能测试数据 (运行 stress_test_cli.py 生成)</p>
+        <h2>⚡ 工作流编排</h2>
+        <div class="metrics">
+            <div class="metric">
+                <div class="metric-value">18135</div>
+                <div class="metric-label">API端口</div>
+            </div>
+            <div class="metric">
+                <div class="metric-value">1</div>
+                <div class="metric-label">活跃工作流</div>
+            </div>
+            <div class="metric">
+                <div class="metric-value status-ok">已集成</div>
+                <div class="metric-label">决策引擎</div>
+            </div>
+        </div>
     </div>
     
     <script>

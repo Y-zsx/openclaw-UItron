@@ -1,0 +1,14 @@
+[Unit]
+Description=Smart Load Balancer Service
+After=network.target
+
+[Service]
+Type=simple
+User=root
+WorkingDirectory=/root/.openclaw/workspace/ultron/agents
+ExecStart=/usr/bin/python3 smart_loadbalancer.py
+Restart=always
+RestartSec=10
+
+[Install]
+WantedBy=multi-user.target
