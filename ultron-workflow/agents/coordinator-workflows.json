@@ -1,0 +1,55 @@
+{
+  "active": [],
+  "completed": [
+    {
+      "workflow_id": "be80cec2-6637-4e2f-ad36-dbe0a41fd32a",
+      "workflow": {
+        "steps": [
+          {
+            "type": "monitor",
+            "payload": {
+              "action": "status"
+            }
+          },
+          {
+            "type": "analyze",
+            "payload": {
+              "action": "analyze"
+            }
+          },
+          {
+            "type": "execute",
+            "payload": {
+              "action": "shell",
+              "command": "echo done"
+            }
+          }
+        ]
+      },
+      "status": "completed",
+      "started_at": "2026-03-05T15:50:01.978054",
+      "current_step": 2,
+      "step_results": [
+        {
+          "step": 0,
+          "task_id": "dc41f1d7-62bd-41b4-9ac4-3e64e9554b1c",
+          "agent": "monitor",
+          "status": "dispatched"
+        },
+        {
+          "step": 1,
+          "task_id": "e45e4a87-fef9-4f39-a23a-a01ce39cfbc9",
+          "agent": "analyzer",
+          "status": "dispatched"
+        },
+        {
+          "step": 2,
+          "task_id": "abb6a7d3-9b43-45f1-b57e-3bdac968f8a8",
+          "agent": "executor",
+          "status": "dispatched"
+        }
+      ],
+      "completed_at": "2026-03-05T15:50:01.982603"
+    }
+  ]
+}

@@ -1,0 +1,34 @@
+{
+  "agent_id": "agent-coordinator",
+  "type": "coordinate",
+  "status": "idle",
+  "capabilities": [
+    "task_dispatch",
+    "workflow",
+    "conflict_resolution",
+    "resource_management"
+  ],
+  "agents": {
+    "monitor": {
+      "status": "unknown",
+      "capabilities": [
+        "monitor"
+      ]
+    },
+    "analyzer": {
+      "status": "unknown",
+      "capabilities": [
+        "analyze"
+      ]
+    },
+    "executor": {
+      "status": "unknown",
+      "capabilities": [
+        "execute"
+      ]
+    }
+  },
+  "last_heartbeat": "2026-03-05T15:50:01.982633",
+  "dispatch_count": 1,
+  "workflow_count": 1
+}

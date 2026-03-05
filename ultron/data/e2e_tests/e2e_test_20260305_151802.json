@@ -1,0 +1,124 @@
+{
+  "test_run": "2026-03-05T15:18:05.536413",
+  "elapsed_seconds": 3.037350654602051,
+  "results": {
+    "组件健康": true,
+    "告警引擎": false,
+    "自动修复": false,
+    "集成流程": false,
+    "数据持久化": true,
+    "API端点": true
+  },
+  "passed": 3,
+  "total": 6,
+  "log": [
+    {
+      "timestamp": "2026-03-05T15:18:02.499007",
+      "status": "INFO",
+      "message": "=== 测试1: 组件健康检查 ===",
+      "details": {}
+    },
+    {
+      "timestamp": "2026-03-05T15:18:02.499081",
+      "status": "PASS",
+      "message": "告警引擎 文件存在: ops-alert-engine.py",
+      "details": {}
+    },
+    {
+      "timestamp": "2026-03-05T15:18:02.499117",
+      "status": "PASS",
+      "message": "自动修复 文件存在: ops/ops-auto-repair.py",
+      "details": {}
+    },
+    {
+      "timestamp": "2026-03-05T15:18:02.499137",
+      "status": "PASS",
+      "message": "预测告警 文件存在: predictive_alert.py",
+      "details": {}
+    },
+    {
+      "timestamp": "2026-03-05T15:18:02.499158",
+      "status": "PASS",
+      "message": "修复集成 文件存在: ops/ops-alert-repair-integration.py",
+      "details": {}
+    },
+    {
+      "timestamp": "2026-03-05T15:18:02.499178",
+      "status": "PASS",
+      "message": "监控收集 文件存在: ops-metrics-collector.py",
+      "details": {}
+    },
+    {
+      "timestamp": "2026-03-05T15:18:02.499190",
+      "status": "PASS",
+      "message": "告警通知 文件存在: ops-alert-notifier.py",
+      "details": {}
+    },
+    {
+      "timestamp": "2026-03-05T15:18:02.999749",
+      "status": "INFO",
+      "message": "=== 测试2: 告警引擎功能 ===",
+      "details": {}
+    },
+    {
+      "timestamp": "2026-03-05T15:18:03.003499",
+      "status": "FAIL",
+      "message": "告警引擎测试失败: module 'alert_engine' has no attribute 'OpsAlertEngine'",
+      "details": {}
+    },
+    {
+      "timestamp": "2026-03-05T15:18:03.511252",
+      "status": "INFO",
+      "message": "=== 测试3: 自动修复功能 ===",
+      "details": {}
+    },
+    {
+      "timestamp": "2026-03-05T15:18:03.517692",
+      "status": "FAIL",
+      "message": "自动修复测试失败: module 'auto_repair' has no attribute 'AutoRepair'",
+      "details": {}
+    },
+    {
+      "timestamp": "2026-03-05T15:18:04.018643",
+      "status": "INFO",
+      "message": "=== 测试4: 集成流程测试 ===",
+      "details": {}
+    },
+    {
+      "timestamp": "2026-03-05T15:18:04.024364",
+      "status": "FAIL",
+      "message": "集成流程测试失败: 'AlertRepairIntegration' object has no attribute 'process'",
+      "details": {}
+    },
+    {
+      "timestamp": "2026-03-05T15:18:04.525124",
+      "status": "INFO",
+      "message": "=== 测试5: 数据持久化 ===",
+      "details": {}
+    },
+    {
+      "timestamp": "2026-03-05T15:18:04.525255",
+      "status": "WARN",
+      "message": "告警日志文件不存在",
+      "details": {}
+    },
+    {
+      "timestamp": "2026-03-05T15:18:04.525623",
+      "status": "PASS",
+      "message": "修复日志存在, 2 条记录",
+      "details": {}
+    },
+    {
+      "timestamp": "2026-03-05T15:18:05.026211",
+      "status": "INFO",
+      "message": "=== 测试6: API端点测试 ===",
+      "details": {}
+    },
+    {
+      "timestamp": "2026-03-05T15:18:05.036184",
+      "status": "WARN",
+      "message": "Metrics API 响应码: 000",
+      "details": {}
+    }
+  ]
+}

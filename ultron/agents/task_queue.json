@@ -202,6 +202,78 @@
       "type": "message",
       "timestamp": "2026-03-05T15:08:53.719080",
       "status": "pending"
+    },
+    {
+      "id": "21",
+      "sender": "monitor",
+      "recipient": "messenger",
+      "message": "状态报告: Load=0.38, Mem=14.1%, Disk=30%",
+      "type": "message",
+      "timestamp": "2026-03-05T15:39:59.308588",
+      "status": "pending"
+    },
+    {
+      "id": "22",
+      "sender": "executor",
+      "recipient": "messenger",
+      "message": "执行完成: 6个任务",
+      "type": "message",
+      "timestamp": "2026-03-05T15:43:11.109036",
+      "status": "pending"
+    },
+    {
+      "id": "23",
+      "sender": "executor",
+      "recipient": "messenger",
+      "message": "执行完成: 6个任务",
+      "type": "message",
+      "timestamp": "2026-03-05T15:43:50.420141",
+      "status": "pending"
+    },
+    {
+      "id": "24",
+      "sender": "coordinator",
+      "recipient": "communicator",
+      "message": "{\"type\": \"test\", \"content\": \"ping\"}",
+      "type": "message",
+      "timestamp": "2026-03-05T15:52:40.488492",
+      "status": "pending"
+    },
+    {
+      "id": "25",
+      "sender": "monitor",
+      "recipient": "analyzer",
+      "message": "{\"type\": \"test\", \"content\": \"route_test\"}",
+      "type": "message",
+      "timestamp": "2026-03-05T15:52:40.489923",
+      "status": "pending"
+    },
+    {
+      "id": "26",
+      "sender": "executor",
+      "recipient": "messenger",
+      "message": "执行完成: 6个任务",
+      "type": "message",
+      "timestamp": "2026-03-05T16:00:38.939960",
+      "status": "pending"
+    },
+    {
+      "id": "27",
+      "sender": "executor",
+      "recipient": "messenger",
+      "message": "执行完成: 6个任务",
+      "type": "message",
+      "timestamp": "2026-03-05T16:01:04.939630",
+      "status": "pending"
+    },
+    {
+      "id": "28",
+      "sender": "executor",
+      "recipient": "messenger",
+      "message": "执行完成: 6个任务",
+      "type": "message",
+      "timestamp": "2026-03-05T16:01:17.922859",
+      "status": "pending"
     }
   ],
   "events": [

@@ -1,0 +1,130 @@
+{
+  "test_run": "2026-03-05T15:21:32.552200",
+  "elapsed_seconds": 3.241457939147949,
+  "results": {
+    "组件健康": true,
+    "告警引擎": true,
+    "自动修复": true,
+    "集成流程": true,
+    "数据持久化": true,
+    "API端点": true
+  },
+  "passed": 6,
+  "total": 6,
+  "log": [
+    {
+      "timestamp": "2026-03-05T15:21:29.310693",
+      "status": "INFO",
+      "message": "=== 测试1: 组件健康检查 ===",
+      "details": {}
+    },
+    {
+      "timestamp": "2026-03-05T15:21:29.310731",
+      "status": "PASS",
+      "message": "告警引擎 文件存在: ops-alert-engine.py",
+      "details": {}
+    },
+    {
+      "timestamp": "2026-03-05T15:21:29.310803",
+      "status": "PASS",
+      "message": "自动修复 文件存在: ops/ops-auto-repair.py",
+      "details": {}
+    },
+    {
+      "timestamp": "2026-03-05T15:21:29.310868",
+      "status": "PASS",
+      "message": "预测告警 文件存在: predictive_alert.py",
+      "details": {}
+    },
+    {
+      "timestamp": "2026-03-05T15:21:29.310885",
+      "status": "PASS",
+      "message": "修复集成 文件存在: ops/ops-alert-repair-integration.py",
+      "details": {}
+    },
+    {
+      "timestamp": "2026-03-05T15:21:29.310902",
+      "status": "PASS",
+      "message": "监控收集 文件存在: ops-metrics-collector.py",
+      "details": {}
+    },
+    {
+      "timestamp": "2026-03-05T15:21:29.310922",
+      "status": "PASS",
+      "message": "告警通知 文件存在: ops-alert-notifier.py",
+      "details": {}
+    },
+    {
+      "timestamp": "2026-03-05T15:21:29.811478",
+      "status": "INFO",
+      "message": "=== 测试2: 告警引擎功能 ===",
+      "details": {}
+    },
+    {
+      "timestamp": "2026-03-05T15:21:29.815507",
+      "status": "PASS",
+      "message": "告警引擎产生 1 个告警",
+      "details": {}
+    },
+    {
+      "timestamp": "2026-03-05T15:21:30.316085",
+      "status": "INFO",
+      "message": "=== 测试3: 自动修复功能 ===",
+      "details": {}
+    },
+    {
+      "timestamp": "2026-03-05T15:21:30.327686",
+      "status": "PASS",
+      "message": "自动修复模块包含 5 个策略",
+      "details": {}
+    },
+    {
+      "timestamp": "2026-03-05T15:21:30.462685",
+      "status": "PASS",
+      "message": "自动修复执行测试成功",
+      "details": {}
+    },
+    {
+      "timestamp": "2026-03-05T15:21:30.963355",
+      "status": "INFO",
+      "message": "=== 测试4: 集成流程测试 ===",
+      "details": {}
+    },
+    {
+      "timestamp": "2026-03-05T15:21:30.973044",
+      "status": "INFO",
+      "message": "集成流程无告警/修复触发(正常)",
+      "details": {}
+    },
+    {
+      "timestamp": "2026-03-05T15:21:31.473705",
+      "status": "INFO",
+      "message": "=== 测试5: 数据持久化 ===",
+      "details": {}
+    },
+    {
+      "timestamp": "2026-03-05T15:21:31.474035",
+      "status": "WARN",
+      "message": "告警日志文件不存在",
+      "details": {}
+    },
+    {
+      "timestamp": "2026-03-05T15:21:31.475396",
+      "status": "PASS",
+      "message": "修复日志存在, 2 条记录",
+      "details": {}
+    },
+    {
+      "timestamp": "2026-03-05T15:21:31.976028",
+      "status": "INFO",
+      "message": "=== 测试6: API端点测试 ===",
+      "details": {}
+    },
+    {
+      "timestamp": "2026-03-05T15:21:32.051685",
+      "status": "WARN",
+      "message": "Metrics API 响应码: 000",
+      "details": {}
+    }
+  ]
+}

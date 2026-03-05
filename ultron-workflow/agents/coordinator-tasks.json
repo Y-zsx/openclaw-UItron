@@ -1,0 +1,70 @@
+{
+  "pending": [],
+  "dispatched": [
+    {
+      "task_id": "5697e3b3-f4f4-443a-b982-e37c52e76c1d",
+      "task": {
+        "type": "shell",
+        "payload": {
+          "action": "shell",
+          "command": "echo test"
+        },
+        "task_id": "5697e3b3-f4f4-443a-b982-e37c52e76c1d",
+        "target_agent": "executor"
+      },
+      "target_agent": "executor",
+      "dispatched_at": "2026-03-05T15:49:54.543186",
+      "status": "dispatched",
+      "executed": true
+    },
+    {
+      "task_id": "dc41f1d7-62bd-41b4-9ac4-3e64e9554b1c",
+      "task": {
+        "type": "monitor",
+        "payload": {
+          "action": "status"
+        },
+        "metadata": {},
+        "task_id": "dc41f1d7-62bd-41b4-9ac4-3e64e9554b1c",
+        "target_agent": "monitor"
+      },
+      "target_agent": "monitor",
+      "dispatched_at": "2026-03-05T15:50:01.978255",
+      "status": "dispatched"
+    },
+    {
+      "task_id": "e45e4a87-fef9-4f39-a23a-a01ce39cfbc9",
+      "task": {
+        "type": "analyze",
+        "payload": {
+          "action": "analyze"
+        },
+        "metadata": {},
+        "task_id": "e45e4a87-fef9-4f39-a23a-a01ce39cfbc9",
+        "target_agent": "analyzer"
+      },
+      "target_agent": "analyzer",
+      "dispatched_at": "2026-03-05T15:50:01.979983",
+      "status": "dispatched"
+    },
+    {
+      "task_id": "abb6a7d3-9b43-45f1-b57e-3bdac968f8a8",
+      "task": {
+        "type": "execute",
+        "payload": {
+          "action": "shell",
+          "command": "echo done"
+        },
+        "metadata": {},
+        "task_id": "abb6a7d3-9b43-45f1-b57e-3bdac968f8a8",
+        "target_agent": "executor"
+      },
+      "target_agent": "executor",
+      "dispatched_at": "2026-03-05T15:50:01.981482",
+      "status": "dispatched",
+      "executed": true
+    }
+  ],
+  "completed": [],
+  "failed": []
+}
