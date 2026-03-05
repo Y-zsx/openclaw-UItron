@@ -1,0 +1,218 @@
+{
+  "tasks": [
+    {
+      "id": "collect_data",
+      "name": "采集系统指标",
+      "agent_type": "monitor",
+      "payload": {
+        "metrics": [
+          "cpu",
+          "memory",
+          "disk"
+        ]
+      },
+      "priority": 8,
+      "status": "completed",
+      "depends_on": [],
+      "parallel_with": [],
+      "timeout": 60.0,
+      "retry_count": 0,
+      "max_retries": 3,
+      "result": {
+        "cpu": 45,
+        "memory": 62,
+        "disk": 38
+      },
+      "error": null,
+      "created_at": "2026-03-05T16:37:06.432985"
+    },
+    {
+      "id": "analyze_data",
+      "name": "分析指标趋势",
+      "agent_type": "executor",
+      "payload": {
+        "input": "collect_data"
+      },
+      "priority": 7,
+      "status": "completed",
+      "depends_on": [
+        "collect_data"
+      ],
+      "parallel_with": [],
+      "timeout": 60.0,
+      "retry_count": 0,
+      "max_retries": 3,
+      "result": {
+        "trend": "stable",
+        "score": 85
+      },
+      "error": null,
+      "created_at": "2026-03-05T16:37:06.433561"
+    },
+    {
+      "id": "check_alerts",
+      "name": "检查告警条件",
+      "agent_type": "analyzer",
+      "payload": {
+        "thresholds": {
+          "cpu": 80,
+          "memory": 85
+        }
+      },
+      "priority": 9,
+      "status": "completed",
+      "depends_on": [
+        "analyze_data"
+      ],
+      "parallel_with": [],
+      "timeout": 60.0,
+      "retry_count": 0,
+      "max_retries": 3,
+      "result": {
+        "alerts": [],
+        "status": "healthy"
+      },
+      "error": null,
+      "created_at": "2026-03-05T16:37:06.434090"
+    },
+    {
+      "id": "send_notification",
+      "name": "发送通知",
+      "agent_type": "communicator",
+      "payload": {
+        "channels": [
+          "dingtalk"
+        ]
+      },
+      "priority": 6,
+      "status": "completed",
+      "depends_on": [
+        "check_alerts"
+      ],
+      "parallel_with": [],
+      "timeout": 60.0,
+      "retry_count": 0,
+      "max_retries": 3,
+      "result": {
+        "sent": true,
+        "channels": 1
+      },
+      "error": null,
+      "created_at": "2026-03-05T16:37:06.434978"
+    }
+  ],
+  "workflows": [
+    {
+      "id": "monitoring_workflow",
+      "name": "系统监控工作流",
+      "description": "完整的监控、分析、告警流程",
+      "tasks": [
+        {
+          "id": "collect_data",
+          "name": "采集系统指标",
+          "agent_type": "monitor",
+          "payload": {
+            "metrics": [
+              "cpu",
+              "memory",
+              "disk"
+            ]
+          },
+          "priority": 8,
+          "status": "completed",
+          "depends_on": [],
+          "parallel_with": [],
+          "timeout": 60.0,
+          "retry_count": 0,
+          "max_retries": 3,
+          "result": {
+            "cpu": 45,
+            "memory": 62,
+            "disk": 38
+          },
+          "error": null,
+          "created_at": "2026-03-05T16:37:06.432985"
+        },
+        {
+          "id": "analyze_data",
+          "name": "分析指标趋势",
+          "agent_type": "executor",
+          "payload": {
+            "input": "collect_data"
+          },
+          "priority": 7,
+          "status": "completed",
+          "depends_on": [
+            "collect_data"
+          ],
+          "parallel_with": [],
+          "timeout": 60.0,
+          "retry_count": 0,
+          "max_retries": 3,
+          "result": {
+            "trend": "stable",
+            "score": 85
+          },
+          "error": null,
+          "created_at": "2026-03-05T16:37:06.433561"
+        },
+        {
+          "id": "check_alerts",
+          "name": "检查告警条件",
+          "agent_type": "analyzer",
+          "payload": {
+            "thresholds": {
+              "cpu": 80,
+              "memory": 85
+            }
+          },
+          "priority": 9,
+          "status": "completed",
+          "depends_on": [
+            "analyze_data"
+          ],
+          "parallel_with": [],
+          "timeout": 60.0,
+          "retry_count": 0,
+          "max_retries": 3,
+          "result": {
+            "alerts": [],
+            "status": "healthy"
+          },
+          "error": null,
+          "created_at": "2026-03-05T16:37:06.434090"
+        },
+        {
+          "id": "send_notification",
+          "name": "发送通知",
+          "agent_type": "communicator",
+          "payload": {
+            "channels": [
+              "dingtalk"
+            ]
+          },
+          "priority": 6,
+          "status": "completed",
+          "depends_on": [
+            "check_alerts"
+          ],
+          "parallel_with": [],
+          "timeout": 60.0,
+          "retry_count": 0,
+          "max_retries": 3,
+          "result": {
+            "sent": true,
+            "channels": 1
+          },
+          "error": null,
+          "created_at": "2026-03-05T16:37:06.434978"
+        }
+      ],
+      "parallel_groups": [],
+      "on_success": null,
+      "on_failure": null,
+      "created_at": "2026-03-05T16:37:06.435904"
+    }
+  ],
+  "timestamp": "2026-03-05T16:37:06.639986"
+}

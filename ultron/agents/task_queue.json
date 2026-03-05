@@ -310,6 +310,33 @@
       "type": "message",
       "timestamp": "2026-03-05T16:03:53.345615",
       "status": "pending"
+    },
+    {
+      "id": "33",
+      "sender": "monitor",
+      "recipient": "messenger",
+      "message": "状态报告: Load=0.43, Mem=15.5%, Disk=30%",
+      "type": "message",
+      "timestamp": "2026-03-05T16:23:37.947402",
+      "status": "pending"
+    },
+    {
+      "id": "34",
+      "sender": "coordinator",
+      "recipient": "communicator",
+      "message": "{\"type\": \"test\", \"content\": \"ping\"}",
+      "type": "message",
+      "timestamp": "2026-03-05T16:31:23.929898",
+      "status": "pending"
+    },
+    {
+      "id": "35",
+      "sender": "monitor",
+      "recipient": "analyzer",
+      "message": "{\"type\": \"test\", \"content\": \"route_test\"}",
+      "type": "message",
+      "timestamp": "2026-03-05T16:31:23.932396",
+      "status": "pending"
     }
   ],
   "events": [

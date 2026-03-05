@@ -1,0 +1,15 @@
+{
+  "alerts": [
+    {"timestamp": "2026-03-05T14:00:00", "type": "disk", "severity": "warning", "message": "Disk usage high"},
+    {"timestamp": "2026-03-05T14:15:00", "type": "memory", "severity": "warning", "message": "Memory usage high"},
+    {"timestamp": "2026-03-05T14:30:00", "type": "disk", "severity": "warning", "message": "Disk usage high"},
+    {"timestamp": "2026-03-05T14:45:00", "type": "cpu", "severity": "info", "message": "CPU spike"},
+    {"timestamp": "2026-03-05T15:00:00", "type": "disk", "severity": "warning", "message": "Disk usage high"},
+    {"timestamp": "2026-03-05T15:15:00", "type": "memory", "severity": "error", "message": "Memory critical"},
+    {"timestamp": "2026-03-05T15:30:00", "type": "disk", "severity": "warning", "message": "Disk usage high"},
+    {"timestamp": "2026-03-05T15:45:00", "type": "network", "severity": "info", "message": "Network latency"},
+    {"timestamp": "2026-03-05T16:00:00", "type": "disk", "severity": "error", "message": "Disk almost full"},
+    {"timestamp": "2026-03-05T16:15:00", "type": "service", "severity": "error", "message": "Service down"},
+    {"timestamp": "2026-03-05T16:18:00", "type": "memory", "severity": "error", "message": "Memory critical"}
+  ]
+}

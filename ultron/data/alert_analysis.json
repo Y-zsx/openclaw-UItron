@@ -1,0 +1,59 @@
+{
+  "generated_at": "2026-03-05T16:22:15.516457",
+  "summary": {
+    "total_alerts_24h": 11,
+    "most_common_type": "disk",
+    "risk_level": "medium"
+  },
+  "trends": {
+    "total": 11,
+    "hourly": {
+      "2026-03-05 14:00": 4,
+      "2026-03-05 15:00": 4,
+      "2026-03-05 16:00": 3
+    },
+    "by_type": {
+      "disk": 5,
+      "memory": 3,
+      "cpu": 1,
+      "network": 1,
+      "service": 1
+    },
+    "by_severity": {
+      "warning": 5,
+      "info": 2,
+      "error": 4
+    }
+  },
+  "patterns": [
+    {
+      "type": "frequent",
+      "alert_type": "disk",
+      "count": 5,
+      "message": "disk类型告警频繁出现5次"
+    },
+    {
+      "type": "time_pattern",
+      "peak_hours": [
+        14,
+        15,
+        16
+      ],
+      "message": "告警高峰时段: 14, 15, 16点"
+    },
+    {
+      "type": "consecutive_errors",
+      "count": 4,
+      "message": "检测到连续4个错误告警"
+    }
+  ],
+  "prediction": {
+    "predicted_alerts": 2,
+    "risk_level": "medium",
+    "avg_hourly_rate": 0.46,
+    "avg_severity": 2.2
+  },
+  "recommendations": [
+    "建议检查disk相关问题，根因: 检查大文件日志, 清理临时文件"
+  ]
+}

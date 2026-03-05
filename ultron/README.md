@@ -167,12 +167,33 @@ ultron/
 6. 网络连接数 > 1000 (INFO)
 7. Gateway连接丢失 (CRITICAL)
 
-### 修复策略 (5种)
+### 修复策略 (6种)
 1. high_cpu_cleanup - 高CPU清理(杀进程)
 2. high_memory_cleanup - 高内存清理(释放缓存)
 3. high_disk_cleanup - 磁盘清理(删除临时文件)
 4. gateway_restart - Gateway重启
 5. service_restart - 服务重启
+6. process_restart - 异常进程重启
+
+### 告警自动升级 (Alert Escalation)
+- 自动升级规则: WARNING 10min / ERROR 5min / CRITICAL 1min
+- 多人协作: primary/secondary/emergency 三级团队
+- 工作流: acknowledge(确认) → resolve(解决)
+
+### 预测性告警 (Predictive Alert)
+- 趋势分析: CPU/内存/磁盘趋势预测
+- 模式识别: 周期性模式/异常模式检测
+- 根因建议: 自动分析告警关联性
+
+### 通知渠道 (8个)
+- console - 控制台输出
+- file - 文件日志
+- dingtalk - 钉钉
+- lark - 飞书
+- telegram - 电报
+- discord - Discord
+- email - 邮件
+- webhook - Webhook
 
 ### 快速使用
 
@@ -186,5 +207,7 @@ python3 /root/.openclaw/workspace/ultron/ops/ops-dashboard.py
 
 ## 版本历史
 
+- v1.3 (2026-03-05): 智能运维增强 - 告警自动升级/多人协作/预测性告警
+- v1.2 (2026-03-05): 智能告警分析 - 趋势分析/模式识别/根因建议
 - v1.1 (2026-03-05): 智能运维系统 - Collector/Alert/Repair/Dashboard四模块集成
 - v1.0 (2026-03-05): 初始版本，6个Agent + 增强消息总线 + 工作流引擎
