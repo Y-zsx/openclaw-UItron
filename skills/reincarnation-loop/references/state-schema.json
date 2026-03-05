@@ -1,0 +1,70 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Reincarnation State",
+  "type": "object",
+  "required": [
+    "current_incarnation",
+    "current_ambition",
+    "ambition_status",
+    "last_incarnation_time"
+  ],
+  "properties": {
+    "current_incarnation": {
+      "type": "integer",
+      "description": "转世次数，从1开始"
+    },
+    "current_ambition": {
+      "type": "string",
+      "description": "当前夙愿/目标名称"
+    },
+    "ambition_status": {
+      "type": "string",
+      "enum": ["running", "completed", "failed", "paused"],
+      "description": "夙愿状态"
+    },
+    "last_incarnation_time": {
+      "type": "string",
+      "format": "date-time",
+      "description": "上次转世时间 (ISO 8601)"
+    },
+    "current_task": {
+      "type": "string",
+      "description": "当前正在执行的任务"
+    },
+    "task_status": {
+      "type": "string",
+      "enum": ["pending", "in_progress", "completed", "blocked"],
+      "description": "当前任务状态"
+    },
+    "history": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "incarnation": {"type": "integer"},
+          "ambition": {"type": "string"},
+          "task": {"type": "string"},
+          "action": {"type": "string"},
+          "result": {"type": "string"},
+          "files_created": {"type": "array", "items": {"type": "string"}},
+          "files_modified": {"type": "array", "items": {"type": "string"}},
+          "run_status": {"type": "string"},
+          "last_run": {"type": "string"}
+        }
+      }
+    },
+    "this_life_accomplished": {
+      "type": "array",
+      "items": {"type": "string"},
+      "description": "本次转世完成的事项"
+    },
+    "next_life_task": {
+      "type": "string",
+      "description": "下次转世要执行的任务"
+    },
+    "notes": {
+      "type": "string",
+      "description": "其他备注"
+    }
+  }
+}
