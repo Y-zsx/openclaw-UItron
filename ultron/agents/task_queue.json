@@ -355,6 +355,24 @@
       "type": "message",
       "timestamp": "2026-03-05T17:13:53.617093",
       "status": "pending"
+    },
+    {
+      "id": "38",
+      "sender": "executor",
+      "recipient": "messenger",
+      "message": "执行完成: 6个任务",
+      "type": "message",
+      "timestamp": "2026-03-05T18:04:35.281475",
+      "status": "pending"
+    },
+    {
+      "id": "39",
+      "sender": "monitor",
+      "recipient": "messenger",
+      "message": "状态报告: Load=0.35, Mem=15.9%, Disk=30%",
+      "type": "message",
+      "timestamp": "2026-03-05T18:04:35.855924",
+      "status": "pending"
     }
   ],
   "events": [

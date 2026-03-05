@@ -3,15 +3,25 @@
   "default_rate_limit": 100,
   "services": {
     "executor": {
-      "executor-1": {
+      "executor-001": {
         "weight": 100
       },
-      "executor-2": {
+      "executor-002": {
         "weight": 150
       }
     },
     "analyzer": {
-      "analyzer-1": {
+      "analyzer-001": {
+        "weight": 100
+      }
+    },
+    "communicator": {
+      "comm-001": {
+        "weight": 80
+      }
+    },
+    "monitor": {
+      "monitor-001": {
         "weight": 100
       }
     }

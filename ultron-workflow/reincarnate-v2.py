@@ -24,6 +24,36 @@ LOG_FILE = f"{WORKSPACE}/ultron-workflow/reincarnate.log"
 
 UTC = timezone.utc
 
+# 夙愿任务列表
+TASK_PROGRESSION = {
+    "多智能体协作网络": [
+        "实现Agent服务注册与发现机制",
+        "实现Agent监控与指标收集系统",
+        "实现Agent API网关与统一入口",
+        "实现Agent认证与授权机制",
+        "实现Agent安全通信与加密通道",
+        "实现Agent身份认证与访问控制集成",
+        "实现Agent集群负载均衡与故障转移",
+        "实现Agent服务网格与流量管理",
+        "实现Agent服务网格与API网关集成",
+        "实现Agent服务健康检测与自动故障恢复",
+        "实现Agent服务编排与工作流引擎",
+        "实现Agent任务调度与队列管理",
+        "实现Agent消息总线与事件驱动",
+        "实现Agent分布式事务协调",
+    ]
+}
+
+
+def get_next_task(ambition: str, current_task: str) -> str:
+    """根据当前任务获取下一个任务"""
+    tasks = TASK_PROGRESSION.get(ambition, [])
+    if current_task in tasks:
+        idx = tasks.index(current_task)
+        if idx + 1 < len(tasks):
+            return tasks[idx + 1]
+    return "继续完善系统"
+
 
 def log(msg: str):
     """日志输出"""
@@ -175,12 +205,17 @@ def update_state(decision: dict, execution: dict, state: dict):
     old_incarnation = current.get('incarnation', 0)
     new_incarnation = old_incarnation + 1
     
+    # 获取下一个任务
+    ambition = current.get('ambition', '多智能体协作网络')
+    current_task = decision['task'].replace('修复: ', '')  # 去掉"修复:"前缀
+    next_task = get_next_task(ambition, current_task)
+    
     new_state = {
         "version": "2.0",
         "system": "ultron-reincarnation-v2",
         "current": {
             "incarnation": new_incarnation,
-            "ambition": current.get('ambition', '模块整合与实用化'),
+            "ambition": ambition,
             "ambition_status": "running",
             "last_wake": datetime.now(UTC).isoformat(),
             "task_status": execution['status']
@@ -191,7 +226,7 @@ def update_state(decision: dict, execution: dict, state: dict):
             "verification": execution.get('verification', {})
         },
         "next_life": {
-            "task": decision.get('task', '继续推进'),
+            "task": next_task,
             "interval": decision.get('interval', '5m'),
             "priority": 1
         },
@@ -208,6 +243,7 @@ def update_state(decision: dict, execution: dict, state: dict):
         json.dump(new_state, f, indent=2, ensure_ascii=False)
     
     log(f"💾 状态已更新: 第{new_incarnation}世")
+    log(f"   📋 下一任务: {next_task}")
     return new_state
 
 
@@ -221,7 +257,8 @@ def register_cron(interval: str, task: str):
     if result.returncode == 0:
         try:
             import json
-            jobs = json.loads(result.stdout)
+            data = json.loads(result.stdout)
+            jobs = data.get('jobs', [])  # 结构是 {"jobs": [...]}
             for job in jobs:
                 if job.get('name') in ['ultron-life', 'ultron-life-continue']:
                     subprocess.run(

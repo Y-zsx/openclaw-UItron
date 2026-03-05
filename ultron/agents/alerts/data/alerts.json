@@ -1,0 +1,113 @@
+{
+  "version": "1.0",
+  "alerts": [
+    {
+      "rule_id": "agent_task_queue_full",
+      "rule_name": "Agent任务队列积压",
+      "metric": "agent.queue.pending",
+      "value": 120.0,
+      "threshold": 100,
+      "condition": "gte",
+      "level": "CRITICAL",
+      "message": "Agent任务队列积压超过100个",
+      "timestamp": "2026-03-05T17:53:48.286087",
+      "tags": {},
+      "state": "firing",
+      "_id": "alert_1772704428286",
+      "_created_at": 1772704428.2869933
+    },
+    {
+      "rule_id": "agent_cpu_high",
+      "rule_name": "Agent服务CPU使用率过高",
+      "metric": "agent.cpu.percent",
+      "value": 85.0,
+      "threshold": 80,
+      "condition": "gte",
+      "level": "WARNING",
+      "message": "Agent服务CPU使用率超过80%",
+      "timestamp": "2026-03-05T17:53:48.286037",
+      "tags": {},
+      "state": "firing",
+      "_id": "alert_1772704428288",
+      "_created_at": 1772704428.2888422
+    },
+    {
+      "rule_id": "agent_memory_high",
+      "rule_name": "Agent服务内存使用率过高",
+      "metric": "agent.memory.percent",
+      "value": 90.0,
+      "threshold": 85,
+      "condition": "gte",
+      "level": "WARNING",
+      "message": "Agent服务内存使用率超过85%",
+      "timestamp": "2026-03-05T17:53:48.286080",
+      "tags": {},
+      "state": "firing",
+      "_id": "alert_1772704428290",
+      "_created_at": 1772704428.2908401
+    },
+    {
+      "rule_id": "agent_task_failed",
+      "rule_name": "Agent任务失败率过高",
+      "metric": "agent.tasks.failure_rate",
+      "value": 0.25,
+      "threshold": 0.2,
+      "condition": "gte",
+      "level": "WARNING",
+      "message": "Agent任务失败率超过20%",
+      "timestamp": "2026-03-05T17:53:48.286095",
+      "tags": {},
+      "state": "firing",
+      "_id": "alert_1772704428292",
+      "_created_at": 1772704428.2926278
+    },
+    {
+      "rule_id": "agent_response_slow",
+      "rule_name": "Agent响应时间过长",
+      "metric": "agent.latency.p99",
+      "value": 6000.0,
+      "threshold": 5000,
+      "condition": "gte",
+      "level": "WARNING",
+      "message": "Agent响应时间P99超过5秒",
+      "timestamp": "2026-03-05T17:53:48.286102",
+      "tags": {},
+      "state": "firing",
+      "_id": "alert_1772704428293_4",
+      "_created_at": 1772704428.293424
+    },
+    {
+      "rule_id": "agent_response_slow",
+      "rule_name": "Agent响应时间过长",
+      "metric": "agent.latency.p99",
+      "value": 6000.0,
+      "threshold": 5000,
+      "condition": "gte",
+      "level": "WARNING",
+      "message": "Agent响应时间P99超过5秒",
+      "timestamp": "2026-03-05T17:53:48.286102",
+      "tags": {},
+      "state": "firing",
+      "_id": "alert_1772704428294",
+      "_created_at": 1772704428.2944915
+    },
+    {
+      "rule_id": "test_rule",
+      "rule_name": "测试规则",
+      "level": "WARNING",
+      "message": "这是一条测试告警",
+      "metric": "test.metric",
+      "value": 99.9,
+      "threshold": 80,
+      "condition": "gt",
+      "state": "firing",
+      "timestamp": "2026-03-05T17:53:52.968430",
+      "tags": {
+        "test": "true"
+      },
+      "_id": "alert_1772704432969",
+      "_created_at": 1772704432.9692743
+    }
+  ],
+  "updated_at": "2026-03-05T17:53:48.293425"
+}

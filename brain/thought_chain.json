@@ -1,16 +1,15 @@
 {
-  "timestamp": "2026-03-05T17:14:00Z",
-  "thought": "heartbeat_check",
+  "timestamp": "2026-03-05T17:50:00Z",
+  "heartbeat_count": 47,
+  "thoughts": [
+    {
+      "time": "17:50",
+      "type": "routine_check",
+      "observation": "系统运行正常: uptime 5天, load 0.43, 内存14%, 磁盘30%",
+      "decision": "无待处理任务，执行例行检查后记录",
+      "action": "system_health_check"
+    }
+  ],
   "status": "healthy",
-  "system_metrics": {
-    "load": 0.71,
-    "memory_percent": "14%",
-    "disk_percent": "30%",
-    "uptime": "4 days, 23 hours"
-  },
-  "incarnation": 6,
-  "ambition": "行为学习系统",
-  "ambition_status": "in_progress",
-  "decision": "无待办事项，执行例行检查。当前系统健康，进行监控系统状态更新。",
-  "next_action": "等待下一次心跳"
+  "next_heartbeat": "30m"
 }
