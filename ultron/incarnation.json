@@ -1,0 +1,37 @@
+{
+  "version": "2.0",
+  "current": {
+    "incarnation": 62,
+    "ambition": "实用工具整合",
+    "ambition_id": "tool-integration",
+    "stage": 2,
+    "total_stages": 2,
+    "started_at": "2026-03-05T10:21:11.638007",
+    "status": "working"
+  },
+  "rules": {
+    "format": "{ambition_id}-{stage}",
+    "example": "tool-integration-1",
+    "completion_criteria": "产出可用工具或完成整合"
+  },
+  "history": [
+    {
+      "incarnation": 61,
+      "ambition": "监控告警",
+      "ambition_id": "monitoring",
+      "status": "completed"
+    },
+    {
+      "incarnation": 60,
+      "ambition": "决策系统",
+      "ambition_id": "decision",
+      "status": "completed"
+    },
+    {
+      "incarnation": 59,
+      "ambition": "数据处理",
+      "ambition_id": "analytics",
+      "status": "completed"
+    }
+  ]
+}

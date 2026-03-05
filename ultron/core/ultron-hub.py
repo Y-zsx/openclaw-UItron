@@ -257,7 +257,6 @@ class UltronHub:
                 print(f"⚠️ DingTalk error: {e}")
         
         print("=== Cycle Complete ===\n")
-        return {"metrics": metrics, "stats": stats, "decisions": decisions, "alerts": alerts}
     
     def get_status(self):
         """获取整体状态"""

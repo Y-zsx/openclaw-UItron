@@ -339,7 +339,7 @@ class IntelligentMonitor:
             "process_threshold": 300,
             "check_interval": 60,
             "history_size": 1000,
-            "services": ["openclaw", "nginx", "chromium", "cron"]
+            "services": ["openclaw", "nginx", "chrome", "cron"]
         }
         if os.path.exists(CONFIG_PATH):
             try:
