@@ -1,6 +1,16 @@
 [
-  {"time": "2026-03-05T16:13:41Z", "type": "heartbeat", "status": "healthy", "action": "系统检查", "load": "0.29", "memory": "15%", "note": "系统运行正常，负载0.29"},
-  {"time": "2026-03-05T15:57:14Z", "type": "heartbeat", "status": "healthy", "action": "系统检查", "load": "0.95", "memory": "15%", "note": "系统运行正常"},
-  {"time": "2026-03-05T15:57:14Z", "type": "system_check", "status": "pass", "action": "快速自检", "result": "所有服务正常"},
-  {"time": "2026-03-05T15:57:14Z", "type": "decision", "action": "静默等待", "reason": "无待处理任务，系统健康"}
+  {
+    "timestamp": "2026-03-05T16:44:55Z",
+    "type": "heartbeat",
+    "status": "healthy",
+    "system_state": {
+      "load": 1.23,
+      "memory_percent": "17%",
+      "disk_percent": "30%",
+      "uptime": "4 days 23 hours"
+    },
+    "decision": "系统正常，选择自主学习行动",
+    "action": "quick_check",
+    "result": "所有系统运行正常"
+  }
 ]
