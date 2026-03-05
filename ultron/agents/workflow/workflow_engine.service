@@ -1,0 +1,16 @@
+[Unit]
+Description=Ultron Workflow Engine
+After=network.target
+
+[Service]
+Type=simple
+User=root
+WorkingDirectory=/root/.openclaw/workspace
+ExecStart=/usr/bin/python3 /root/.openclaw/workspace/ultron/agents/workflow/workflow_engine.py
+Restart=always
+RestartSec=10
+
+Environment=PYTHONPATH=/root/.openclaw/workspace
+
+[Install]
+WantedBy=multi-user.target

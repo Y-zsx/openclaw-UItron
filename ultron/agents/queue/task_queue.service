@@ -1,0 +1,16 @@
+[Unit]
+Description=Agent Task Queue Service
+After=network.target
+
+[Service]
+Type=simple
+User=root
+WorkingDirectory=/root/.openclaw/workspace/ultron/agents/queue
+ExecStart=/usr/bin/python3 /root/.openclaw/workspace/ultron/agents/queue/task_queue.py
+Restart=always
+RestartSec=10
+
+Environment=PYTHONPATH=/root/.openclaw/workspace/ultron/agents/queue
+
+[Install]
+WantedBy=multi-user.target
