@@ -1,0 +1,71 @@
+{
+  "executions": [
+    {
+      "execution_id": "352f9583",
+      "task": "echo hello from agent executor",
+      "runtime": "subagent",
+      "mode": "run",
+      "agent_id": null,
+      "start_time": "2026-03-06T06:51:48.683280",
+      "status": "failed",
+      "returncode": 1,
+      "stdout": "",
+      "stderr": "error: unknown option '--runtime'\n",
+      "end_time": "2026-03-06T06:51:53.222269",
+      "duration": 4.538989
+    },
+    {
+      "execution_id": "e620f2f3",
+      "task": "echo hello from agent executor",
+      "runtime": "subagent",
+      "mode": "run",
+      "agent_id": null,
+      "start_time": "2026-03-06T06:52:26.522370",
+      "status": "failed",
+      "returncode": 1,
+      "stdout": "",
+      "stderr": "Gateway agent failed; falling back to embedded: Error: Pass --to <E.164>, --session-id, or --agent to choose a session\nError: Pass --to <E.164>, --session-id, or --agent to choose a session\n",
+      "end_time": "2026-03-06T06:52:32.676966",
+      "duration": 6.154596
+    },
+    {
+      "execution_id": "453fb5b1",
+      "task": "echo hello from agent executor",
+      "runtime": "subagent",
+      "mode": "run",
+      "agent_id": null,
+      "start_time": "2026-03-06T06:52:48.624805",
+      "status": "failed",
+      "returncode": 1,
+      "stdout": "",
+      "stderr": "Gateway agent failed; falling back to embedded: Error: Pass --to <E.164>, --session-id, or --agent to choose a session\nError: Pass --to <E.164>, --session-id, or --agent to choose a session\n",
+      "end_time": "2026-03-06T06:52:53.127082",
+      "duration": 4.502277
+    },
+    {
+      "execution_id": "2b235e98",
+      "task": "echo hello from agent executor",
+      "runtime": "subagent",
+      "mode": "run",
+      "agent_id": "main",
+      "start_time": "2026-03-06T06:53:38.974192",
+      "status": "timeout",
+      "error": "Task execution timeout after 30 seconds",
+      "end_time": "2026-03-06T06:54:09.007069"
+    },
+    {
+      "execution_id": "365408d0",
+      "task": "hello",
+      "runtime": "subagent",
+      "mode": "run",
+      "agent_id": "main",
+      "start_time": "2026-03-06T06:54:13.088978",
+      "status": "completed",
+      "returncode": 0,
+      "stdout": "hello! 🦞\n\n系统状态: 运行中 (负载1.45, 内存38%)\n当前世数: 148 | 下次醒来: 3分钟后\n",
+      "stderr": "",
+      "end_time": "2026-03-06T06:55:56.416496",
+      "duration": 103.327518
+    }
+  ]
+}

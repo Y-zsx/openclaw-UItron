@@ -8,6 +8,8 @@
 import json
 import sqlite3
 import logging
+import psutil
+import os
 from datetime import datetime, timedelta
 from pathlib import Path
 from http.server import HTTPServer, BaseHTTPRequestHandler
@@ -216,6 +218,79 @@ class HealthCheckAPI:
             return result
         except Exception as e:
             return {"status": "error", "message": str(e)}
+    
+    def get_system_resources(self) -> dict:
+        """获取系统资源使用情况"""
+        try:
+            # CPU使用率
+            cpu_percent = psutil.cpu_percent(interval=0.1)
+            cpu_count = psutil.cpu_count()
+            
+            # 内存使用
+            memory = psutil.virtual_memory()
+            
+            # 磁盘使用
+            disk = psutil.disk_usage('/')
+            
+            # 负载平均值
+            load_avg = os.getloadavg() if hasattr(os, 'getloadavg') else [0, 0, 0]
+            
+            # 网络IO
+            net_io = psutil.net_io_counters()
+            
+            return {
+                "cpu": {
+                    "percent": cpu_percent,
+                    "count": cpu_count,
+                    "load_avg": load_avg
+                },
+                "memory": {
+                    "total": memory.total,
+                    "available": memory.available,
+                    "used": memory.used,
+                    "percent": memory.percent
+                },
+                "disk": {
+                    "total": disk.total,
+                    "used": disk.used,
+                    "free": disk.free,
+                    "percent": disk.percent
+                },
+                "network": {
+                    "bytes_sent": net_io.bytes_sent,
+                    "bytes_recv": net_io.bytes_recv,
+                    "packets_sent": net_io.packets_sent,
+                    "packets_recv": net_io.packets_recv
+                },
+                "timestamp": datetime.now().isoformat()
+            }
+        except Exception as e:
+            logger.error(f"获取系统资源失败: {e}")
+            return {"error": str(e)}
+    
+    def get_top_processes(self, limit: int = 10) -> list:
+        """获取Top进程"""
+        try:
+            processes = []
+            for proc in psutil.process_iter(['pid', 'name', 'cpu_percent', 'memory_percent']):
+                try:
+                    pinfo = proc.info
+                    if pinfo['cpu_percent'] is not None and pinfo['memory_percent'] is not None:
+                        processes.append({
+                            "pid": pinfo['pid'],
+                            "name": pinfo['name'][:30],
+                            "cpu": round(pinfo['cpu_percent'], 1),
+                            "memory": round(pinfo['memory_percent'], 1)
+                        })
+                except (psutil.NoSuchProcess, psutil.AccessDenied):
+                    pass
+            
+            # 按CPU使用率排序
+            processes.sort(key=lambda x: x['cpu'], reverse=True)
+            return processes[:limit]
+        except Exception as e:
+            logger.error(f"获取Top进程失败: {e}")
+            return []
 
 
 class HealthCheckAPIHandler(BaseHTTPRequestHandler):
@@ -295,6 +370,31 @@ class HealthCheckAPIHandler(BaseHTTPRequestHandler):
                 result = self.api.trigger_health_check()
                 self._send_json(result)
             
+            elif path == '/resources':
+                # 系统资源使用情况
+                resources = self.api.get_system_resources()
+                self._send_json(resources)
+            
+            elif path == '/overview':
+                # 综合概览（健康检查 + 系统资源）
+                status = self.api.get_current_status()
+                resources = self.api.get_system_resources()
+                services = self.api.get_all_services_status()
+                stats = self.api.get_statistics()
+                self._send_json({
+                    "status": status,
+                    "resources": resources,
+                    "services": services,
+                    "stats": stats,
+                    "timestamp": datetime.now().isoformat()
+                })
+            
+            elif path == '/processes':
+                # Top进程
+                limit = int(query.get('limit', [10])[0])
+                processes = self.api.get_top_processes(limit)
+                self._send_json({"processes": processes})
+            
             elif path == '/dashboard' or path == '/dashboard.html':
                 # 仪表盘页面
                 dashboard_path = Path("/root/.openclaw/workspace/ultron/health_check_dashboard.html")
@@ -336,6 +436,9 @@ def run_server(port: int = API_PORT):
     logger.info(f"   - /trend       : 健康趋势")
     logger.info(f"   - /hourly      : 小时统计")
     logger.info(f"   - /trigger     : 触发健康检查")
+    logger.info(f"   - /resources   : 系统资源(CPU/内存/磁盘)")
+    logger.info(f"   - /processes   : Top进程列表")
+    logger.info(f"   - /overview    : 综合概览")
     
     try:
         server.serve_forever()

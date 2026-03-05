@@ -1,0 +1,20 @@
+{
+  "health_check": {
+    "script": "/root/.openclaw/workspace/ultron-workflow/modules/cron_health_trigger.py",
+    "interval": 300,
+    "last_run": "2026-03-06T06:28:32.265748",
+    "enabled": true
+  },
+  "metrics_collect": {
+    "script": "/root/.openclaw/workspace/ultron-workflow/modules/metrics_collector.py",
+    "interval": 300,
+    "last_run": "2026-03-06T06:28:35.578905",
+    "enabled": true
+  },
+  "api_health": {
+    "script": "/root/.openclaw/workspace/ultron-workflow/modules/health_api_manager.py",
+    "interval": 60,
+    "last_run": "2026-03-06T06:28:35.699830",
+    "enabled": true
+  }
+}

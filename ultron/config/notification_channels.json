@@ -1,0 +1,16 @@
+{
+  "channels": [
+    {
+      "id": "test-webhook",
+      "name": "测试Webhook",
+      "channel_type": "webhook",
+      "enabled": true,
+      "config": {
+        "url": "https://httpbin.org/post",
+        "method": "POST"
+      },
+      "min_level": "info",
+      "services": []
+    }
+  ]
+}

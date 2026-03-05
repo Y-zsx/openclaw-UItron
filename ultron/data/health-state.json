@@ -40,6 +40,129 @@
           "timestamp": "2026-03-06T02:42:37.758798"
         }
       ]
+    },
+    {
+      "timestamp": "2026-03-06T06:43:45.804445",
+      "results": [
+        {
+          "name": "enhanced_executor_api",
+          "host": "127.0.0.1",
+          "port": 18210,
+          "port_open": true,
+          "http_ok": false,
+          "critical": true,
+          "timestamp": "2026-03-06T06:43:45.794289"
+        },
+        {
+          "name": "gateway",
+          "host": "127.0.0.1",
+          "port": 18789,
+          "port_open": true,
+          "http_ok": true,
+          "critical": true,
+          "timestamp": "2026-03-06T06:43:45.798939"
+        },
+        {
+          "name": "browser",
+          "host": "127.0.0.1",
+          "port": 18800,
+          "port_open": true,
+          "http_ok": false,
+          "critical": false,
+          "timestamp": "2026-03-06T06:43:45.801462"
+        },
+        {
+          "name": "ultron_api",
+          "host": "127.0.0.1",
+          "port": 18200,
+          "port_open": true,
+          "http_ok": true,
+          "critical": false,
+          "timestamp": "2026-03-06T06:43:45.804376"
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-03-06T06:46:12.672488",
+      "results": [
+        {
+          "name": "enhanced_executor_api",
+          "host": "127.0.0.1",
+          "port": 18210,
+          "port_open": true,
+          "http_ok": false,
+          "critical": true,
+          "timestamp": "2026-03-06T06:46:12.649087"
+        },
+        {
+          "name": "gateway",
+          "host": "127.0.0.1",
+          "port": 18789,
+          "port_open": true,
+          "http_ok": true,
+          "critical": true,
+          "timestamp": "2026-03-06T06:46:12.653846"
+        },
+        {
+          "name": "browser",
+          "host": "127.0.0.1",
+          "port": 18800,
+          "port_open": true,
+          "http_ok": false,
+          "critical": false,
+          "timestamp": "2026-03-06T06:46:12.667759"
+        },
+        {
+          "name": "ultron_api",
+          "host": "127.0.0.1",
+          "port": 18200,
+          "port_open": true,
+          "http_ok": true,
+          "critical": false,
+          "timestamp": "2026-03-06T06:46:12.672413"
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-03-06T06:46:27.022202",
+      "results": [
+        {
+          "name": "enhanced_executor_api",
+          "host": "127.0.0.1",
+          "port": 18210,
+          "port_open": true,
+          "http_ok": false,
+          "critical": true,
+          "timestamp": "2026-03-06T06:46:27.000655"
+        },
+        {
+          "name": "gateway",
+          "host": "127.0.0.1",
+          "port": 18789,
+          "port_open": true,
+          "http_ok": true,
+          "critical": true,
+          "timestamp": "2026-03-06T06:46:27.005405"
+        },
+        {
+          "name": "browser",
+          "host": "127.0.0.1",
+          "port": 18800,
+          "port_open": true,
+          "http_ok": false,
+          "critical": false,
+          "timestamp": "2026-03-06T06:46:27.017839"
+        },
+        {
+          "name": "ultron_api",
+          "host": "127.0.0.1",
+          "port": 18200,
+          "port_open": true,
+          "http_ok": true,
+          "critical": false,
+          "timestamp": "2026-03-06T06:46:27.022067"
+        }
+      ]
     }
   ],
   "alerts": [],
@@ -49,5 +172,5 @@
     "browser": 0,
     "ultron_api": 0
   },
-  "last_check": "2026-03-06T02:42:37.758913"
+  "last_check": "2026-03-06T06:46:27.022211"
 }

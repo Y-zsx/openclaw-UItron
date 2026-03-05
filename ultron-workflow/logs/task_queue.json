@@ -1,0 +1,41 @@
+{
+  "pending": [
+    {
+      "id": "task_1772751288525",
+      "type": "monitor",
+      "params": {},
+      "priority": "normal",
+      "priority_val": 3,
+      "status": "pending",
+      "added_at": "2026-03-06T06:54:48.525511",
+      "started_at": null,
+      "completed_at": null
+    },
+    {
+      "id": "task_1772751288525",
+      "type": "alert",
+      "params": {},
+      "priority": "low",
+      "priority_val": 4,
+      "status": "pending",
+      "added_at": "2026-03-06T06:54:48.525952",
+      "started_at": null,
+      "completed_at": null
+    }
+  ],
+  "running": [],
+  "completed": [
+    {
+      "id": "task_1772751288524",
+      "type": "health_check",
+      "params": {},
+      "priority": "high",
+      "priority_val": 2,
+      "status": "completed",
+      "added_at": "2026-03-06T06:54:48.524783",
+      "started_at": "2026-03-06T06:54:48.529675",
+      "completed_at": "2026-03-06T06:54:48.530982"
+    }
+  ],
+  "failed": []
+}
