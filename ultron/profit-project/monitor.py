@@ -11,6 +11,12 @@ from datetime import datetime
 from urllib.parse import urlparse
 import ssl
 import socket
+import sys
+import os
+
+# 添加当前目录到路径
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+import alerter
 
 CONFIG_FILE = "sites.json"
 LOG_FILE = "../logs/monitor.json"
@@ -122,7 +128,7 @@ class WebsiteMonitor:
         return self.results
     
     def log_alert(self, result):
-        """记录告警"""
+        """记录告警并发送钉钉通知"""
         alert = {
             "type": "site_down",
             "site": result['site'],
@@ -135,6 +141,13 @@ class WebsiteMonitor:
             with open(ALERT_LOG, 'a') as f:
                 f.write(json.dumps(alert, ensure_ascii=False) + '\n')
             print(f"  ⚠️  告警已记录: {result['site']}")
+            
+            # 发送钉钉通知
+            alerter.send_alert(
+                result['site'],
+                result['url'],
+                result.get('error', 'Unknown')
+            )
         except Exception as e:
             print(f"  ❌ 告警记录失败: {e}")
     

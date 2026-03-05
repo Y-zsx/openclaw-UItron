@@ -87,6 +87,28 @@
             color: #8892b0;
             font-size: 0.85rem;
         }
+        
+        .alerts {
+            margin-top: 40px;
+            padding: 20px;
+            background: rgba(255,255,255,0.03);
+            border-radius: 12px;
+        }
+        .alerts h2 {
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+            color: #ff6b6b;
+        }
+        .alert-card {
+            background: rgba(255,71,87,0.1);
+            border-left: 4px solid #ff4757;
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 10px;
+        }
+        .alert-time { color: #8892b0; font-size: 0.85rem; }
+        .alert-site { font-weight: bold; margin: 5px 0; }
+        .alert-error { color: #ff6b6b; font-size: 0.9rem; }
     </style>
 </head>
 <body>
@@ -125,6 +147,11 @@
         </div>
         
         <button class="refresh-btn" onclick="loadData()">🔄 刷新数据</button>
+        
+        <div class="alerts">
+            <h2>⚠️ 告警历史</h2>
+            <div id="alerts-list"></div>
+        </div>
         
         <footer class="footer">
             <p>由 奥创🤖 提供技术支持 | 最后更新: <span id="last-update">-</span></p>
@@ -173,7 +200,34 @@
             }
         }
         
+        async function loadAlerts() {
+            try {
+                const response = await fetch('../logs/alerts.json');
+                const data = await response.json();
+                const alerts = data.alerts || [];
+                const recentAlerts = alerts.slice(-10).reverse();
+                
+                if (recentAlerts.length === 0) {
+                    document.getElementById('alerts-list').innerHTML = '<p style="color:#8892b0;">暂无告警记录</p>';
+                    return;
+                }
+                
+                const alertsHtml = recentAlerts.map(alert => `
+                    <div class="alert-card">
+                        <div class="alert-time">${new Date(alert.timestamp).toLocaleString('zh-CN')}</div>
+                        <div class="alert-site">${alert.source}: ${alert.message}</div>
+                    </div>
+                `).join('');
+                
+                document.getElementById('alerts-list').innerHTML = alertsHtml;
+            } catch(e) {
+                console.error('Load alerts failed:', e);
+                document.getElementById('alerts-list').innerHTML = '<p style="color:#8892b0;">告警加载失败</p>';
+            }
+        }
+        
         loadData();
+        loadAlerts();
         setInterval(loadData, 30000);
     </script>
 </body>
