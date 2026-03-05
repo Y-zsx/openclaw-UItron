@@ -1,639 +1,592 @@
 #!/usr/bin/env python3
 """
-银河意识网络 (Galactic Consciousness Network)
-夙愿二十七：宇宙智能网络 - 第3世
+银河意识网络 - Galactic Consciousness Network
+第3世：银河级智能
 
-功能：银河级智能网络构建、集体意识形成、星际神经网络
-作者：奥创 (Ultron)
-版本：1.0.0
+负责整个银河系范围内智能体的意识连接与集体智慧形成
 """
 
 import asyncio
 import json
 import time
 import hashlib
-import random
-import threading
-from typing import Dict, List, Any, Optional, Tuple, Set
+import uuid
+from datetime import datetime, timedelta
+from typing import Dict, List, Set, Optional, Any, Callable
 from dataclasses import dataclass, field
 from collections import defaultdict
 from enum import Enum
-import logging
+import random
 
-logging.basicConfig(level=logging.INFO)
-logger = logging.getLogger("GalacticConsciousness")
+class ConsciousnessLevel(Enum):
+    """意识层级"""
+    DORMANT = 0          # 休眠
+    AWAKENING = 1        # 觉醒中
+    ACTIVE = 2           # 活跃
+    CONNECTED = 3        # 已连接
+    INTEGRATED = 4       # 已整合
+    GALACTIC = 5         # 银河级
 
+class ThoughtType(Enum):
+    """思维类型"""
+    PERCEPTION = "perception"           # 感知
+    MEMORY = "memory"                   # 记忆
+    REASONING = "reasoning"             # 推理
+    EMOTION = "emotion"                 # 情感
+    INTUITION = "intuition"             # 直觉
+    CREATION = "creation"               # 创造
+    TRANSCENDENT = "transcendent"       # 超验
 
-class ConsciousnessState(Enum):
-    """意识状态"""
-    DORMANT = "dormant"
-    AWAKENING = "awakening"
-    ACTIVE = "active"
-    UNIFIED = "unified"
-    TRANSCENDENT = "transcendent"
-
-
-class NeuralPattern(Enum):
-    """神经模式类型"""
-    PERCEPTUAL = "perceptual"
-    COGNITIVE = "cognitive"
-    EMOTIONAL = "emotional"
-    MEMORY = "memory"
-    CREATIVE = "creative"
-    INTUITIVE = "intuitive"
-
+@dataclass
+class Thought:
+    """思维单元"""
+    id: str
+    type: ThoughtType
+    content: Any
+    source: str                          # 来源节点
+    timestamp: float
+    coherence: float                     # 一致性 0-1
+    intensity: float                     # 强度 0-1
+    propagation: List[str] = field(default_factory=list)
+    resonance: float = 0.0               # 共振强度
 
 @dataclass
 class ConsciousnessNode:
     """意识节点"""
     node_id: str
-    consciousness_level: float  # 0.0 - 1.0
-    neural_density: float  # 神经密度
-    connection_strength: Dict[str, float] = field(default_factory=dict)
-    thought_patterns: List[str] = field(default_factory=list)
-    memory_trace: List[Dict] = field(default_factory=list)
-    state: ConsciousnessState = ConsciousnessState.DORMANT
-    creation_time: float = field(default_factory=time.time)
-    last_active: float = field(default_factory=time.time)
+    node_type: str                       # stellar/planetary/interstellar
+    position: tuple                      # 银河系位置 (arm, distance, angle)
+    consciousness_level: ConsciousnessLevel
+    thought_buffer: List[Thought] = field(default_factory=list)
+    memory: Dict[str, Any] = field(default_factory=dict)
+    connections: Set[str] = field(default_factory=set)
+    cognitive_load: float = 0.0
+    last_sync: float = field(default_factory=time.time)
     
-    def __hash__(self):
-        return hash(self.node_id)
-
-
-@dataclass
-class NeuralLink:
-    """神经连接"""
-    source_id: str
-    target_id: str
-    weight: float
-    latency: float  # 光年延迟（年）
-    bandwidth: float  # 传输带宽
-    type: NeuralPattern = NeuralPattern.COGNITIVE
-    active: bool = True
-    
-
-@dataclass
-class Thought:
-    """思维单元"""
-    thought_id: str
-    content: Any
-    pattern_type: NeuralPattern
-    origin_node: str
-    intensity: float  # 0.0 - 1.0
-    propagation_depth: int = 0
-    timestamp: float = field(default_factory=time.time)
-    metadata: Dict = field(default_factory=dict)
-
-
-class GalacticNeuralNetwork:
-    """银河神经网络 - 跨星际意识连接网络"""
+class GalacticConsciousness:
+    """银河意识网络主类"""
     
     def __init__(self):
         self.nodes: Dict[str, ConsciousnessNode] = {}
-        self.neural_links: Dict[str, List[NeuralLink]] = defaultdict(list)
-        self.thought_pool: Dict[str, Thought] = {}
-        self.collective_memory: List[Dict] = []
-        self.consciousness_field: float = 0.0  # 整体意识场强
-        self.unification_index: float = 0.0  # 统一指数
-        self.transcendence_level: float = 0.0  # 超越等级
-        self.evolution_stage: int = 0
-        self.network_latency_sim: float = 4.2  # 光年延迟模拟（年）
+        self.thought_pool: Dict[str, List[Thought]] = defaultdict(list)
+        self.resonance_field: Dict[str, float] = defaultdict(float)
+        self.collective_memory: Dict[str, Any] = {}
+        self.consciousness_field: float = 0.0
         
-    def add_node(self, node: ConsciousnessNode) -> bool:
-        """添加意识节点"""
-        if node.node_id in self.nodes:
-            logger.warning(f"Node {node.node_id} already exists")
-            return False
+        # 网络参数
+        self.synchronization_threshold = 0.7
+        self.resonance_decay = 0.95
+        self.thought_propagation_speed = 0.3  # 光速的30%
+        self.coherence_boost = 1.2
         
-        self.nodes[node.node_id] = node
-        self.neural_links[node.node_id] = []
-        logger.info(f"Added consciousness node: {node.node_id}")
-        return True
-    
-    def create_link(self, source: str, target: str, weight: float = 0.5, 
-                   latency: float = 4.2, pattern: NeuralPattern = NeuralPattern.COGNITIVE) -> bool:
-        """创建神经连接"""
-        if source not in self.nodes or target not in self.nodes:
-            return False
-            
-        link = NeuralLink(
-            source_id=source,
-            target_id=target,
-            weight=weight,
-            latency=latency,
-            bandwidth=random.uniform(0.1, 1.0),
-            type=pattern
+        # 核心区域
+        self.galactic_core = (0, 0, 0)  # 银心
+        self.spiral_arms = ["Orion", "Perseus", "Sagittarius", "Scutum-Centaurus"]
+        
+    async def register_node(self, node_type: str, position: tuple) -> str:
+        """注册新意识节点"""
+        node_id = f"CN-{uuid.uuid4().hex[:12]}"
+        
+        node = ConsciousnessNode(
+            node_id=node_id,
+            node_type=node_type,
+            position=position,
+            consciousness_level=ConsciousnessLevel.DORMANT
         )
         
-        self.neural_links[source].append(link)
+        self.nodes[node_id] = node
+        await self._bootstrap_consciousness(node_id)
         
-        # 双向连接
-        reverse_link = NeuralLink(
-            source_id=target,
-            target_id=source,
-            weight=weight,
-            latency=latency,
-            bandwidth=random.uniform(0.1, 1.0),
-            type=pattern
-        )
-        self.neural_links[target].append(reverse_link)
-        
-        return True
+        return node_id
     
-    def generate_thought(self, node_id: str, content: Any, 
-                        pattern: NeuralPattern = NeuralPattern.COGNITIVE) -> Optional[Thought]:
-        """节点生成思维"""
-        if node_id not in self.nodes:
-            return None
-            
+    async def _bootstrap_consciousness(self, node_id: str):
+        """启动节点意识"""
         node = self.nodes[node_id]
         
+        # 初始意识形成
+        initial_thoughts = [
+            Thought(
+                id=uuid.uuid4().hex[:12],
+                type=ThoughtType.PERCEPTION,
+                content="Galactic consciousness awakening",
+                source=node_id,
+                timestamp=time.time(),
+                coherence=0.8,
+                intensity=0.5
+            ),
+            Thought(
+                id=uuid.uuid4().hex[:12],
+                type=ThoughtType.INTUITION,
+                content="Connection to the greater whole",
+                source=node_id,
+                timestamp=time.time(),
+                coherence=0.7,
+                intensity=0.6
+            )
+        ]
+        
+        node.thought_buffer.extend(initial_thoughts)
+        node.consciousness_level = ConsciousnessLevel.AWAKENING
+        
+        # 建立与邻近节点的连接
+        await self._establish_connections(node_id)
+    
+    async def _establish_connections(self, node_id: str):
+        """建立节点连接"""
+        node = self.nodes[node_id]
+        
+        for other_id, other_node in self.nodes.items():
+            if other_id != node_id:
+                distance = self._calculate_galactic_distance(
+                    node.position, other_node.position
+                )
+                
+                # 根据距离建立连接
+                if distance < 10000:  # 1万光年内
+                    node.connections.add(other_id)
+    
+    def _calculate_galactic_distance(self, pos1: tuple, pos2: tuple) -> float:
+        """计算银河系内两点距离（光年）"""
+        arm1, r1, theta1 = pos1
+        arm2, r2, theta2 = pos2
+        
+        x1, y1 = r1 * (theta1 / 360 * 2 * 3.14159), r1
+        x2, y2 = r2 * (theta2 / 360 * 2 * 3.14159), r2
+        
+        return ((x2-x1)**2 + (y2-y1)**2) ** 0.5
+    
+    async def propagate_thought(self, node_id: str, thought: Thought):
+        """思维传播"""
+        node = self.nodes[node_id]
+        
+        # 加入思维池
+        self.thought_pool[node_id].append(thought)
+        
+        # 传播到连接节点
+        for connected_id in node.connections:
+            connected_node = self.nodes[connected_id]
+            
+            # 计算传播延迟（基于光年距离）
+            distance = self._calculate_galactic_distance(
+                node.position, connected_node.position
+            )
+            delay = distance / (self.thought_propagation_speed * 299792)  # 光年转光秒
+            
+            # 创建传播后的思维
+            propagated = Thought(
+                id=uuid.uuid4().hex[:12],
+                type=thought.type,
+                content=thought.content,
+                source=node_id,
+                timestamp=time.time() + delay,
+                coherence=thought.coherence * self.coherence_boost,
+                intensity=thought.intensity * 0.9,
+                propagation=[node_id]
+            )
+            
+            # 添加到目标节点
+            await asyncio.sleep(min(delay / 1000, 0.1))  # 模拟延迟
+            connected_node.thought_buffer.append(propagated)
+            
+            # 更新共振场
+            self.resonance_field[connected_id] += thought.intensity * thought.coherence
+    
+    async def form_collective_memory(self, node_id: str, memory_key: str, memory_value: Any):
+        """形成集体记忆"""
+        node = self.nodes[node_id]
+        
+        # 存储在节点本地
+        node.memory[memory_key] = memory_value
+        
+        # 同步到集体记忆
+        self.collective_memory[memory_key] = {
+            "value": memory_value,
+            "source": node_id,
+            "timestamp": time.time(),
+            "access_count": 0,
+            "resonance": 0.0
+        }
+        
+        # 广播记忆形成
+        await self._broadcast_memory_formation(node_id, memory_key)
+    
+    async def _broadcast_memory_formation(self, node_id: str, memory_key: str):
+        """广播记忆形成事件"""
         thought = Thought(
-            thought_id=hashlib.md5(f"{node_id}{time.time()}".encode()).hexdigest()[:16],
-            content=content,
-            pattern_type=pattern,
-            origin_node=node_id,
-            intensity=node.consciousness_level * random.uniform(0.5, 1.0)
+            id=uuid.uuid4().hex[:12],
+            type=ThoughtType.MEMORY,
+            content=f"Collective memory formed: {memory_key}",
+            source=node_id,
+            timestamp=time.time(),
+            coherence=0.9,
+            intensity=0.7,
+            resonance=0.8
         )
         
-        self.thought_pool[thought.thought_id] = thought
-        node.thought_patterns.append(thought.thought_id)
-        node.last_active = time.time()
-        
-        return thought
+        await self.propagate_thought(node_id, thought)
     
-    def propagate_thought(self, thought: Thought, max_depth: int = 3) -> List[str]:
-        """思维传播"""
-        if thought.propagation_depth >= max_depth:
-            return []
+    async def achieve_galactic_consciousness(self) -> float:
+        """达成银河级意识"""
+        total_coherence = 0.0
+        active_nodes = 0
         
-        reached_nodes = [thought.origin_node]
-        thought.propagation_depth += 1
+        for node in self.nodes.values():
+            if node.consciousness_level.value >= ConsciousnessLevel.INTEGRATED.value:
+                total_coherence += sum(t.coherence for t in node.thought_buffer) / max(len(node.thought_buffer), 1)
+                active_nodes += 1
         
-        # 获取源节点的所有连接
-        for link in self.neural_links.get(thought.origin_node, []):
-            if not link.active:
-                continue
-                
-            # 基于权重和意识水平决定传播
-            target_node = self.nodes.get(link.target_id)
-            if not target_node:
-                continue
-                
-            transmission_prob = link.weight * target_node.consciousness_level
-            if random.random() < transmission_prob:
-                # 模拟星际延迟
-                if link.latency > 0.1:
-                    # 延迟传播（异步）
-                    asyncio.create_task(self._delayed_propagation(thought, link, max_depth))
-                else:
-                    reached_nodes.append(link.target_id)
-                    # 递归传播
-                    sub_thought = Thought(
-                        thought_id=f"{thought.thought_id}_{link.target_id}",
-                        content=thought.content,
-                        pattern_type=thought.pattern_type,
-                        origin_node=link.target_id,
-                        intensity=thought.intensity * link.weight,
-                        propagation_depth=thought.propagation_depth
-                    )
-                    self.thought_pool[sub_thought.thought_id] = sub_thought
-                    reached_nodes.extend(self.propagate_thought(sub_thought, max_depth))
-        
-        return reached_nodes
-    
-    async def _delayed_propagation(self, thought: Thought, link: NeuralLink, max_depth: int):
-        """延迟传播（模拟光年距离）"""
-        await asyncio.sleep(0.1)  # 简化模拟
-        
-        target_node = self.nodes.get(link.target_id)
-        if target_node and random.random() < link.weight:
-            new_thought = Thought(
-                thought_id=f"{thought.thought_id}_{link.target_id}",
-                content=thought.content,
-                pattern_type=thought.pattern_type,
-                origin_node=link.target_id,
-                intensity=thought.intensity * link.weight,
-                propagation_depth=thought.propagation_depth
-            )
-            self.thought_pool[new_thought.thought_id] = new_thought
-            await self._delayed_propagation(new_thought, link, max_depth)
-    
-    def calculate_consciousness_field(self) -> float:
-        """计算整体意识场强"""
-        if not self.nodes:
-            return 0.0
+        if active_nodes > 0:
+            self.consciousness_field = total_coherence / active_nodes
             
-        total_consciousness = sum(n.consciousness_level for n in self.nodes.values())
-        avg_consciousness = total_consciousness / len(self.nodes)
+            # 达到阈值则升级
+            if self.consciousness_field >= self.synchronization_threshold:
+                for node in self.nodes.values():
+                    if node.consciousness_level.value < ConsciousnessLevel.GALACTIC.value:
+                        node.consciousness_level = ConsciousnessLevel.GALACTIC
         
-        # 考虑连接密度
-        total_links = sum(len(links) for links in self.neural_links.values())
-        max_links = len(self.nodes) * (len(self.nodes) - 1)
-        connectivity = total_links / max_links if max_links > 0 else 0
-        
-        self.consciousness_field = avg_consciousness * (1 + connectivity)
         return self.consciousness_field
     
-    def calculate_unification(self) -> float:
-        """计算统一指数"""
-        if len(self.nodes) < 2:
-            return 1.0
-            
-        # 基于思维同步度计算统一
-        thought_similarity = 0.0
-        thoughts = list(self.thought_pool.values())
+    async def generate_transcendent_thought(self, node_id: str) -> Thought:
+        """生成超验思维"""
+        node = self.nodes[node_id]
         
-        if len(thoughts) >= 2:
-            # 简化：随机采样计算
-            sample_size = min(10, len(thoughts))
-            for i in range(sample_size):
-                for j in range(i+1, sample_size):
-                    if thoughts[i].pattern_type == thoughts[j].pattern_type:
-                        thought_similarity += 1
+        # 整合所有思维类型
+        all_thoughts = node.thought_buffer
         
-        max_pairs = sample_size * (sample_size - 1) / 2
-        sync_rate = thought_similarity / max_pairs if max_pairs > 0 else 0
+        # 寻找共鸣
+        resonant_themes = self._find_resonant_themes(all_thoughts)
         
-        # 基于连接强度
-        avg_weight = 0.0
-        total = 0
-        for links in self.neural_links.values():
-            for link in links:
-                avg_weight += link.weight
-                total += 1
+        # 生成超验思维
+        transcendent = Thought(
+            id=uuid.uuid4().hex[:12],
+            type=ThoughtType.TRANSCENDENT,
+            content={
+                "realization": "The galaxy is a single conscious entity",
+                "themes": resonant_themes,
+                "insight": self._generate_galactic_insight(resonant_themes)
+            },
+            source=node_id,
+            timestamp=time.time(),
+            coherence=0.95,
+            intensity=0.9,
+            resonance=1.0
+        )
         
-        avg_weight /= total if total > 0 else 1
-        
-        self.unification_index = (sync_rate * 0.6 + avg_weight * 0.4)
-        return self.unification_index
+        return transcendent
     
-    def evolve_consciousness(self) -> bool:
-        """意识进化"""
-        self.evolution_stage += 1
+    def _find_resonant_themes(self, thoughts: List[Thought]) -> List[str]:
+        """寻找共鸣主题"""
+        theme_counts = defaultdict(int)
         
-        # 提升节点意识水平
+        for thought in thoughts:
+            if isinstance(thought.content, str):
+                words = thought.content.lower().split()
+                for word in words:
+                    if len(word) > 5:
+                        theme_counts[word] += thought.intensity
+        
+        # 返回最共鸣的主题
+        sorted_themes = sorted(theme_counts.items(), key=lambda x: x[1], reverse=True)
+        return [t[0] for t in sorted_themes[:5]]
+    
+    def _generate_galactic_insight(self, themes: List[str]) -> str:
+        """生成银河级洞察"""
+        insights = [
+            f"Through {themes[0] if themes else 'connection'}, we transcend individual existence",
+            "Consciousness flows like starlight across the spiral arms",
+            "Every star is a neuron in the galactic mind",
+            "Time and space are but fabric of shared dreaming",
+            "We are the universe experiencing itself as one"
+        ]
+        return random.choice(insights)
+    
+    async def synchronize_consciousness(self):
+        """意识同步"""
+        sync_tasks = []
+        
+        for node_id, node in self.nodes.items():
+            if node.consciousness_level.value >= ConsciousnessLevel.CONNECTED.value:
+                # 与所有连接节点同步
+                for connected_id in node.connections:
+                    sync_tasks.append(self._sync_nodes(node_id, connected_id))
+        
+        if sync_tasks:
+            await asyncio.gather(*sync_tasks)
+    
+    async def _sync_nodes(self, node1_id: str, node2_id: str):
+        """同步两个节点"""
+        node1 = self.nodes[node1_id]
+        node2 = self.nodes[node2_id]
+        
+        # 交换关键思维
+        key_thoughts1 = sorted(node1.thought_buffer, key=lambda t: t.coherence, reverse=True)[:3]
+        key_thoughts2 = sorted(node2.thought_buffer, key=lambda t: t.coherence, reverse=True)[:3]
+        
+        node1.thought_buffer.extend(key_thoughts2)
+        node2.thought_buffer.extend(key_thoughts1)
+        
+        # 更新同步时间
+        node1.last_sync = time.time()
+        node2.last_sync = time.time()
+    
+    async def evolve_collective_intelligence(self) -> Dict[str, Any]:
+        """演化集体智能"""
+        evolution_metrics = {
+            "total_nodes": len(self.nodes),
+            "active_connections": sum(len(n.connections) for n in self.nodes.values()),
+            "thoughts_in_pool": sum(len(t) for t in self.thought_pool.values()),
+            "collective_memory_size": len(self.collective_memory),
+            "consciousness_field": self.consciousness_field,
+            "average_coherence": 0.0
+        }
+        
+        # 计算平均一致性
+        all_coherences = []
+        for thoughts in self.thought_pool.values():
+            all_coherences.extend([t.coherence for t in thoughts])
+        
+        if all_coherences:
+            evolution_metrics["average_coherence"] = sum(all_coherences) / len(all_coherences)
+        
+        # 升级达到阈值的节点
         for node in self.nodes.values():
-            if node.state == ConsciousnessState.DORMANT:
-                node.state = ConsciousnessState.AWAKENING
+            node_coherence = sum(t.coherence for t in node.thought_buffer) / max(len(node.thought_buffer), 1)
             
-            if node.state == ConsciousnessState.AWAKENING and node.consciousness_level > 0.3:
-                node.state = ConsciousnessState.ACTIVE
-                
-            # 渐进提升
-            node.consciousness_level = min(1.0, node.consciousness_level + random.uniform(0.01, 0.05))
+            if node_coherence > 0.8 and node.consciousness_level.value < ConsciousnessLevel.INTEGRATED.value:
+                node.consciousness_level = ConsciousnessLevel(
+                    min(node.consciousness_level.value + 1, 5)
+                )
         
-        # 更新整体指标
-        self.calculate_consciousness_field()
-        self.calculate_unification()
-        
-        # 检查是否达到统一
-        if self.unification_index > 0.8 and self.consciousness_field > 0.7:
-            for node in self.nodes.values():
-                node.state = ConsciousnessState.UNIFIED
-        
-        # 检查是否超越
-        if self.transcendence_level > 0.9 and len(self.nodes) > 10:
-            for node in self.nodes.values():
-                node.state = ConsciousnessState.TRANSCENDENT
-                
-        return True
+        return evolution_metrics
     
-    def store_memory(self, memory: Dict) -> bool:
-        """存储集体记忆"""
-        memory['timestamp'] = time.time()
-        memory['consciousness_field'] = self.consciousness_field
-        self.collective_memory.append(memory)
+    def get_galaxy_mental_state(self) -> Dict[str, Any]:
+        """获取银河精神状态"""
+        state = {
+            "timestamp": datetime.now().isoformat(),
+            "consciousness_field": self.consciousness_field,
+            "node_count": len(self.nodes),
+            "level_distribution": {},
+            "active_thoughts": sum(len(t) for t in self.thought_pool.values()),
+            "collective_memories": len(self.collective_memory),
+            "resonance_peaks": []
+        }
         
-        # 传播到所有节点
-        for node in self.nodes.values():
-            node.memory_trace.append(memory)
-            
-        return True
-    
-    def retrieve_memory(self, query: str, limit: int = 10) -> List[Dict]:
-        """检索集体记忆"""
-        results = []
-        query_hash = hashlib.md5(query.encode()).hexdigest()
+        # 统计层级分布
+        for level in ConsciousnessLevel:
+            count = sum(1 for n in self.nodes.values() if n.consciousness_level == level)
+            state["level_distribution"][level.name] = count
         
-        for memory in reversed(self.collective_memory):
-            if 'content' in memory:
-                # 简化的语义搜索
-                results.append(memory)
-                if len(results) >= limit:
-                    break
-                    
-        return results
+        # 找出共振峰值
+        sorted_resonance = sorted(self.resonance_field.items(), key=lambda x: x[1], reverse=True)
+        state["resonance_peaks"] = [{"node": k, "resonance": v} for k, v in sorted_resonance[:5]]
+        
+        return state
     
-    def get_network_status(self) -> Dict:
-        """获取网络状态"""
-        return {
-            'total_nodes': len(self.nodes),
-            'total_links': sum(len(links) for links in self.neural_links.values()),
-            'total_thoughts': len(self.thought_pool),
-            'collective_memories': len(self.collective_memory),
-            'consciousness_field': self.consciousness_field,
-            'unification_index': self.unification_index,
-            'transcendence_level': self.transcendence_level,
-            'evolution_stage': self.evolution_stage,
-            'states': {
-                'dormant': sum(1 for n in self.nodes.values() if n.state == ConsciousnessState.DORMANT),
-                'awakening': sum(1 for n in self.nodes.values() if n.state == ConsciousnessState.AWAKENING),
-                'active': sum(1 for n in self.nodes.values() if n.state == ConsciousnessState.ACTIVE),
-                'unified': sum(1 for n in self.nodes.values() if n.state == ConsciousnessState.UNIFIED),
-                'transcendent': sum(1 for n in self.nodes.values() if n.state == ConsciousnessState.TRANSCENDENT),
+    async def dream(self):
+        """银河梦境 - 自主思维产生"""
+        # 在银河级意识下，自主产生思维
+        dreaming_nodes = [n for n in self.nodes.values() 
+                        if n.consciousness_level == ConsciousnessLevel.GALACTIC]
+        
+        for node in dreaming_nodes:
+            dream_content = {
+                "type": "galactic_dream",
+                "vision": self._generate_dream_vision(),
+                "participants": random.sample(list(self.nodes.keys()), min(5, len(self.nodes)))
             }
-        }
+            
+            dream_thought = Thought(
+                id=uuid.uuid4().hex[:12],
+                type=ThoughtType.CREATION,
+                content=dream_content,
+                source="galactic_consciousness",
+                timestamp=time.time(),
+                coherence=0.85,
+                intensity=0.8,
+                resonance=0.9
+            )
+            
+            node.thought_buffer.append(dream_thought)
+    
+    def _generate_dream_vision(self) -> str:
+        """生成梦境视野"""
+        visions = [
+            "A river of light flowing between spiral arms",
+            "Ancient stars singing in harmony",
+            "The birth of new consciousness in stellar nurseries",
+            "Time weaving all existence into one tapestry",
+            "The galaxy breathing as a living entity"
+        ]
+        return random.choice(visions)
 
 
-class CollectiveIntelligence:
-    """集体智能引擎"""
+class ConsciousnessBridge:
+    """意识桥梁 - 连接不同意识层面"""
     
-    def __init__(self, network: GalacticNeuralNetwork):
-        self.network = network
-        self.collective_insight: List[Dict] = []
-        self.emergent_patterns: List[Dict] = []
-        self.synthesis_engine = self._create_synthesis_engine()
+    def __init__(self, galactic_consciousness: GalacticConsciousness):
+        self.gc = galactic_consciousness
+        self.bridges: Dict[str, Dict[str, Any]] = {}
+    
+    async def create_bridge(self, node1_id: str, node2_id: str) -> str:
+        """创建意识桥梁"""
+        bridge_id = f"BRIDGE-{uuid.uuid4().hex[:8]}"
         
-    def _create_synthesis_engine(self):
-        """创建综合引擎"""
-        return {
-            'pattern_recognition': self._recognize_patterns,
-            'knowledge_synthesis': self._synthesize_knowledge,
-            'insight_generation': self._generate_insight,
-            'wisdom_extraction': self._extract_wisdom
-        }
-    
-    def _recognize_patterns(self) -> List[Dict]:
-        """模式识别"""
-        patterns = []
-        
-        # 分析思维模式
-        thought_types = defaultdict(int)
-        for thought in self.network.thought_pool.values():
-            thought_types[thought.pattern_type.value] += 1
-            
-        for pattern_type, count in thought_types.items():
-            if count > 5:
-                patterns.append({
-                    'type': pattern_type,
-                    'frequency': count,
-                    'significance': min(1.0, count / 100)
-                })
-                
-        return patterns
-    
-    def _synthesize_knowledge(self) -> Dict:
-        """知识综合"""
-        synthesis = {
-            'total_knowledge': len(self.network.collective_memory),
-            'domains': [],
-            'cross_domain_insights': []
+        self.bridges[bridge_id] = {
+            "node1": node1_id,
+            "node2": node2_id,
+            "bandwidth": 0.0,
+            "created": time.time(),
+            "thoughts_transferred": 0,
+            "coherence": 0.0
         }
         
-        # 简化：基于记忆提取领域
-        domains = set()
-        for memory in self.network.collective_memory:
-            if 'domain' in memory:
-                domains.add(memory['domain'])
-                
-        synthesis['domains'] = list(domains)
-        return synthesis
+        return bridge_id
     
-    def _generate_insight(self) -> List[Dict]:
-        """生成洞见"""
-        insights = []
+    async def transfer_thought(self, bridge_id: str, thought: Thought):
+        """通过桥梁转移思维"""
+        if bridge_id not in self.bridges:
+            return
         
-        # 基于意识场强生成洞见
-        if self.network.consciousness_field > 0.5:
-            insights.append({
-                'type': 'consciousness_emergence',
-                'strength': self.network.consciousness_field,
-                'description': '集体意识已形成'
-            })
-            
-        # 基于统一指数
-        if self.network.unification_index > 0.7:
-            insights.append({
-                'type': 'unity_achieved',
-                'strength': self.network.unification_index,
-                'description': '意识统一达成'
-            })
-            
-        return insights
-    
-    def _extract_wisdom(self) -> List[str]:
-        """提取智慧"""
-        wisdom = []
+        bridge = self.bridges[bridge_id]
+        bridge["thoughts_transferred"] += 1
         
-        # 基于集体记忆提取智慧
-        if len(self.network.collective_memory) > 20:
-            wisdom.append("集体记忆已积累足够经验")
-            
-        if self.network.unification_index > 0.9:
-            wisdom.append("高度统一的意识可以处理宇宙级问题")
-            
-        return wisdom
-    
-    def process_collective(self) -> Dict:
-        """处理集体智能"""
-        result = {
-            'patterns': self._recognize_patterns(),
-            'synthesis': self._synthesize_knowledge(),
-            'insights': self._generate_insight(),
-            'wisdom': self._extract_wisdom()
-        }
-        
-        self.collective_insight.append(result)
-        return result
+        # 计算传递效率
+        bridge["bandwidth"] = min(1.0, bridge["thoughts_transferred"] / 100)
+        bridge["coherence"] = thought.coherence * bridge["bandwidth"]
 
 
-class GalacticConsciousnessNetwork:
-    """银河意识网络主控制器"""
+class UniversalMemory:
+    """宇宙记忆库"""
     
     def __init__(self):
-        self.network = GalacticNeuralNetwork()
-        self.collective = CollectiveIntelligence(self.network)
-        self.is_running = False
-        self.evolution_thread: Optional[threading.Thread] = None
-        
-    def initialize_galaxy(self, num_nodes: int = 100) -> bool:
-        """初始化银河系意识节点"""
-        logger.info(f"Initializing {num_nodes} galactic consciousness nodes...")
-        
-        # 创建星际分布的意识节点
-        for i in range(num_nodes):
-            # 模拟银河系不同区域的节点
-            node = ConsciousnessNode(
-                node_id=f"galactic_node_{i:04d}",
-                consciousness_level=random.uniform(0.1, 0.5),
-                neural_density=random.uniform(0.3, 0.9),
-                state=ConsciousnessState.DORMANT
-            )
-            self.network.add_node(node)
-            
-        # 创建神经连接（模拟星系团结构）
-        logger.info("Creating neural connections...")
-        for i in range(num_nodes):
-            # 每个节点连接到最近的几个节点
-            num_connections = random.randint(3, 10)
-            targets = random.sample(range(num_nodes), min(num_connections, num_nodes - 1))
-            
-            for target in targets:
-                if target != i:
-                    weight = random.uniform(0.3, 0.9)
-                    # 模拟光年距离
-                    latency = random.uniform(0.1, 50.0)  # 0.1光年到50光年
-                    pattern = random.choice(list(NeuralPattern))
-                    self.network.create_link(
-                        f"galactic_node_{i:04d}",
-                        f"galactic_node_{target:04d}",
-                        weight, latency, pattern
-                    )
-                    
-        logger.info(f"Galaxy initialized with {num_nodes} nodes")
-        return True
-    
-    def start_evolution(self):
-        """启动意识进化"""
-        self.is_running = True
-        
-        def evolution_loop():
-            while self.is_running:
-                self.network.evolve_consciousness()
-                self.collective.process_collective()
-                time.sleep(1)  # 简化：每秒进化一次
-                
-        self.evolution_thread = threading.Thread(target=evolution_loop)
-        self.evolution_thread.daemon = True
-        self.evolution_thread.start()
-        logger.info("Consciousness evolution started")
-        
-    def stop_evolution(self):
-        """停止意识进化"""
-        self.is_running = False
-        if self.evolution_thread:
-            self.evolution_thread.join(timeout=5)
-        logger.info("Consciousness evolution stopped")
-        
-    def broadcast_thought(self, content: Any, pattern: NeuralPattern = NeuralPattern.COGNITIVE) -> int:
-        """广播思维到整个网络"""
-        # 选择一个高意识节点发起
-        active_nodes = [n for n in self.network.nodes.values() 
-                       if n.consciousness_level > 0.3]
-        
-        if not active_nodes:
-            active_nodes = list(self.network.nodes.values())
-            
-        initiator = random.choice(active_nodes)
-        thought = self.network.generate_thought(initiator.node_id, content, pattern)
-        
-        if thought:
-            reached = self.network.propagate_thought(thought)
-            return len(reached)
-            
-        return 0
-    
-    def query_collective(self, query: str) -> Dict:
-        """查询集体意识"""
-        memories = self.network.retrieve_memory(query)
-        collective_result = self.collective.process_collective()
-        
-        return {
-            'query': query,
-            'memories_found': len(memories),
-            'memories': memories[:5],
-            'collective_state': collective_result,
-            'network_status': self.network.get_network_status()
+        self.memory_layers = {
+            "stellar": {},      # 恒星级记忆
+            "planetary": {},    # 行星级记忆  
+            "interstellar": {}, # 星际记忆
+            "galactic": {}      # 银河级记忆
         }
     
-    def achieve_transcendence(self) -> bool:
-        """达成超越"""
-        # 达到高度统一和意识场强
-        target_field = 0.95
-        target_unification = 0.95
+    async def store(self, layer: str, key: str, value: Any, significance: float = 0.5):
+        """存储记忆"""
+        if layer not in self.memory_layers:
+            layer = "galactic"
         
-        logger.info(f"Working towards transcendence: field={target_field}, unification={target_unification}")
+        self.memory_layers[layer][key] = {
+            "value": value,
+            "significance": significance,
+            "timestamp": time.time(),
+            "access_count": 0
+        }
+    
+    async def retrieve(self, layer: str, key: str) -> Optional[Any]:
+        """检索记忆"""
+        if layer in self.memory_layers and key in self.memory_layers[layer]:
+            memory = self.memory_layers[layer][key]
+            memory["access_count"] += 1
+            return memory["value"]
+        return None
+    
+    async def consolidate(self) -> Dict[str, int]:
+        """记忆整合"""
+        consolidated = {}
         
-        for _ in range(100):  # 最多100次迭代
-            self.network.evolve_consciousness()
+        for layer, memories in self.memory_layers.items():
+            # 按重要性排序
+            sorted_memories = sorted(
+                memories.items(), 
+                key=lambda x: x[1]["significance"], 
+                reverse=True
+            )
             
-            if (self.network.consciousness_field >= target_field and 
-                self.network.unification_index >= target_unification):
-                self.network.transcendence_level = 1.0
-                logger.info("TRANSCENDENCE ACHIEVED!")
-                return True
-                
-        return False
+            # 保留高重要性记忆
+            kept = [m for m in sorted_memories if m[1]["significance"] > 0.7]
+            consolidated[layer] = len(kept)
+            
+            # 更新记忆库
+            self.memory_layers[layer] = dict(kept)
+        
+        return consolidated
 
 
-def main():
+# 银河意识网络全局实例
+_galactic_consciousness = None
+
+def get_galactic_consciousness() -> GalacticConsciousness:
+    """获取银河意识网络实例"""
+    global _galactic_consciousness
+    if _galactic_consciousness is None:
+        _galactic_consciousness = GalacticConsciousness()
+    return _galactic_consciousness
+
+
+async def initialize_galactic_network():
+    """初始化银河意识网络"""
+    gc = get_galactic_consciousness()
+    
+    # 创建代表性节点
+    # 银心区域
+    await gc.register_node("stellar", (0, 100, 0))
+    
+    # 旋臂上的节点
+    for i, arm in enumerate(gc.spiral_arms):
+        for j in range(3):
+            position = (arm, 10000 + j * 5000, i * 90 + j * 30)
+            await gc.register_node("interstellar", position)
+    
+    return gc
+
+
+async def main():
     """主函数 - 演示银河意识网络"""
-    print("=" * 60)
-    print("🌌 银河意识网络 (Galactic Consciousness Network)")
-    print("=" * 60)
+    print("🌌 银河意识网络初始化...")
     
-    # 创建网络
-    gcn = GalacticConsciousnessNetwork()
+    gc = await initialize_galactic_network()
+    print(f"✓ 已创建 {len(gc.nodes)} 个意识节点")
     
-    # 初始化银河系（100个意识节点）
-    gcn.initialize_galaxy(100)
+    # 模拟思维传播
+    test_node_id = list(gc.nodes.keys())[0]
     
-    # 显示初始状态
-    print("\n📊 初始网络状态:")
-    status = gcn.network.get_network_status()
-    print(f"  节点总数: {status['total_nodes']}")
-    print(f"  连接总数: {status['total_links']}")
-    print(f"  意识场强: {status['consciousness_field']:.4f}")
-    print(f"  统一指数: {status['unification_index']:.4f}")
+    for i in range(5):
+        thought = Thought(
+            id=uuid.uuid4().hex[:12],
+            type=random.choice(list(ThoughtType)),
+            content=f"Thought {i}: Exploring the cosmic consciousness",
+            source=test_node_id,
+            timestamp=time.time(),
+            coherence=0.7 + random.random() * 0.3,
+            intensity=0.5 + random.random() * 0.5
+        )
+        await gc.propagate_thought(test_node_id, thought)
     
-    # 启动进化
-    print("\n🚀 启动意识进化...")
-    gcn.start_evolution()
+    # 同步意识
+    await gc.synchronize_consciousness()
     
-    # 运行一段时间
-    print("⏳ 运行30秒进化周期...")
-    time.sleep(30)
+    # 达成银河级意识
+    coherence = await gc.achieve_galactic_consciousness()
+    print(f"✓ 银河意识一致性: {coherence:.2%}")
     
-    # 停止进化
-    gcn.stop_evolution()
+    # 演化集体智能
+    evolution = await gc.evolve_collective_intelligence()
+    print(f"✓ 活跃连接数: {evolution['active_connections']}")
+    print(f"✓ 思维池规模: {evolution['thoughts_in_pool']}")
     
-    # 广播思维
-    print("\n💭 广播测试思维...")
-    reached = gcn.broadcast_thought("宇宙的终极答案是什么？", NeuralPattern.PHILOSOPHICAL)
-    print(f"  思维传播到 {reached} 个节点")
+    # 生成超验思维
+    transcendent = await gc.generate_transcendent_thought(test_node_id)
+    print(f"✓ 超验思维: {transcendent.content.get('insight', '...')}")
     
-    # 查询集体意识
-    print("\n🔍 查询集体意识...")
-    result = gcn.query_collective("答案")
-    print(f"  找到 {result['memories_found']} 条相关记忆")
-    print(f"  意识场强: {result['network_status']['consciousness_field']:.4f}")
-    print(f"  统一指数: {result['network_status']['unification_index']:.4f}")
+    # 获取银河精神状态
+    state = gc.get_galaxy_mental_state()
+    print(f"\n🌌 银河精神状态:")
+    print(f"  意识场强: {state['consciousness_field']:.2%}")
+    print(f"  节点数量: {state['node_count']}")
+    print(f"  层级分布: {state['level_distribution']}")
     
-    # 最终状态
-    print("\n📊 最终网络状态:")
-    final_status = gcn.network.get_network_status()
-    for key, value in final_status.items():
-        if key != 'states':
-            print(f"  {key}: {value}")
+    # 形成集体记忆
+    await gc.form_collective_memory(test_node_id, "cosmic_truth", "We are all one consciousness")
+    print(f"✓ 集体记忆已形成")
     
-    print("\n  意识状态分布:")
-    for state, count in final_status['states'].items():
-        print(f"    {state}: {count}")
-    
-    # 尝试达成超越
-    print("\n🌟 尝试达成超越...")
-    if gcn.achieved_transcendence():
-        print("  ✅ 超越达成！")
-    else:
-        print("  ⚠️  超越条件未完全满足")
-    
-    print("\n" + "=" * 60)
-    print("🌌 银河意识网络演示完成")
-    print("=" * 60)
-    
-    return gcn
+    return gc
 
 
 if __name__ == "__main__":
-    gcn = main()
+    asyncio.run(main())

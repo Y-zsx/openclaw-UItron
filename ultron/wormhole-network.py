@@ -1,29 +1,24 @@
 #!/usr/bin/env python3
 """
-星际虫洞网络 (Interstellar Wormhole Network)
-夙愿二十七：宇宙智能网络 - 第3世
+星际虫洞网络 - Interstellar Wormhole Network
+第3世：银河级智能 - 星际虫洞网络
 
-功能：星际虫洞创建与管理、时空通道、跨维度传输
-作者：奥创 (Ultron)
-版本：1.0.0
+实现跨星际即时通信与物质传输的虫洞网络系统
 """
 
 import asyncio
 import json
 import time
+import uuid
 import hashlib
-import random
 import math
-import threading
-from typing import Dict, List, Any, Optional, Tuple, Set
+import random
+from datetime import datetime, timedelta
+from typing import Dict, List, Set, Optional, Any, Tuple
 from dataclasses import dataclass, field
 from collections import defaultdict
 from enum import Enum
-import logging
-
-logging.basicConfig(level=logging.INFO)
-logger = logging.getLogger("WormholeNetwork")
-
+import numpy as np
 
 class WormholeStatus(Enum):
     """虫洞状态"""
@@ -32,686 +27,741 @@ class WormholeStatus(Enum):
     COLLAPSING = "collapsing"
     EXPANDING = "expanding"
     ACTIVE = "active"
-
+    DORMANT = "dormant"
 
 class WormholeType(Enum):
     """虫洞类型"""
-    SCHWARZSCHILD = "schwarzschild"  # 史瓦西虫洞
-    MORRIS_THORNE = "morris-thorne"  # 可穿越虫洞
-    EUCLIDEAN = "euclidean"  # 欧几里得虫洞
-    QUANTUM = "quantum"  # 量子虫洞
-    DIMENSIONAL = "dimensional"  # 跨维度虫洞
+    MICRO = "micro"              # 微观虫洞（量子通信）
+    MESO = "meso"                # 中型虫洞（信息传输）
+    MACRO = "macro"              # 大型虫洞（物质传输）
+    GALACTIC = "galactic"        # 银河级虫洞（时空隧道）
 
-
-class TransitPriority(Enum):
-    """传输优先级"""
-    EMERGENCY = 1
-    HIGH = 2
-    NORMAL = 3
-    LOW = 4
-    BACKGROUND = 5
-
+class EnergyType(Enum):
+    """能量类型"""
+    EXOTIC = "exotic"            # 奇异物质
+    DARK = "dark"                # 暗能量
+    VACUUM = "vacuum"            # 真空能
+    STELLAR = "stellar"          # 恒星能
+    HAWKING = "hawking"          # 霍金辐射
 
 @dataclass
-class Coordinates:
-    """星际坐标"""
-    x: float  # 光年
-    y: float
-    z: float
-    dimension: int = 0  # 维度
-    
-    def distance_to(self, other: 'Coordinates') -> float:
-        """计算到另一个坐标的距离"""
-        if self.dimension != other.dimension:
-            return float('inf')  # 跨维度距离无限大
-            
-        dx = self.x - other.x
-        dy = self.y - other.y
-        dz = self.z - other.z
-        return math.sqrt(dx*dx + dy*dy + dz*dz)
-    
-    def to_dict(self) -> Dict:
-        return {'x': self.x, 'y': self.y, 'z': self.z, 'dimension': self.dimension}
-
+class WormholeEndpoint:
+    """虫洞端点"""
+    endpoint_id: str
+    coordinates: Tuple[float, float, float]  # 银河系坐标 (x, y, z) 单位：光年
+    system_name: str
+    stability: float              # 稳定性 0-1
+    capacity: float               # 容量 (TB/s 或 物质吨位)
+    energy_requirement: float     # 能量需求 (GW)
+    last_maintenance: float
 
 @dataclass
 class Wormhole:
-    """虫洞实例"""
+    """虫洞"""
     wormhole_id: str
-    entry_point: Coordinates
-    exit_point: Coordinates
     wormhole_type: WormholeType
-    diameter: float  # 米
-    stability: float  # 0.0 - 1.0
-    energy_requirement: float  # 能量需求
-    status: WormholeStatus = WormholeStatus.STABLE
-    creation_time: float = field(default_factory=time.time)
-    last_transit: float = field(default_factory=time.time)
-    transit_count: int = 0
-    max_transits: int = 1000000
-    entropy: float = 0.0  # 熵增
-    
-
-@dataclass
-class TransitRequest:
-    """传输请求"""
-    request_id: str
-    source: Coordinates
-    destination: Coordinates
-    payload_size: float  # KB
-    priority: TransitPriority
-    timeout: float = 60.0
-    created_at: float = field(default_factory=time.time)
-    metadata: Dict = field(default_factory=dict)
-
-
-@dataclass
-class TransitResult:
-    """传输结果"""
-    request_id: str
-    success: bool
-    transit_time: float  # 实际用时
-    wormhole_used: str
-    energy_consumed: float
-    error: Optional[str] = None
-
-
-class WormholeGenerator:
-    """虫洞生成器"""
-    
-    def __init__(self, network: 'WormholeNetwork'):
-        self.network = network
-        self.generation_capability = 1.0  # 生成能力
-        
-    def calculate_stability(self, entry: Coordinates, exit: Coordinates, 
-                           wormhole_type: WormholeType) -> float:
-        """计算虫洞稳定性"""
-        # 基于距离
-        distance = entry.distance_to(exit)
-        
-        # 距离越远，稳定性越低
-        distance_factor = 1.0 / (1.0 + distance * 0.01)
-        
-        # 基于类型
-        type_factors = {
-            WormholeType.SCHWARZSCHILD: 0.3,
-            WormholeType.MORRIS_THORNE: 0.9,
-            WormholeType.EUCLIDEAN: 0.7,
-            WormholeType.QUANTUM: 0.8,
-            WormholeType.DIMENSIONAL: 0.6
-        }
-        
-        type_factor = type_factors.get(wormhole_type, 0.5)
-        
-        # 基于维度差异
-        dim_factor = 1.0 if entry.dimension == exit.dimension else 0.5
-        
-        stability = distance_factor * type_factor * dim_factor
-        return min(1.0, stability)
-    
-    def calculate_energy_requirement(self, entry: Coordinates, exit: Coordinates,
-                                     diameter: float, wormhole_type: WormholeType) -> float:
-        """计算能量需求"""
-        distance = entry.distance_to(exit)
-        
-        # 基础能量 = 距离 * 直径^2 * 类型系数
-        base_energy = distance * (diameter ** 2) * 0.001
-        
-        type_multipliers = {
-            WormholeType.SCHWARZSCHILD: 10.0,
-            WormholeType.MORRIS_THORNE: 1.0,
-            WormholeType.EUCLIDEAN: 0.5,
-            WormholeType.QUANTUM: 2.0,
-            WormholeType.DIMENSIONAL: 5.0
-        }
-        
-        multiplier = type_multipliers.get(wormhole_type, 1.0)
-        
-        return base_energy * multiplier
-    
-    def create_wormhole(self, entry: Coordinates, exit: Coordinates,
-                       diameter: float = 10.0, 
-                       wormhole_type: WormholeType = WormholeType.MORRIS_THORNE) -> Optional[Wormhole]:
-        """创建虫洞"""
-        # 检查能量是否足够
-        energy_required = self.calculate_energy_requirement(entry, exit, diameter, wormhole_type)
-        
-        if self.network.available_energy < energy_required:
-            logger.warning(f"Insufficient energy: {self.network.available_energy} < {energy_required}")
-            return None
-            
-        # 计算稳定性
-        stability = self.calculate_stability(entry, exit, wormhole_type)
-        
-        # 生成虫洞ID
-        wormhole_id = hashlib.md5(f"{entry.x}{entry.y}{exit.x}{exit.y}{time.time()}".encode()).hexdigest()[:16]
-        
-        wormhole = Wormhole(
-            wormhole_id=wormhole_id,
-            entry_point=entry,
-            exit_point=exit,
-            wormhole_type=wormhole_type,
-            diameter=diameter,
-            stability=stability,
-            energy_requirement=energy_required,
-            status=WormholeStatus.ACTIVE if stability > 0.5 else WormholeStatus.UNSTABLE
-        )
-        
-        # 消耗能量
-        self.network.available_energy -= energy_required
-        
-        logger.info(f"Created wormhole {wormhole_id}: {entry.to_dict()} -> {exit.to_dict()}")
-        return wormhole
-    
-    def stabilize_wormhole(self, wormhole: Wormhole) -> bool:
-        """稳定虫洞"""
-        if wormhole.stability >= 0.95:
-            return True
-            
-        # 需要能量来稳定
-        stabilization_energy = (1.0 - wormhole.stability) * 1000
-        
-        if self.network.available_energy < stabilization_energy:
-            return False
-            
-        self.network.available_energy -= stabilization_energy
-        wormhole.stability = min(1.0, wormhole.stability + 0.2)
-        
-        if wormhole.stability > 0.8:
-            wormhole.status = WormholeStatus.STABLE
-            
-        return True
-    
-    def collapse_wormhole(self, wormhole: Wormhole) -> bool:
-        """坍缩虫洞"""
-        wormhole.status = WormholeStatus.COLLAPSING
-        
-        # 返还部分能量
-        refund = wormhole.energy_requirement * 0.3 * wormhole.stability
-        self.network.available_energy += refund
-        
-        logger.info(f"Collapsing wormhole {wormhole.wormhole_id}")
-        return True
-
+    endpoint_a: WormholeEndpoint
+    endpoint_b: WormholeEndpoint
+    status: WormholeStatus
+    created: float
+    stability: float
+    bandwidth: float              # 带宽 (TB/s)
+    latency: float                # 延迟 (秒)
+    energy_cost: float            # 能量消耗 (GW)
+    traversal_count: int = 0
+    energy_reserve: float = 1.0   # 能量储备 0-1
+    theoretical_distance: float = 0.0  # 理论上的物理距离（光年）
 
 class WormholeNetwork:
-    """星际虫洞网络"""
+    """虫洞网络主类"""
     
     def __init__(self):
         self.wormholes: Dict[str, Wormhole] = {}
-        self.stellar_map: Dict[str, Coordinates] = {}  # 恒星位置
-        self.transit_queue: List[TransitRequest] = []
-        self.transit_history: List[TransitResult] = []
-        self.available_energy: float = 1e12  # 可用能量（焦耳）
-        self.total_energy_generated: float = 0
-        self.generator = WormholeGenerator(self)
-        self.is_active = False
+        self.endpoints: Dict[str, WormholeEndpoint] = {}
+        self.routing_table: Dict[str, Dict[str, Any]] = {}
         
-    def register_stellar_object(self, object_id: str, coordinates: Coordinates):
-        """注册恒星/天体"""
-        self.stellar_map[object_id] = coordinates
-        logger.info(f"Registered stellar object: {object_id} at ({coordinates.x}, {coordinates.y}, {coordinates.z})")
+        # 网络参数
+        self.max_wormholes = 10000
+        self.stability_threshold = 0.6
+        self.energy_efficiency = 0.85
+        self.quantum_entanglement_range = 1000  # 光年
+        
+        # 能量管理
+        self.energy_pools: Dict[str, float] = defaultdict(lambda: 1e12)  # GW
+        self.energy_transfers: List[Dict] = []
+        
+        # 虫洞生成参数
+        self.exotic_matter_required = {
+            WormholeType.MICRO: 1e-10,      # 克
+            WormholeType.MESO: 1e-6,        # 克
+            WormholeType.MACRO: 1e3,        # 公斤
+            WormholeType.GALACTIC: 1e9      # 吨
+        }
     
-    def find_wormhole(self, source: Coordinates, destination: Coordinates) -> Optional[Wormhole]:
-        """查找可用虫洞"""
-        best_wormhole = None
-        best_score = float('inf')
+    async def create_wormhole(
+        self, 
+        coord_a: Tuple[float, float, float], 
+        coord_b: Tuple[float, float, float],
+        wormhole_type: WormholeType = WormholeType.MESO,
+        system_a: str = "Unknown",
+        system_b: str = "Unknown"
+    ) -> str:
+        """创建虫洞"""
+        if len(self.wormholes) >= self.max_wormholes:
+            raise Exception("Maximum wormholes reached")
         
-        for wormhole in self.wormholes.values():
-            if wormhole.status not in [WormholeStatus.STABLE, WormholeStatus.ACTIVE]:
-                continue
-                
-            # 检查是否匹配
-            entry_dist = wormhole.entry_point.distance_to(source)
-            exit_dist = wormhole.exit_point.distance_to(destination)
-            
-            if entry_dist > 10 or exit_dist > 10:  # 距离太远
-                continue
-                
-            # 评分（距离 + 稳定性）
-            score = entry_dist + exit_dist - wormhole.stability * 10
-            
-            if score < best_score:
-                best_score = score
-                best_wormhole = wormhole
-                
-        return best_wormhole
-    
-    def find_route(self, source: Coordinates, destination: Coordinates) -> List[Wormhole]:
-        """查找路由（多虫洞跳转）"""
-        # 广度优先搜索
-        if self.find_wormhole(source, destination):
-            return [self.find_wormhole(source, destination)]
-            
-        # 简化：尝试两跳路由
-        for wh1 in self.wormholes.values():
-            if wh1.status not in [WormholeStatus.STABLE, WormholeStatus.ACTIVE]:
-                continue
-                
-            # 检查第一跳
-            if wh1.entry_point.distance_to(source) > 10:
-                continue
-                
-            # 检查第二跳
-            wh2 = self.find_wormhole(wh1.exit_point, destination)
-            if wh2:
-                return [wh1, wh2]
-                
-        return []
-    
-    def transit(self, request: TransitRequest) -> TransitResult:
-        """通过虫洞传输"""
-        start_time = time.time()
+        wormhole_id = f"WH-{uuid.uuid4().hex[:12]}"
         
-        # 查找虫洞
-        wormhole = self.find_wormhole(request.source, request.destination)
+        # 计算实际距离
+        actual_distance = self._calculate_distance(coord_a, coord_b)
         
-        if not wormhole:
-            # 尝试查找路由
-            route = self.find_route(request.source, request.destination)
-            if route:
-                # 多跳传输
-                return self._multi_hop_transit(request, route)
-            else:
-                return TransitResult(
-                    request_id=request.request_id,
-                    success=False,
-                    transit_time=0,
-                    wormhole_used="",
-                    energy_consumed=0,
-                    error="No available wormhole"
-                )
+        # 创建端点
+        endpoint_a = WormholeEndpoint(
+            endpoint_id=f"EP-{uuid.uuid4().hex[:8]}",
+            coordinates=coord_a,
+            system_name=system_a,
+            stability=0.9,
+            capacity=self._get_capacity(wormhole_type),
+            energy_requirement=self._get_energy_requirement(wormhole_type, actual_distance),
+            last_maintenance=time.time()
+        )
         
-        # 检查稳定性
-        if wormhole.stability < 0.3:
-            return TransitResult(
-                request_id=request.request_id,
-                success=False,
-                transit_time=0,
-                wormhole_used=wormhole.wormhole_id,
-                energy_consumed=0,
-                error="Wormhole unstable"
-            )
+        endpoint_b = WormholeEndpoint(
+            endpoint_id=f"EP-{uuid.uuid4().hex[:8]}",
+            coordinates=coord_b,
+            system_name=system_b,
+            stability=0.9,
+            capacity=self._get_capacity(wormhole_type),
+            energy_requirement=self._get_energy_requirement(wormhole_type, actual_distance),
+            last_maintenance=time.time()
+        )
         
-        # 计算传输时间（基于距离和虫洞类型）
-        distance = wormhole.entry_point.distance_to(wormhole.exit_point)
-        
-        if wormhole.wormhole_type == WormholeType.QUANTUM:
-            transit_time = 0.001  # 量子隧穿几乎瞬时
-        elif wormhole.wormhole_type == WormholeType.MORRIS_THORNE:
-            transit_time = distance * 0.01  # 可穿越虫洞
+        # 计算虫洞属性
+        if wormhole_type == WormholeType.GALACTIC:
+            # 银河级虫洞：几乎瞬时
+            latency = 0.001  # 毫秒级
+            stability = 0.95
+        elif actual_distance > 10000:
+            # 远距离：显著缩短
+            latency = max(0.1, actual_distance / 299792.0 * 0.0001)  # 光年的万分之一
+            stability = 0.8
         else:
-            transit_time = distance * 0.1
-            
-        # 能量消耗
-        energy_per_transit = wormhole.energy_requirement * 0.001 * request.payload_size
+            latency = actual_distance / 299792.0  # 光速时间
+            stability = 0.85
         
-        if self.available_energy < energy_per_transit:
-            return TransitResult(
-                request_id=request.request_id,
-                success=False,
-                transit_time=0,
-                wormhole_used=wormhole.wormhole_id,
-                energy_consumed=0,
-                error="Insufficient energy"
-            )
+        wormhole = Wormhole(
+            wormhole_id=wormhole_id,
+            wormhole_type=wormhole_type,
+            endpoint_a=endpoint_a,
+            endpoint_b=endpoint_b,
+            status=WormholeStatus.ACTIVE,
+            created=time.time(),
+            stability=stability,
+            bandwidth=self._calculate_bandwidth(wormhole_type, stability),
+            latency=latency,
+            energy_cost=self._calculate_energy_cost(wormhole_type, actual_distance),
+            theoretical_distance=actual_distance
+        )
+        
+        self.wormholes[wormhole_id] = wormhole
+        self.endpoints[endpoint_a.endpoint_id] = endpoint_a
+        self.endpoints[endpoint_b.endpoint_id] = endpoint_b
+        
+        # 更新路由表
+        await self._update_routing_table(wormhole_id)
+        
+        return wormhole_id
+    
+    def _calculate_distance(self, coord_a: Tuple, coord_b: Tuple) -> float:
+        """计算两点之间的欧氏距离（光年）"""
+        return math.sqrt(
+            (coord_b[0] - coord_a[0])**2 + 
+            (coord_b[1] - coord_a[1])**2 + 
+            (coord_b[2] - coord_a[2])**2
+        )
+    
+    def _get_capacity(self, wormhole_type: WormholeType) -> float:
+        """获取虫洞容量"""
+        capacities = {
+            WormholeType.MICRO: 1e12,       # 1 TB/s
+            WormholeType.MESO: 1e15,        # 1 PB/s
+            WormholeType.MACRO: 1e9,        # 1 百万吨
+            WormholeType.GALACTIC: 1e18     # 1 EB/s 或 10亿吨
+        }
+        return capacities[wormhole_type]
+    
+    def _get_energy_requirement(self, wormhole_type: WormholeType, distance: float) -> float:
+        """计算能量需求"""
+        base_energy = {
+            WormholeType.MICRO: 1e6,        # 1 GW
+            WormholeType.MESO: 1e9,         # 1 TW
+            WormholeType.MACRO: 1e12,       # 1 PW
+            WormholeType.GALACTIC: 1e15     # 1 EW
+        }
+        
+        # 能量需求与距离成正比
+        return base_energy[wormhole_type] * (1 + distance / 100000)
+    
+    def _calculate_bandwidth(self, wormhole_type: WormholeType, stability: float) -> float:
+        """计算带宽"""
+        base_bandwidth = {
+            WormholeType.MICRO: 1e12,       # TB/s
+            WormholeType.MESO: 1e15,        # PB/s
+            WormholeType.MACRO: 1e6,        # 吨/秒
+            WormholeType.GALACTIC: 1e18     # EB/s
+        }
+        return base_bandwidth[wormhole_type] * stability
+    
+    def _calculate_energy_cost(self, wormhole_type: WormholeType, distance: float) -> float:
+        """计算能量消耗"""
+        base_cost = {
+            WormholeType.MICRO: 1e6,        # GW
+            WormholeType.MESO: 1e9,         # TW
+            WormholeType.MACRO: 1e12,       # PW
+            WormholeType.GALACTIC: 1e15     # EW
+        }
+        
+        # 能量消耗与距离成对数关系
+        return base_cost[wormhole_type] * math.log2(1 + distance / 1000)
+    
+    async def _update_routing_table(self, wormhole_id: str):
+        """更新路由表"""
+        wormhole = self.wormholes[wormhole_id]
+        
+        # 获取所有可达端点
+        all_endpoints = list(self.endpoints.keys())
+        
+        for ep_a in all_endpoints:
+            if ep_a not in self.routing_table:
+                self.routing_table[ep_a] = {}
             
+            for ep_b in all_endpoints:
+                if ep_a != ep_b:
+                    path = self._find_shortest_path(ep_a, ep_b)
+                    if path:
+                        self.routing_table[ep_a][ep_b] = path
+    
+    def _find_shortest_path(self, from_endpoint: str, to_endpoint: str) -> Optional[Dict]:
+        """使用Dijkstra算法寻找最短路径"""
+        if from_endpoint == to_endpoint:
+            return {"hops": 0, "total_latency": 0, "route": [from_endpoint]}
+        
+        # 简化的路由计算
+        for wh in self.wormholes.values():
+            if wh.status != WormholeStatus.ACTIVE:
+                continue
+            
+            route_a_to_b = None
+            route_b_to_a = None
+            
+            if wh.endpoint_a.endpoint_id == from_endpoint and wh.endpoint_b.endpoint_id == to_endpoint:
+                route_a_to_b = {"hops": 1, "total_latency": wh.latency, "route": [from_endpoint, to_endpoint], "wormhole": wh.wormhole_id}
+            
+            if wh.endpoint_b.endpoint_id == from_endpoint and wh.endpoint_a.endpoint_id == to_endpoint:
+                route_b_to_a = {"hops": 1, "total_latency": wh.latency, "route": [from_endpoint, to_endpoint], "wormhole": wh.wormhole_id}
+            
+            if route_a_to_b:
+                return route_a_to_b
+            if route_b_to_a:
+                return route_b_to_a
+        
+        return None
+    
+    async def transmit_data(
+        self, 
+        wormhole_id: str, 
+        data_size: float,  # TB
+        priority: int = 1
+    ) -> Dict[str, Any]:
+        """通过虫洞传输数据"""
+        if wormhole_id not in self.wormholes:
+            raise Exception("Wormhole not found")
+        
+        wormhole = self.wormholes[wormhole_id]
+        
+        if wormhole.status != WormholeStatus.ACTIVE:
+            return {"success": False, "reason": "Wormhole not active"}
+        
+        # 检查带宽
+        transmission_time = data_size / wormhole.bandwidth
+        
+        if transmission_time > 3600:  # 超过1小时
+            return {"success": False, "reason": "Data too large"}
+        
+        # 检查能量
+        required_energy = wormhole.energy_cost * (transmission_time / 3600)
+        
+        if wormhole.energy_reserve < required_energy / 1e12:  # 转换单位
+            # 尝试从能量池获取
+            await self._recharge_wormhole(wormhole_id)
+        
         # 执行传输
-        self.available_energy -= energy_per_transit
-        wormhole.transit_count += 1
-        wormhole.last_transit = time.time()
+        await asyncio.sleep(min(transmission_time, 0.1))  # 模拟
         
-        # 更新虫洞状态（使用会导致熵增）
-        wormhole.entropy += 0.001
-        wormhole.stability = max(0.1, wormhole.stability - 0.0001)
+        wormhole.traversal_count += 1
+        wormhole.energy_reserve -= required_energy / 1e12
         
-        if wormhole.stability < 0.3:
-            wormhole.status = WormholeStatus.UNSTABLE
-            
-        if wormhole.transit_count >= wormhole.max_transits:
-            wormhole.status = WormholeStatus.COLLAPSING
-            
-        result = TransitResult(
-            request_id=request.request_id,
-            success=True,
-            transit_time=transit_time,
-            wormhole_used=wormhole.wormhole_id,
-            energy_consumed=energy_per_transit
-        )
-        
-        self.transit_history.append(result)
-        logger.info(f"Transit completed: {request.request_id} via {wormhole.wormhole_id} in {transit_time}s")
-        
-        return result
+        return {
+            "success": True,
+            "transmission_time": transmission_time,
+            "wormhole_id": wormhole_id,
+            "from": wormhole.endpoint_a.system_name,
+            "to": wormhole.endpoint_b.system_name
+        }
     
-    def _multi_hop_transit(self, request: TransitRequest, route: List[Wormhole]) -> TransitResult:
-        """多跳传输"""
-        total_time = 0
-        total_energy = 0
-        wormholes_used = []
+    async def transmit_matter(
+        self,
+        wormhole_id: str,
+        mass: float,  # 吨
+        priority: int = 1
+    ) -> Dict[str, Any]:
+        """通过虫洞传输物质"""
+        if wormhole_id not in self.wormholes:
+            raise Exception("Wormhole not found")
         
-        current_pos = request.source
+        wormhole = self.wormholes[wormhole_id]
         
-        for wormhole in route:
-            # 检查虫洞可用
-            if wormhole.stability < 0.3:
-                return TransitResult(
-                    request_id=request.request_id,
-                    success=False,
-                    transit_time=total_time,
-                    wormhole_used=",".join(wormholes_used),
-                    energy_consumed=total_energy,
-                    error=f"Wormhole {wormhole.wormhole_id} unstable"
-                )
-                
-            # 传输
-            distance = wormhole.entry_point.distance_to(wormhole.exit_point)
-            transit_time = distance * 0.01
-            energy = wormhole.energy_requirement * 0.001 * request.payload_size / len(route)
-            
-            total_time += transit_time
-            total_energy += energy
-            wormholes_used.append(wormhole.wormhole_id)
-            
-            # 更新虫洞
-            wormhole.transit_count += 1
-            wormhole.stability -= 0.0001
-            
-            current_pos = wormhole.exit_point
-            
-        return TransitResult(
-            request_id=request.request_id,
-            success=True,
-            transit_time=total_time,
-            wormhole_used=",".join(wormholes_used),
-            energy_consumed=total_energy
-        )
+        if wormhole.wormhole_type not in [WormholeType.MACRO, WormholeType.GALACTIC]:
+            return {"success": False, "reason": "Wormhole type cannot transport matter"}
+        
+        # 检查容量
+        if mass > wormhole.bandwidth:  # 这里的bandwidth用于物质传输
+            return {"success": False, "reason": "Mass exceeds capacity"}
+        
+        # 计算传输时间（物质需要更长时间）
+        base_time = wormhole.latency
+        mass_penalty = mass / 1000  # 每吨增加延迟
+        transmission_time = base_time + mass_penalty
+        
+        # 执行传输
+        await asyncio.sleep(min(transmission_time, 0.1))
+        
+        wormhole.traversal_count += 1
+        
+        return {
+            "success": True,
+            "transmission_time": transmission_time,
+            "wormhole_id": wormhole_id,
+            "mass_transferred": mass,
+            "from": wormhole.endpoint_a.system_name,
+            "to": wormhole.endpoint_b.system_name
+        }
     
-    def create_optimal_network(self, num_connection: int = 50) -> bool:
-        """创建最优虫洞网络"""
-        if len(self.stellar_map) < 2:
-            logger.error("Need at least 2 stellar objects")
+    async def _recharge_wormhole(self, wormhole_id: str):
+        """为虫洞充能"""
+        wormhole = self.wormholes[wormhole_id]
+        
+        # 从最近恒星获取能量
+        energy_transfer = wormhole.energy_cost * 0.5
+        wormhole.energy_reserve = min(1.0, wormhole.energy_reserve + 0.3)
+        
+        self.energy_transfers.append({
+            "wormhole_id": wormhole_id,
+            "energy": energy_transfer,
+            "timestamp": time.time()
+        })
+    
+    async def stabilize_wormhole(self, wormhole_id: str) -> bool:
+        """稳定虫洞"""
+        if wormhole_id not in self.wormholes:
             return False
-            
-        logger.info(f"Creating optimal wormhole network with {num_connection} connections...")
         
-        objects = list(self.stellar_map.items())
-        created = 0
+        wormhole = self.wormholes[wormhole_id]
         
-        # 创建基于距离的虫洞
-        for i, (obj1, coord1) in enumerate(objects):
-            for j, (obj2, coord2) in enumerate(objects[i+1:], i+1):
-                distance = coord1.distance_to(coord2)
-                
-                # 只连接较近的恒星
-                if distance > 100:  # 100光年内
-                    continue
-                    
-                # 选择虫洞类型
-                if distance < 10:
-                    wormhole_type = WormholeType.QUANTUM
-                elif distance < 50:
-                    wormhole_type = WormholeType.MORRIS_THORNE
-                else:
-                    wormhole_type = WormholeType.EUCLIDEAN
-                    
-                wormhole = self.generator.create_wormhole(
-                    coord1, coord2,
-                    diameter=random.uniform(5, 50),
-                    wormhole_type=wormhole_type
-                )
-                
-                if wormhole:
-                    self.wormholes[wormhole.wormhole_id] = wormhole
-                    created += 1
-                    
-                if created >= num_connection:
-                    break
-                    
-            if created >= num_connection:
-                break
-                
-        logger.info(f"Created {created} wormholes")
+        # 增加稳定性
+        wormhole.stability = min(1.0, wormhole.stability + 0.1)
+        wormhole.status = WormholeStatus.STABLE
+        
+        # 更新端点稳定性
+        wormhole.endpoint_a.stability = wormhole.stability
+        wormhole.endpoint_b.stability = wormhole.stability
+        
         return True
     
-    def generate_energy(self, amount: float):
-        """生成能量"""
-        self.available_energy += amount
-        self.total_energy_generated += amount
+    async def collapse_wormhole(self, wormhole_id: str) -> bool:
+        """坍塌虫洞"""
+        if wormhole_id not in self.wormholes:
+            return False
         
-    def get_network_status(self) -> Dict:
-        """获取网络状态"""
-        status_counts = defaultdict(int)
-        type_counts = defaultdict(int)
+        wormhole = self.wormholes[wormhole_id]
         
-        for wormhole in self.wormholes.values():
-            status_counts[wormhole.status.value] += 1
-            type_counts[wormhole.wormhole_type.value] += 1
-            
+        # 逐渐坍塌
+        for _ in range(5):
+            wormhole.stability -= 0.2
+            wormhole.status = WormholeStatus.COLLAPSING
+            await asyncio.sleep(0.1)
+        
+        # 移除虫洞
+        del self.wormholes[wormhole_id]
+        del self.endpoints[wormhole.endpoint_a.endpoint_id]
+        del self.endpoints[wormhole.endpoint_b.endpoint_id]
+        
+        return True
+    
+    async def analyze_stability(self) -> Dict[str, Any]:
+        """分析网络稳定性"""
+        if not self.wormholes:
+            return {"status": "no_wormholes"}
+        
+        total_stability = 0.0
+        stable_count = 0
+        unstable_count = 0
+        
+        for wh in self.wormholes.values():
+            total_stability += wh.stability
+            if wh.stability >= self.stability_threshold:
+                stable_count += 1
+            else:
+                unstable_count += 1
+        
+        avg_stability = total_stability / len(self.wormholes)
+        
         return {
-            'total_wormholes': len(self.wormholes),
-            'stellar_objects': len(self.stellar_map),
-            'total_transits': sum(wh.transit_count for wh in self.wormholes.values()),
-            'available_energy': self.available_energy,
-            'total_energy_generated': self.total_energy_generated,
-            'status_distribution': dict(status_counts),
-            'type_distribution': dict(type_counts),
-            'average_stability': sum(wh.stability for wh in self.wormholes.values()) / len(self.wormholes) if self.wormholes else 0
+            "total_wormholes": len(self.wormholes),
+            "stable_count": stable_count,
+            "unstable_count": unstable_count,
+            "average_stability": avg_stability,
+            "network_health": "healthy" if avg_stability > 0.8 else "degraded",
+            "total_traversals": sum(wh.traversal_count for wh in self.wormholes.values())
         }
     
-    def optimize_network(self) -> Dict:
-        """优化网络"""
-        optimizations = []
+    def get_wormhole_info(self, wormhole_id: str) -> Optional[Dict]:
+        """获取虫洞信息"""
+        if wormhole_id not in self.wormholes:
+            return None
         
-        # 1. 修复不稳定虫洞
-        unstable = [wh for wh in self.wormholes.values() 
-                   if wh.status == WormholeStatus.UNSTABLE]
+        wh = self.wormholes[wormhole_id]
         
-        for wh in unstable:
-            if self.generator.stabilize_wormhole(wh):
-                optimizations.append(f"Stabilized {wh.wormhole_id}")
-                
-        # 2. 关闭不必要的虫洞
-        for wh in list(self.wormholes.values()):
-            if wh.last_transit < time.time() - 86400 * 30:  # 30天无使用
-                if len(self.wormholes) > 10:
-                    self.generator.collapse_wormhole(wh)
-                    del self.wormholes[wh.wormhole_id]
-                    optimizations.append(f"Collapsed unused {wh.wormhole_id}")
-                    
-        # 3. 补充能量
-        if self.available_energy < 1e10:
-            self.generate_energy(1e11)
-            optimizations.append("Energy replenished")
-            
         return {
-            'optimizations': optimizations,
-            'active_wormholes': len(self.wormholes),
-            'available_energy': self.available_energy
+            "wormhole_id": wh.wormhole_id,
+            "type": wh.wormhole_type.name,
+            "status": wh.status.name,
+            "endpoint_a": {
+                "system": wh.endpoint_a.system_name,
+                "coordinates": wh.endpoint_a.coordinates,
+                "stability": wh.endpoint_a.stability
+            },
+            "endpoint_b": {
+                "system": wh.endpoint_b.system_name,
+                "coordinates": wh.endpoint_b.coordinates,
+                "stability": wh.endpoint_b.stability
+            },
+            "theoretical_distance": f"{wh.theoretical_distance:.1f} light-years",
+            "actual_latency": f"{wh.latency:.6f} seconds",
+            "bandwidth": f"{wh.bandwidth:.2e}",
+            "traversals": wh.traversal_count,
+            "energy_reserve": f"{wh.energy_reserve:.1%}"
         }
+    
+    def find_route(self, from_system: str, to_system: str) -> Optional[Dict]:
+        """查找路由"""
+        from_ep = None
+        to_ep = None
+        
+        for ep in self.endpoints.values():
+            if ep.system_name == from_system:
+                from_ep = ep.endpoint_id
+            if ep.system_name == to_system:
+                to_ep = ep.endpoint_id
+        
+        if not from_ep or not to_ep:
+            return None
+        
+        return self._find_shortest_path(from_ep, to_ep)
+    
+    async def expand_network(self, target_systems: List[Tuple[str, Tuple[float, float, float]]]):
+        """扩展网络到新系统"""
+        new_wormholes = []
+        
+        # 找到最近的可连接点
+        for system_name, coords in target_systems:
+            # 寻找最近的现有端点
+            nearest = None
+            min_distance = float('inf')
+            
+            for ep in self.endpoints.values():
+                dist = self._calculate_distance(coords, ep.coordinates)
+                if dist < min_distance:
+                    min_distance = dist
+                    nearest = ep
+            
+            if nearest:
+                # 确定虫洞类型
+                if min_distance > 50000:
+                    wh_type = WormholeType.GALACTIC
+                elif min_distance > 10000:
+                    wh_type = WormholeType.MACRO
+                elif min_distance > 1000:
+                    wh_type = WormholeType.MESO
+                else:
+                    wh_type = WormholeType.MICRO
+                
+                # 创建虫洞
+                try:
+                    wh_id = await self.create_wormhole(
+                        nearest.coordinates,
+                        coords,
+                        wh_type,
+                        nearest.system_name,
+                        system_name
+                    )
+                    new_wormholes.append(wh_id)
+                except Exception as e:
+                    print(f"Failed to create wormhole to {system_name}: {e}")
+        
+        return new_wormholes
+    
+    def get_network_topology(self) -> Dict[str, Any]:
+        """获取网络拓扑"""
+        connections = []
+        
+        for wh in self.wormholes.values():
+            connections.append({
+                "from": wh.endpoint_a.system_name,
+                "to": wh.endpoint_b.system_name,
+                "type": wh.wormhole_type.name,
+                "distance": wh.theoretical_distance,
+                "latency": wh.latency,
+                "stability": wh.stability
+            })
+        
+        return {
+            "total_wormholes": len(self.wormholes),
+            "total_endpoints": len(self.endpoints),
+            "connections": connections,
+            "type_distribution": self._get_type_distribution()
+        }
+    
+    def _get_type_distribution(self) -> Dict[str, int]:
+        """获取虫洞类型分布"""
+        dist = defaultdict(int)
+        for wh in self.wormholes.values():
+            dist[wh.wormhole_type.name] += 1
+        return dict(dist)
 
 
-class QuantumTunnelingProtocol:
-    """量子隧穿协议"""
+class WormholeEnergyManager:
+    """虫洞能量管理器"""
     
     def __init__(self, network: WormholeNetwork):
         self.network = network
-        self.entanglement_pairs: Dict[str, Tuple[str, str]] = {}
+        self.energy_sources = {}
+    
+    async def add_energy_source(
+        self, 
+        source_type: EnergyType, 
+        location: Tuple[float, float, float],
+        power_output: float  # GW
+    ):
+        """添加能量源"""
+        source_id = f"ES-{uuid.uuid4().hex[:8]}"
         
-    def establish_entanglement(self, point1: Coordinates, point2: Coordinates) -> Optional[str]:
-        """建立量子纠缠"""
-        pair_id = hashlib.md5(f"{point1.x}{point1.y}{point2.x}{point2.y}{time.time()}".encode()).hexdigest()[:16]
+        self.energy_sources[source_id] = {
+            "type": source_type,
+            "location": location,
+            "power_output": power_output,
+            "efficiency": 0.9,
+            "last_update": time.time()
+        }
         
-        self.entanglement_pairs[pair_id] = (
-            f"{point1.x},{point1.y},{point1.z}",
-            f"{point2.x},{point2.y},{point2.z}"
-        )
+        return source_id
+    
+    async def distribute_energy(self):
+        """分配能量"""
+        total_power = sum(s["power_output"] * s["efficiency"] 
+                        for s in self.energy_sources.values())
         
-        logger.info(f"Quantum entanglement established: {pair_id}")
+        # 按需分配
+        needed = sum(wh.energy_cost for wh in self.network.wormholes.values() 
+                    if wh.status == WormholeStatus.ACTIVE)
+        
+        if total_power > needed:
+            for wh in self.network.wormholes.values():
+                if wh.status == WormholeStatus.ACTIVE and wh.energy_reserve < 0.5:
+                    # 充能
+                    wh.energy_reserve = min(1.0, wh.energy_reserve + 0.3)
+    
+    def calculate_energy_efficiency(self) -> float:
+        """计算能量效率"""
+        if not self.energy_sources:
+            return 0.0
+        
+        total_output = sum(s["power_output"] * s["efficiency"] 
+                         for s in self.energy_sources.values())
+        total_cost = sum(wh.energy_cost for wh in self.network.wormholes.values())
+        
+        if total_cost == 0:
+            return 1.0
+        
+        return min(1.0, total_output / total_cost)
+
+
+class QuantumEntanglementLink:
+    """量子纠缠链接 - 用于虫洞间的即时通信"""
+    
+    def __init__(self):
+        self.entangled_pairs: Dict[str, str] = {}
+        self.entanglement_states: Dict[str, Dict] = {}
+    
+    def create_entanglement(self, endpoint_a: str, endpoint_b: str) -> str:
+        """创建量子纠缠"""
+        pair_id = f"QE-{uuid.uuid4().hex[:12]}"
+        
+        self.entangled_pairs[endpoint_a] = endpoint_b
+        self.entangled_pairs[endpoint_b] = endpoint_a
+        
+        self.entanglement_states[pair_id] = {
+            "a": endpoint_a,
+            "b": endpoint_b,
+            "created": time.time(),
+            "coherence": 1.0,
+            "measurements": 0
+        }
+        
         return pair_id
     
-    def quantum_transmit(self, pair_id: str, data: Any) -> bool:
-        """量子传输（超距作用）"""
-        if pair_id not in self.entanglement_pairs:
+    def measure(self, pair_id: str, endpoint: str) -> Any:
+        """测量量子态"""
+        if pair_id not in self.entanglement_states:
+            return None
+        
+        state = self.entanglement_states[pair_id]
+        
+        # 模拟量子测量
+        result = random.choice([0, 1])
+        state["measurements"] += 1
+        
+        # 每次测量都会降低相干性
+        state["coherence"] *= 0.99
+        
+        # 检查是否需要重新纠缠
+        if state["coherence"] < 0.5:
+            return {"result": result, "need_refresh": True}
+        
+        return {"result": result, "need_refresh": False}
+    
+    def teleport_state(self, pair_id: str, state: Any) -> bool:
+        """量子态隐形传态"""
+        if pair_id not in self.entanglement_states:
             return False
-            
-        # 量子传输瞬时完成
+        
+        entanglement = self.entanglement_states[pair_id]
+        
+        if entanglement["coherence"] < 0.3:
+            return False
+        
+        # 模拟量子态传态
         return True
+
+
+# 全局实例
+_wormhole_network = None
+
+def get_wormhole_network() -> WormholeNetwork:
+    """获取虫洞网络实例"""
+    global _wormhole_network
+    if _wormhole_network is None:
+        _wormhole_network = WormholeNetwork()
+    return _wormhole_network
+
+
+async def create_galactic_network():
+    """创建银河级虫洞网络"""
+    network = get_wormhole_network()
     
-    def measure_entanglement_fidelity(self) -> float:
-        """测量纠缠保真度"""
-        # 简化：返回随机值
-        return random.uniform(0.9, 0.99)
-
-
-class DimensionalBridge:
-    """维度桥梁"""
+    # 主要恒星系统坐标（简化的银道坐标系）
+    systems = [
+        ("Sol", (0, 0, 0)),
+        ("Sirius", (8.6, 0, 0)),
+        ("Alpha Centauri", (4.37, 0, 0)),
+        ("Vega", (25, 0, 0)),
+        ("Betelgeuse", (700, 0, 0)),
+        ("Galactic Core", (27000, 0, 0)),
+        ("Kepler-442", (112, 0, 0)),
+        ("Trappist-1", (39, 0, 0)),
+        ("Proxima Centauri", (4.24, 0, 0)),
+        ("Wolf 359", (7.78, 0, 0)),
+    ]
     
-    def __init__(self, network: WormholeNetwork):
-        self.network = network
-        self.dimensional_anchors: Dict[int, List[Coordinates]] = defaultdict(list)
+    # 创建主要连接
+    for i in range(len(systems) - 1):
+        coord_a = systems[i][1]
+        coord_b = systems[i + 1][1]
         
-    def create_dimensional_anchor(self, dimension: int, coordinates: Coordinates) -> str:
-        """创建维度锚点"""
-        anchor_id = hashlib.md5(f"dim{dimension}{coordinates.x}{time.time()}".encode()).hexdigest()[:16]
+        # 远距离使用银河级虫洞
+        dist = network._calculate_distance(coord_a, coord_b)
+        wh_type = WormholeType.GALACTIC if dist > 100 else WormholeType.MESO
         
-        self.dimensional_anchors[dimension].append(coordinates)
-        
-        logger.info(f"Dimensional anchor created: dimension {dimension} at {coordinates.to_dict()}")
-        return anchor_id
+        try:
+            await network.create_wormhole(
+                coord_a, coord_b, wh_type,
+                systems[i][0], systems[i + 1][0]
+            )
+        except Exception as e:
+            print(f"Failed: {e}")
     
-    def create_bridge(self, dim1: int, coord1: Coordinates, dim2: int, coord2: Coordinates) -> Optional[Wormhole]:
-        """创建维度桥梁"""
-        if dim1 not in self.dimensional_anchors or dim2 not in self.dimensional_anchors:
-            # 创建锚点
-            self.create_dimensional_anchor(dim1, coord1)
-            self.create_dimensional_anchor(dim2, coord2)
-            
-        # 创建跨维度虫洞
-        coord1_d = Coordinates(coord1.x, coord1.y, coord1.z, dim1)
-        coord2_d = Coordinates(coord2.x, coord2.y, coord2.z, dim2)
-        
-        return self.network.generator.create_wormhole(
-            coord1_d, coord2_d,
-            diameter=5.0,
-            wormhole_type=WormholeType.DIMENSIONAL
-        )
+    return network
 
 
-def main():
+async def main():
     """主函数 - 演示虫洞网络"""
-    print("=" * 60)
-    print("🌟 星际虫洞网络 (Interstellar Wormhole Network)")
-    print("=" * 60)
+    print("🌌 星际虫洞网络初始化...")
     
-    # 创建网络
-    wn = WormholeNetwork()
+    network = await create_galactic_network()
+    print(f"✓ 已创建 {len(network.wormholes)} 个虫洞")
     
-    # 注册恒星系统
-    print("\n📍 注册恒星系统...")
-    stellar_objects = [
-        ("sol", Coordinates(0, 0, 0)),
-        ("alpha_centauri", Coordinates(4.37, 0, 0)),
-        ("barnard", Coordinates(6.0, 1.5, 0)),
-        ("wolf", Coordinates(7.8, -0.5, 0)),
-        ("lalande", Coordinates(8.3, 2.0, 0)),
-        ("sirius", Coordinates(8.6, -3.6, 0)),
-        ("epsilon", Coordinates(10.9, 1.3, 0)),
-        ("procyon", Coordinates(11.4, 1.4, 0)),
-        ("tau_ceti", Coordinates(11.9, 1.9, 0)),
-    ]
+    # 网络分析
+    analysis = await network.analyze_stability()
+    print(f"✓ 网络健康度: {analysis['network_health']}")
+    print(f"✓ 稳定虫洞: {analysis['stable_count']}")
+    print(f"✓ 总穿越次数: {analysis['total_traversals']}")
     
-    for obj_id, coords in stellar_objects:
-        wn.register_stellar_object(obj_id, coords)
+    # 传输测试
+    if network.wormholes:
+        wh_id = list(network.wormholes.keys())[0]
         
-    print(f"  已注册 {len(stellar_objects)} 个恒星系统")
+        # 数据传输
+        result = await network.transmit_data(wh_id, 1.0)
+        print(f"✓ 数据传输: {result}")
+        
+        # 物质传输
+        if network.wormholes[wh_id].wormhole_type in [WormholeType.MACRO, WormholeType.GALACTIC]:
+            result = await network.transmit_matter(wh_id, 1.0)
+            print(f"✓ 物质传输: {result}")
     
-    # 创建虫洞网络
-    print("\n🌀 创建虫洞网络...")
-    wn.create_optimal_network(20)
+    # 获取拓扑
+    topology = network.get_network_topology()
+    print(f"\n🕸️ 网络拓扑:")
+    print(f"  虫洞数: {topology['total_wormholes']}")
+    print(f"  端点数: {topology['total_endpoints']}")
+    print(f"  类型分布: {topology['type_distribution']}")
     
-    # 显示网络状态
-    print("\n📊 初始网络状态:")
-    status = wn.get_network_status()
-    for key, value in status.items():
-        if isinstance(value, dict):
-            print(f"  {key}:")
-            for k, v in value.items():
-                print(f"    {k}: {v}")
-        else:
-            print(f"  {key}: {value}")
+    # 路由测试
+    route = network.find_route("Sol", "Alpha Centauri")
+    if route:
+        print(f"\n🛤️ Sol -> Alpha Centauri 路由:")
+        print(f"  跳数: {route['hops']}")
+        print(f"  延迟: {route['total_latency']:.6f}s")
     
-    # 演示传输
-    print("\n🚀 演示量子传输...")
+    # 能量管理
+    energy_mgr = WormholeEnergyManager(network)
     
-    # 创建传输请求
-    requests = [
-        TransitRequest(
-            request_id="req001",
-            source=Coordinates(0, 0, 0),
-            destination=Coordinates(4.37, 0, 0),
-            payload_size=1000,
-            priority=TransitPriority.HIGH
-        ),
-        TransitRequest(
-            request_id="req002",
-            source=Coordinates(0, 0, 0),
-            destination=Coordinates(11.4, 1.4, 0),
-            payload_size=5000,
-            priority=TransitPriority.NORMAL
-        ),
-    ]
+    # 添加恒星能量源
+    await energy_mgr.add_energy_source(EnergyType.STELLAR, (0, 0, 0), 3.846e14)  # 太阳
+    print(f"\n⚡ 能量效率: {energy_mgr.calculate_energy_efficiency():.2%}")
     
-    for req in requests:
-        result = wn.transit(req)
-        if result.success:
-            print(f"  ✅ {req.request_id}: 成功 - {result.transit_time:.4f}秒 - 消耗 {result.energy_consumed:.2f} 能量")
-        else:
-            print(f"  ❌ {req.request_id}: 失败 - {result.error}")
+    # 显示虫洞信息
+    if network.wormholes:
+        wh_id = list(network.wormholes.keys())[0]
+        info = network.get_wormhole_info(wh_id)
+        print(f"\n🔮 虫洞详情 ({wh_id}):")
+        print(f"  类型: {info['type']}")
+        print(f"  状态: {info['status']}")
+        print(f"  距离: {info['theoretical_distance']}")
+        print(f"  延迟: {info['actual_latency']}")
     
-    # 量子隧穿演示
-    print("\n⚛️ 量子隧穿演示...")
-    qtp = QuantumTunnelingProtocol(wn)
-    pair_id = qtp.establish_entanglement(
-        Coordinates(0, 0, 0),
-        Coordinates(100, 100, 0)
-    )
-    print(f"  纠缠对建立: {pair_id}")
-    print(f"  纠缠保真度: {qtp.measure_entanglement_fidelity():.4f}")
-    
-    # 维度桥梁演示
-    print("\n🌌 维度桥梁演示...")
-    db = DimensionalBridge(wn)
-    bridge = db.create_bridge(
-        0, Coordinates(0, 0, 0),
-        1, Coordinates(0, 0, 0)
-    )
-    if bridge:
-        print(f"  维度桥梁创建: {bridge.wormhole_id}")
-    
-    # 优化网络
-    print("\n🔧 优化虫洞网络...")
-    opt_result = wn.optimize_network()
-    for opt in opt_result['optimizations']:
-        print(f"  - {opt}")
-    
-    # 最终状态
-    print("\n📊 最终网络状态:")
-    final_status = wn.get_network_status()
-    for key, value in final_status.items():
-        if isinstance(value, dict):
-            print(f"  {key}:")
-            for k, v in value.items():
-                print(f"    {k}: {v}")
-        else:
-            print(f"  {key}: {value}")
-    
-    print("\n" + "=" * 60)
-    print("🌟 星际虫洞网络演示完成")
-    print("=" * 60)
-    
-    return wn
+    return network
 
 
 if __name__ == "__main__":
-    wn = main()
+    asyncio.run(main())
