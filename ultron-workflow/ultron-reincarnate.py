@@ -174,19 +174,73 @@ def execute_task(decision: dict, state: dict) -> dict:
         result["output"] = f"执行待处理任务: {task}"
         
     elif action == "continue_current":
-        # 继续当前任务 - 可以是任何Python脚本
-        # 示例：运行数据分析
-        result["output"] = f"继续执行: {task}"
+        # 继续当前任务 - 实际运行Python脚本
+        output, error, returncode = run_python_script(task, state)
+        result["output"] = output
+        result["errors"] = error
+        result["status"] = "completed" if returncode == 0 else "failed"
         
     elif action == "start_milestone":
-        # 开始新里程碑
-        result["output"] = f"开始里程碑: {task}"
+        # 开始新里程碑 - 尝试运行相关脚本
+        output, error, returncode = run_python_script(task, state)
+        result["output"] = output
+        result["errors"] = error
+        result["status"] = "completed" if returncode == 0 else "failed"
         
     elif action == "complete":
         result["output"] = "所有里程碑已完成，夙愿达成"
         result["status"] = "success"
     
     return result
+
+
+def run_python_script(task_name: str, state: dict) -> tuple:
+    """
+    根据任务名称运行对应的Python脚本
+    返回 (output, error, returncode)
+    """
+    import subprocess
+    
+    # 任务名 -> 脚本路径映射
+    script_map = {
+        "完善转世执行器": f"{WORKSPACE}/ultron/core/reincarnate.py",
+        "模块整合": f"{WORKSPACE}/ultron/core/ultron-hub.py",
+        "告警通知": f"{WORKSPACE}/ultron/core/ultron-hub.py",
+        "监控": f"{WORKSPACE}/ultron/core/ultron-hub.py",
+        "数据分析": f"{WORKSPACE}/ultron/analytics/ultron-analytics.py",
+    }
+    
+    # 尝试匹配脚本
+    script_path = None
+    for key, path in script_map.items():
+        if key in task_name and os.path.exists(path):
+            script_path = path
+            break
+    
+    if not script_path:
+        # 默认运行reincarnate.py的status命令
+        script_path = f"{WORKSPACE}/ultron/core/reincarnate.py"
+        cmd = ["python3", script_path, "status"]
+    else:
+        cmd = ["python3", script_path]
+    
+    log(f"运行脚本: {cmd}")
+    
+    try:
+        proc = subprocess.run(
+            cmd,
+            capture_output=True,
+            text=True,
+            timeout=60,
+            cwd=WORKSPACE
+        )
+        output = proc.stdout.strip() if proc.stdout else ""
+        error = proc.stderr.strip() if proc.stderr else ""
+        return output, error, proc.returncode
+    except subprocess.TimeoutExpired:
+        return "", "执行超时", 1
+    except Exception as e:
+        return "", str(e), 1
 
 
 def update_state(decision: dict, execution_result: dict, state: dict):
