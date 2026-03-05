@@ -13,8 +13,38 @@ import threading
 import psutil
 import requests
 import uuid
+import time
+from functools import lru_cache
 
 app = Flask(__name__)
+
+# 简单内存缓存
+class SimpleCache:
+    def __init__(self):
+        self._cache = {}
+        self._timestamps = {}
+        self._lock = threading.Lock()
+    
+    def get(self, key):
+        with self._lock:
+            if key in self._cache:
+                if time.time() - self._timestamps[key] < 60:  # 60秒TTL
+                    return self._cache[key]
+                del self._cache[key]
+                del self._timestamps[key]
+        return None
+    
+    def set(self, key, value):
+        with self._lock:
+            self._cache[key] = value
+            self._timestamps[key] = time.time()
+    
+    def clear(self):
+        with self._lock:
+            self._cache.clear()
+            self._timestamps.clear()
+
+cache = SimpleCache()
 
 @app.after_request
 def add_cors_headers(response):
@@ -430,7 +460,13 @@ def get_action(action_id):
 
 @app.route("/api/stats", methods=["GET"])
 def get_stats():
-    """获取决策统计"""
+    """获取决策统计 (带缓存)"""
+    # 尝试从缓存获取
+    cached = cache.get("stats")
+    if cached:
+        cached["cached"] = True
+        return jsonify(cached)
+    
     conn = sqlite3.connect(DB_PATH)
     c = conn.cursor()
     
@@ -448,12 +484,18 @@ def get_stats():
     
     conn.close()
     
-    return jsonify({
+    result = {
         "total_decisions": total_decisions,
         "total_assessments": total_assessments,
         "total_actions": total_actions,
         "average_risk_level": round(avg_risk, 2)
-    })
+    }
+    
+    # 存入缓存
+    cache.set("stats", result)
+    
+    result["cached"] = False
+    return jsonify(result)
 
 # ==================== 反馈学习增强 ====================
 from collections import defaultdict
