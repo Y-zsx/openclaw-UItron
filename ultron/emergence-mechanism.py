@@ -1,844 +1,868 @@
 #!/usr/bin/env python3
 """
- emergence-mechanism.py - 涌现机制
- 夙愿二十六第2世：涌现智能
- 功能：复杂系统中的涌现现象、层级涌现、自组织临界性
+涌现机制 (Emergence Mechanism)
+奥创智能体生态系统 - 第2世：涌现智能
 """
 
 import asyncio
 import random
 import math
 import json
-from dataclasses import dataclass, field
-from typing import List, Dict, Optional, Set, Tuple, Callable
-from enum import Enum
-from collections import defaultdict, deque
 import time
+from typing import List, Dict, Any, Optional, Callable, Set, Tuple
+from dataclasses import dataclass, field
+from collections import defaultdict
+from enum import Enum
 import heapq
 
 
 class EmergenceType(Enum):
     """涌现类型"""
-    SPATIAL = "spatial"           # 空间涌现
-    TEMPORAL = "temporal"         # 时间涌现
-    BEHAVIORAL = "behavioral"     # 行为涌现
-    COGNITIVE = "cognitive"       # 认知涌现
-    SOCIAL = "social"             # 社会涌现
-    COLLECTIVE = "collective"     # 集体涌现
-    EMERGENT_MEMORY = "emergent_memory"  # 记忆涌现
-    ADAPTIVE = "adaptive"         # 适应性涌现
+    SPATIAL = "spatial"              # 空间涌现
+    TEMPORAL = "temporal"            # 时间涌现
+    BEHAVIORAL = "behavioral"        # 行为涌现
+    COGNITIVE = "cognitive"          # 认知涌现
+    SOCIAL = "social"                # 社会涌现
+    COLLECTIVE = "collective"        # 集体涌现
+    EMOTIONAL = "emotional"          # 情感涌现
+    CREATIVE = "creative"            # 创造性涌现
+
+
+class PatternType(Enum):
+    """模式类型"""
+    CLUSTER = "cluster"              # 聚类
+    CHAIN = "chain"                  # 链式
+    NETWORK = "network"              # 网络
+    WAVE = "wave"                    # 波
+    SPIRAL = "spiral"                # 螺旋
+    GRID = "grid"                    # 网格
+    HIERARCHY = "hierarchy"          # 层级
+    CYCLE = "cycle"                  # 循环
 
 
 @dataclass
-class SystemState:
-    """系统状态"""
-    timestamp: float
-    entities: Dict[str, 'Entity']
-    interactions: List['Interaction']
-    properties: Dict[str, float] = field(default_factory=dict)
-
-
-@dataclass
-class Entity:
-    """实体"""
-    id: str
-    state: Dict = field(default_factory=dict)
-    properties: Dict[str, float] = field(default_factory=dict)
-    neighbors: Set[str] = field(default_factory=set)
-    history: List[Dict] = field(default_factory=list)
-    
-    def add_property(self, key: str, value: float) -> None:
-        self.properties[key] = value
-    
-    def get_property(self, key: str, default: float = 0.0) -> float:
-        return self.properties.get(key, default)
-
-
-@dataclass
-class Interaction:
-    """交互"""
-    entity_a: str
-    entity_b: str
-    type: str
+class EmergentProperty:
+    """涌现属性"""
+    name: str
+    emergence_type: EmergenceType
     strength: float
-    timestamp: float
+    stability: float
+    components: List[str]
+    metadata: Dict[str, Any] = field(default_factory=dict)
+    timestamp: float = field(default_factory=time.time)
+
+
+@dataclass
+class Pattern:
+    """模式"""
+    pattern_type: PatternType
+    confidence: float
+    nodes: List[str]
+    edges: List[Tuple[str, str]]
+    center: Optional[Tuple[float, float]] = None
+    radius: Optional[float] = None
+    metadata: Dict[str, Any] = field(default_factory=dict)
+
+
+@dataclass
+class AgentFeature:
+    """智能体特征"""
+    agent_id: str
+    position: Tuple[float, float]
+    velocity: Tuple[float, float]
+    acceleration: Tuple[float, float]
+    energy: float
+    state: str
+    neighbors: List[str]
+    attributes: Dict[str, Any] = field(default_factory=dict)
 
 
 class EmergenceDetector:
     """涌现检测器"""
     
     def __init__(self):
-        self.baseline_properties: Dict[str, float] = {}
-        self.emergence_threshold = 0.3
-        self.learning_rate = 0.1
-    
-    def calculate_entropy(self, values: List[float]) -> float:
-        if not values:
-            return 0.0
-        
-        # 离散化
-        bins = 10
-        min_val, max_val = min(values), max(values)
-        if min_val == max_val:
-            return 0.0
-        
-        hist = [0] * bins
-        for v in values:
-            bin_idx = min(bins - 1, int((v - min_val) / (max_val - min_val) * bins))
-            hist[bin_idx] += 1
-        
-        # 计算香农熵
-        entropy = 0.0
-        total = len(values)
-        for count in hist:
-            if count > 0:
-                p = count / total
-                entropy -= p * math.log2(p)
-        
-        return entropy
-    
-    def calculate_complexity(self, system: SystemState) -> float:
-        if not system.entities:
-            return 0.0
-        
-        # 基于实体间差异计算复杂度
-        states = [list(e.state.values()) for e in system.entities.values()]
-        if not states:
-            return 0.0
-        
-        flat_states = [v for s in states for v in s if isinstance(v, (int, float))]
-        
-        if len(flat_states) < 2:
-            return 0.0
-        
-        entropy = self.calculate_entropy(flat_states)
-        
-        # 系统大小
-        n = len(system.entities)
-        
-        # 复杂度 = 熵 * log(系统大小)
-        complexity = entropy * math.log2(n + 1)
-        
-        return complexity
-    
-    def detect_emergence(self, before: SystemState, after: SystemState) -> Dict[str, float]:
-        """检测涌现现象"""
-        before_complexity = self.calculate_complexity(before)
-        after_complexity = self.calculate_complexity(after)
-        
-        emergence_strength = max(0, after_complexity - before_complexity)
-        
-        # 检测不同类型的涌现
-        emergence_types = {}
-        
-        # 空间涌现：检查位置模式
-        spatial_score = self._detect_spatial_emergence(before, after)
-        emergence_types[EmergenceType.SPATIAL.value] = spatial_score
-        
-        # 行为涌现：检查行为模式变化
-        behavioral_score = self._detect_behavioral_emergence(before, after)
-        emergence_types[EmergenceType.BEHAVIORAL.value] = behavioral_score
-        
-        # 社交涌现：检查交互模式
-        social_score = self._detect_social_emergence(before, after)
-        emergence_types[EmergenceType.SOCIAL.value] = social_score
-        
-        # 适应性涌现：检查系统适应性
-        adaptive_score = self._detect_adaptive_emergence(before, after)
-        emergence_types[EmergenceType.ADAPTIVE.value] = adaptive_score
-        
-        return {
-            "strength": emergence_strength,
-            "complexity_change": after_complexity - before_complexity,
-            "types": emergence_types,
-            "is_emergent": emergence_strength > self.emergence_threshold,
+        self.patterns: List[Pattern] = []
+        self.emergent_properties: List[EmergentProperty] = []
+        self.detection_history: List[Dict[str, Any]] = []
+        self.threshold_config = {
+            "spatial_distance": 30.0,
+            "temporal_window": 10,
+            "behavior_similarity": 0.7,
+            "pattern_confidence": 0.6,
+            "stability_window": 5
         }
+        self.clustering_cache: Dict[str, List[Set[str]]] = {}
+        self.correlation_matrix: Dict[Tuple[str, str], float] = {}
     
-    def _detect_spatial_emergence(self, before: SystemState, after: SystemState) -> float:
-        """空间涌现检测"""
-        if not before.entities or not after.entities:
-            return 0.0
+    def detect_spatial_patterns(self, agents: List[AgentFeature]) -> List[Pattern]:
+        """检测空间模式"""
+        patterns = []
         
-        # 计算位置熵的变化
-        before_x = [e.state.get("x", 0) for e in before.entities.values()]
-        after_x = [e.state.get("x", 0) for e in after.entities.values()]
+        clusters = self._detect_clusters(agents)
+        for cluster in clusters:
+            if len(cluster) >= 3:
+                center = self._calculate_center(agents, cluster)
+                patterns.append(Pattern(
+                    pattern_type=PatternType.CLUSTER,
+                    confidence=min(1.0, len(cluster) / 10),
+                    nodes=list(cluster),
+                    edges=self._create_cluster_edges(cluster),
+                    center=center,
+                    radius=self._calculate_radius(agents, cluster, center)
+                ))
         
-        before_entropy = self.calculate_entropy(before_x)
-        after_entropy = self.calculate_entropy(after_x)
+        chains = self._detect_chains(agents)
+        for chain in chains:
+            if len(chain) >= 4:
+                patterns.append(Pattern(
+                    pattern_type=PatternType.CHAIN,
+                    confidence=min(1.0, len(chain) / 8),
+                    nodes=chain,
+                    edges=self._create_chain_edges(chain)
+                ))
         
-        return max(0, after_entropy - before_entropy)
+        waves = self._detect_waves(agents)
+        for wave in waves:
+            patterns.append(Pattern(
+                pattern_type=PatternType.WAVE,
+                confidence=0.7,
+                nodes=wave["nodes"],
+                edges=wave["edges"],
+                metadata={"direction": wave.get("direction")}
+            ))
+        
+        spirals = self._detect_spirals(agents)
+        for spiral in spirals:
+            patterns.append(Pattern(
+                pattern_type=PatternType.SPIRAL,
+                confidence=0.75,
+                nodes=spiral["nodes"],
+                edges=spiral["edges"],
+                center=spiral.get("center"),
+                radius=spiral.get("radius")
+            ))
+        
+        self.patterns = patterns
+        return patterns
     
-    def _detect_behavioral_emergence(self, before: SystemState, after: SystemState) -> float:
-        """行为涌现检测"""
-        before_behaviors = set()
-        for e in before.entities.values():
-            if "behavior" in e.state:
-                before_behaviors.add(e.state["behavior"])
+    def _detect_clusters(self, agents: List[AgentFeature]) -> List[Set[str]]:
+        """检测聚类"""
+        clusters = []
+        visited: Set[str] = set()
         
-        after_behaviors = set()
-        for e in after.entities.values():
-            if "behavior" in e.state:
-                after_behaviors.add(e.state["behavior"])
-        
-        new_behaviors = after_behaviors - before_behaviors
-        
-        return min(1.0, len(new_behaviors) / 3)
-    
-    def _detect_social_emergence(self, before: SystemState, after: SystemState) -> float:
-        """社交涌现检测"""
-        before_connections = sum(len(e.neighbors) for e in before.entities.values())
-        after_connections = sum(len(e.neighbors) for e in after.entities.values())
-        
-        if before_connections == 0:
-            return 0.0
-        
-        connection_change = (after_connections - before_connections) / before_connections
-        
-        return max(0, connection_change)
-    
-    def _detect_adaptive_emergence(self, before: SystemState, after: SystemState) -> float:
-        """适应性涌现检测"""
-        # 检查系统响应环境变化的能力
-        before_props = list(before.properties.values())
-        after_props = list(after.properties.values())
-        
-        if not before_props or not after_props:
-            return 0.0
-        
-        # 适应性 = 系统调整能力的度量
-        adaptation = sum(abs(a - b) for a, b in zip(before_props, after_props)) / len(before_props)
-        
-        return min(1.0, adaptation)
-
-
-class SelfOrganizedCriticality:
-    """自组织临界性"""
-    
-    def __init__(self, threshold: float = 0.8):
-        self.threshold = threshold
-        self.sandpile_state: Dict[Tuple[int, int], int] = {}
-        self.avalanche_history: List[Dict] = []
-        self.grid_size = 50
-    
-    def add_grain(self, x: int, y: int) -> None:
-        key = (x % self.grid_size, y % self.grid_size)
-        self.sandpile_state[key] = self.sandpile_state.get(key, 0) + 1
-    
-    def topple(self) -> List[Tuple[int, int]]:
-        """雪崩过程"""
-        unstable = []
-        
-        for (x, y), height in self.sandpile_state.items():
-            if height >= 4:
-                unstable.append((x, y))
-        
-        if not unstable:
-            return []
-        
-        avalanche_sites = []
-        
-        for x, y in unstable:
-            current_height = self.sandpile_state.get((x, y), 0)
-            if current_height >= 4:
-                self.sandpile_state[(x, y)] -= 4
-                avalanche_sites.append((x, y))
+        for agent in agents:
+            if agent.agent_id in visited:
+                continue
+            
+            cluster = set()
+            queue = [agent.agent_id]
+            
+            while queue:
+                current_id = queue.pop(0)
+                if current_id in visited:
+                    continue
                 
-                # 分配到邻居
-                neighbors = [(x+1, y), (x-1, y), (x, y+1), (x, y-1)]
-                for nx, ny in neighbors:
-                    nkey = (nx % self.grid_size, ny % self.grid_size)
-                    self.sandpile_state[nkey] = self.sandpile_state.get(nkey, 0) + 1
+                visited.add(current_id)
+                cluster.add(current_id)
+                
+                current = next((a for a in agents if a.agent_id == current_id), None)
+                if not current:
+                    continue
+                
+                for neighbor_id in current.neighbors:
+                    if neighbor_id not in visited:
+                        neighbor = next((a for a in agents if a.agent_id == neighbor_id), None)
+                        if neighbor and self._distance(current.position, neighbor.position) < self.threshold_config["spatial_distance"]:
+                            queue.append(neighbor_id)
+            
+            if len(cluster) >= 2:
+                clusters.append(cluster)
         
-        if avalanche_sites:
-            self.avalanche_history.append({
-                "size": len(avalanche_sites),
-                "timestamp": time.time(),
+        return clusters
+    
+    def _detect_chains(self, agents: List[AgentFeature]) -> List[List[str]]:
+        """检测链式结构"""
+        chains = []
+        
+        adjacency = defaultdict(list)
+        for agent in agents:
+            adjacency[agent.agent_id] = agent.neighbors[:]
+        
+        for agent in agents:
+            if len(adjacency[agent.agent_id]) == 1:
+                chain = [agent.agent_id]
+                current = agent.agent_id
+                visited = {agent.agent_id}
+                
+                while len(adjacency[current]) == 1:
+                    next_agent_id = adjacency[current][0]
+                    if next_agent_id in visited:
+                        break
+                    chain.append(next_agent_id)
+                    visited.add(next_agent_id)
+                    current = next_agent_id
+                
+                if len(chain) >= 4:
+                    chains.append(chain)
+        
+        return chains
+    
+    def _detect_waves(self, agents: List[AgentFeature]) -> List[Dict[str, Any]]:
+        """检测波动模式"""
+        waves = []
+        
+        if len(agents) < 5:
+            return waves
+        
+        sorted_by_x = sorted(agents, key=lambda a: a.position[0])
+        
+        wave_nodes = []
+        for i in range(len(sorted_by_x) - 1):
+            current = sorted_by_x[i]
+            next_agent = sorted_by_x[i + 1]
+            
+            dist = self._distance(current.position, next_agent.position)
+            if dist < 50:
+                wave_nodes.append(current.agent_id)
+        
+        if len(wave_nodes) >= 5:
+            edges = [(wave_nodes[i], wave_nodes[i+1]) for i in range(len(wave_nodes)-1)]
+            waves.append({
+                "nodes": wave_nodes,
+                "edges": edges,
+                "direction": "horizontal"
             })
         
-        return avalanche_sites
+        return waves
     
-    def run_to_stability(self) -> int:
-        steps = 0
-        max_steps = 1000
+    def _detect_spirals(self, agents: List[AgentFeature]) -> List[Dict[str, Any]]:
+        """检测螺旋模式"""
+        spirals = []
         
-        while steps < max_steps:
-            avalanche = self.topple()
-            if not avalanche:
-                break
-            steps += 1
+        if len(agents) < 6:
+            return spirals
         
-        return steps
+        positions = [(a.agent_id, a.position) for a in agents]
+        
+        for i, (id1, pos1) in enumerate(positions):
+            for j, (id2, pos2) in enumerate(positions):
+                if i >= j:
+                    continue
+                
+                center = ((pos1[0] + pos2[0]) / 2, (pos1[1] + pos2[1]) / 2)
+                
+                angles = []
+                for aid, pos in positions:
+                    angle = math.atan2(pos[1] - center[1], pos[0] - center[0])
+                    angles.append((aid, angle))
+                
+                angles.sort(key=lambda x: x[1])
+                
+                spiral_detected = True
+                prev_angle = angles[0][1]
+                for k in range(1, len(angles)):
+                    diff = angles[k][1] - prev_angle
+                    if abs(diff) > math.pi / 2:
+                        spiral_detected = False
+                        break
+                    prev_angle = angles[k][1]
+                
+                if spiral_detected:
+                    node_list = [a[0] for a in angles]
+                    edge_list = [(node_list[m], node_list[m+1]) for m in range(len(node_list)-1)]
+                    radius = sum(self._distance(p[1], center) for p in positions) / len(positions)
+                    
+                    spirals.append({
+                        "nodes": node_list,
+                        "edges": edge_list,
+                        "center": center,
+                        "radius": radius
+                    })
+                    break
+        
+        return spirals
     
-    def get_power_law_exponent(self) -> float:
-        """计算幂律指数"""
-        if len(self.avalanche_history) < 10:
-            return 0.0
+    def _calculate_center(self, agents: List[AgentFeature], cluster: Set[str]) -> Tuple[float, float]:
+        """计算聚类中心"""
+        cluster_agents = [a for a in agents if a.agent_id in cluster]
+        if not cluster_agents:
+            return (0, 0)
         
-        sizes = [a["size"] for a in self.avalanche_history]
-        max_size = max(sizes)
-        
-        if max_size == 0:
-            return 0.0
-        
-        # 简化计算：基于大小分布
-        buckets = defaultdict(int)
-        for s in sizes:
-            bucket = int(math.log2(s + 1))
-            buckets[bucket] += 1
-        
-        # 线性回归计算斜率
-        log_sizes = []
-        log_counts = []
-        
-        for bucket, count in sorted(buckets.items()):
-            if count > 0:
-                log_sizes.append(bucket)
-                log_counts.append(math.log2(count))
-        
-        if len(log_sizes) < 2:
-            return 0.0
-        
-        n = len(log_sizes)
-        sum_x = sum(log_sizes)
-        sum_y = sum(log_counts)
-        sum_xy = sum(x * y for x, y in zip(log_sizes, log_counts))
-        sum_x2 = sum(x ** 2 for x in log_sizes)
-        
-        slope = (n * sum_xy - sum_x * sum_y) / (n * sum_x2 - sum_x ** 2)
-        
-        return abs(slope)
-
-
-class PhaseTransition:
-    """相变检测"""
+        sum_x = sum(a.position[0] for a in cluster_agents)
+        sum_y = sum(a.position[1] for a in cluster_agents)
+        return (sum_x / len(cluster_agents), sum_y / len(cluster_agents))
     
-    def __init__(self):
-        self.order_parameter_history: List[float] = []
-        self.critical_threshold = 0.7
+    def _calculate_radius(self, agents: List[AgentFeature], cluster: Set[str], 
+                          center: Tuple[float, float]) -> float:
+        """计算聚类半径"""
+        cluster_agents = [a for a in agents if a.agent_id in cluster]
+        if not cluster_agents:
+            return 0
+        
+        distances = [self._distance(a.position, center) for a in cluster_agents]
+        return sum(distances) / len(distances)
     
-    def calculate_order_parameter(self, system: SystemState) -> float:
-        """计算序参量"""
-        if not system.entities:
-            return 0.0
-        
-        # 使用平均场近似
-        properties = []
-        for e in system.entities.values():
-            for v in e.properties.values():
-                properties.append(v)
-        
-        if not properties:
-            return 0.0
-        
-        mean = sum(properties) / len(properties)
-        variance = sum((p - mean) ** 2 for p in properties) / len(properties)
-        
-        # 序参量 = 1 - (归一化方差)
-        normalized_variance = math.sqrt(variance) / (abs(mean) + 1)
-        
-        return 1.0 - min(1.0, normalized_variance)
+    def _distance(self, pos1: Tuple[float, float], pos2: Tuple[float, float]) -> float:
+        """计算距离"""
+        return math.sqrt((pos1[0] - pos2[0])**2 + (pos1[1] - pos2[1])**2)
     
-    def detect_phase_transition(self, system: SystemState) -> Dict:
-        """检测相变"""
-        order_param = self.calculate_order_parameter(system)
-        self.order_parameter_history.append(order_param)
-        
-        if len(self.order_parameter_history) < 10:
-            return {"transition": False, "order_parameter": order_param}
-        
-        # 计算序参量变化率
-        recent = self.order_parameter_history[-10:]
-        changes = [abs(recent[i] - recent[i-1]) for i in range(1, len(recent))]
-        
-        avg_change = sum(changes) / len(changes)
-        
-        is_transition = avg_change > (1 - self.critical_threshold) * 0.1
-        
-        return {
-            "transition": is_transition,
-            "order_parameter": order_param,
-            "change_rate": avg_change,
-            "phase": "ordered" if order_param > self.critical_threshold else "disordered",
-        }
-
-
-class NetworkEmergence:
-    """网络涌现"""
+    def _create_cluster_edges(self, cluster: Set[str]) -> List[Tuple[str, str]]:
+        """创建聚类边"""
+        return [(a, b) for i, a in enumerate(cluster) for b in list(cluster)[i+1:i+3]]
     
-    def __init__(self):
-        self.nodes: Set[str] = set()
-        self.edges: Dict[str, Set[str]] = defaultdict(set)
-        self.centrality: Dict[str, float] = {}
-        self.community_detected = False
-        self.communities: Dict[int, Set[str]] = {}
+    def _create_chain_edges(self, chain: List[str]) -> List[Tuple[str, str]]:
+        """创建链式边"""
+        return [(chain[i], chain[i+1]) for i in range(len(chain) - 1)]
     
-    def add_node(self, node_id: str) -> None:
-        self.nodes.add(node_id)
-        if node_id not in self.edges:
-            self.edges[node_id] = set()
+    def detect_temporal_patterns(self, history: List[List[AgentFeature]]) -> List[Pattern]:
+        """检测时间模式"""
+        patterns = []
+        
+        if len(history) < 3:
+            return patterns
+        
+        cycles = self._detect_cycles(history)
+        patterns.extend(cycles)
+        
+        trends = self._detect_trends(history)
+        patterns.extend(trends)
+        
+        oscillations = self._detect_oscillations(history)
+        patterns.extend(oscillations)
+        
+        return patterns
     
-    def add_edge(self, node_a: str, node_b: str) -> None:
-        self.add_node(node_a)
-        self.add_node(node_b)
-        self.edges[node_a].add(node_b)
-        self.edges[node_b].add(node_a)
+    def _detect_cycles(self, history: List[List[AgentFeature]]) -> List[Pattern]:
+        """检测循环模式"""
+        cycles = []
+        
+        metric_values = []
+        for snapshot in history:
+            total_energy = sum(a.energy for a in snapshot)
+            metric_values.append(total_energy)
+        
+        if len(metric_values) >= 10:
+            cycle_length = self._find_cycle_length(metric_values)
+            if cycle_length > 0:
+                cycles.append(Pattern(
+                    pattern_type=PatternType.CYCLE,
+                    confidence=0.7,
+                    nodes=[f"cycle_{i}" for i in range(cycle_length)],
+                    edges=[],
+                    metadata={"length": cycle_length, "metric": "energy"}
+                ))
+        
+        return cycles
     
-    def calculate_centrality(self) -> Dict[str, float]:
-        """计算度中心性"""
-        if not self.nodes:
-            return {}
+    def _detect_trends(self, history: List[List[AgentFeature]]) -> List[Pattern]:
+        """检测趋势"""
+        trends = []
         
-        max_degree = max(len(neighbors) for neighbors in self.edges.values()) or 1
+        if len(history) < 5:
+            return trends
         
-        self.centrality = {
-            node: len(neighbors) / max_degree
-            for node, neighbors in self.edges.items()
-        }
+        velocities = []
+        for snapshot in history:
+            avg_velocity = sum(math.sqrt(v[0]**2 + v[1]**2) for a in snapshot for v in [a.velocity]) / len(snapshot)
+            velocities.append(avg_velocity)
         
-        return self.centrality
+        if velocities[-1] > velocities[0] * 1.5:
+            trends.append(Pattern(
+                pattern_type=PatternType.CHAIN,
+                confidence=0.6,
+                nodes=["trend_up"],
+                edges=[],
+                metadata={"type": "increasing"}
+            ))
+        elif velocities[-1] < velocities[0] * 0.5:
+            trends.append(Pattern(
+                pattern_type=PatternType.CHAIN,
+                confidence=0.6,
+                nodes=["trend_down"],
+                edges=[],
+                metadata={"type": "decreasing"}
+            ))
+        
+        return trends
     
-    def detect_communities(self) -> Dict[int, Set[str]]:
-        """社区检测（简化版Label Propagation）"""
-        if not self.nodes:
-            return {}
+    def _detect_oscillations(self, history: List[List[AgentFeature]]) -> List[Pattern]:
+        """检测振荡"""
+        oscillations = []
         
-        labels = {node: i for i, node in enumerate(self.nodes)}
+        if len(history) < 10:
+            return oscillations
         
-        for _ in range(10):  # 迭代次数
-            nodes_list = list(self.nodes)
-            random.shuffle(nodes_list)
+        positions = []
+        for snapshot in history:
+            if snapshot:
+                avg_x = sum(a.position[0] for a in snapshot) / len(snapshot)
+                avg_y = sum(a.position[1] for a in snapshot) / len(snapshot)
+                positions.append((avg_x, avg_y))
+        
+        if len(positions) >= 10:
+            x_values = [p[0] for p in positions]
+            y_values = [p[1] for p in positions]
             
-            for node in nodes_list:
-                neighbor_labels = [labels[n] for n in self.edges[node] if n in labels]
-                if neighbor_labels:
-                    labels[node] = max(set(neighbor_labels), key=neighbor_labels.count)
+            x_oscillates = self._has_oscillation(x_values)
+            y_oscillates = self._has_oscillation(y_values)
+            
+            if x_oscillates or y_oscillates:
+                oscillations.append(Pattern(
+                    pattern_type=PatternType.WAVE,
+                    confidence=0.65,
+                    nodes=["oscillation"],
+                    edges=[],
+                    metadata={"x_oscillates": x_oscillates, "y_oscillates": y_oscillates}
+                ))
         
-        self.communities = defaultdict(set)
-        for node, label in labels.items():
-            self.communities[label].add(node)
-        
-        self.community_detected = True
-        return dict(self.communities)
+        return oscillations
     
-    def calculate_modularity(self) -> float:
-        """计算模块度"""
-        if not self.community_detected or not self.edges:
+    def _find_cycle_length(self, values: List[float]) -> int:
+        """查找循环长度"""
+        for length in range(2, len(values) // 2):
+            pattern = values[:length]
+            matches = 0
+            for i in range(length, len(values), length):
+                segment = values[i:i+length]
+                if segment == pattern[:len(segment)]:
+                    matches += 1
+                else:
+                    break
+            
+            if matches >= 2:
+                return length
+        return 0
+    
+    def _has_oscillation(self, values: List[float]) -> bool:
+        """检测是否振荡"""
+        if len(values) < 4:
+            return False
+        
+        sign_changes = 0
+        for i in range(1, len(values)):
+            if values[i] > values[i-1] and values[i-1] <= values[i-2]:
+                sign_changes += 1
+            elif values[i] < values[i-1] and values[i-1] >= values[i-2]:
+                sign_changes += 1
+        
+        return sign_changes >= len(values) // 3
+    
+    def detect_behavioral_patterns(self, agents: List[AgentFeature]) -> List[Pattern]:
+        """检测行为模式"""
+        patterns = []
+        
+        state_groups = defaultdict(list)
+        for agent in agents:
+            state_groups[agent.state].append(agent.agent_id)
+        
+        for state, agent_ids in state_groups.items():
+            if len(agent_ids) >= 3:
+                patterns.append(Pattern(
+                    pattern_type=PatternType.CLUSTER,
+                    confidence=0.7,
+                    nodes=agent_ids,
+                    edges=self._create_cluster_edges(set(agent_ids)),
+                    metadata={"state": state}
+                ))
+        
+        return patterns
+    
+    def create_emergent_property(self, name: str, emergence_type: EmergenceType,
+                                  components: List[str], metadata: Dict[str, Any] = None) -> EmergentProperty:
+        """创建涌现属性"""
+        property = EmergentProperty(
+            name=name,
+            emergence_type=emergence_type,
+            strength=0.0,
+            stability=0.0,
+            components=components,
+            metadata=metadata or {}
+        )
+        
+        self.emergent_properties.append(property)
+        return property
+    
+    def analyze_property_strength(self, property: EmergentProperty, 
+                                   agents: List[AgentFeature]) -> float:
+        """分析涌现属性强度"""
+        if not property.components:
             return 0.0
         
-        m = sum(len(neighbors) for neighbors in self.edges.values()) / 2
-        
-        if m == 0:
+        component_agents = [a for a in agents if a.agent_id in property.components]
+        if len(component_agents) < 2:
             return 0.0
         
-        Q = 0.0
+        coordination_score = self._calculate_coordination(component_agents)
+        interaction_score = self._calculate_interaction(component_agents)
+        synchronization_score = self._calculate_synchronization(component_agents)
         
-        for community in self.communities.values():
-            for node_a in community:
-                for node_b in community:
-                    if node_b in self.edges[node_a]:
-                        ki = len(self.edges[node_a])
-                        kj = len(self.edges[node_b])
-                        Q += 1 - (ki * kj) / (2 * m)
+        property.strength = (coordination_score + interaction_score + synchronization_score) / 3
         
-        Q /= (2 * m)
-        
-        return Q
+        return property.strength
     
-    def get_network_properties(self) -> Dict:
-        """获取网络属性"""
-        if not self.nodes:
-            return {}
-        
-        degrees = [len(self.edges[n]) for n in self.nodes]
-        
-        return {
-            "node_count": len(self.nodes),
-            "edge_count": sum(len(neighbors) for neighbors in self.edges.values()) / 2,
-            "avg_degree": sum(degrees) / len(degrees),
-            "max_degree": max(degrees),
-            "clustering_coefficient": self._calculate_clustering(),
-            "communities": len(self.communities),
-        }
-    
-    def _calculate_clustering(self) -> float:
-        """计算聚类系数"""
-        if not self.nodes:
+    def _calculate_coordination(self, agents: List[AgentFeature]) -> float:
+        """计算协调度"""
+        if len(agents) < 2:
             return 0.0
         
-        clustering_sum = 0.0
-        
-        for node in self.nodes:
-            neighbors = list(self.edges[node])
-            k = len(neighbors)
-            
-            if k < 2:
-                continue
-            
-            edges_between = 0
-            for i in range(k):
-                for j in range(i + 1, k):
-                    if neighbors[j] in self.edges[neighbors[i]]:
-                        edges_between += 1
-            
-            max_edges = k * (k - 1) / 2
-            clustering_sum += edges_between / max_edges
-        
-        return clustering_sum / len(self.nodes) if self.nodes else 0.0
-
-
-class HierarchyEmergence:
-    """层级涌现"""
-    
-    def __init__(self):
-        self.layers: Dict[int, Set[str]] = defaultdict(set)
-        self.layer_properties: Dict[int, Dict[str, float]] = {}
-    
-    def add_entity(self, entity_id: str, layer: int) -> None:
-        self.layers[layer].add(entity_id)
-    
-    def compute_layer_properties(self, layer: int, entities: Dict[str, Entity]) -> Dict[str, float]:
-        """计算层属性"""
-        layer_entities = [entities[eid] for eid in self.layers[layer] if eid in entities]
-        
-        if not layer_entities:
-            return {}
-        
-        properties = {}
-        
-        # 聚合属性
-        numeric_props = defaultdict(list)
-        for e in layer_entities:
-            for k, v in e.properties.items():
-                if isinstance(v, (int, float)):
-                    numeric_props[k].append(v)
-        
-        for k, values in numeric_props.items():
-            properties[f"{k}_mean"] = sum(values) / len(values)
-            properties[f"{k}_sum"] = sum(values)
-            properties[f"{k}_std"] = math.sqrt(sum((v - sum(values)/len(values))**2 for v in values) / len(values))
-        
-        return properties
-    
-    def detect_emergent_layer(self, system: SystemState) -> Optional[int]:
-        """检测新涌现的层级"""
-        if len(self.layers) < 2:
-            return None
-        
-        # 比较相邻层的复杂度
-        for layer in range(1, max(self.layers.keys()) + 1):
-            if layer not in self.layers:
-                continue
-            
-            entities_in_layer = [system.entities[eid] for eid in self.layers[layer] if eid in system.entities]
-            
-            if not entities_in_layer:
-                continue
-            
-            # 计算层复杂度
-            complexity = 0.0
-            for e in entities_in_layer:
-                complexity += len(e.state) + len(e.properties)
-            
-            # 如果复杂度显著高于下层，可能有涌现
-            if layer > 1 and layer - 1 in self.layers:
-                prev_entities = [system.entities[eid] for eid in self.layers[layer - 1] if eid in system.entities]
-                if prev_entities:
-                    prev_complexity = sum(len(e.state) + len(e.properties) for e in prev_entities)
-                    if complexity > prev_complexity * 1.5:
-                        return layer
-        
-        return None
-
-
-class FeedbackLoop:
-    """反馈循环"""
-    
-    def __init__(self):
-        self.positive_loops: List[str] = []
-        self.negative_loops: List[str] = []
-        self.loop_strength: Dict[str, float] = {}
-    
-    def add_feedback(self, loop_id: str, is_positive: bool, strength: float = 1.0) -> None:
-        if is_positive:
-            if loop_id not in self.positive_loops:
-                self.positive_loops.append(loop_id)
-        else:
-            if loop_id not in self.negative_loops:
-                self.negative_loops.append(loop_id)
-        
-        self.loop_strength[loop_id] = strength
-    
-    def analyze_stability(self) -> Dict:
-        """分析系统稳定性"""
-        total_positive = sum(self.loop_strength.get(loop, 0) for loop in self.positive_loops)
-        total_negative = sum(self.loop_strength.get(loop, 0) for loop in self.negative_loops)
-        
-        # 如果正反馈大于负反馈，系统可能不稳定（涌现的前兆）
-        stability_score = total_negative / (total_positive + 0.1)
-        
-        return {
-            "positive_feedback_count": len(self.positive_loops),
-            "negative_feedback_count": len(self.negative_loops),
-            "total_positive_strength": total_positive,
-            "total_negative_strength": total_negative,
-            "stability_score": stability_score,
-            "is_stable": stability_score > 1.0,
-            "likely_emergence": total_positive > total_negative * 1.5,
-        }
-
-
-class EmergentMemory:
-    """涌现记忆系统"""
-    
-    def __init__(self, max_size: int = 1000):
-        self.max_size = max_size
-        self.memory: deque = deque(maxlen=max_size)
-        self.patterns: Dict[str, List[Dict]] = defaultdict(list)
-        self.association_weights: Dict[Tuple[str, str], float] = {}
-    
-    def add_experience(self, experience: Dict) -> None:
-        self.memory.append({**experience, "timestamp": time.time()})
-        
-        # 提取特征模式
-        features = self._extract_features(experience)
-        pattern_key = self._hash_features(features)
-        
-        self.patterns[pattern_key].append(experience)
-    
-    def _extract_features(self, experience: Dict) -> Tuple:
-        """提取特征"""
-        features = []
-        for key in sorted(experience.keys()):
-            if key == "timestamp":
-                continue
-            val = experience[key]
-            if isinstance(val, (int, float)):
-                features.append(int(val))
-            elif isinstance(val, str):
-                features.append(val[:10])
-        return tuple(features)
-    
-    def _hash_features(self, features: Tuple) -> str:
-        return str(hash(features))
-    
-    def find_similar(self, experience: Dict, threshold: float = 0.7) -> List[Dict]:
-        """查找相似经历"""
-        features = self._extract_features(experience)
-        pattern_key = self._hash_features(features)
-        
-        similar = self.patterns.get(pattern_key, [])
-        
-        if similar:
-            return similar[:5]
-        
-        # 模糊匹配
-        results = []
-        for exp in self.memory:
-            similarity = self._calculate_similarity(experience, exp)
-            if similarity >= threshold:
-                results.append(exp)
-        
-        return sorted(results, key=lambda x: self._calculate_similarity(experience, x), reverse=True)[:5]
-    
-    def _calculate_similarity(self, a: Dict, b: Dict) -> float:
-        """计算相似度"""
-        common_keys = set(a.keys()) & set(b.keys())
-        if not common_keys:
+        velocities = [math.sqrt(v[0]**2 + v[1]**2) for a in agents for v in [a.velocity]]
+        if not velocities:
             return 0.0
         
-        matches = 0
-        for key in common_keys:
-            if key == "timestamp":
-                continue
-            if a[key] == b[key]:
-                matches += 1
+        avg_velocity = sum(velocities) / len(velocities)
+        velocity_variance = sum((v - avg_velocity)**2 for v in velocities) / len(velocities)
         
-        return matches / len(common_keys)
+        coordination = 1.0 / (1.0 + velocity_variance)
+        return min(1.0, coordination)
     
-    def get_emergent_insights(self) -> List[str]:
-        """从记忆中提取涌现洞察"""
-        insights = []
+    def _calculate_interaction(self, agents: List[AgentFeature]) -> float:
+        """计算交互度"""
+        total_interactions = 0
+        max_interactions = 0
         
-        if len(self.memory) < 10:
-            return insights
+        for agent in agents:
+            total_interactions += len(agent.neighbors)
+            max_interactions += len(agents) - 1
         
-        # 统计频繁模式
+        if max_interactions == 0:
+            return 0.0
+        
+        return min(1.0, total_interactions / max_interactions)
+    
+    def _calculate_synchronization(self, agents: List[AgentFeature]) -> float:
+        """计算同步度"""
+        if len(agents) < 2:
+            return 0.0
+        
+        states = [a.state for a in agents]
+        state_counts = defaultdict(int)
+        for state in states:
+            state_counts[state] += 1
+        
+        most_common_count = max(state_counts.values()) if state_counts else 0
+        synchronization = most_common_count / len(agents)
+        
+        return synchronization
+    
+    def get_pattern_statistics(self) -> Dict[str, Any]:
+        """获取模式统计"""
         pattern_counts = defaultdict(int)
-        for exp in self.memory:
-            pattern_key = self._hash_features(self._extract_features(exp))
-            pattern_counts[pattern_key] += 1
+        for pattern in self.patterns:
+            pattern_counts[pattern.pattern_type.value] += 1
         
-        # 找出频繁模式
-        frequent = sorted(pattern_counts.items(), key=lambda x: x[1], reverse=True)[:5]
+        total_confidence = sum(p.confidence for p in self.patterns)
+        avg_confidence = total_confidence / len(self.patterns) if self.patterns else 0
         
-        for pattern, count in frequent:
-            if count >= 5:
-                insights.append(f"频繁模式出现{count}次")
-        
-        return insights
+        return {
+            "pattern_counts": dict(pattern_counts),
+            "total_patterns": len(self.patterns),
+            "average_confidence": avg_confidence,
+            "emergent_properties": len(self.emergent_properties),
+            "property_strengths": [p.strength for p in self.emergent_properties]
+        }
 
 
 class EmergenceSystem:
-    """涌现系统 - 主入口"""
+    """涌现系统"""
     
     def __init__(self):
-        self.entities: Dict[str, Entity] = {}
-        self.system_state = SystemState(
-            timestamp=time.time(),
-            entities={},
-            interactions=[],
-        )
         self.detector = EmergenceDetector()
-        self.sandpile = SelfOrganizedCriticality()
-        self.phase_transition = PhaseTransition()
-        self.network = NetworkEmergence()
-        self.hierarchy = HierarchyEmergence()
-        self.feedback = FeedbackLoop()
-        self.memory = EmergentMemory()
-        self.state_history: List[SystemState] = []
+        self.agents: Dict[str, AgentFeature] = {}
+        self.evolution_history: List[Dict[str, Any]] = []
+        self.active_emergences: Dict[str, EmergentProperty] = {}
+        self.emergence_rules: List[Callable] = []
+        self.feedback_loops: List[Tuple[str, str, float]] = []
+        
+        self._init_emergence_rules()
     
-    def add_entity(self, entity_id: str, properties: Optional[Dict] = None) -> Entity:
-        entity = Entity(
-            id=entity_id,
-            properties=properties or {},
-        )
-        self.entities[entity_id] = entity
-        return entity
+    def _init_emergence_rules(self):
+        """初始化涌现规则"""
+        self.emergence_rules = [
+            self._rule_cluster_formation,
+            self._rule_synchronization,
+            self._rule_collective_intelligence,
+            self._rule_adaptive_complexity,
+            self._rule_emergent_memory
+        ]
     
-    def add_interaction(self, entity_a: str, entity_b: str, interaction_type: str, strength: float = 1.0) -> None:
-        interaction = Interaction(
-            entity_a=entity_a,
-            entity_b=entity_b,
-            type=interaction_type,
-            strength=strength,
-            timestamp=time.time(),
-        )
-        self.system_state.interactions.append(interaction)
+    def _rule_cluster_formation(self, agents: List[AgentFeature]) -> Optional[EmergentProperty]:
+        """聚类形成规则"""
+        clusters = self.detector._detect_clusters(agents)
         
-        # 更新网络
-        self.network.add_edge(entity_a, entity_b)
-        
-        # 更新实体的邻居
-        if entity_a in self.entities:
-            self.entities[entity_a].neighbors.add(entity_b)
-        if entity_b in self.entities:
-            self.entities[entity_b].neighbors.add(entity_a)
+        large_clusters = [c for c in clusters if len(c) >= 5]
+        if large_clusters:
+            return self.detector.create_emergent_property(
+                "cluster_formation",
+                EmergenceType.SPATIAL,
+                list(large_clusters[0]),
+                {"cluster_size": len(large_clusters[0])}
+            )
+        return None
     
-    def update(self) -> Dict:
-        """更新系统状态"""
-        # 保存之前的状态
-        before_state = SystemState(
-            timestamp=self.system_state.timestamp,
-            entities={k: Entity(id=v.id, state=dict(v.state), properties=dict(v.properties), 
-                              neighbors=set(v.neighbors), history=list(v.history))
-                     for k, v in self.entities.items()},
-            interactions=list(self.system_state.interactions[-100:]),
-        )
+    def _rule_synchronization(self, agents: List[AgentFeature]) -> Optional[EmergentProperty]:
+        """同步规则"""
+        states = [a.state for a in agents]
+        state_counts = defaultdict(int)
+        for state in states:
+            state_counts[state] += 1
         
-        # 更新系统时间
-        self.system_state.timestamp = time.time()
-        self.system_state.entities = self.entities
+        most_common = max(state_counts.values()) if state_counts else 0
+        if most_common >= len(agents) * 0.7:
+            return self.detector.create_emergent_property(
+                "state_synchronization",
+                EmergenceType.TEMPORAL,
+                [a.agent_id for a in agents if a.state == max(state_counts, key=state_counts.get)],
+                {"synchronized_state": max(state_counts, key=state_counts.get)}
+            )
+        return None
+    
+    def _rule_collective_intelligence(self, agents: List[AgentFeature]) -> Optional[EmergentProperty]:
+        """集体智慧规则"""
+        total_energy = sum(a.energy for a in agents)
+        avg_connections = sum(len(a.neighbors) for a in agents) / len(agents) if agents else 0
         
-        # 运行自组织临界性模型
-        if random.random() < 0.1:
-            x, y = random.randint(0, 49), random.randint(0, 49)
-            self.sandpile.add_grain(x, y)
-            self.sandpile.run_to_stability()
+        if total_energy > 500 and avg_connections > 2:
+            return self.detector.create_emergent_property(
+                "collective_intelligence",
+                EmergenceType.COGNITIVE,
+                [a.agent_id for a in agents],
+                {"total_energy": total_energy, "avg_connections": avg_connections}
+            )
+        return None
+    
+    def _rule_adaptive_complexity(self, agents: List[AgentFeature]) -> Optional[EmergentProperty]:
+        """自适应复杂性规则"""
+        unique_states = len(set(a.state for a in agents))
+        total_agents = len(agents)
         
-        # 检测相变
-        phase_info = self.phase_transition.detect_phase_transition(self.system_state)
+        if unique_states >= 3 and total_agents >= 5:
+            return self.detector.create_emergent_property(
+                "adaptive_complexity",
+                EmergenceType.BEHAVIORAL,
+                [a.agent_id for a in agents],
+                {"unique_states": unique_states}
+            )
+        return None
+    
+    def _rule_emergent_memory(self, agents: List[AgentFeature]) -> Optional[EmergentProperty]:
+        """涌现记忆规则"""
+        patterns = self.detector.patterns
         
-        # 计算网络属性
-        if self.network.nodes:
-            self.network.calculate_centrality()
-            self.network.detect_communities()
+        if len(patterns) >= 2:
+            all_nodes = set()
+            for pattern in patterns:
+                all_nodes.update(pattern.nodes)
+            
+            return self.detector.create_emergent_property(
+                "emergent_memory",
+                EmergenceType.COLLECTIVE,
+                list(all_nodes),
+                {"pattern_count": len(patterns)}
+            )
+        return None
+    
+    def add_agent(self, agent: AgentFeature):
+        """添加智能体"""
+        self.agents[agent.agent_id] = agent
+    
+    def remove_agent(self, agent_id: str):
+        """移除智能体"""
+        if agent_id in self.agents:
+            del self.agents[agent_id]
+    
+    def update(self) -> Dict[str, Any]:
+        """更新涌现系统"""
+        agents_list = list(self.agents.values())
         
-        # 检测涌现
-        emergence_info = self.detector.detect_emergence(before_state, self.system_state)
+        spatial_patterns = self.detector.detect_spatial_patterns(agents_list)
         
-        # 分析反馈循环
-        feedback_info = self.feedback.analyze_stability()
+        self.detector.detect_behavioral_patterns(agents_list)
         
-        # 保存状态历史
-        self.state_history.append(self.system_state)
-        if len(self.state_history) > 100:
-            self.state_history = self.state_history[-100:]
+        new_emergences = []
+        for rule in self.emergence_rules:
+            emergence = rule(agents_list)
+            if emergence:
+                self.active_emergences[emergence.name] = emergence
+                self.detector.analyze_property_strength(emergence, agents_list)
+                new_emergences.append(emergence)
+        
+        self.evolution_history.append({
+            "timestamp": time.time(),
+            "pattern_count": len(spatial_patterns),
+            "emergence_count": len(self.active_emergences),
+            "agent_count": len(self.agents)
+        })
+        
+        if len(self.evolution_history) > 1000:
+            self.evolution_history = self.evolution_history[-1000:]
         
         return {
-            "emergence": emergence_info,
-            "phase_transition": phase_info,
-            "network_properties": self.network.get_network_properties(),
-            "feedback": feedback_info,
-            "sandpile_exponent": self.sandpile.get_power_law_exponent(),
-            "entity_count": len(self.entities),
-            "interaction_count": len(self.system_state.interactions),
+            "patterns": len(spatial_patterns),
+            "emergences": len(self.active_emergences),
+            "new_emergences": len(new_emergences),
+            "agents": len(self.agents)
         }
     
-    def learn_from_interaction(self, entity_a: str, entity_b: str, outcome: Dict) -> None:
-        """从交互中学习"""
-        # 记录经验
-        self.memory.add_experience({
-            "entity_a": entity_a,
-            "entity_b": entity_b,
-            "outcome": outcome,
-        })
+    def get_system_state(self) -> Dict[str, Any]:
+        """获取系统状态"""
+        return {
+            "agent_count": len(self.agents),
+            "active_emergences": len(self.active_emergences),
+            "pattern_statistics": self.detector.get_pattern_statistics(),
+            "evolution_trend": self._analyze_evolution_trend()
+        }
+    
+    def _analyze_emergence_trend(self) -> str:
+        """分析涌现趋势"""
+        if len(self.evolution_history) < 5:
+            return "insufficient_data"
         
-        # 更新实体属性
-        if entity_a in self.entities:
-            for k, v in outcome.items():
-                if isinstance(v, (int, float)):
-                    self.entities[entity_a].add_property(k, v)
+        recent = self.evolution_history[-5:]
+        emergence_counts = [h["emergence_count"] for h in recent]
         
-        # 更新网络权重
-        key = (min(entity_a, entity_b), max(entity_a, entity_b))
-        self.network.association_weights[key] = self.network.association_weights.get(key, 0) + 0.1
+        if all(emergence_counts[i] <= emergence_counts[i+1] for i in range(len(emergence_counts)-1)):
+            return "increasing"
+        elif all(emergence_counts[i] >= emergence_counts[i+1] for i in range(len(emergence_counts)-1)):
+            return "decreasing"
+        else:
+            return "stable"
+    
+    def analyze_evolution_trend(self) -> str:
+        """分析进化趋势"""
+        return self._analyze_emergence_trend()
+    
+    def get_emergent_properties(self) -> List[Dict[str, Any]]:
+        """获取涌现属性"""
+        return [
+            {
+                "name": p.name,
+                "type": p.emergence_type.value,
+                "strength": p.strength,
+                "stability": p.stability,
+                "components": p.components,
+                "metadata": p.metadata
+            }
+            for p in self.active_emergences.values()
+        ]
 
 
-def main():
-    print("=== 涌现机制测试 ===")
+class EmergenceNetwork:
+    """涌现网络"""
     
-    system = EmergenceSystem()
+    def __init__(self):
+        self.nodes: Dict[str, Dict[str, Any]] = {}
+        self.edges: Dict[Tuple[str, str], float] = {}
+        self.emergence_layers: List[Dict[str, EmergentProperty]] = []
     
-    # 创建100个实体
-    for i in range(100):
-        system.add_entity(f"entity_{i}", {
-            "energy": random.uniform(0, 100),
-            "coherence": random.uniform(0, 1),
-            "activity": random.uniform(0, 1),
-        })
+    def add_node(self, node_id: str, node_type: str, attributes: Dict[str, Any]):
+        """添加节点"""
+        self.nodes[node_id] = {
+            "type": node_type,
+            "attributes": attributes,
+            "connections": 0,
+            "strength": 0.0
+        }
     
-    print(f"创建了 {len(system.entities)} 个实体")
+    def add_edge(self, node1_id: str, node2_id: str, weight: float = 1.0):
+        """添加边"""
+        if node1_id in self.nodes and node2_id in self.nodes:
+            self.edges[(node1_id, node2_id)] = weight
+            self.nodes[node1_id]["connections"] += 1
+            self.nodes[node2_id]["connections"] += 1
     
-    # 创建随机交互
-    for _ in range(500):
-        a = random.choice(list(system.entities.keys()))
-        b = random.choice(list(system.entities.keys()))
-        if a != b:
-            system.add_interaction(a, b, "interaction", random.uniform(0.5, 1.0))
-    
-    print(f"创建了 {len(system.system_state.interactions)} 个交互")
-    
-    # 模拟系统演化
-    for step in range(20):
-        result = system.update()
+    def calculate_centrality(self, node_id: str) -> float:
+        """计算中心性"""
+        if node_id not in self.nodes:
+            return 0.0
         
-        if step % 5 == 0:
-            print(f"\n步骤 {step}:")
-            print(f"  实体数: {result['entity_count']}")
-            print(f"  涌现强度: {result['emergence']['strength']:.3f}")
-            print(f"  相变状态: {result['phase_transition']['phase']}")
-            print(f"  网络节点: {result['network_properties'].get('node_count', 0)}")
-            print(f"  稳定性: {result['feedback']['is_stable']}")
+        connections = sum(1 for e in self.edges if node_id in e)
+        total_nodes = len(self.nodes) - 1
+        
+        return connections / total_nodes if total_nodes > 0 else 0.0
     
-    # 测试涌现洞察
-    print("\n=== 涌现洞察 ===")
-    system.learn_from_interaction("entity_0", "entity_1", {"learning": 0.8, "adaptation": 0.6})
-    system.learn_from_interaction("entity_0", "entity_2", {"learning": 0.7, "adaptation": 0.5})
+    def find_hubs(self, top_k: int = 5) -> List[Tuple[str, float]]:
+        """查找中心节点"""
+        centralities = [(node_id, self.calculate_centrality(node_id)) 
+                       for node_id in self.nodes]
+        return sorted(centralities, key=lambda x: x[1], reverse=True)[:top_k]
     
-    insights = system.memory.get_emergent_insights()
-    for insight in insights:
-        print(f"  - {insight}")
+    def detect_communities(self) -> List[Set[str]]:
+        """检测社区"""
+        visited = set()
+        communities = []
+        
+        for node_id in self.nodes:
+            if node_id in visited:
+                continue
+            
+            community = set()
+            queue = [node_id]
+            
+            while queue:
+                current = queue.pop(0)
+                if current in visited:
+                    continue
+                
+                visited.add(current)
+                community.add(current)
+                
+                for (n1, n2), weight in self.edges.items():
+                    neighbor = n2 if n1 == current else n1 if n2 == current else None
+                    if neighbor and neighbor not in visited and weight > 0.5:
+                        queue.append(neighbor)
+            
+            if community:
+                communities.append(community)
+        
+        return communities
+    
+    def get_network_metrics(self) -> Dict[str, Any]:
+        """获取网络指标"""
+        if not self.nodes:
+            return {}
+        
+        total_connections = len(self.edges)
+        avg_connections = sum(n["connections"] for n in self.nodes.values()) / len(self.nodes)
+        
+        return {
+            "node_count": len(self.nodes),
+            "edge_count": total_connections,
+            "average_connections": avg_connections,
+            "density": total_connections / (len(self.nodes) * (len(self.nodes) - 1)) if len(self.nodes) > 1 else 0,
+            "communities": len(self.detect_communities())
+        }
 
 
 if __name__ == "__main__":
-    main()
+    system = EmergenceSystem()
+    
+    for i in range(20):
+        agent = AgentFeature(
+            agent_id=f"agent_{i}",
+            position=(random.uniform(0, 500), random.uniform(0, 500)),
+            velocity=(random.uniform(-2, 2), random.uniform(-2, 2)),
+            acceleration=(0, 0),
+            energy=random.uniform(50, 100),
+            state=random.choice(["idle", "exploring", "foraging", "resting"]),
+            neighbors=[f"agent_{random.randint(0, 19)}" for _ in range(random.randint(1, 4))]
+        )
+        system.add_agent(agent)
+    
+    print(f"涌现系统初始化完成")
+    print(f"智能体数量: {len(system.agents)}")
+    
+    for step in range(20):
+        for agent in system.agents.values():
+            agent.position = (
+                agent.position[0] + agent.velocity[0],
+                agent.position[1] + agent.velocity[1]
+            )
+            agent.position = (
+                max(0, min(500, agent.position[0])),
+                max(0, min(500, agent.position[1]))
+            )
+        
+        result = system.update()
+        
+        if step % 5 == 0:
+            print(f"步骤 {step}: 模式={result['patterns']}, 涌现={result['emergences']}")
