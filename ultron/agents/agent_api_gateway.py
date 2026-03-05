@@ -656,4 +656,13 @@ async def demo_test():
 
 
 if __name__ == "__main__":
-    asyncio.run(demo_test())
+    import sys
+    if len(sys.argv) > 1 and sys.argv[1] == "--serve":
+        # 运行服务器模式
+        host = sys.argv[2] if len(sys.argv) > 2 else "0.0.0.0"
+        port = int(sys.argv[3]) if len(sys.argv) > 3 else 8090
+        print(f"启动 Agent API Gateway 服务器: {host}:{port}")
+        run_gateway_sync(host, port)
+    else:
+        # 默认运行演示测试
+        asyncio.run(demo_test())

@@ -1,0 +1,29 @@
+{
+  "test_time": "2026-03-06T03:22:45.060853",
+  "results": [
+    {
+      "test_name": "concurrent_stress",
+      "start_time": 1772738562.5650153,
+      "end_time": 1772738562.673527,
+      "total_requests": 50,
+      "success_count": 50,
+      "failure_count": 0,
+      "avg_latency": 0.054181385040283206,
+      "max_latency": 0.10561132431030273,
+      "min_latency": 0.007601022720336914,
+      "throughput": 460.7798633799939
+    },
+    {
+      "test_name": "concurrent_high_load",
+      "start_time": 1772738562.6736183,
+      "end_time": 1772738562.9654567,
+      "total_requests": 100,
+      "success_count": 100,
+      "failure_count": 0,
+      "avg_latency": 0.13529596328735352,
+      "max_latency": 0.2864370346069336,
+      "min_latency": 0.016833066940307617,
+      "throughput": 342.6553785397599
+    }
+  ]
+}

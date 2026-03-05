@@ -1,0 +1,148 @@
+{
+  "sessions": [
+    {
+      "session_id": "session_f96145f475c6",
+      "name": "测试协作会话",
+      "description": "测试多Agent协作",
+      "status": "completed",
+      "created_at": "2026-03-06T03:10:58.204757",
+      "updated_at": "2026-03-06T03:11:12.632787",
+      "started_at": "2026-03-06T03:11:07.137645",
+      "completed_at": "2026-03-06T03:11:16.627502",
+      "timeout": 600,
+      "tasks": [
+        {
+          "task_id": "task_ff9f0c46",
+          "agent_id": "monitor-1",
+          "capabilities": [
+            "monitoring"
+          ],
+          "action": "collect_metrics",
+          "params": {
+            "metric": "cpu"
+          },
+          "status": "completed",
+          "progress": 100.0,
+          "output": {
+            "cpu": 45,
+            "memory": 60
+          },
+          "error": null,
+          "dependencies": [],
+          "retries": 0,
+          "max_retries": 3,
+          "started_at": "2026-03-06T03:11:07.137681",
+          "completed_at": "2026-03-06T03:11:09.452553",
+          "checkpoints": [],
+          "updated_at": "2026-03-06T03:11:09.452580"
+        },
+        {
+          "task_id": "task_e9070d6d",
+          "agent_id": "analyzer-1",
+          "capabilities": [
+            "analysis"
+          ],
+          "action": "analyze",
+          "params": {
+            "data": "metrics"
+          },
+          "status": "completed",
+          "progress": 100.0,
+          "output": {
+            "analysis": "正常",
+            "trend": "stable"
+          },
+          "error": null,
+          "dependencies": [
+            "task_ff9f0c46"
+          ],
+          "retries": 0,
+          "max_retries": 3,
+          "started_at": null,
+          "completed_at": "2026-03-06T03:11:16.627455",
+          "checkpoints": [],
+          "updated_at": "2026-03-06T03:11:16.627480"
+        }
+      ],
+      "participants": [
+        "monitor-1",
+        "analyzer-1"
+      ],
+      "results": {
+        "task_ff9f0c46": {
+          "cpu": 45,
+          "memory": 60
+        },
+        "task_e9070d6d": {
+          "analysis": "正常",
+          "trend": "stable"
+        }
+      },
+      "checkpoints": [
+        {
+          "checkpoint_id": "cp_2a5856e7",
+          "name": "分析前检查点",
+          "created_at": "2026-03-06T03:11:12.632724",
+          "tasks_snapshot": [
+            {
+              "task_id": "task_ff9f0c46",
+              "agent_id": "monitor-1",
+              "capabilities": [
+                "monitoring"
+              ],
+              "action": "collect_metrics",
+              "params": {
+                "metric": "cpu"
+              },
+              "status": "completed",
+              "progress": 100.0,
+              "output": {
+                "cpu": 45,
+                "memory": 60
+              },
+              "error": null,
+              "dependencies": [],
+              "retries": 0,
+              "max_retries": 3,
+              "started_at": "2026-03-06T03:11:07.137681",
+              "completed_at": "2026-03-06T03:11:09.452553",
+              "checkpoints": [],
+              "updated_at": "2026-03-06T03:11:09.452580"
+            },
+            {
+              "task_id": "task_e9070d6d",
+              "agent_id": "analyzer-1",
+              "capabilities": [
+                "analysis"
+              ],
+              "action": "analyze",
+              "params": {
+                "data": "metrics"
+              },
+              "status": "waiting",
+              "progress": 0.0,
+              "output": null,
+              "error": null,
+              "dependencies": [
+                "task_ff9f0c46"
+              ],
+              "retries": 0,
+              "max_retries": 3,
+              "started_at": null,
+              "completed_at": null,
+              "checkpoints": []
+            }
+          ],
+          "results_snapshot": {
+            "task_ff9f0c46": {
+              "cpu": 45,
+              "memory": 60
+            }
+          }
+        }
+      ],
+      "metadata": {}
+    }
+  ],
+  "last_updated": "2026-03-06T03:11:16.627884"
+}
