@@ -63,3 +63,30 @@
   ❌ OpenAI API: down (0ms)
   ⚠️  告警已记录: OpenAI API
 ⚠️ 未配置钉钉Webhook
+/usr/lib/python3/dist-packages/urllib3/connectionpool.py:1020: InsecureRequestWarning: Unverified HTTPS request is being made to host 'www.baidu.com'. Adding certificate verification is strongly advised. See: https://urllib3.readthedocs.io/en/latest/advanced-usage.html#ssl-warnings
+  warnings.warn(
+/usr/lib/python3/dist-packages/urllib3/connectionpool.py:1020: InsecureRequestWarning: Unverified HTTPS request is being made to host 'httpbin.org'. Adding certificate verification is strongly advised. See: https://urllib3.readthedocs.io/en/latest/advanced-usage.html#ssl-warnings
+  warnings.warn(
+/usr/lib/python3/dist-packages/urllib3/connectionpool.py:1020: InsecureRequestWarning: Unverified HTTPS request is being made to host 'github.com'. Adding certificate verification is strongly advised. See: https://urllib3.readthedocs.io/en/latest/advanced-usage.html#ssl-warnings
+  warnings.warn(
+/usr/lib/python3/dist-packages/urllib3/connectionpool.py:1020: InsecureRequestWarning: Unverified HTTPS request is being made to host 'www.aliyun.com'. Adding certificate verification is strongly advised. See: https://urllib3.readthedocs.io/en/latest/advanced-usage.html#ssl-warnings
+  warnings.warn(
+/usr/lib/python3/dist-packages/urllib3/connectionpool.py:1020: InsecureRequestWarning: Unverified HTTPS request is being made to host 'cloud.tencent.com'. Adding certificate verification is strongly advised. See: https://urllib3.readthedocs.io/en/latest/advanced-usage.html#ssl-warnings
+  warnings.warn(
+[11:35:02] 开始监控 8 个站点...
+  ✅ 百度: up (76.09ms)
+  ✅ 测试API-正常: up (912.76ms)
+  ❌ Google: down (0ms)
+  ⚠️  告警已记录: Google
+📝 告警已自动记录
+⚠️ 未配置钉钉Webhook
+  ❌ GitHub: down (10199.95ms)
+  ⚠️  告警已记录: GitHub
+📝 告警已自动记录
+⚠️ 未配置钉钉Webhook
+  ✅ 阿里云: up (77.09ms)
+  ✅ 腾讯云: up (265.61ms)
+  ❌ OpenAI API: down (0ms)
+  ⚠️  告警已记录: OpenAI API
+📝 告警已自动记录
+⚠️ 未配置钉钉Webhook

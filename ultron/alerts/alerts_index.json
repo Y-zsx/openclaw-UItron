@@ -1,6 +1,36 @@
 {
   "alerts": [
     {
+      "id": "alert_20260305_113533",
+      "type": "site_down",
+      "site": "OpenAI API",
+      "url": "https://api.openai.com",
+      "error": "Connection error: HTTPSConnectionPool(host='api.openai.com', port=44",
+      "severity": "error",
+      "timestamp": "2026-03-05T11:35:33.714842",
+      "status": "active"
+    },
+    {
+      "id": "alert_20260305_113523",
+      "type": "site_down",
+      "site": "GitHub",
+      "url": "https://github.com",
+      "error": "Timeout",
+      "severity": "error",
+      "timestamp": "2026-03-05T11:35:23.360866",
+      "status": "active"
+    },
+    {
+      "id": "alert_20260305_113513",
+      "type": "site_down",
+      "site": "Google",
+      "url": "https://www.google.com",
+      "error": "Connection error: HTTPSConnectionPool(host='www.google.com', port=44",
+      "severity": "error",
+      "timestamp": "2026-03-05T11:35:13.159884",
+      "status": "active"
+    },
+    {
       "id": "alert_20260305_113230",
       "type": "site_down",
       "site": "测试站点",
@@ -12,6 +42,6 @@
     }
   ],
   "stats": {
-    "site_down": 1
+    "site_down": 4
   }
 }

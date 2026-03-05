@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>告警历史 - 奥创监控中心</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Segoe UI', Arial, sans-serif; margin: 0; padding: 20px; background: #0d1117; color: #c9d1d9; min-height: 100vh; }
+        h1 { color: #58a6ff; text-align: center; margin-bottom: 20px; }
+        .header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
+        .refresh-btn { background: #238636; color: white; border: none; padding: 8px 16px; border-radius: 6px; cursor: pointer; }
+        .refresh-btn:hover { background: #2ea043; }
+        .stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; margin-bottom: 30px; }
+        .stat-card { background: #161b22; padding: 20px; border-radius: 8px; border: 1px solid #30363d; text-align: center; }
+        .stat-value { font-size: 32px; font-weight: bold; color: #58a6ff; }
+        .stat-label { color: #8b949e; margin-top: 5px; }
+        .alert-list { background: #161b22; border-radius: 8px; border: 1px solid #30363d; overflow: hidden; }
+        .alert-item { display: grid; grid-template-columns: 100px 120px 1fr 100px 100px; gap: 15px; padding: 15px 20px; border-bottom: 1px solid #30363d; align-items: center; }
+        .alert-item:last-child { border-bottom: none; }
+        .alert-item:hover { background: #21262d; }
+        .alert-time { color: #8b949e; font-size: 13px; }
+        .alert-type { padding: 4px 10px; border-radius: 4px; font-size: 12px; font-weight: bold; }
+        .type-site_down { background: #f85149; color: white; }
+        .type-high_cpu { background: #d29922; color: white; }
+        .type-high_memory { background: #a371f7; color: white; }
+        .type-disk_full { background: #f85149; color: white; }
+        .type-default { background: #8b949e; color: white; }
+        .alert-message { color: #c9d1d9; }
+        .alert-severity { padding: 4px 10px; border-radius: 4px; font-size: 12px; text-align: center; }
+        .severity-error { background: #f8514922; color: #f85149; border: 1px solid #f85149; }
+        .severity-warning { background: #d2992222; color: #d29922; border: 1px solid #d29922; }
+        .severity-info { background: #58a6ff22; color: #58a6ff; border: 1px solid #58a6ff; }
+        .alert-status { padding: 4px 10px; border-radius: 4px; font-size: 12px; text-align: center; }
+        .status-active { background: #f8514922; color: #f85149; }
+        .status-resolved { background: #23863622; color: #3fb950; }
+        .empty { text-align: center; padding: 40px; color: #8b949e; }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>🚨 告警历史</h1>
+        <button class="refresh-btn" onclick="loadAlerts()">🔄 刷新</button>
+    </div>
+    
+    <div class="stats" id="stats">
+        <div class="stat-card"><div class="stat-value" id="total">-</div><div class="stat-label">总告警数</div></div>
+        <div class="stat-card"><div class="stat-value" id="site_down">-</div><div class="stat-label">站点故障</div></div>
+        <div class="stat-card"><div class="stat-value" id="high_cpu">-</div><div class="stat-label">CPU告警</div></div>
+        <div class="stat-card"><div class="stat-value" id="high_memory">-</div><div class="stat-label">内存告警</div></div>
+    </div>
+    
+    <div class="alert-list" id="alertList">
+        <div class="empty">加载中...</div>
+    </div>
+    
+    <script>
+        async function loadAlerts() {
+            try {
+                const resp = await fetch('http://localhost:8765/api/alerts');
+                const data = await resp.json();
+                
+                // 更新统计
+                const stats = data.stats || {};
+                document.getElementById('total').textContent = data.alerts?.length || 0;
+                document.getElementById('site_down').textContent = stats.by_type?.site_down || 0;
+                document.getElementById('high_cpu').textContent = stats.by_type?.high_cpu || 0;
+                document.getElementById('high_memory').textContent = stats.by_type?.high_memory || 0;
+                
+                // 更新列表
+                const list = document.getElementById('alertList');
+                if (!data.alerts || data.alerts.length === 0) {
+                    list.innerHTML = '<div class="empty">暂无告警记录</div>';
+                    return;
+                }
+                
+                list.innerHTML = data.alerts.map(alert => `
+                    <div class="alert-item">
+                        <div class="alert-time">${alert.timestamp?.replace('T', ' ').substring(0, 19) || '-'}</div>
+                        <div class="alert-type type-${alert.type || 'default'}">${alert.type || 'unknown'}</div>
+                        <div class="alert-message">${alert.site || alert.error || alert.message || '-'}</div>
+                        <div class="alert-severity severity-${alert.severity || 'info'}">${alert.severity || 'info'}</div>
+                        <div class="alert-status status-${alert.status || 'active'}">${alert.status || 'active'}</div>
+                    </div>
+                `).join('');
+            } catch(e) {
+                document.getElementById('alertList').innerHTML = '<div class="empty">加载失败: ' + e.message + '</div>';
+            }
+        }
+        
+        loadAlerts();
+        setInterval(loadAlerts, 30000);
+    </script>
+</body>
+</html>

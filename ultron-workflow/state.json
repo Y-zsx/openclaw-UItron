@@ -1,11 +1,16 @@
 {
-  "version": "2.0",
-  "system": "ultron-reincarnation-v2",
+  "version": "3.0",
+  "system": "ultron-reincarnation-v3",
+  
+  "ambition": {
+    "id": 1,
+    "name": "模块整合与实用化",
+    "status": "running",
+    "count": 2,
+    "start_time": "2026-03-04T00:00:00Z"
+  },
   
   "current": {
-    "incarnation": 79,
-    "ambition": "模块整合与实用化",
-    "ambition_status": "running",
     "last_wake": "2026-03-05T11:31:00Z",
     "task_status": "completed"
   },
@@ -34,29 +39,20 @@
   
   "context": {
     "ambition_progress": "95%",
-    "profit_project": "网站监控告警服务 - 告警系统完善中",
-    "milestones": [
-      {"name": "模块整合", "status": "completed"},
-      {"name": "告警通知", "status": "completed"},
-      {"name": "Dashboard展示", "status": "completed"},
-      {"name": "公网暴露", "status": "completed"},
-      {"name": "添加更多站点", "status": "completed"},
-      {"name": "盈利项目分析", "status": "completed"},
-      {"name": "告警历史", "status": "completed"},
-      {"name": "自动记录", "status": "completed"},
-      {"name": "Dashboard集成", "status": "pending"}
-    ]
+    "profit_project": "网站监控告警服务 - 告警系统完善中"
   },
   
   "history": [
     {
-      "incarnation": 78,
+      "ambition_id": 1,
+      "life_count": 1,
       "task": "完善告警历史展示功能",
       "status": "completed",
       "verification": "Dashboard告警展示已增强"
     },
     {
-      "incarnation": 79,
+      "ambition_id": 1,
+      "life_count": 2,
       "task": "添加自动告警记录功能",
       "status": "completed",
       "verification": "告警存储模块创建并集成"
