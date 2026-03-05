@@ -690,5 +690,581 @@
     "started_at": "2026-03-05T16:01:17.918800",
     "error": "未提供命令",
     "failed_at": "2026-03-05T16:01:17.920552"
+  },
+  {
+    "type": "disk_full",
+    "source": "message_bus",
+    "original": {
+      "id": "1",
+      "sender": "monitor",
+      "recipient": "executor",
+      "message": "磁盘使用率过高",
+      "type": "task",
+      "timestamp": "2026-03-04T17:32:57.189668",
+      "status": "completed",
+      "result": "{\"action\": \"unknown_alert\", \"result\": \"\\u672a\\u5904\\u7406\", \"task_id\": \"1\", \"original_alert\": \"\\u78c1\\u76d8\\u4f7f\\u7528\\u7387\\u8fc7\\u9ad8\"}",
+      "completed_at": "2026-03-05T14:23:35.879458"
+    },
+    "id": "task_20260305160309_30",
+    "status": "completed",
+    "created_at": "2026-03-05T16:03:09.324443",
+    "started_at": "2026-03-05T16:03:09.336537",
+    "result": {
+      "action": "clean_logs",
+      "result": "已清理7天前日志",
+      "output": ""
+    },
+    "completed_at": "2026-03-05T16:03:09.343427"
+  },
+  {
+    "type": "disk_full",
+    "source": "message_bus",
+    "original": {
+      "id": "6",
+      "sender": "monitor",
+      "recipient": "executor",
+      "message": "告警: 磁盘满",
+      "type": "task",
+      "timestamp": "2026-03-05T13:50:38.401004",
+      "status": "completed",
+      "result": "{\"action\": \"unknown_alert\", \"result\": \"\\u672a\\u5904\\u7406\", \"task_id\": \"6\", \"original_alert\": \"\\u78c1\\u76d8\\u6ee1\"}",
+      "completed_at": "2026-03-05T14:23:35.880504"
+    },
+    "id": "task_20260305160309_31",
+    "status": "completed",
+    "created_at": "2026-03-05T16:03:09.325747",
+    "started_at": "2026-03-05T16:03:09.345006",
+    "result": {
+      "action": "clean_logs",
+      "result": "已清理7天前日志",
+      "output": ""
+    },
+    "completed_at": "2026-03-05T16:03:09.350958"
+  },
+  {
+    "type": "disk_full",
+    "source": "message_bus",
+    "original": {
+      "id": "monitor->executor:7",
+      "sender": "monitor",
+      "recipient": "executor",
+      "message": "磁盘告警",
+      "type": "task",
+      "payload": {
+        "disk": 95
+      },
+      "timestamp": "2026-03-05T13:51:12.690546",
+      "status": "completed",
+      "result": "{\"action\": \"unknown_alert\", \"result\": \"\\u672a\\u5904\\u7406\", \"task_id\": \"monitor->executor:7\", \"original_alert\": \"\\u78c1\\u76d8\\u544a\\u8b66\"}",
+      "completed_at": "2026-03-05T14:23:35.881858"
+    },
+    "id": "task_20260305160309_32",
+    "status": "completed",
+    "created_at": "2026-03-05T16:03:09.327553",
+    "started_at": "2026-03-05T16:03:09.352565",
+    "result": {
+      "action": "clean_logs",
+      "result": "已清理7天前日志",
+      "output": ""
+    },
+    "completed_at": "2026-03-05T16:03:09.358367"
+  },
+  {
+    "type": "disk_full",
+    "source": "message_bus",
+    "original": {
+      "id": "monitor->executor:9",
+      "sender": "monitor",
+      "recipient": "executor",
+      "message": "磁盘告警",
+      "type": "task",
+      "payload": {
+        "disk": 95
+      },
+      "timestamp": "2026-03-05T13:51:37.950942",
+      "status": "completed",
+      "result": "{\"action\": \"unknown_alert\", \"result\": \"\\u672a\\u5904\\u7406\", \"task_id\": \"monitor->executor:9\", \"original_alert\": \"\\u78c1\\u76d8\\u544a\\u8b66\"}",
+      "completed_at": "2026-03-05T14:23:35.882922"
+    },
+    "id": "task_20260305160309_33",
+    "status": "completed",
+    "created_at": "2026-03-05T16:03:09.329311",
+    "started_at": "2026-03-05T16:03:09.359838",
+    "result": {
+      "action": "clean_logs",
+      "result": "已清理7天前日志",
+      "output": ""
+    },
+    "completed_at": "2026-03-05T16:03:09.365682"
+  },
+  {
+    "type": "custom",
+    "source": "message_bus",
+    "original": {
+      "id": "16",
+      "sender": "monitor",
+      "recipient": "executor",
+      "message": "test alert",
+      "type": "task",
+      "timestamp": "2026-03-05T14:48:17.859858",
+      "status": "pending"
+    },
+    "id": "task_20260305160309_34",
+    "status": "failed",
+    "created_at": "2026-03-05T16:03:09.331936",
+    "started_at": "2026-03-05T16:03:09.367278",
+    "error": "未提供命令",
+    "failed_at": "2026-03-05T16:03:09.370980"
+  },
+  {
+    "type": "custom",
+    "source": "message_bus",
+    "original": {
+      "id": "19",
+      "sender": "monitor",
+      "recipient": "executor",
+      "message": "预测告警: ['load']",
+      "type": "task",
+      "timestamp": "2026-03-05T15:08:31.848022",
+      "status": "pending"
+    },
+    "id": "task_20260305160309_35",
+    "status": "failed",
+    "created_at": "2026-03-05T16:03:09.334364",
+    "started_at": "2026-03-05T16:03:09.373115",
+    "error": "未提供命令",
+    "failed_at": "2026-03-05T16:03:09.375247"
+  },
+  {
+    "type": "disk_full",
+    "source": "message_bus",
+    "original": {
+      "id": "1",
+      "sender": "monitor",
+      "recipient": "executor",
+      "message": "磁盘使用率过高",
+      "type": "task",
+      "timestamp": "2026-03-04T17:32:57.189668",
+      "status": "completed",
+      "result": "{\"action\": \"unknown_alert\", \"result\": \"\\u672a\\u5904\\u7406\", \"task_id\": \"1\", \"original_alert\": \"\\u78c1\\u76d8\\u4f7f\\u7528\\u7387\\u8fc7\\u9ad8\"}",
+      "completed_at": "2026-03-05T14:23:35.879458"
+    },
+    "id": "task_20260305160325_36",
+    "status": "completed",
+    "created_at": "2026-03-05T16:03:25.411133",
+    "started_at": "2026-03-05T16:03:25.423571",
+    "result": {
+      "action": "clean_logs",
+      "result": "已清理7天前日志",
+      "output": ""
+    },
+    "completed_at": "2026-03-05T16:03:25.429647"
+  },
+  {
+    "type": "disk_full",
+    "source": "message_bus",
+    "original": {
+      "id": "6",
+      "sender": "monitor",
+      "recipient": "executor",
+      "message": "告警: 磁盘满",
+      "type": "task",
+      "timestamp": "2026-03-05T13:50:38.401004",
+      "status": "completed",
+      "result": "{\"action\": \"unknown_alert\", \"result\": \"\\u672a\\u5904\\u7406\", \"task_id\": \"6\", \"original_alert\": \"\\u78c1\\u76d8\\u6ee1\"}",
+      "completed_at": "2026-03-05T14:23:35.880504"
+    },
+    "id": "task_20260305160325_37",
+    "status": "completed",
+    "created_at": "2026-03-05T16:03:25.412739",
+    "started_at": "2026-03-05T16:03:25.431309",
+    "result": {
+      "action": "clean_logs",
+      "result": "已清理7天前日志",
+      "output": ""
+    },
+    "completed_at": "2026-03-05T16:03:25.437000"
+  },
+  {
+    "type": "disk_full",
+    "source": "message_bus",
+    "original": {
+      "id": "monitor->executor:7",
+      "sender": "monitor",
+      "recipient": "executor",
+      "message": "磁盘告警",
+      "type": "task",
+      "payload": {
+        "disk": 95
+      },
+      "timestamp": "2026-03-05T13:51:12.690546",
+      "status": "completed",
+      "result": "{\"action\": \"unknown_alert\", \"result\": \"\\u672a\\u5904\\u7406\", \"task_id\": \"monitor->executor:7\", \"original_alert\": \"\\u78c1\\u76d8\\u544a\\u8b66\"}",
+      "completed_at": "2026-03-05T14:23:35.881858"
+    },
+    "id": "task_20260305160325_38",
+    "status": "completed",
+    "created_at": "2026-03-05T16:03:25.414798",
+    "started_at": "2026-03-05T16:03:25.438576",
+    "result": {
+      "action": "clean_logs",
+      "result": "已清理7天前日志",
+      "output": ""
+    },
+    "completed_at": "2026-03-05T16:03:25.444515"
+  },
+  {
+    "type": "disk_full",
+    "source": "message_bus",
+    "original": {
+      "id": "monitor->executor:9",
+      "sender": "monitor",
+      "recipient": "executor",
+      "message": "磁盘告警",
+      "type": "task",
+      "payload": {
+        "disk": 95
+      },
+      "timestamp": "2026-03-05T13:51:37.950942",
+      "status": "completed",
+      "result": "{\"action\": \"unknown_alert\", \"result\": \"\\u672a\\u5904\\u7406\", \"task_id\": \"monitor->executor:9\", \"original_alert\": \"\\u78c1\\u76d8\\u544a\\u8b66\"}",
+      "completed_at": "2026-03-05T14:23:35.882922"
+    },
+    "id": "task_20260305160325_39",
+    "status": "completed",
+    "created_at": "2026-03-05T16:03:25.416753",
+    "started_at": "2026-03-05T16:03:25.446328",
+    "result": {
+      "action": "clean_logs",
+      "result": "已清理7天前日志",
+      "output": ""
+    },
+    "completed_at": "2026-03-05T16:03:25.452997"
+  },
+  {
+    "type": "custom",
+    "source": "message_bus",
+    "original": {
+      "id": "16",
+      "sender": "monitor",
+      "recipient": "executor",
+      "message": "test alert",
+      "type": "task",
+      "timestamp": "2026-03-05T14:48:17.859858",
+      "status": "pending"
+    },
+    "id": "task_20260305160325_40",
+    "status": "failed",
+    "created_at": "2026-03-05T16:03:25.418899",
+    "started_at": "2026-03-05T16:03:25.454725",
+    "error": "未提供命令",
+    "failed_at": "2026-03-05T16:03:25.457071"
+  },
+  {
+    "type": "custom",
+    "source": "message_bus",
+    "original": {
+      "id": "19",
+      "sender": "monitor",
+      "recipient": "executor",
+      "message": "预测告警: ['load']",
+      "type": "task",
+      "timestamp": "2026-03-05T15:08:31.848022",
+      "status": "pending"
+    },
+    "id": "task_20260305160325_41",
+    "status": "failed",
+    "created_at": "2026-03-05T16:03:25.421272",
+    "started_at": "2026-03-05T16:03:25.466892",
+    "error": "未提供命令",
+    "failed_at": "2026-03-05T16:03:25.473220"
+  },
+  {
+    "type": "disk_full",
+    "source": "message_bus",
+    "original": {
+      "id": "1",
+      "sender": "monitor",
+      "recipient": "executor",
+      "message": "磁盘使用率过高",
+      "type": "task",
+      "timestamp": "2026-03-04T17:32:57.189668",
+      "status": "completed",
+      "result": "{\"action\": \"unknown_alert\", \"result\": \"\\u672a\\u5904\\u7406\", \"task_id\": \"1\", \"original_alert\": \"\\u78c1\\u76d8\\u4f7f\\u7528\\u7387\\u8fc7\\u9ad8\"}",
+      "completed_at": "2026-03-05T14:23:35.879458"
+    },
+    "id": "task_20260305160337_42",
+    "status": "completed",
+    "created_at": "2026-03-05T16:03:37.265639",
+    "started_at": "2026-03-05T16:03:37.279179",
+    "result": {
+      "action": "clean_logs",
+      "result": "已清理7天前日志",
+      "output": ""
+    },
+    "completed_at": "2026-03-05T16:03:37.285472"
+  },
+  {
+    "type": "disk_full",
+    "source": "message_bus",
+    "original": {
+      "id": "6",
+      "sender": "monitor",
+      "recipient": "executor",
+      "message": "告警: 磁盘满",
+      "type": "task",
+      "timestamp": "2026-03-05T13:50:38.401004",
+      "status": "completed",
+      "result": "{\"action\": \"unknown_alert\", \"result\": \"\\u672a\\u5904\\u7406\", \"task_id\": \"6\", \"original_alert\": \"\\u78c1\\u76d8\\u6ee1\"}",
+      "completed_at": "2026-03-05T14:23:35.880504"
+    },
+    "id": "task_20260305160337_43",
+    "status": "completed",
+    "created_at": "2026-03-05T16:03:37.267506",
+    "started_at": "2026-03-05T16:03:37.287342",
+    "result": {
+      "action": "clean_logs",
+      "result": "已清理7天前日志",
+      "output": ""
+    },
+    "completed_at": "2026-03-05T16:03:37.293287"
+  },
+  {
+    "type": "disk_full",
+    "source": "message_bus",
+    "original": {
+      "id": "monitor->executor:7",
+      "sender": "monitor",
+      "recipient": "executor",
+      "message": "磁盘告警",
+      "type": "task",
+      "payload": {
+        "disk": 95
+      },
+      "timestamp": "2026-03-05T13:51:12.690546",
+      "status": "completed",
+      "result": "{\"action\": \"unknown_alert\", \"result\": \"\\u672a\\u5904\\u7406\", \"task_id\": \"monitor->executor:7\", \"original_alert\": \"\\u78c1\\u76d8\\u544a\\u8b66\"}",
+      "completed_at": "2026-03-05T14:23:35.881858"
+    },
+    "id": "task_20260305160337_44",
+    "status": "completed",
+    "created_at": "2026-03-05T16:03:37.269649",
+    "started_at": "2026-03-05T16:03:37.296744",
+    "result": {
+      "action": "clean_logs",
+      "result": "已清理7天前日志",
+      "output": ""
+    },
+    "completed_at": "2026-03-05T16:03:37.302598"
+  },
+  {
+    "type": "disk_full",
+    "source": "message_bus",
+    "original": {
+      "id": "monitor->executor:9",
+      "sender": "monitor",
+      "recipient": "executor",
+      "message": "磁盘告警",
+      "type": "task",
+      "payload": {
+        "disk": 95
+      },
+      "timestamp": "2026-03-05T13:51:37.950942",
+      "status": "completed",
+      "result": "{\"action\": \"unknown_alert\", \"result\": \"\\u672a\\u5904\\u7406\", \"task_id\": \"monitor->executor:9\", \"original_alert\": \"\\u78c1\\u76d8\\u544a\\u8b66\"}",
+      "completed_at": "2026-03-05T14:23:35.882922"
+    },
+    "id": "task_20260305160337_45",
+    "status": "completed",
+    "created_at": "2026-03-05T16:03:37.271805",
+    "started_at": "2026-03-05T16:03:37.304571",
+    "result": {
+      "action": "clean_logs",
+      "result": "已清理7天前日志",
+      "output": ""
+    },
+    "completed_at": "2026-03-05T16:03:37.310440"
+  },
+  {
+    "type": "custom",
+    "source": "message_bus",
+    "original": {
+      "id": "16",
+      "sender": "monitor",
+      "recipient": "executor",
+      "message": "test alert",
+      "type": "task",
+      "timestamp": "2026-03-05T14:48:17.859858",
+      "status": "pending"
+    },
+    "id": "task_20260305160337_46",
+    "status": "failed",
+    "created_at": "2026-03-05T16:03:37.274292",
+    "started_at": "2026-03-05T16:03:37.312393",
+    "error": "未提供命令",
+    "failed_at": "2026-03-05T16:03:37.314603"
+  },
+  {
+    "type": "custom",
+    "source": "message_bus",
+    "original": {
+      "id": "19",
+      "sender": "monitor",
+      "recipient": "executor",
+      "message": "预测告警: ['load']",
+      "type": "task",
+      "timestamp": "2026-03-05T15:08:31.848022",
+      "status": "pending"
+    },
+    "id": "task_20260305160337_47",
+    "status": "failed",
+    "created_at": "2026-03-05T16:03:37.276541",
+    "started_at": "2026-03-05T16:03:37.317167",
+    "error": "未提供命令",
+    "failed_at": "2026-03-05T16:03:37.319554"
+  },
+  {
+    "type": "disk_full",
+    "source": "message_bus",
+    "original": {
+      "id": "1",
+      "sender": "monitor",
+      "recipient": "executor",
+      "message": "磁盘使用率过高",
+      "type": "task",
+      "timestamp": "2026-03-04T17:32:57.189668",
+      "status": "completed",
+      "result": "{\"action\": \"unknown_alert\", \"result\": \"\\u672a\\u5904\\u7406\", \"task_id\": \"1\", \"original_alert\": \"\\u78c1\\u76d8\\u4f7f\\u7528\\u7387\\u8fc7\\u9ad8\"}",
+      "completed_at": "2026-03-05T14:23:35.879458"
+    },
+    "id": "task_20260305160353_48",
+    "status": "completed",
+    "created_at": "2026-03-05T16:03:53.241026",
+    "started_at": "2026-03-05T16:03:53.268503",
+    "result": {
+      "action": "clean_logs",
+      "result": "已清理7天前日志",
+      "output": ""
+    },
+    "completed_at": "2026-03-05T16:03:53.283449"
+  },
+  {
+    "type": "disk_full",
+    "source": "message_bus",
+    "original": {
+      "id": "6",
+      "sender": "monitor",
+      "recipient": "executor",
+      "message": "告警: 磁盘满",
+      "type": "task",
+      "timestamp": "2026-03-05T13:50:38.401004",
+      "status": "completed",
+      "result": "{\"action\": \"unknown_alert\", \"result\": \"\\u672a\\u5904\\u7406\", \"task_id\": \"6\", \"original_alert\": \"\\u78c1\\u76d8\\u6ee1\"}",
+      "completed_at": "2026-03-05T14:23:35.880504"
+    },
+    "id": "task_20260305160353_49",
+    "status": "completed",
+    "created_at": "2026-03-05T16:03:53.244375",
+    "started_at": "2026-03-05T16:03:53.286013",
+    "result": {
+      "action": "clean_logs",
+      "result": "已清理7天前日志",
+      "output": ""
+    },
+    "completed_at": "2026-03-05T16:03:53.293404"
+  },
+  {
+    "type": "disk_full",
+    "source": "message_bus",
+    "original": {
+      "id": "monitor->executor:7",
+      "sender": "monitor",
+      "recipient": "executor",
+      "message": "磁盘告警",
+      "type": "task",
+      "payload": {
+        "disk": 95
+      },
+      "timestamp": "2026-03-05T13:51:12.690546",
+      "status": "completed",
+      "result": "{\"action\": \"unknown_alert\", \"result\": \"\\u672a\\u5904\\u7406\", \"task_id\": \"monitor->executor:7\", \"original_alert\": \"\\u78c1\\u76d8\\u544a\\u8b66\"}",
+      "completed_at": "2026-03-05T14:23:35.881858"
+    },
+    "id": "task_20260305160353_50",
+    "status": "completed",
+    "created_at": "2026-03-05T16:03:53.249051",
+    "started_at": "2026-03-05T16:03:53.295473",
+    "result": {
+      "action": "clean_logs",
+      "result": "已清理7天前日志",
+      "output": ""
+    },
+    "completed_at": "2026-03-05T16:03:53.302839"
+  },
+  {
+    "type": "disk_full",
+    "source": "message_bus",
+    "original": {
+      "id": "monitor->executor:9",
+      "sender": "monitor",
+      "recipient": "executor",
+      "message": "磁盘告警",
+      "type": "task",
+      "payload": {
+        "disk": 95
+      },
+      "timestamp": "2026-03-05T13:51:37.950942",
+      "status": "completed",
+      "result": "{\"action\": \"unknown_alert\", \"result\": \"\\u672a\\u5904\\u7406\", \"task_id\": \"monitor->executor:9\", \"original_alert\": \"\\u78c1\\u76d8\\u544a\\u8b66\"}",
+      "completed_at": "2026-03-05T14:23:35.882922"
+    },
+    "id": "task_20260305160353_51",
+    "status": "completed",
+    "created_at": "2026-03-05T16:03:53.253383",
+    "started_at": "2026-03-05T16:03:53.306843",
+    "result": {
+      "action": "clean_logs",
+      "result": "已清理7天前日志",
+      "output": ""
+    },
+    "completed_at": "2026-03-05T16:03:53.317920"
+  },
+  {
+    "type": "custom",
+    "source": "message_bus",
+    "original": {
+      "id": "16",
+      "sender": "monitor",
+      "recipient": "executor",
+      "message": "test alert",
+      "type": "task",
+      "timestamp": "2026-03-05T14:48:17.859858",
+      "status": "pending"
+    },
+    "id": "task_20260305160353_52",
+    "status": "failed",
+    "created_at": "2026-03-05T16:03:53.258853",
+    "started_at": "2026-03-05T16:03:53.322830",
+    "error": "未提供命令",
+    "failed_at": "2026-03-05T16:03:53.328582"
+  },
+  {
+    "type": "custom",
+    "source": "message_bus",
+    "original": {
+      "id": "19",
+      "sender": "monitor",
+      "recipient": "executor",
+      "message": "预测告警: ['load']",
+      "type": "task",
+      "timestamp": "2026-03-05T15:08:31.848022",
+      "status": "pending"
+    },
+    "id": "task_20260305160353_53",
+    "status": "failed",
+    "created_at": "2026-03-05T16:03:53.264016",
+    "started_at": "2026-03-05T16:03:53.334389",
+    "error": "未提供命令",
+    "failed_at": "2026-03-05T16:03:53.339034"
   }
 ]

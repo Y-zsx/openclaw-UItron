@@ -83,5 +83,41 @@
     "timestamp": "2026-03-05T15:08:31.843336",
     "_id": "alert_1772694511845",
     "_created_at": 1772694511.8451884
+  },
+  {
+    "rule": "CPU使用率过高",
+    "metric": "cpu.usage_percent",
+    "value": 92.5,
+    "threshold": 90,
+    "condition": ">=",
+    "level": "WARNING",
+    "message": "CPU使用率超过90%",
+    "timestamp": "2026-03-05T16:06:45.815264",
+    "_id": "alert_1772698005816",
+    "_created_at": 1772698005.8160136
+  },
+  {
+    "rule": "内存使用率过高",
+    "metric": "memory.percent",
+    "value": 88.0,
+    "threshold": 85,
+    "condition": ">=",
+    "level": "WARNING",
+    "message": "内存使用率超过85%",
+    "timestamp": "2026-03-05T16:06:45.815296",
+    "_id": "alert_1772698005817",
+    "_created_at": 1772698005.8170218
+  },
+  {
+    "rule": "CPU使用率严重",
+    "metric": "cpu.usage_percent",
+    "value": 97.0,
+    "threshold": 95,
+    "condition": ">=",
+    "level": "CRITICAL",
+    "message": "CPU使用率超过95%",
+    "timestamp": "2026-03-05T16:06:45.815298",
+    "_id": "alert_1772698005817",
+    "_created_at": 1772698005.8178065
   }
 ]
