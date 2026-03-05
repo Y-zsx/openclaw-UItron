@@ -1,0 +1,14 @@
+[Unit]
+Description=Decision Agent Integration Layer
+After=network.target
+
+[Service]
+Type=simple
+User=root
+WorkingDirectory=/root/.openclaw/workspace/ultron/agents
+ExecStart=/usr/bin/python3 decision_agent_integration.py
+Restart=always
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target

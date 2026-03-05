@@ -1,0 +1,16 @@
+[Unit]
+Description=Decision Agent Network - 决策Agent协作网络
+After=network.target
+
+[Service]
+Type=simple
+User=root
+WorkingDirectory=/root/.openclaw/workspace/ultron/agents
+ExecStart=/usr/bin/python3 /root/.openclaw/workspace/ultron/agents/decision_agent_network.py
+Restart=always
+RestartSec=10
+StandardOutput=append:/root/.openclaw/workspace/logs/decision-agent-network.log
+StandardError=append:/root/.openclaw/workspace/logs/decision-agent-network.log
+
+[Install]
+WantedBy=multi-user.target

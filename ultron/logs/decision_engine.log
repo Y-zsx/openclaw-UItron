@@ -1,65 +1,9 @@
-2026-03-05 23:37:56,228 - core - INFO - 决策引擎初始化完成
-2026-03-05 23:37:56,229 - rules - INFO - 添加规则: high_cpu_alert
-2026-03-05 23:37:56,230 - rules - INFO - 添加规则: memory_alert
-2026-03-05 23:37:56,231 - rules - INFO - 添加规则: disk_alert
-2026-03-05 23:37:56,232 - rules - INFO - 添加规则: service_down
-2026-03-05 23:37:56,233 - rules - INFO - 添加规则: high_error_rate
-2026-03-05 23:37:56,234 - rules - INFO - 添加规则: error_pattern
-2026-03-05 23:37:56,235 - rules - INFO - 规则引擎初始化完成, 6 条规则
-2026-03-05 23:37:56,236 - executor - INFO - 注册行动: noop
-2026-03-05 23:37:56,237 - executor - INFO - 行动执行器初始化完成
-2026-03-05 23:37:56,237 - feedback - INFO - 反馈闭环系统初始化完成
-2026-03-05 23:37:56,238 - core - INFO - 注册规则: high_cpu_alert
-2026-03-05 23:37:56,239 - core - INFO - 注册规则: memory_alert
-2026-03-05 23:37:56,239 - core - INFO - 注册规则: disk_alert
-2026-03-05 23:37:56,240 - core - INFO - 注册规则: service_down
-2026-03-05 23:37:56,241 - core - INFO - 注册规则: high_error_rate
-2026-03-05 23:37:56,241 - core - INFO - 注册规则: error_pattern
-2026-03-05 23:37:56,242 - __main__ - INFO - 决策引擎API服务器初始化完成
-2026-03-05 23:37:56,374 - __main__ - INFO - 启动决策引擎API服务器: 端口 18120
- * Serving Flask app 'api_server'
+==================================================
+决策引擎API服务启动
+端口: 18120
+功能: 决策制定 | 风险评估 | 行动执行
+==================================================
+ * Serving Flask app 'decision_engine_api'
  * Debug mode: off
-2026-03-05 23:37:56,385 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
- * Running on all addresses (0.0.0.0)
- * Running on http://127.0.0.1:18120
- * Running on http://172.16.204.191:18120
-2026-03-05 23:37:56,385 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
-2026-03-05 23:38:15,676 - workflow_integration - INFO - 工作流 wf-7cb0515e 触发成功
-2026-03-05 23:38:15,678 - werkzeug - INFO - 127.0.0.1 - - [05/Mar/2026 23:38:15] "POST /workflow/trigger HTTP/1.1" 200 -
-2026-03-05 23:38:23,979 - core - INFO - 评估完成: 1 个候选决策
-2026-03-05 23:38:23,980 - core - INFO - 日志动作: log - {'auto': True}
-2026-03-05 23:38:23,980 - core - INFO - 决策执行完成: dec_20260305233823979624
-2026-03-05 23:38:41,081 - workflow_integration - INFO - 工作流 wf-7cb0515e 触发成功
-2026-03-05 23:38:41,082 - werkzeug - INFO - 127.0.0.1 - - [05/Mar/2026 23:38:41] "POST /decide-and-act HTTP/1.1" 200 -
-2026-03-05 23:39:59,203 - werkzeug - INFO - 127.0.0.1 - - [05/Mar/2026 23:39:59] "[33mGET /status HTTP/1.1[0m" 404 -
-2026-03-05 23:40:52,809 - werkzeug - INFO - 127.0.0.1 - - [05/Mar/2026 23:40:52] "GET /health HTTP/1.1" 200 -
-2026-03-05 23:41:00,904 - werkzeug - INFO - 127.0.0.1 - - [05/Mar/2026 23:41:00] "[33mGET /api/decisions HTTP/1.1[0m" 404 -
-2026-03-05 23:41:46,285 - werkzeug - INFO - 127.0.0.1 - - [05/Mar/2026 23:41:46] "[33mGET /api/agents HTTP/1.1[0m" 404 -
-2026-03-05 23:41:48,284 - werkzeug - INFO - 127.0.0.1 - - [05/Mar/2026 23:41:48] "[33mGET / HTTP/1.1[0m" 404 -
-2026-03-05 23:41:50,671 - werkzeug - INFO - 127.0.0.1 - - [05/Mar/2026 23:41:50] "[33mGET /api/agent/list HTTP/1.1[0m" 404 -
-2026-03-05 23:41:57,364 - werkzeug - INFO - 127.0.0.1 - - [05/Mar/2026 23:41:57] "GET /stats HTTP/1.1" 200 -
-2026-03-05 23:48:10,697 - werkzeug - INFO - 127.0.0.1 - - [05/Mar/2026 23:48:10] "GET /health HTTP/1.1" 200 -
-2026-03-05 23:48:13,292 - werkzeug - INFO - 127.0.0.1 - - [05/Mar/2026 23:48:13] "[33mGET /api/rules HTTP/1.1[0m" 404 -
-2026-03-05 23:48:15,624 - werkzeug - INFO - 127.0.0.1 - - [05/Mar/2026 23:48:15] "[33mGET / HTTP/1.1[0m" 404 -
-2026-03-05 23:48:20,971 - werkzeug - INFO - 127.0.0.1 - - [05/Mar/2026 23:48:20] "GET /rules HTTP/1.1" 200 -
-2026-03-05 23:48:24,521 - werkzeug - INFO - 127.0.0.1 - - [05/Mar/2026 23:48:24] "[33mGET /processors HTTP/1.1[0m" 404 -
-2026-03-05 23:48:34,122 - werkzeug - INFO - 127.0.0.1 - - [05/Mar/2026 23:48:34] "[33mGET / HTTP/1.1[0m" 404 -
-2026-03-05 23:48:36,026 - werkzeug - INFO - 127.0.0.1 - - [05/Mar/2026 23:48:36] "[33mGET /alerts HTTP/1.1[0m" 404 -
-2026-03-05 23:48:55,731 - werkzeug - INFO - 127.0.0.1 - - [05/Mar/2026 23:48:55] "GET /actions HTTP/1.1" 200 -
-2026-03-05 23:49:40,655 - werkzeug - INFO - 127.0.0.1 - - [05/Mar/2026 23:49:40] "GET /health HTTP/1.1" 200 -
-2026-03-05 23:49:40,662 - werkzeug - INFO - 127.0.0.1 - - [05/Mar/2026 23:49:40] "GET /stats HTTP/1.1" 200 -
-2026-03-05 23:49:40,669 - werkzeug - INFO - 127.0.0.1 - - [05/Mar/2026 23:49:40] "POST /risk HTTP/1.1" 200 -
-2026-03-05 23:49:40,677 - core - INFO - 评估完成: 1 个候选决策
-2026-03-05 23:49:40,677 - core - INFO - 日志动作: log - {'auto': True}
-2026-03-05 23:49:40,677 - core - INFO - 决策执行完成: dec_20260305234940677123
-2026-03-05 23:49:40,678 - werkzeug - INFO - 127.0.0.1 - - [05/Mar/2026 23:49:40] "POST /decide HTTP/1.1" 200 -
-2026-03-06 00:23:43,568 - werkzeug - INFO - 127.0.0.1 - - [06/Mar/2026 00:23:43] "GET /health HTTP/1.1" 200 -
-2026-03-06 00:23:52,563 - werkzeug - INFO - 127.0.0.1 - - [06/Mar/2026 00:23:52] "GET /health HTTP/1.1" 200 -
-2026-03-06 00:25:48,361 - werkzeug - INFO - 127.0.0.1 - - [06/Mar/2026 00:25:48] "GET /health HTTP/1.1" 200 -
-2026-03-06 00:28:28,128 - werkzeug - INFO - 127.0.0.1 - - [06/Mar/2026 00:28:28] "GET /health HTTP/1.1" 200 -
-2026-03-06 00:28:44,656 - werkzeug - INFO - 127.0.0.1 - - [06/Mar/2026 00:28:44] "GET /health HTTP/1.1" 200 -
-2026-03-06 00:28:45,244 - werkzeug - INFO - 127.0.0.1 - - [06/Mar/2026 00:28:45] "GET /health HTTP/1.1" 200 -
-2026-03-06 00:28:51,475 - werkzeug - INFO - 127.0.0.1 - - [06/Mar/2026 00:28:51] "GET /health HTTP/1.1" 200 -
-2026-03-06 00:44:27,492 - werkzeug - INFO - 127.0.0.1 - - [06/Mar/2026 00:44:27] "[33mGET /api/health HTTP/1.1[0m" 404 -
-2026-03-06 00:44:43,795 - werkzeug - INFO - 127.0.0.1 - - [06/Mar/2026 00:44:43] "[33mGET /api/health HTTP/1.1[0m" 404 -
-2026-03-06 00:44:54,016 - werkzeug - INFO - 127.0.0.1 - - [06/Mar/2026 00:44:54] "[33mGET /api/health HTTP/1.1[0m" 404 -
+Address already in use
+Port 18120 is in use by another program. Either identify and stop that program, or start the server with a different port.

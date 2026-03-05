@@ -455,6 +455,221 @@ def get_stats():
         "average_risk_level": round(avg_risk, 2)
     })
 
+# ==================== 反馈学习增强 ====================
+from collections import defaultdict
+
+# 反馈学习内存
+feedback_memory = {
+    "patterns": defaultdict(lambda: defaultdict(float)),
+    "success_history": [],
+    "failure_history": [],
+    "optimization_suggestions": []
+}
+
+@app.route("/api/feedback/collect", methods=["POST"])
+def collect_feedback():
+    """收集决策执行反馈"""
+    try:
+        data = request.json
+        decision_id = data.get("decision_id")
+        action_id = data.get("action_id")
+        expected = data.get("expected")
+        actual = data.get("actual")
+        context = data.get("context", {})
+        
+        success = (expected == actual)
+        
+        # 计算差异度
+        try:
+            delta = abs(float(expected) - float(actual)) if isinstance(expected, (int, float)) and isinstance(actual, (int, float)) else (0.0 if expected == actual else 1.0)
+        except:
+            delta = 1.0
+        
+        # 生成模式标识
+        pattern_parts = []
+        for key in ["cpu_percent", "memory_percent", "disk_percent", "error_count"]:
+            if key in context:
+                value = context[key]
+                if isinstance(value, (int, float)):
+                    bucket = int(value / 20) * 20
+                    pattern_parts.append(f"{key}_{bucket}")
+        pattern = "|".join(pattern_parts) if pattern_parts else "default"
+        
+        # 更新模式-动作映射
+        action = data.get("action", "default")
+        reward = 1.0 if success else -0.5
+        feedback_memory["patterns"][pattern][action] += reward
+        
+        # 记录历史
+        entry = {
+            "decision_id": decision_id,
+            "action_id": action_id,
+            "expected": str(expected),
+            "actual": str(actual),
+            "success": success,
+            "delta": delta,
+            "pattern": pattern,
+            "timestamp": datetime.utcnow().isoformat()
+        }
+        
+        if success:
+            feedback_memory["success_history"].append(entry)
+        else:
+            feedback_memory["failure_history"].append(entry)
+        
+        # 保持历史长度限制
+        max_history = 500
+        if len(feedback_memory["success_history"]) > max_history:
+            feedback_memory["success_history"] = feedback_memory["success_history"][-max_history:]
+        if len(feedback_memory["failure_history"]) > max_history:
+            feedback_memory["failure_history"] = feedback_memory["failure_history"][-max_history:]
+        
+        return jsonify({
+            "success": True,
+            "feedback": entry,
+            "pattern_reward": feedback_memory["patterns"][pattern][action]
+        })
+    except Exception as e:
+        return jsonify({"success": False, "error": str(e)}), 400
+
+@app.route("/api/feedback/learn", methods=["GET"])
+def get_learned_patterns():
+    """获取学习到的模式"""
+    patterns = {}
+    for pattern, actions in feedback_memory["patterns"].items():
+        patterns[pattern] = dict(actions)
+    
+    return jsonify({
+        "patterns": patterns,
+        "total_patterns": len(patterns),
+        "success_count": len(feedback_memory["success_history"]),
+        "failure_count": len(feedback_memory["failure_history"])
+    })
+
+@app.route("/api/feedback/recommend", methods=["POST"])
+def get_recommendations():
+    """获取优化建议"""
+    try:
+        context = request.json or {}
+        
+        # 生成当前上下文模式
+        pattern_parts = []
+        for key in ["cpu_percent", "memory_percent", "disk_percent", "error_count"]:
+            if key in context:
+                value = context[key]
+                if isinstance(value, (int, float)):
+                    bucket = int(value / 20) * 20
+                    pattern_parts.append(f"{key}_{bucket}")
+        pattern = "|".join(pattern_parts) if pattern_parts else "default"
+        
+        recommendations = []
+        
+        # 基于失败模式
+        recent_failures = feedback_memory["failure_history"][-10:]
+        if len(recent_failures) > 3:
+            recommendations.append({
+                "type": "pattern_warning",
+                "message": f"检测到近期 {len(recent_failures)} 次失败，可能存在系统性问题",
+                "confidence": 0.7
+            })
+        
+        # 基于低奖励动作
+        action_rewards = feedback_memory["patterns"].get(pattern, {})
+        for action, reward in action_rewards.items():
+            if reward < -1.0:
+                recommendations.append({
+                    "type": "action_adjust",
+                    "action": action,
+                    "message": f"动作 '{action}' 在当前模式下表现不佳 (reward={reward:.2f})",
+                    "suggestion": "考虑调整参数或更换策略",
+                    "confidence": min(1.0, abs(reward) / 5.0)
+                })
+        
+        # 基于历史成功的最佳动作
+        if action_rewards:
+            best_action = max(action_rewards.items(), key=lambda x: x[1])
+            if best_action[1] > 0:
+                recommendations.append({
+                    "type": "best_practice",
+                    "action": best_action[0],
+                    "message": f"建议使用动作 '{best_action[0]}' (reward={best_action[1]:.2f})",
+                    "confidence": min(1.0, best_action[1] / 5.0)
+                })
+        
+        return jsonify({
+            "pattern": pattern,
+            "recommendations": recommendations,
+            "context": context
+        })
+    except Exception as e:
+        return jsonify({"success": False, "error": str(e)}), 400
+
+@app.route("/api/feedback/stats", methods=["GET"])
+def get_feedback_stats():
+    """获取反馈学习统计"""
+    total = len(feedback_memory["success_history"]) + len(feedback_memory["failure_history"])
+    success_rate = len(feedback_memory["success_history"]) / total if total > 0 else 0
+    
+    # 计算各动作的平均奖励
+    action_stats = defaultdict(lambda: {"count": 0, "total_reward": 0.0})
+    for pattern, actions in feedback_memory["patterns"].items():
+        for action, reward in actions.items():
+            action_stats[action]["count"] += 1
+            action_stats[action]["total_reward"] += reward
+    
+    return jsonify({
+        "total_feedback": total,
+        "success_count": len(feedback_memory["success_history"]),
+        "failure_count": len(feedback_memory["failure_history"]),
+        "success_rate": round(success_rate, 3),
+        "unique_patterns": len(feedback_memory["patterns"]),
+        "action_performance": dict(action_stats)
+    })
+
+@app.route("/api/optimize/auto", methods=["POST"])
+def auto_optimize():
+    """自动优化决策参数"""
+    try:
+        data = request.json or {}
+        target_metric = data.get("target_metric", "success_rate")
+        
+        suggestions = []
+        
+        # 分析失败模式
+        failure_patterns = defaultdict(int)
+        for failure in feedback_memory["failure_history"]:
+            pattern = failure.get("pattern", "default")
+            failure_patterns[pattern] += 1
+        
+        # 找出最频繁的失败模式
+        if failure_patterns:
+            worst_pattern = max(failure_patterns.items(), key=lambda x: x[1])
+            if worst_pattern[1] >= 3:
+                suggestions.append({
+                    "type": "pattern_fix",
+                    "pattern": worst_pattern[0],
+                    "issue": f"模式 '{worst_pattern[0]}' 失败 {worst_pattern[1]} 次",
+                    "action": "调整该模式下的决策阈值"
+                })
+        
+        # 基于历史成功调整规则
+        success_patterns = defaultdict(float)
+        for success in feedback_memory["success_history"]:
+            pattern = success.get("pattern", "default")
+            success_patterns[pattern] += 1
+        
+        return jsonify({
+            "success": True,
+            "target_metric": target_metric,
+            "suggestions": suggestions,
+            "analysis": {
+                "worst_pattern": dict(failure_patterns),
+                "best_patterns": dict(success_patterns)
+            }
+        })
+    except Exception as e:
+        return jsonify({"success": False, "error": str(e)}), 400
+
 if __name__ == "__main__":
     print("=" * 50)
     print("决策引擎API服务启动")
