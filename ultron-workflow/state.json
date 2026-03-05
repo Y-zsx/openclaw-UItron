@@ -2,32 +2,42 @@
   "version": "2.0",
   "system": "ultron-reincarnation-v2",
   "current": {
-    "incarnation": 37,
+    "incarnation": 41,
     "ambition": "智能运维助手系统",
     "ambition_status": "completed",
     "last_wake": "2026-03-05T21:45:00.000000",
     "task_status": "completed"
   },
   "this_life": {
-    "task": "智能运维助手系统 - 安全加固",
+    "task": "Agent监控与指标收集系统",
     "accomplished": [
-      "✅ 创建安全配置模块 (security_layer.py)",
-      "✅ 实现API密钥认证系统",
-      "✅ 实现请求速率限制",
-      "✅ 实现输入验证与危险命令检测",
-      "✅ 添加安全响应头 (CSP, HSTS, X-Frame-Options等)",
-      "✅ 创建审计日志系统",
-      "✅ 提供CLI管理工具 (security_cli.py)",
-      "✅ 创建Flask中间件 (security_middleware.py)",
-      "✅ 部署安全API服务 (端口18097)",
-      "✅ 创建systemd服务 (ultron-security)"
+      "✅ 创建增强版Agent监控器 (agent_monitor.py)",
+      "✅ 实现SQLite数据库持久化 (agent_monitor.db)",
+      "✅ 实现实时状态监控 (在线/忙碌/空闲/离线)",
+      "✅ 实现性能指标收集 (CPU/内存/响应时间/成功率)",
+      "✅ 实现历史数据存储与趋势分析",
+      "✅ 实现告警系统 (成功率高/响应时间长/CPU高/内存高/离线)",
+      "✅ 创建RESTful API服务 (端口18098)",
+      "✅ 创建CLI管理工具 (agent_monitor_cli.py)",
+      "✅ 创建systemd服务 (agent_monitor.service)",
+      "✅ 部署并测试完成"
     ],
     "verification": {
-      "security_api": true,
-      "port": 18097,
-      "endpoints": ["/health", "/api/security/status"],
-      "service": "ultron-security.service",
-      "verified_at": "2026-03-05T21:45:00.000000"
+      "monitor_api": true,
+      "port": 18098,
+      "endpoints": [
+        "/health",
+        "/api/monitor/summary",
+        "/api/agents",
+        "/api/agents/<id>",
+        "/api/agents/<id>/stats",
+        "/api/agents/<id>/history",
+        "/api/agents/<id>/trends",
+        "/api/snapshot",
+        "/api/alerts"
+      ],
+      "service": "agent_monitor.service",
+      "verified_at": "2026-03-05T21:45:35.000000"
     }
   },
   "next_life": {
@@ -36,7 +46,7 @@
     "priority": 1
   },
   "context": {
-    "note": "安全加固已完成。安全API: http://115.29.235.46:18097 | 审计日志: ultron/logs/audit.log | CLI: ultron/security/security_cli.py"
+    "note": "Agent监控已完成。监控API: http://115.29.235.46:18098 | CLI: ultron/agents/agent_monitor_cli.py | 数据库: ultron/agents/data/agent_monitor.db"
   },
   "history": [
     {
@@ -79,6 +89,13 @@
       "task": "智能运维助手系统 - 安全加固",
       "type": "advance",
       "result": "✅ 安全层(18097) + API密钥 + 速率限制 + 审计日志 + 中间件 + systemd",
+      "status": "completed"
+    },
+    {
+      "incarnation": 41,
+      "task": "Agent监控与指标收集系统",
+      "type": "advance",
+      "result": "✅ 监控器(18098) + SQLite + 实时监控 + 指标收集 + 历史分析 + 告警 + CLI + systemd",
       "status": "completed"
     }
   ]

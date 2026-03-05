@@ -1,0 +1,16 @@
+[Unit]
+Description=Agent Monitor Service
+After=network.target
+
+[Service]
+Type=simple
+User=root
+WorkingDirectory=/root/.openclaw/workspace/ultron/agents
+ExecStart=/usr/bin/python3 /root/.openclaw/workspace/ultron/agents/agent_monitor_api.py
+Restart=always
+RestartSec=10
+StandardOutput=append:/root/.openclaw/workspace/ultron/logs/agent_monitor_api.log
+StandardError=append:/root/.openclaw/workspace/ultron/logs/agent_monitor_api.error.log
+
+[Install]
+WantedBy=multi-user.target

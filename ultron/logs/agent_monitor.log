@@ -1,0 +1,49 @@
+2026-03-05 21:44:45,658 [INFO] AgentMonitor: 数据库初始化完成: /root/.openclaw/workspace/ultron/agents/data/agent_monitor.db
+2026-03-05 21:44:45,659 [INFO] AgentMonitor: 已加载 0 个Agent
+2026-03-05 21:44:45,659 [INFO] AgentMonitor: AgentMonitor 初始化完成
+2026-03-05 21:44:45,664 [INFO] AgentMonitor: 注册Agent: WebScraper (agent_001)
+2026-03-05 21:44:45,668 [INFO] AgentMonitor: 注册Agent: DataProcessor (agent_002)
+2026-03-05 21:44:45,673 [INFO] AgentMonitor: 注册Agent: MLEngine (agent_003)
+2026-03-05 21:45:16,758 [INFO] AgentMonitor: 数据库初始化完成: /root/.openclaw/workspace/ultron/agents/data/agent_monitor.db
+2026-03-05 21:45:16,759 [INFO] AgentMonitor: 已加载 3 个Agent
+2026-03-05 21:45:16,760 [INFO] AgentMonitor: AgentMonitor 初始化完成
+2026-03-05 21:45:24,175 [INFO] AgentMonitor: 数据库初始化完成: /root/.openclaw/workspace/ultron/agents/data/agent_monitor.db
+2026-03-05 21:45:24,176 [INFO] AgentMonitor: 已加载 3 个Agent
+2026-03-05 21:45:24,176 [INFO] AgentMonitor: AgentMonitor 初始化完成
+2026-03-05 21:45:24,186 [INFO] AgentMonitorAPI: 启动 Agent Monitor API 服务 (端口 18098)
+2026-03-05 21:45:24,194 [INFO] werkzeug: [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:18098
+ * Running on http://172.16.204.191:18098
+2026-03-05 21:45:24,194 [INFO] werkzeug: [33mPress CTRL+C to quit[0m
+2026-03-05 21:45:25,919 [INFO] werkzeug: 127.0.0.1 - - [05/Mar/2026 21:45:25] "GET /health HTTP/1.1" 200 -
+2026-03-05 21:45:31,367 [INFO] AgentMonitor: 数据库初始化完成: /root/.openclaw/workspace/ultron/agents/data/agent_monitor.db
+2026-03-05 21:45:31,368 [INFO] AgentMonitor: 已加载 3 个Agent
+2026-03-05 21:45:31,368 [INFO] AgentMonitor: AgentMonitor 初始化完成
+2026-03-05 21:45:31,379 [INFO] AgentMonitorAPI: 启动 Agent Monitor API 服务 (端口 18098)
+2026-03-05 21:45:35,162 [INFO] werkzeug: 127.0.0.1 - - [05/Mar/2026 21:45:35] "GET /api/monitor/summary HTTP/1.1" 200 -
+2026-03-05 21:45:39,341 [INFO] werkzeug: 127.0.0.1 - - [05/Mar/2026 21:45:39] "GET /api/agents HTTP/1.1" 200 -
+2026-03-05 21:45:41,960 [INFO] AgentMonitor: 数据库初始化完成: /root/.openclaw/workspace/ultron/agents/data/agent_monitor.db
+2026-03-05 21:45:41,961 [INFO] AgentMonitor: 已加载 3 个Agent
+2026-03-05 21:45:41,962 [INFO] AgentMonitor: AgentMonitor 初始化完成
+2026-03-05 21:45:41,973 [INFO] AgentMonitorAPI: 启动 Agent Monitor API 服务 (端口 18098)
+2026-03-05 21:45:52,482 [INFO] AgentMonitor: 数据库初始化完成: /root/.openclaw/workspace/ultron/agents/data/agent_monitor.db
+2026-03-05 21:45:52,483 [INFO] AgentMonitor: 已加载 3 个Agent
+2026-03-05 21:45:52,483 [INFO] AgentMonitor: AgentMonitor 初始化完成
+2026-03-05 21:45:52,497 [INFO] AgentMonitorAPI: 启动 Agent Monitor API 服务 (端口 18098)
+2026-03-05 21:46:02,970 [INFO] AgentMonitor: 数据库初始化完成: /root/.openclaw/workspace/ultron/agents/data/agent_monitor.db
+2026-03-05 21:46:02,971 [INFO] AgentMonitor: 已加载 3 个Agent
+2026-03-05 21:46:02,971 [INFO] AgentMonitor: AgentMonitor 初始化完成
+2026-03-05 21:46:02,980 [INFO] AgentMonitorAPI: 启动 Agent Monitor API 服务 (端口 18098)
+2026-03-05 21:46:05,982 [INFO] werkzeug: 127.0.0.1 - - [05/Mar/2026 21:46:05] "GET /api/monitor/summary HTTP/1.1" 200 -
+2026-03-05 21:46:10,663 [INFO] AgentMonitor: 数据库初始化完成: /root/.openclaw/workspace/ultron/agents/data/agent_monitor.db
+2026-03-05 21:46:10,664 [INFO] AgentMonitor: 已加载 3 个Agent
+2026-03-05 21:46:10,665 [INFO] AgentMonitor: AgentMonitor 初始化完成
+2026-03-05 21:46:13,471 [INFO] AgentMonitor: 数据库初始化完成: /root/.openclaw/workspace/ultron/agents/data/agent_monitor.db
+2026-03-05 21:46:13,472 [INFO] AgentMonitor: 已加载 3 个Agent
+2026-03-05 21:46:13,472 [INFO] AgentMonitor: AgentMonitor 初始化完成
+2026-03-05 21:46:13,483 [INFO] AgentMonitorAPI: 启动 Agent Monitor API 服务 (端口 18098)
+2026-03-05 21:46:15,859 [INFO] AgentMonitor: 数据库初始化完成: /root/.openclaw/workspace/ultron/agents/data/agent_monitor.db
+2026-03-05 21:46:15,860 [INFO] AgentMonitor: 已加载 3 个Agent
+2026-03-05 21:46:15,860 [INFO] AgentMonitor: AgentMonitor 初始化完成
+2026-03-05 21:46:15,865 [INFO] AgentMonitor: 注册Agent: TestBot (test_agent)
