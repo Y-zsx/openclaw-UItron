@@ -1,0 +1,609 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agent协作网络 - 性能与负载均衡监控</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            min-height: 100vh;
+            color: #fff;
+            padding: 20px;
+        }
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding: 20px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 12px;
+            backdrop-filter: blur(10px);
+        }
+        .header h1 {
+            font-size: 24px;
+            background: linear-gradient(90deg, #00d4ff, #7c3aed);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .status-badge {
+            padding: 6px 16px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: 600;
+        }
+        .status-healthy { background: #10b981; }
+        .status-degraded { background: #f59e0b; }
+        .status-unhealthy { background: #ef4444; }
+        
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+        
+        .card {
+            background: rgba(255,255,255,0.1);
+            border-radius: 16px;
+            padding: 20px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+        
+        .card h3 {
+            color: #00d4ff;
+            margin-bottom: 15px;
+            font-size: 16px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .stat-value {
+            font-size: 32px;
+            font-weight: 700;
+            margin: 10px 0;
+        }
+        
+        .stat-label {
+            color: rgba(255,255,255,0.6);
+            font-size: 14px;
+        }
+        
+        .agent-list {
+            max-height: 400px;
+            overflow-y: auto;
+        }
+        
+        .agent-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px;
+            margin-bottom: 8px;
+            background: rgba(0,0,0,0.2);
+            border-radius: 8px;
+            transition: all 0.3s;
+        }
+        
+        .agent-item:hover {
+            background: rgba(0,0,0,0.4);
+            transform: translateX(4px);
+        }
+        
+        .agent-info {
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .agent-name {
+            font-weight: 600;
+            color: #fff;
+        }
+        
+        .agent-stats {
+            font-size: 12px;
+            color: rgba(255,255,255,0.6);
+            margin-top: 4px;
+        }
+        
+        .load-bar {
+            width: 100px;
+            height: 6px;
+            background: rgba(255,255,255,0.2);
+            border-radius: 3px;
+            overflow: hidden;
+            margin-top: 8px;
+        }
+        
+        .load-fill {
+            height: 100%;
+            border-radius: 3px;
+            transition: width 0.5s;
+        }
+        
+        .load-low { background: #10b981; }
+        .load-medium { background: #f59e0b; }
+        .load-high { background: #ef4444; }
+        
+        .recommendations {
+            background: linear-gradient(135deg, #7c3aed 0%, #4f46e5 100%);
+        }
+        
+        .recommendation-item {
+            padding: 12px;
+            background: rgba(0,0,0,0.2);
+            border-radius: 8px;
+            margin-bottom: 10px;
+            border-left: 4px solid #10b981;
+        }
+        
+        .recommendation-item.warning {
+            border-left-color: #f59e0b;
+        }
+        
+        .recommendation-item.critical {
+            border-left-color: #ef4444;
+        }
+        
+        .recommendation-title {
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+        
+        .recommendation-desc {
+            font-size: 13px;
+            color: rgba(255,255,255,0.7);
+        }
+        
+        .chart-container {
+            height: 200px;
+        }
+        
+        .btn {
+            padding: 8px 16px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+        
+        .btn-primary {
+            background: linear-gradient(90deg, #00d4ff, #7c3aed);
+            color: #fff;
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 20px rgba(0,212,255,0.4);
+        }
+        
+        .strategy-select {
+            padding: 8px 12px;
+            border-radius: 6px;
+            background: rgba(0,0,0,0.3);
+            color: #fff;
+            border: 1px solid rgba(255,255,255,0.2);
+            cursor: pointer;
+        }
+        
+        .table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        
+        .table th, .table td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+        
+        .table th {
+            color: rgba(255,255,255,0.6);
+            font-weight: 600;
+            font-size: 12px;
+            text-transform: uppercase;
+        }
+        
+        .table td {
+            font-size: 14px;
+        }
+        
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 4px;
+            overflow: hidden;
+        }
+        
+        .progress-fill {
+            height: 100%;
+            transition: width 0.5s;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>🦞 Agent协作网络 - 性能与负载均衡监控</h1>
+        <div style="display: flex; gap: 15px; align-items: center;">
+            <select id="strategySelect" class="strategy-select" onchange="changeStrategy()">
+                <option value="round_robin">轮询</option>
+                <option value="least_connections">最少连接</option>
+                <option value="least_load" selected>最低负载</option>
+                <option value="performance">性能最优</option>
+                <option value="random">随机</option>
+                <option value="weighted">加权</option>
+            </select>
+            <span id="overallStatus" class="status-badge status-healthy">健康</span>
+            <button class="btn btn-primary" onclick="refreshAll()">🔄 刷新</button>
+        </div>
+    </div>
+    
+    <!-- 核心指标 -->
+    <div class="grid">
+        <div class="card">
+            <h3>📊 总Agent数</h3>
+            <div class="stat-value" id="totalAgents">-</div>
+            <div class="stat-label">在线Agent数量</div>
+        </div>
+        <div class="card">
+            <h3>✅ 健康Agent</h3>
+            <div class="stat-value" id="healthyAgents">-</div>
+            <div class="stat-label">健康比例: <span id="healthyRatio">-</span></div>
+        </div>
+        <div class="card">
+            <h3>⚡ 总任务数</h3>
+            <div class="stat-value" id="totalTasks">-</div>
+            <div class="stat-label">已完成: <span id="completedTasks">-</span></div>
+        </div>
+        <div class="card">
+            <h3>📈 平均执行时间</h3>
+            <div class="stat-value" id="avgExecTime">-</div>
+            <div class="stat-label">毫秒</div>
+        </div>
+    </div>
+    
+    <!-- 详细面板 -->
+    <div class="grid">
+        <!-- Agent列表 -->
+        <div class="card">
+            <h3>🤖 Agent状态</h3>
+            <div class="agent-list" id="agentList">
+                <div style="text-align: center; padding: 40px; color: rgba(255,255,255,0.5);">
+                    加载中...
+                </div>
+            </div>
+        </div>
+        
+        <!-- 负载分布图 -->
+        <div class="card">
+            <h3>📊 负载分布</h3>
+            <div class="chart-container">
+                <canvas id="loadChart"></canvas>
+            </div>
+        </div>
+    </div>
+    
+    <div class="grid">
+        <!-- 性能指标 -->
+        <div class="card">
+            <h3>📈 性能趋势</h3>
+            <div class="chart-container">
+                <canvas id="perfChart"></canvas>
+            </div>
+        </div>
+        
+        <!-- 智能建议 -->
+        <div class="card recommendations">
+            <h3>💡 智能优化建议</h3>
+            <div id="recommendations">
+                <div style="color: rgba(255,255,255,0.7); text-align: center; padding: 20px;">
+                    正在分析...
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- 详细表格 -->
+    <div class="card" style="margin-top: 20px;">
+        <h3>📋 详细指标</h3>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Agent ID</th>
+                    <th>当前负载</th>
+                    <th>完成任务</th>
+                    <th>失败任务</th>
+                    <th>成功率</th>
+                    <th>平均执行时间</th>
+                    <th>权重</th>
+                </tr>
+            </thead>
+            <tbody id="detailTable">
+            </tbody>
+        </table>
+    </div>
+
+    <script>
+        let loadChart, perfChart;
+        
+        async function fetchJSON(url) {
+            try {
+                const res = await fetch(url);
+                return await res.json();
+            } catch (e) {
+                console.error(url, e);
+                return null;
+            }
+        }
+        
+        async function refreshAll() {
+            const [lbData, perfData, failoverData] = await Promise.all([
+                fetchJSON('/api/agents'),
+                fetchJSON('/metrics'),
+                fetchJSON('/api/failover/status')
+            ]);
+            
+            updateStats(lbData);
+            updateAgentList(lbData);
+            updateCharts(lbData);
+            updateRecommendations(lbData, perfData, failoverData);
+            updateDetailTable(lbData);
+        }
+        
+        function updateStats(data) {
+            const agents = data?.agents || {};
+            const total = Object.keys(agents).length;
+            const healthy = data?.healthy_agents || 0;
+            let completed = 0, failed = 0, totalTasks = 0, avgTime = 0, timeSum = 0;
+            
+            Object.values(agents).forEach(a => {
+                completed += a.completed_tasks;
+                failed += a.failed_tasks;
+                totalTasks += a.total_tasks;
+                if (a.avg_execution_time > 0) timeSum += a.avg_execution_time;
+            });
+            
+            avgTime = total > 0 && completed > 0 ? (timeSum / total).toFixed(1) : 0;
+            
+            document.getElementById('totalAgents').textContent = total;
+            document.getElementById('healthyAgents').textContent = healthy;
+            document.getElementById('healthyRatio').textContent = total > 0 ? Math.round(healthy/total*100) + '%' : '-';
+            document.getElementById('totalTasks').textContent = totalTasks;
+            document.getElementById('completedTasks').textContent = completed;
+            document.getElementById('avgExecTime').textContent = avgTime;
+            
+            const statusEl = document.getElementById('overallStatus');
+            if (healthy === total && total > 0) {
+                statusEl.textContent = '健康';
+                statusEl.className = 'status-badge status-healthy';
+            } else if (healthy > 0) {
+                statusEl.textContent = '部分降级';
+                statusEl.className = 'status-badge status-degraded';
+            } else {
+                statusEl.textContent = '不健康';
+                statusEl.className = 'status-badge status-unhealthy';
+            }
+        }
+        
+        function updateAgentList(data) {
+            const agents = data?.agents || {};
+            const container = document.getElementById('agentList');
+            
+            if (Object.keys(agents).length === 0) {
+                container.innerHTML = '<div style="text-align: center; padding: 40px; color: rgba(255,255,255,0.5);">暂无Agent数据</div>';
+                return;
+            }
+            
+            container.innerHTML = Object.values(agents).map(a => {
+                const loadPercent = Math.min(100, (a.current_load / 5) * 100);
+                const loadClass = loadPercent < 30 ? 'load-low' : loadPercent < 70 ? 'load-medium' : 'load-high';
+                const healthClass = a.success_rate >= 90 ? 'status-healthy' : a.success_rate >= 70 ? 'status-degraded' : 'status-unhealthy';
+                
+                return `
+                    <div class="agent-item">
+                        <div class="agent-info">
+                            <span class="agent-name">${a.agent_id}</span>
+                            <span class="agent-stats">负载: ${a.current_load} | 成功率: ${a.success_rate}%</span>
+                            <div class="load-bar">
+                                <div class="load-fill ${loadClass}" style="width: ${loadPercent}%"></div>
+                            </div>
+                        </div>
+                        <span class="status-badge ${healthClass}" style="font-size: 11px;">${a.success_rate}%</span>
+                    </div>
+                `;
+            }).join('');
+        }
+        
+        function updateCharts(data) {
+            const agents = data?.agents || {};
+            const labels = Object.keys(agents);
+            const loads = Object.values(agents).map(a => a.current_load);
+            const successRates = Object.values(agents).map(a => a.success_rate);
+            
+            if (loadChart) loadChart.destroy();
+            loadChart = new Chart(document.getElementById('loadChart'), {
+                type: 'bar',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        label: '当前负载',
+                        data: loads,
+                        backgroundColor: loads.map(l => l < 2 ? '#10b981' : l < 4 ? '#f59e0b' : '#ef4444'),
+                        borderRadius: 4
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: { legend: { display: false } },
+                    scales: {
+                        y: { beginAtZero: true, grid: { color: 'rgba(255,255,255,0.1)' } },
+                        x: { grid: { display: false } }
+                    }
+                }
+            });
+            
+            if (perfChart) perfChart.destroy();
+            perfChart = new Chart(document.getElementById('perfChart'), {
+                type: 'line',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        label: '成功率 %',
+                        data: successRates,
+                        borderColor: '#00d4ff',
+                        backgroundColor: 'rgba(0,212,255,0.1)',
+                        fill: true,
+                        tension: 0.4
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: { legend: { display: false } },
+                    scales: {
+                        y: { min: 0, max: 100, grid: { color: 'rgba(255,255,255,0.1)' } },
+                        x: { grid: { display: false } }
+                    }
+                }
+            });
+        }
+        
+        function updateRecommendations(lbData, perfData, failoverData) {
+            const agents = lbData?.agents || {};
+            const recommendations = [];
+            
+            // 分析每个Agent
+            Object.values(agents).forEach(a => {
+                if (a.current_load >= 4) {
+                    recommendations.push({
+                        type: 'critical',
+                        title: `⚠️ ${a.agent_id} 负载过高`,
+                        desc: `当前负载 ${a.current_load}，建议增加实例或分散任务`
+                    });
+                }
+                if (a.success_rate < 80) {
+                    recommendations.push({
+                        type: 'warning',
+                        title: `🔧 ${a.agent_id} 成功率较低`,
+                        desc: `成功率 ${a.success_rate}%，建议检查执行逻辑`
+                    });
+                }
+                if (a.avg_execution_time > 100) {
+                    recommendations.push({
+                        type: 'warning',
+                        title: `⏱️ ${a.agent_id} 执行较慢`,
+                        desc: `平均执行时间 ${a.avg_execution_time}ms，建议优化`
+                    });
+                }
+            });
+            
+            // 总体建议
+            const healthyCount = lbData?.healthy_agents || 0;
+            const totalCount = Object.keys(agents).length;
+            if (healthyCount / totalCount < 0.5 && totalCount > 0) {
+                recommendations.push({
+                    type: 'critical',
+                    title: '🚨 Agent健康率过低',
+                    desc: `仅 ${healthyCount}/${totalCount} Agent健康，建议检查系统`
+                });
+            }
+            
+            if (failoverData?.failed_tasks > 0) {
+                recommendations.push({
+                    type: 'warning',
+                    title: '🔄 存在失败任务',
+                    desc: `${failoverData.failed_tasks} 个任务失败，建议检查故障转移配置`
+                });
+            }
+            
+            if (recommendations.length === 0) {
+                recommendations.push({
+                    type: 'normal',
+                    title: '✅ 系统运行良好',
+                    desc: '所有Agent正常运行，负载均衡策略效果良好'
+                });
+            }
+            
+            document.getElementById('recommendations').innerHTML = recommendations.map(r => 
+                `<div class="recommendation-item ${r.type}">
+                    <div class="recommendation-title">${r.title}</div>
+                    <div class="recommendation-desc">${r.desc}</div>
+                </div>`
+            ).join('');
+        }
+        
+        function updateDetailTable(data) {
+            const agents = data?.agents || {};
+            const tbody = document.getElementById('detailTable');
+            
+            tbody.innerHTML = Object.values(agents).map(a => `
+                <tr>
+                    <td>${a.agent_id}</td>
+                    <td>
+                        <div class="progress-bar">
+                            <div class="progress-fill ${a.current_load < 2 ? '#10b981' : a.current_load < 4 ? '#f59e0b' : '#ef4444'}" 
+                                style="width: ${Math.min(100, a.current_load/5*100)}%"></div>
+                        </div>
+                        ${a.current_load}
+                    </td>
+                    <td>${a.completed_tasks}</td>
+                    <td style="color: ${a.failed_tasks > 0 ? '#ef4444' : '#fff'}">${a.failed_tasks}</td>
+                    <td style="color: ${a.success_rate >= 90 ? '#10b981' : a.success_rate >= 70 ? '#f59e0b' : '#ef4444'}">${a.success_rate}%</td>
+                    <td>${a.avg_execution_time.toFixed(1)}ms</td>
+                    <td>${a.weight}</td>
+                </tr>
+            `).join('');
+        }
+        
+        async function changeStrategy() {
+            const strategy = document.getElementById('strategySelect').value;
+            try {
+                await fetch('/api/strategy', {
+                    method: 'PUT',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify({strategy})
+                });
+                refreshAll();
+            } catch (e) {
+                alert('策略切换失败');
+            }
+        }
+        
+        // 初始化
+        loadChart = new Chart(document.getElementById('loadChart'), { type: 'bar', data: { labels: [], datasets: [] } });
+        perfChart = new Chart(document.getElementById('perfChart'), { type: 'line', data: { labels: [], datasets: [] } });
+        
+        // 使用8089端口的collab gateway代理
+        const LB_API = 'http://localhost:8093';
+        const PERF_API = 'http://localhost:18141';
+        
+        // 重写fetchJSON使用正确的API
+        async function fetchJSON(url) {
+            const apiMap = {
+                '/api/': LB_API + url,
+                '/metrics': PERF_API + '/metrics'
+            };
+            const targetUrl = apiMap[Object.keys(apiMap).find(k => url.includes(k))] || url;
+            try {
+                const res = await fetch(targetUrl);
+                return await res.json();
+            } catch (e) {
+                console.error(url, e);
+                return null;
+            }
+        }
+        
+        setInterval(refreshAll, 10000);
+        refreshAll();
+    </script>
+</body>
+</html>

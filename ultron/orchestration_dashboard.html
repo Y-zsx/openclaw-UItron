@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agent服务编排可视化面板</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { 
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            min-height: 100vh;
+            color: #e0e0e0;
+        }
+        .header {
+            background: rgba(0,0,0,0.3);
+            padding: 20px 30px;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .header h1 { 
+            font-size: 24px; 
+            background: linear-gradient(90deg, #00d4ff, #7b2cbf);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .status-badge {
+            padding: 6px 16px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: 500;
+        }
+        .status-online { background: rgba(0,255,136,0.2); color: #00ff88; }
+        .container { padding: 20px 30px; }
+        
+        /* Stats Cards */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        .stat-card {
+            background: rgba(255,255,255,0.05);
+            border-radius: 16px;
+            padding: 24px;
+            border: 1px solid rgba(255,255,255,0.1);
+            transition: transform 0.2s;
+        }
+        .stat-card:hover { transform: translateY(-4px); }
+        .stat-value { 
+            font-size: 36px; 
+            font-weight: 700;
+            background: linear-gradient(90deg, #00d4ff, #00ff88);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .stat-label { 
+            color: #888; 
+            font-size: 14px; 
+            margin-top: 8px; 
+        }
+        
+        /* Charts */
+        .charts-row {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        .chart-card {
+            background: rgba(255,255,255,0.05);
+            border-radius: 16px;
+            padding: 24px;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+        .chart-card h3 {
+            font-size: 16px;
+            margin-bottom: 20px;
+            color: #aaa;
+        }
+        
+        /* Executor Status */
+        .executor-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+        .executor-card {
+            background: rgba(255,255,255,0.05);
+            border-radius: 12px;
+            padding: 20px;
+            text-align: center;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+        .executor-icon {
+            font-size: 32px;
+            margin-bottom: 10px;
+        }
+        .executor-name { font-size: 14px; color: #aaa; }
+        .executor-status {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            display: inline-block;
+            margin-right: 6px;
+        }
+        .status-active { background: #00ff88; }
+        .status-inactive { background: #666; }
+        
+        /* Execution Table */
+        .table-card {
+            background: rgba(255,255,255,0.05);
+            border-radius: 16px;
+            padding: 24px;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+        .table-card h3 {
+            font-size: 16px;
+            margin-bottom: 20px;
+            color: #aaa;
+        }
+        table { width: 100%; border-collapse: collapse; }
+        th, td { 
+            padding: 12px 16px; 
+            text-align: left; 
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+        th { color: #666; font-weight: 500; font-size: 13px; }
+        td { font-size: 14px; }
+        .status-tag {
+            padding: 4px 10px;
+            border-radius: 12px;
+            font-size: 12px;
+        }
+        .status-success { background: rgba(0,255,136,0.2); color: #00ff88; }
+        .status-failed { background: rgba(255,68,68,0.2); color: #ff4444; }
+        .status-pending { background: rgba(255,204,0,0.2); color: #ffcc00; }
+        .status-running { background: rgba(0,212,255,0.2); color: #00d4ff; }
+        
+        .last-update {
+            text-align: right;
+            color: #666;
+            font-size: 12px;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>🎯 Agent服务编排可视化面板</h1>
+        <span class="status-badge status-online">● 在线</span>
+    </div>
+    
+    <div class="container">
+        <!-- Stats -->
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-value" id="totalExecutions">-</div>
+                <div class="stat-label">总执行次数</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value" id="activeCount">-</div>
+                <div class="stat-label">活跃任务</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value" id="successRate">-</div>
+                <div class="stat-label">成功率</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value" id="avgDuration">-</div>
+                <div class="stat-label">平均执行时间</div>
+            </div>
+        </div>
+        
+        <!-- Executor Status -->
+        <div class="chart-card" style="margin-bottom: 30px;">
+            <h3>⚡ 执行器状态</h3>
+            <div class="executor-grid">
+                <div class="executor-card">
+                    <div class="executor-icon">🐚</div>
+                    <div class="executor-name">Shell</div>
+                    <div style="margin-top:10px;"><span class="executor-status status-active"></span>在线</div>
+                </div>
+                <div class="executor-card">
+                    <div class="executor-icon">🌐</div>
+                    <div class="executor-name">HTTP</div>
+                    <div style="margin-top:10px;"><span class="executor-status status-active"></span>在线</div>
+                </div>
+                <div class="executor-card">
+                    <div class="executor-icon">📜</div>
+                    <div class="executor-name">Script</div>
+                    <div style="margin-top:10px;"><span class="executor-status status-active"></span>在线</div>
+                </div>
+                <div class="executor-card">
+                    <div class="executor-icon">🤖</div>
+                    <div class="executor-name">Agent</div>
+                    <div style="margin-top:10px;"><span class="executor-status status-active"></span>在线</div>
+                </div>
+                <div class="executor-card">
+                    <div class="executor-icon">📞</div>
+                    <div class="executor-name">Function</div>
+                    <div style="margin-top:10px;"><span class="executor-status status-active"></span>在线</div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Charts -->
+        <div class="charts-row">
+            <div class="chart-card">
+                <h3>📊 执行状态分布</h3>
+                <canvas id="statusChart" height="200"></canvas>
+            </div>
+            <div class="chart-card">
+                <h3>📈 执行趋势</h3>
+                <canvas id="trendChart" height="200"></canvas>
+            </div>
+        </div>
+        
+        <!-- Recent Executions -->
+        <div class="table-card">
+            <h3>📋 最近执行记录</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>执行ID</th>
+                        <th>任务ID</th>
+                        <th>执行器类型</th>
+                        <th>状态</th>
+                        <th>开始时间</th>
+                        <th>耗时</th>
+                    </tr>
+                </thead>
+                <tbody id="executionTable">
+                    <tr><td colspan="6" style="text-align:center;color:#666;">加载中...</td></tr>
+                </tbody>
+            </table>
+        </div>
+        
+        <div class="last-update">最后更新: <span id="lastUpdate">-</span></div>
+    </div>
+    
+    <script>
+        // Charts
+        let statusChart, trendChart;
+        let executionHistory = [];
+        
+        function initCharts() {
+            const statusCtx = document.getElementById('statusChart').getContext('2d');
+            statusChart = new Chart(statusCtx, {
+                type: 'doughnut',
+                data: {
+                    labels: ['成功', '失败', '进行中', '超时'],
+                    datasets: [{
+                        data: [0, 0, 0, 0],
+                        backgroundColor: ['#00ff88', '#ff4444', '#00d4ff', '#ffcc00'],
+                        borderWidth: 0
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    plugins: { legend: { position: 'bottom', labels: { color: '#aaa' } } }
+                }
+            });
+            
+            const trendCtx = document.getElementById('trendChart').getContext('2d');
+            trendChart = new Chart(trendCtx, {
+                type: 'line',
+                data: {
+                    labels: [],
+                    datasets: [{
+                        label: '执行次数',
+                        data: [],
+                        borderColor: '#00d4ff',
+                        backgroundColor: 'rgba(0,212,255,0.1)',
+                        fill: true,
+                        tension: 0.4
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    plugins: { legend: { display: false } },
+                    scales: {
+                        x: { ticks: { color: '#666' }, grid: { color: 'rgba(255,255,255,0.1)' } },
+                        y: { ticks: { color: '#666' }, grid: { color: 'rgba(255,255,255,0.1)' } }
+                    }
+                }
+            });
+        }
+        
+        async function fetchStats() {
+            try {
+                const response = await fetch('http://172.16.204.191:18232/api/orchestration/stats');
+                const data = await response.json();
+                
+                // Update stats
+                document.getElementById('totalExecutions').textContent = data.total_executions || 0;
+                document.getElementById('activeCount').textContent = data.active_count || 0;
+                document.getElementById('successRate').textContent = ((data.success_rate || 0) * 100).toFixed(1) + '%';
+                document.getElementById('avgDuration').textContent = (data.avg_duration || 0).toFixed(2) + 's';
+                
+                // Update status chart
+                if (data.by_status) {
+                    statusChart.data.datasets[0].data = [
+                        data.by_status.success || 0,
+                        data.by_status.failed || 0,
+                        data.by_status.running || 0,
+                        data.by_status.timeout || 0
+                    ];
+                    statusChart.update();
+                }
+                
+                // Update trend chart
+                if (data.trend && data.trend.length > 0) {
+                    const labels = data.trend.map(t => t.hour);
+                    const values = data.trend.map(t => t.count);
+                    trendChart.data.labels = labels;
+                    trendChart.data.datasets[0].data = values;
+                    trendChart.update();
+                }
+                
+                // Update execution table
+                if (data.recent_executions) {
+                    updateExecutionTable(data.recent_executions);
+                }
+                
+                document.getElementById('lastUpdate').textContent = new Date().toLocaleTimeString('zh-CN');
+            } catch (e) {
+                console.error('Failed to fetch stats:', e);
+            }
+        }
+        
+        function updateExecutionTable(executions) {
+            const tbody = document.getElementById('executionTable');
+            if (!executions || executions.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="6" style="text-align:center;color:#666;">暂无执行记录</td></tr>';
+                return;
+            }
+            
+            tbody.innerHTML = executions.map(exec => `
+                <tr>
+                    <td style="font-family:monospace;font-size:12px;">${exec.execution_id?.substring(0, 12) || '-'}</td>
+                    <td>${exec.task_id || '-'}</td>
+                    <td>${exec.executor_type || '-'}</td>
+                    <td><span class="status-tag status-${exec.status}">${exec.status}</span></td>
+                    <td>${exec.start_time ? new Date(exec.start_time).toLocaleString('zh-CN') : '-'}</td>
+                    <td>${exec.duration ? exec.duration.toFixed(2) + 's' : '-'}</td>
+                </tr>
+            `).join('');
+        }
+        
+        // Initialize
+        initCharts();
+        fetchStats();
+        setInterval(fetchStats, 5000); // Refresh every 5 seconds
+    </script>
+</body>
+</html>

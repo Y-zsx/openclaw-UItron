@@ -280,6 +280,17 @@ def stats():
     })
 
 
+@app.route('/decisions/recent', methods=['GET'])
+def recent_decisions():
+    """获取最近决策"""
+    limit = int(request.args.get('limit', 10))
+    decisions = decision_engine.get_recent_decisions(limit)
+    return jsonify({
+        "decisions": [d.to_dict() for d in decisions],
+        "count": len(decisions)
+    })
+
+
 # 导入工作流集成模块
 import sys
 import os

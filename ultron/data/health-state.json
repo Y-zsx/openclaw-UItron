@@ -1,0 +1,53 @@
+{
+  "history": [
+    {
+      "timestamp": "2026-03-06T02:42:37.758908",
+      "results": [
+        {
+          "name": "enhanced_executor_api",
+          "host": "127.0.0.1",
+          "port": 18210,
+          "port_open": true,
+          "http_ok": false,
+          "critical": true,
+          "timestamp": "2026-03-06T02:42:37.748206"
+        },
+        {
+          "name": "gateway",
+          "host": "127.0.0.1",
+          "port": 18789,
+          "port_open": true,
+          "http_ok": true,
+          "critical": true,
+          "timestamp": "2026-03-06T02:42:37.752637"
+        },
+        {
+          "name": "browser",
+          "host": "127.0.0.1",
+          "port": 18800,
+          "port_open": true,
+          "http_ok": false,
+          "critical": false,
+          "timestamp": "2026-03-06T02:42:37.755381"
+        },
+        {
+          "name": "ultron_api",
+          "host": "127.0.0.1",
+          "port": 18200,
+          "port_open": true,
+          "http_ok": true,
+          "critical": false,
+          "timestamp": "2026-03-06T02:42:37.758798"
+        }
+      ]
+    }
+  ],
+  "alerts": [],
+  "consecutive_failures": {
+    "enhanced_executor_api": 0,
+    "gateway": 0,
+    "browser": 0,
+    "ultron_api": 0
+  },
+  "last_check": "2026-03-06T02:42:37.758913"
+}

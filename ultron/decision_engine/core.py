@@ -281,8 +281,12 @@ class DecisionEngine:
     
     def get_stats(self) -> Dict:
         """获取决策统计"""
+        total = self.stats.get("total", 0)
+        completed = self.stats.get("completed", 0)
         return {
             **self.stats,
+            "total_decisions": total,
+            "success_rate": completed / total if total > 0 else 0,
             "pending": len([d for d in self.decisions if d.status == DecisionStatus.PENDING]),
             "rules_count": len(self.rules),
             "handlers_count": len(self.action_handlers)
@@ -294,6 +298,10 @@ class DecisionEngine:
         if status:
             decisions = [d for d in decisions if d.status == status]
         return [d.to_dict() for d in decisions[-limit:]]
+    
+    def get_recent_decisions(self, limit: int = 10) -> List[Decision]:
+        """获取最近的决策"""
+        return self.decisions[-limit:] if self.decisions else []
     
     # 默认动作处理器
     def _handle_notify(self, decision: Decision) -> Any:

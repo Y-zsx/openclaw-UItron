@@ -1,0 +1,14 @@
+[Unit]
+Description=Ultron Enhanced Agent Executor
+After=network.target
+
+[Service]
+Type=simple
+User=root
+WorkingDirectory=/root/.openclaw/workspace/ultron/agent-executor
+ExecStart=/usr/bin/python3 /root/.openclaw/workspace/ultron/agent-executor/executor_enhanced.py
+Restart=always
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target

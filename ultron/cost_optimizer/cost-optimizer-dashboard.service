@@ -1,0 +1,15 @@
+[Unit]
+Description=Ultron Cost Optimizer Dashboard
+After=network.target cost-optimizer.service
+Requires=cost-optimizer.service
+
+[Service]
+Type=simple
+User=root
+WorkingDirectory=/root/.openclaw/workspace/ultron/cost_optimizer
+ExecStart=/usr/bin/python3 /root/.openclaw/workspace/ultron/cost_optimizer/dashboard_server.py
+Restart=always
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target

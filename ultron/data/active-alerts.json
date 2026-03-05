@@ -1,0 +1,88 @@
+{
+  "alerts": [
+    {
+      "id": "test_alert_1",
+      "title": "Test High CPU",
+      "description": "CPU usage exceeded 90%",
+      "severity": 2,
+      "source": "monitor",
+      "tags": [
+        "cpu",
+        "performance"
+      ],
+      "status": "active",
+      "created_at": "2026-03-06T02:21:02.850158",
+      "updated_at": "2026-03-06T02:22:07.869505",
+      "escalation_level": 4,
+      "escalation_count": 1,
+      "notifications": [
+        {
+          "alert_id": "test_alert_1",
+          "message": "Alert created: Test High CPU",
+          "channels": [
+            "log",
+            "dingtalk"
+          ],
+          "timestamp": "2026-03-06T02:21:02.851423"
+        }
+      ],
+      "resolved_at": null
+    },
+    {
+      "id": "alert_mem",
+      "title": "Memory Usage High",
+      "description": "Memory usage exceeded 85%",
+      "severity": 3,
+      "source": "monitor",
+      "tags": [
+        "memory",
+        "performance"
+      ],
+      "status": "active",
+      "created_at": "2026-03-06T02:22:00.888284",
+      "updated_at": "2026-03-06T02:22:00.888300",
+      "escalation_level": 3,
+      "escalation_count": 0,
+      "notifications": [
+        {
+          "alert_id": "alert_mem",
+          "message": "Alert created: Memory Usage High",
+          "channels": [
+            "log",
+            "dingtalk",
+            "sms"
+          ],
+          "timestamp": "2026-03-06T02:22:00.888749"
+        }
+      ],
+      "resolved_at": null
+    },
+    {
+      "id": "alert_disk",
+      "title": "Disk Space Low",
+      "description": "Disk space below 20%",
+      "severity": 1,
+      "source": "disk-monitor",
+      "tags": [
+        "disk",
+        "storage"
+      ],
+      "status": "active",
+      "created_at": "2026-03-06T02:22:00.899520",
+      "updated_at": "2026-03-06T02:22:00.899535",
+      "escalation_level": 1,
+      "escalation_count": 0,
+      "notifications": [
+        {
+          "alert_id": "alert_disk",
+          "message": "Alert created: Disk Space Low",
+          "channels": [
+            "log"
+          ],
+          "timestamp": "2026-03-06T02:22:00.899959"
+        }
+      ],
+      "resolved_at": null
+    }
+  ]
+}

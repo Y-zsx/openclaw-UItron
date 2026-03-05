@@ -199,6 +199,14 @@ def main():
     msg_parser.add_argument("agent_id", help="Agent ID")
     msg_parser.add_argument("--unread", action="store_true", help="仅未读")
     
+    # 告警命令
+    alerts_parser = subparsers.add_parser("alerts", help="查看告警")
+    alerts_parser.add_argument("--level", help="按级别过滤 (info/warning/error/critical)")
+    alerts_parser.add_argument("--source", help="按来源过滤")
+    alerts_parser.add_argument("--unresolved", action="store_true", help="仅未解决")
+    
+    alert_rule_parser = subparsers.add_parser("alert-rules", help="告警规则管理")
+    
     args = parser.parse_args()
     
     cli = GatewayCLI(args.url)
@@ -221,6 +229,47 @@ def main():
         output = cli.submit_task(args.task_type, payload, args.priority)
     elif args.command == "messages":
         output = cli.get_messages(args.agent_id, args.unread)
+    elif args.command == "alerts":
+        # 本地告警系统查询
+        try:
+            from alert_system import get_alert_manager, AlertLevel, AlertSource
+            manager = get_alert_manager()
+            
+            level = None
+            if args.level:
+                level = AlertLevel(args.level)
+            source = None
+            if args.source:
+                source = AlertSource(args.source)
+            
+            alerts = manager.get_alerts(level=level, source=source, 
+                                        unresolved_only=args.unresolved)
+            output = {
+                "success": True,
+                "total": len(alerts),
+                "alerts": [
+                    {
+                        "id": a.id,
+                        "level": a.level.value,
+                        "source": a.source.value,
+                        "title": a.title,
+                        "message": a.message,
+                        "timestamp": a.timestamp.isoformat(),
+                        "resolved": a.resolved
+                    }
+                    for a in alerts
+                ]
+            }
+        except ImportError:
+            output = {"success": False, "error": "告警系统未安装"}
+    elif args.command == "alert-rules":
+        try:
+            from alert_system import get_alert_manager
+            manager = get_alert_manager()
+            stats = manager.get_stats()
+            output = {"success": True, **stats}
+        except ImportError:
+            output = {"success": False, "error": "告警系统未安装"}
     else:
         # 默认显示健康状态
         output = cli.health()

@@ -1,0 +1,14 @@
+[Unit]
+Description=Agent协作网络负载均衡性能优化服务
+After=network.target
+
+[Service]
+Type=simple
+User=root
+WorkingDirectory=/root/.openclaw/workspace/ultron
+ExecStart=/usr/bin/python3 lb_perf_optimizer_api.py
+Restart=always
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target
