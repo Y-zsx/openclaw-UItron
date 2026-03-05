@@ -45,18 +45,61 @@
 
 ---
 
-## 历史夙愿（需检查运行状态）
+## 目录结构（2026-03-05 重构）
 
-| 夙愿 | 产出 | 运行状态 | 备注 |
-|------|------|----------|------|
-| 智能监控系统 | intelligent-monitor.py | running_verified ✅ | 已在hub中运行 |
-| 决策建议系统 | decision-advisor.py | running_verified ✅ | 已在hub中运行 |
-| 数据分析引擎 | data-analytics-engine.py | running_verified ✅ | 已在hub中运行 |
-| 工作流引擎 | workflow-orchestrator.py | running_verified ✅ | 已在hub中运行 |
-| 多智能体协作 | agent-*.py (50+个) | failed ❌ | 孤立代码，从未运行 |
-| 星际网络 | interstellar-*.py | failed ❌ | 孤立代码，理论大于实际 |
-| 宇宙意识 | galactic-consciousness.py | failed ❌ | 孤立代码，无实际用途 |
-| 量子计算 | quantum-*.py | failed ❌ | 孤立代码，无实际用途 |
+```
+ultron/
+├── core/           # 核心系统（1个）
+│   └── ultron-hub.py          # 主入口，定时运行
+├── monitor/        # 监控模块（4个）
+│   ├── intelligent-monitor.py
+│   ├── monitoring-system.py
+│   ├── predictive-maintenance.py
+│   └── threat-detector.py
+├── decision/       # 决策系统（5个）
+│   ├── decision-advisor.py
+│   ├── ultron-decision-engine.py
+│   ├── autonomous-decision.py
+│   ├── cross-domain-decision.py
+│   └── decision-optimizer.py
+├── workflow/       # 工作流（6个）
+│   ├── workflow-orchestrator.py
+│   ├── workflow-orchestrator-v2.py
+│   ├── task-orchestrator.py
+│   ├── workflow-engine.py
+│   ├── workflow-automation.py
+│   └── unified-scheduler.py
+├── analytics/      # 数据分析（2个）
+│   ├── data-analytics-engine.py
+│   └── ultron-analytics.py
+├── tools/          # 工具集（22个）
+│   ├── capability-*.py
+│   ├── self-*.py
+│   ├── meta-*.py
+│   └── resource-*.py
+├── agents/         # 智能体（已有）
+│   └── [agent相关模块]
+└── legacy/         # 废弃/实验代码（63个）
+    ├── interstellar-*.py
+    ├── galactic-consciousness.py
+    ├── quantum-*.py
+    └── [其他未使用的理论代码]
+```
+
+### 运行状态统计
+
+| 目录 | 文件数 | 运行中 | 废弃 |
+|------|--------|--------|------|
+| core | 1 | ✅ 1 | 0 |
+| monitor | 4 | ✅ 1 | 3 |
+| decision | 5 | ❌ | 5 |
+| workflow | 6 | ❌ | 6 |
+| analytics | 2 | ❌ | 2 |
+| tools | 22 | ❌ | 22 |
+| legacy | 63 | ❌ | 63 |
+| agents | ~10 | ❌ | ~10 |
+
+**当前实际在跑**: 仅 ultron-hub.py (core/)
 
 ---
 
@@ -102,13 +145,8 @@ tail -20 ultron/logs/hub-alerts.json
 
 ---
 
-## 废弃代码清理计划
+## 下一步行动
 
-以下文件可以删除（从未运行，纯粹占用空间）：
-- 50+个agent-*.py（多智能体）
-- interstellar-*.py（星际网络）
-- galactic-consciousness.py
-- quantum-*.py
-- multidimensional-existence.py
-
-**保留标准**：必须被ultron-hub.py或其他运行中的脚本引用
+1. **第60世**: 把告警发送到钉钉，验证完整流程
+2. **第61世**: 让monitor模块真正跑起来
+3. **第62世**: 整合decision模块到hub

@@ -16,6 +16,20 @@ ULTRON_DIR = "/root/.openclaw/workspace/ultron"
 CONFIG_PATH = f"{ULTRON_DIR}/logs/hub-config.json"
 STATE_PATH = f"{ULTRON_DIR}/logs/hub-state.json"
 
+# 模块路径映射
+MODULE_PATHS = {
+    "monitor": f"{ULTRON_DIR}/monitor/intelligent-monitor.py",
+    "advisor": f"{ULTRON_DIR}/decision/decision-advisor.py",
+    "analytics": f"{ULTRON_DIR}/analytics/data-analytics-engine.py",
+    "workflow": f"{ULTRON_DIR}/workflow/workflow-orchestrator.py"
+}
+MODULE_CLASSES = {
+    "monitor": "IntelligentMonitor",
+    "advisor": "DecisionAdvisor",
+    "analytics": "StreamProcessor",
+    "workflow": "WorkflowOrchestrator"
+}
+
 
 def load_module(filename, class_name):
     """动态加载模块（处理连字符文件名）"""
@@ -174,7 +188,7 @@ class UltronHub:
             except Exception as e:
                 print(f"⚠️ Workflow error: {e}")
         
-        # 5. 保存告警日志
+        # 5. 保存告警日志并发送到钉钉
         if alerts:
             try:
                 alert_log = f"{ULTRON_DIR}/logs/hub-alerts.json"
@@ -194,8 +208,47 @@ class UltronHub:
                 alerts_history = alerts_history[-100:]
                 with open(alert_log, 'w') as f:
                     json.dump(alerts_history, f, indent=2)
+                
+                # 发送到钉钉
+                self._send_dingtalk_alert(alerts, cpu, mem, disk)
             except Exception as e:
                 print(f"⚠️ Alert log error: {e}")
+    
+    def _send_dingtalk_alert(self, alerts, cpu, mem, disk):
+        """发送告警到钉钉"""
+        import subprocess
+        if not alerts:
+            return
+        
+        # 构建告警消息
+        timestamp = datetime.now().strftime("%H:%M")
+        msg_lines = [f"🖥️ 奥创告警 {timestamp}"]
+        msg_lines.extend(alerts)
+        msg_lines.append(f"\n📊 CPU:{cpu.get('load_1m', 'N/A')} | Mem:{mem.get('usage_percent', 'N/A')}% | Disk:{disk.get('usage_percent', 'N/A') if isinstance(disk, dict) else 'N/A'}%")
+        message = "\n".join(msg_lines)
+        
+        # 发送到钉钉 (使用默认target或环境变量指定)
+        target = os.environ.get("ULTRON_DINGTALK_TARGET", "")
+        if not target:
+            # 尝试读取配置
+            config_file = f"{ULTRON_DIR}/logs/hub-config.json"
+            if os.path.exists(config_file):
+                with open(config_file) as f:
+                    config = json.load(f)
+                    target = config.get("dingtalk_target", "")
+        
+        if target:
+            try:
+                result = subprocess.run(
+                    ["openclaw", "message", "send", "--channel", "clawdbot-dingtalk", "--target", target, "--message", message],
+                    capture_output=True, text=True, timeout=10
+                )
+                if result.returncode == 0:
+                    print(f"📱 DingTalk alert sent: {len(alerts)} alerts")
+                else:
+                    print(f"⚠️ DingTalk failed: {result.stderr[:100]}")
+            except Exception as e:
+                print(f"⚠️ DingTalk error: {e}")
         
         print("=== Cycle Complete ===\n")
         return {"metrics": metrics, "stats": stats, "decisions": decisions, "alerts": alerts}
