@@ -9,7 +9,55 @@
       "timestamp": "2026-03-04T17:32:57.189668",
       "status": "completed",
       "result": "{\"action\": \"unknown_alert\", \"result\": \"\\u672a\\u5904\\u7406\", \"task_id\": \"1\", \"original_alert\": \"\\u78c1\\u76d8\\u4f7f\\u7528\\u7387\\u8fc7\\u9ad8\"}",
-      "completed_at": "2026-03-04T17:38:43.123562"
+      "completed_at": "2026-03-05T13:54:28.987120"
+    },
+    {
+      "id": "5",
+      "sender": "sender",
+      "recipient": "test_agent",
+      "message": "test message",
+      "type": "task",
+      "timestamp": "2026-03-05T13:50:31.743309",
+      "status": "pending"
+    },
+    {
+      "id": "6",
+      "sender": "monitor",
+      "recipient": "executor",
+      "message": "告警: 磁盘满",
+      "type": "task",
+      "timestamp": "2026-03-05T13:50:38.401004",
+      "status": "completed",
+      "result": "{\"action\": \"unknown_alert\", \"result\": \"\\u672a\\u5904\\u7406\", \"task_id\": \"6\", \"original_alert\": \"\\u78c1\\u76d8\\u6ee1\"}",
+      "completed_at": "2026-03-05T13:54:28.987840"
+    },
+    {
+      "id": "monitor->executor:7",
+      "sender": "monitor",
+      "recipient": "executor",
+      "message": "磁盘告警",
+      "type": "task",
+      "payload": {
+        "disk": 95
+      },
+      "timestamp": "2026-03-05T13:51:12.690546",
+      "status": "completed",
+      "result": "{\"action\": \"unknown_alert\", \"result\": \"\\u672a\\u5904\\u7406\", \"task_id\": \"monitor->executor:7\", \"original_alert\": \"\\u78c1\\u76d8\\u544a\\u8b66\"}",
+      "completed_at": "2026-03-05T13:54:28.988960"
+    },
+    {
+      "id": "monitor->executor:9",
+      "sender": "monitor",
+      "recipient": "executor",
+      "message": "磁盘告警",
+      "type": "task",
+      "payload": {
+        "disk": 95
+      },
+      "timestamp": "2026-03-05T13:51:37.950942",
+      "status": "completed",
+      "result": "{\"action\": \"unknown_alert\", \"result\": \"\\u672a\\u5904\\u7406\", \"task_id\": \"monitor->executor:9\", \"original_alert\": \"\\u78c1\\u76d8\\u544a\\u8b66\"}",
+      "completed_at": "2026-03-05T13:54:28.989990"
     }
   ],
   "messages": [
@@ -29,6 +77,113 @@
       "message": "状态报告: Load=0.84, Mem=12.6%, Disk=30%",
       "type": "message",
       "timestamp": "2026-03-04T17:38:38.922507",
+      "status": "pending"
+    },
+    {
+      "id": "4",
+      "sender": "monitor",
+      "recipient": "messenger",
+      "message": "状态报告: Load=0.9, Mem=16.3%, Disk=30%",
+      "type": "message",
+      "timestamp": "2026-03-05T13:50:06.145821",
+      "status": "pending"
+    },
+    {
+      "id": "7",
+      "sender": "system",
+      "recipient": "messenger",
+      "message": "状态报告",
+      "type": "message",
+      "timestamp": "2026-03-05T13:50:38.401706",
+      "status": "pending"
+    },
+    {
+      "id": "system->messenger:8",
+      "sender": "system",
+      "recipient": "messenger",
+      "message": "系统状态",
+      "type": "message",
+      "payload": {
+        "load": 0.5
+      },
+      "timestamp": "2026-03-05T13:51:12.691254",
+      "status": "pending"
+    },
+    {
+      "id": "system->messenger:10",
+      "sender": "system",
+      "recipient": "messenger",
+      "message": "系统状态",
+      "type": "message",
+      "payload": {
+        "load": 0.5
+      },
+      "timestamp": "2026-03-05T13:51:37.952097",
+      "status": "pending"
+    }
+  ],
+  "events": [
+    {
+      "id": "orchestrator->executor:11",
+      "sender": "orchestrator",
+      "recipient": "executor",
+      "message": "工作流启动",
+      "type": "event",
+      "payload": {},
+      "timestamp": "2026-03-05T13:51:37.953552",
+      "status": "pending"
+    },
+    {
+      "id": "orchestrator->analyzer:11",
+      "sender": "orchestrator",
+      "recipient": "analyzer",
+      "message": "工作流启动",
+      "type": "event",
+      "payload": {},
+      "timestamp": "2026-03-05T13:51:37.954729",
+      "status": "pending"
+    },
+    {
+      "id": "orchestrator->monitor:11",
+      "sender": "orchestrator",
+      "recipient": "monitor",
+      "message": "工作流启动",
+      "type": "event",
+      "payload": {},
+      "timestamp": "2026-03-05T13:51:37.955663",
+      "status": "pending"
+    },
+    {
+      "id": "orchestrator->learner:11",
+      "sender": "orchestrator",
+      "recipient": "learner",
+      "message": "工作流启动",
+      "type": "event",
+      "payload": {},
+      "timestamp": "2026-03-05T13:51:37.956782",
+      "status": "pending"
+    },
+    {
+      "id": "orchestrator->messenger:11",
+      "sender": "orchestrator",
+      "recipient": "messenger",
+      "message": "工作流启动",
+      "type": "event",
+      "payload": {},
+      "timestamp": "2026-03-05T13:51:37.957931",
+      "status": "pending"
+    },
+    {
+      "id": "workflow->all:11",
+      "sender": "workflow",
+      "recipient": "all",
+      "message": "工作流周期完成",
+      "type": "event",
+      "payload": {
+        "status": "completed",
+        "timestamp": "2026-03-05T13:52:06.377903"
+      },
+      "timestamp": "2026-03-05T13:52:06.378270",
       "status": "pending"
     }
   ]
