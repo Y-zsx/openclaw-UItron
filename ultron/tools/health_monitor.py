@@ -222,6 +222,38 @@ class HealthMonitor:
     def stop(self):
         self.running = False
     
+    def get_system_resources(self) -> Dict:
+        """获取系统资源使用情况"""
+        try:
+            # CPU使用率
+            cpu_cmd = "top -bn1 | grep 'Cpu(s)' | awk '{print $2}' | cut -d'%' -f1"
+            cpu_result = subprocess.run(cpu_cmd, shell=True, capture_output=True, text=True)
+            cpu_usage = float(cpu_result.stdout.strip()) if cpu_result.stdout.strip() else 0
+            
+            # 内存使用率
+            mem_cmd = "free | grep Mem | awk '{printf \"%.1f\", $3/$2 * 100}'"
+            mem_result = subprocess.run(mem_cmd, shell=True, capture_output=True, text=True)
+            mem_usage = float(mem_result.stdout.strip()) if mem_result.stdout.strip() else 0
+            
+            # 磁盘使用率
+            disk_cmd = "df -h / | tail -1 | awk '{print $5}' | cut -d'%' -f1"
+            disk_result = subprocess.run(disk_cmd, shell=True, capture_output=True, text=True)
+            disk_usage = float(disk_result.stdout.strip()) if disk_result.stdout.strip() else 0
+            
+            # 负载平均值
+            load_cmd = "uptime | awk -F'load average:' '{print $2}' | awk '{print $1}' | cut -d',' -f1"
+            load_result = subprocess.run(load_cmd, shell=True, capture_output=True, text=True)
+            load_avg = float(load_result.stdout.strip()) if load_result.stdout.strip() else 0
+            
+            return {
+                "cpu": cpu_usage,
+                "memory": mem_usage,
+                "disk": disk_usage,
+                "load": load_avg
+            }
+        except Exception as e:
+            return {"cpu": 0, "memory": 0, "disk": 0, "load": 0, "error": str(e)}
+    
     def get_status(self) -> Dict:
         """获取状态"""
         latest = {}
@@ -238,7 +270,8 @@ class HealthMonitor:
         return {
             "services": latest,
             "alerts": self.alert_manager.alerts[-10:],
-            "timestamp": datetime.now().isoformat()
+            "timestamp": datetime.now().isoformat(),
+            "health": self.get_system_resources()
         }
 
 # 全局实例

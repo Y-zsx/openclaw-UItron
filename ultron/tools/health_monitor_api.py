@@ -12,8 +12,18 @@ import os
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from health_monitor import HealthMonitor, get_monitor, HealthStatus
+from alert_analyzer import AlertAnalyzer, get_analyzer
 
 monitor = get_monitor()
+analyzer = get_analyzer()
+
+# 同步告警到分析器
+def sync_alerts():
+    """同步监控器告警到分析器"""
+    for alert in monitor.alert_manager.alerts:
+        analyzer.add_alert(alert)
+
+sync_alerts()
 
 async def health_handler(request):
     """健康检查端点"""
@@ -82,6 +92,42 @@ async def alerts_handler(request):
     """获取告警"""
     return web.json_response(monitor.alert_manager.alerts[-20:])
 
+async def analysis_summary_handler(request):
+    """获取智能分析摘要"""
+    # 先同步新告警
+    for alert in monitor.alert_manager.alerts[-20:]:
+        if alert not in analyzer.alert_history:
+            analyzer.add_alert(alert)
+    return web.json_response({"summary": analyzer.generate_summary()})
+
+async def analysis_trends_handler(request):
+    """获取趋势分析"""
+    for alert in monitor.alert_manager.alerts[-20:]:
+        if alert not in analyzer.alert_history:
+            analyzer.add_alert(alert)
+    return web.json_response(analyzer.analyze_trends())
+
+async def analysis_patterns_handler(request):
+    """获取模式检测结果"""
+    for alert in monitor.alert_manager.alerts[-20:]:
+        if alert not in analyzer.alert_history:
+            analyzer.add_alert(alert)
+    return web.json_response(analyzer.detect_patterns())
+
+async def analysis_predict_handler(request):
+    """获取预测结果"""
+    for alert in monitor.alert_manager.alerts[-20:]:
+        if alert not in analyzer.alert_history:
+            analyzer.add_alert(alert)
+    return web.json_response(analyzer.predict_future())
+
+async def analysis_service_handler(request):
+    """获取服务健康分析"""
+    for alert in monitor.alert_manager.alerts[-20:]:
+        if alert not in analyzer.alert_history:
+            analyzer.add_alert(alert)
+    return web.json_response(analyzer.analyze_service_health())
+
 def create_app():
     app = web.Application()
     app.router.add_get("/health", health_handler)
@@ -92,6 +138,11 @@ def create_app():
     app.router.add_post("/stop", stop_handler)
     app.router.add_get("/history", history_handler)
     app.router.add_get("/alerts", alerts_handler)
+    app.router.add_get("/analysis/summary", analysis_summary_handler)
+    app.router.add_get("/analysis/trends", analysis_trends_handler)
+    app.router.add_get("/analysis/patterns", analysis_patterns_handler)
+    app.router.add_get("/analysis/predict", analysis_predict_handler)
+    app.router.add_get("/analysis/services", analysis_service_handler)
     return app
 
 async def main():

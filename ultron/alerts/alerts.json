@@ -119,5 +119,23 @@
     "timestamp": "2026-03-05T16:06:45.815298",
     "_id": "alert_1772698005817",
     "_created_at": 1772698005.8178065
+  },
+  {
+    "rule": "升级:unknown",
+    "level": "CRITICAL",
+    "message": "告警升级: ERROR → CRITICAL (等待17727.834931秒未响应)",
+    "timestamp": "2026-03-05T21:22:40.147659",
+    "original_alert_id": "alert_1772699232312",
+    "_id": "alert_1772716960147",
+    "_created_at": 1772716960.147919
+  },
+  {
+    "rule": "升级:unknown",
+    "level": "CRITICAL",
+    "message": "告警升级: ERROR → CRITICAL (等待17721.456226秒未响应)",
+    "timestamp": "2026-03-05T21:22:40.148959",
+    "original_alert_id": "alert_1772699238691",
+    "_id": "alert_1772716960149",
+    "_created_at": 1772716960.1492372
   }
 ]
