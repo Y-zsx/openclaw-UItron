@@ -43,6 +43,41 @@
             gap: 20px;
             margin-bottom: 25px;
         }
+        
+        /* 移动端适配 */
+        @media (max-width: 768px) {
+            body { padding: 10px; }
+            .header { 
+                flex-direction: column; 
+                gap: 15px; 
+                padding: 15px;
+                text-align: center;
+            }
+            .logo { font-size: 20px; }
+            .grid { 
+                grid-template-columns: 1fr; 
+                gap: 15px;
+            }
+            .stat-card { 
+                padding: 15px; 
+            }
+            .stat-card .value {
+                font-size: 28px;
+            }
+            .chart-container {
+                height: 200px !important;
+            }
+            .alert-list {
+                max-height: 200px !important;
+            }
+            .section-title {
+                font-size: 16px;
+            }
+            .info-row {
+                flex-direction: column;
+                gap: 10px;
+            }
+        }
         .stat-card {
             background: rgba(255,255,255,0.08);
             backdrop-filter: blur(10px);

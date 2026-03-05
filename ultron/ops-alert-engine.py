@@ -211,6 +211,51 @@ class AlertEngine:
             "info": len([a for a in self.alerts if a.get('level') == 'INFO']),
             "recent": len(self.get_active_alerts(30))
         }
+    
+    def deduplicate_alerts(self, alerts: List[Dict], window_seconds: int = 300) -> List[Dict]:
+        """告警去重 - 同一规则在时间窗口内只保留一条"""
+        if not alerts:
+            return []
+        
+        seen = {}  # rule_name -> earliest alert in window
+        now = time.time()
+        
+        for alert in sorted(alerts, key=lambda x: x.get('timestamp', '')):
+            rule_name = alert.get('rule', '')
+            alert_time = alert.get('timestamp', '')
+            
+            # 解析时间戳
+            try:
+                from datetime import datetime
+                dt = datetime.fromisoformat(alert_time.replace('Z', '+00:00'))
+                alert_ts = dt.timestamp()
+            except:
+                alert_ts = now
+            
+            if rule_name not in seen:
+                if now - alert_ts < window_seconds:
+                    seen[rule_name] = alert
+        
+        return list(seen.values())
+    
+    def group_alerts_by_level(self, alerts: List[Dict]) -> Dict[str, List[Dict]]:
+        """按级别分组告警"""
+        grouped = {"CRITICAL": [], "WARNING": [], "INFO": []}
+        for alert in alerts:
+            level = alert.get('level', 'INFO')
+            if level in grouped:
+                grouped[level].append(alert)
+        return grouped
+    
+    def group_alerts_by_metric(self, alerts: List[Dict]) -> Dict[str, List[Dict]]:
+        """按指标分组告警"""
+        grouped = {}
+        for alert in alerts:
+            metric = alert.get('metric', 'unknown')
+            if metric not in grouped:
+                grouped[metric] = []
+            grouped[metric].append(alert)
+        return grouped
 
 
 def main():
