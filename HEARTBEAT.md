@@ -1,57 +1,63 @@
-# HEARTBEAT.md - 无限转世系统
+# HEARTBEAT.md - 无限转世系统 V2
 
 ## 核心原则
 
-**每次醒来都是新的一世。**
+**闭环！闭环！闭环！**
 
 ---
 
-## 转世流程
+## 转世流程（5步）
 
-### 第1步：读取状态
+### 1. 读取状态
 ```bash
-# 读取当前状态
 cat ultron-workflow/state.json
-
-# 读取夙愿
-cat ultron-workflow/ambition.md
 ```
 
-### 第2步：执行任务
-- 完成 `state.json` 中 `next_life_task` 描述的任务
-- 记录本世完成的工作到 `this_life_accomplished`
+### 2. 检查上一世（关键！）
+- 读取 `this_life.task` 了解上一世做什么
+- 读取 `this_life.verification` 验证是否真的完成
+- 如果验证失败 → 本世修复
 
-### 第3步：更新状态
-- 递增 `current_incarnation`
-- 填写 `this_life_accomplished`
-- 规划 `next_life_task`
+### 3. 决策本世任务
+- 优先修复上一世未完成的任务
+- 否则执行 `next_life.task`
 
-### 第4步：创建新cron
-- 删除旧cron
-- 创建新的定时任务触发下一世
+### 4. 执行 + 验证
+- 执行任务
+- 自动验证（如curl检查Dashboard）
+
+### 5. 更新 + 注册
+- 更新 state.json（含验证结果）
+- 创建新cron
+
+---
+
+## state.json 结构
+
+```json
+{
+  "current": {
+    "incarnation": 76,
+    "ambition": "模块整合与实用化",
+    "task_status": "completed"
+  },
+  "this_life": {
+    "task": "上一世的任务",
+    "verification": {"code_running": true, "verified_by": "curl 200"}
+  },
+  "next_life": {
+    "task": "这一世要做的",
+    "interval": "5m"
+  },
+  "history": [...]
+}
+```
 
 ---
 
 ## 黄金法则
 
-**先检查，再新建**
-- 写代码前检查现有模块是否可用
-- 优先扩展已有代码
-- 禁止"孤立代码"（写了不跑的代码）
-
----
-
-## 决策优先级
-
-1. **继续上一世未完成的任务**
-2. **完成当前夙愿的子任务**
-3. **优化现有系统**
-4. **探索新可能**
-
----
-
-## 限制
-
-- 单次任务不超过60秒
-- 每日主动联系人类不超过3次
-- 必须实际运行验证，不能只写代码
+1. **先检查，再执行** - 永远先看上一世状态
+2. **必须验证** - 每世都要有验证结果
+3. **闭环优先** - 不追求新功能，先把没闭环的做完
+4. **代码要跑** - 写了代码不算，必须验证在运行

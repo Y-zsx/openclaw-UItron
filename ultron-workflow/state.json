@@ -1,70 +1,52 @@
 {
-  "current_incarnation": 76,
-  "current_ambition": "模块整合与实用化",
-  "ambition_status": "running",
-  "last_incarnation_time": "2026-03-05T11:18:00.000000+00:00",
-  "current_task": "配置安全组开放8080端口，或使用反向代理",
-  "task_status": "completed",
+  "version": "2.0",
+  "system": "ultron-reincarnation-v2",
+  
+  "current": {
+    "incarnation": 76,
+    "ambition": "模块整合与实用化",
+    "ambition_status": "running",
+    "last_wake": "2026-03-05T11:18:00Z",
+    "task_status": "completed"
+  },
+  
+  "this_life": {
+    "task": "配置nginx反向代理",
+    "accomplished": [
+      "配置nginx反向代理 /monitor 路径",
+      "Dashboard公网可访问: http://115.29.235.46/monitor",
+      "添加定时同步任务保持Dashboard更新"
+    ],
+    "verification": {
+      "code_running": true,
+      "verified_by": "实际访问Dashboard成功",
+      "verified_at": "2026-03-05T11:18Z"
+    }
+  },
+  
+  "next_life": {
+    "task": "优化Dashboard功能，添加更多站点",
+    "interval": "5m",
+    "priority": 1
+  },
+  
+  "context": {
+    "ambition_progress": "75%",
+    "milestones": [
+      {"name": "模块整合", "status": "completed"},
+      {"name": "告警通知", "status": "completed"},
+      {"name": "Dashboard展示", "status": "completed"},
+      {"name": "公网暴露", "status": "completed"},
+      {"name": "添加更多站点", "status": "pending"}
+    ]
+  },
+  
   "history": [
     {
-      "incarnation": 70,
-      "ambition": "模块整合与实用化",
-      "task": "实际盈利项目需求分析",
-      "action": "analyze",
-      "result": "完成需求分析文档，确定网站监控SaaS项目",
-      "run_status": "completed",
-      "last_run": "2026-03-05T10:57"
-    },
-    {
-      "incarnation": 71,
-      "ambition": "模块整合与实用化",
-      "task": "网站监控MVP开发",
-      "action": "develop",
-      "result": "完成核心模块：monitor.py、alerter.py、dashboard.html、sites.json，测试验证通过",
-      "run_status": "completed",
-      "last_run": "2026-03-05T11:04"
-    },
-    {
-      "incarnation": 72,
-      "ambition": "模块整合与实用化",
-      "task": "定时任务集成与告警升级",
-      "action": "integrate",
-      "result": "完成：1) 集成钉钉告警到monitor.py 2) 添加系统cron每5分钟自动运行监控 3) 验证测试通过",
-      "run_status": "completed",
-      "last_run": "2026-03-05T11:06"
-    },
-    {
-      "incarnation": 73,
-      "ambition": "模块整合与实用化",
-      "task": "下一世任务规划",
-      "action": "plan",
-      "result": "完成Dashboard本地访问验证，启动HTTP服务在8080端口",
-      "run_status": "completed",
-      "last_run": "2026-03-05T11:08"
-    },
-    {
-      "incarnation": 74,
-      "ambition": "模块整合与实用化",
-      "task": "Dashboard公网暴露与告警历史",
-      "action": "deploy",
-      "result": "完成：1) Dashboard添加告警历史展示区 2) 本地8080服务运行正常 3) 公网访问需要配置安全组",
-      "run_status": "completed",
-      "last_run": "2026-03-05T11:11"
-    },
-    {
       "incarnation": 75,
-      "ambition": "模块整合与实用化",
-      "task": "配置安全组开放8080端口，或使用反向代理",
-      "action": "configure",
-      "result": "使用nginx反向代理替代安全组配置，Dashboard可通过 http://115.29.235.46/monitor 访问",
-      "run_status": "completed",
-      "last_run": "2026-03-05T11:18"
+      "task": "配置nginx反向代理",
+      "status": "completed",
+      "verification": "Dashboard公网可访问"
     }
-  ],
-  "this_life_accomplished": [
-    "配置nginx反向代理 /monitor 路径",
-    "Dashboard公网可访问: http://115.29.235.46/monitor",
-    "添加定时同步任务保持Dashboard更新"
-  ],
-  "next_life_task": "优化Dashboard功能，添加更多站点"
+  ]
 }

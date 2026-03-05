@@ -1,15 +1,35 @@
 {
   "alerts": [
     {
-      "id": "service_down_0fe7c2",
-      "timestamp": "2026-03-04T19:20:25.054593",
-      "level": "critical",
-      "source": "services",
-      "message": "\u670d\u52a1\u5b95\u673a: 0 (\u9608\u503c: 0)",
+      "id": "site_down_git",
+      "timestamp": "2026-03-05T11:20:33",
+      "level": "warning",
+      "source": "monitor",
+      "message": "GitHub: down (Timeout)",
       "value": 0,
-      "threshold": 0,
-      "rule_id": "service_down"
+      "threshold": 1,
+      "rule_id": "site_down"
+    },
+    {
+      "id": "site_down_google",
+      "timestamp": "2026-03-05T11:20:23",
+      "level": "warning",
+      "source": "monitor",
+      "message": "Google: down (Connection error)",
+      "value": 0,
+      "threshold": 1,
+      "rule_id": "site_down"
+    },
+    {
+      "id": "site_down_openai",
+      "timestamp": "2026-03-05T11:20:43",
+      "level": "warning",
+      "source": "monitor",
+      "message": "OpenAI API: down (Connection error)",
+      "value": 0,
+      "threshold": 1,
+      "rule_id": "site_down"
     }
   ],
-  "last_update": "2026-03-04T19:20:25.114026"
+  "last_update": "2026-03-05T11:20:43"
 }
