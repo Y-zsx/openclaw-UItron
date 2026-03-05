@@ -30,6 +30,7 @@ class ActionType(Enum):
     NOTIFY = "notify"        # 通知
     WEBHOOK = "webhook"      # Webhook
     FUNCTION = "function"    # Python函数
+    AGENT = "agent"          # Agent任务执行器
 
 
 @dataclass
@@ -152,6 +153,8 @@ class ActionExecutor:
                 result = await self._execute_notify(action, context)
             elif action.action_type == ActionType.WEBHOOK:
                 result = await self._execute_webhook(action, context)
+            elif action.action_type == ActionType.AGENT:
+                result = await self._execute_agent(action, context)
             else:
                 result = ExecutionResult(
                     action_id=action_name,
@@ -365,6 +368,78 @@ class ActionExecutor:
             status=ExecutionStatus.SUCCESS,
             output={"notified": True}
         )
+    
+    async def _execute_agent(self, action: Action, context: Any) -> ExecutionResult:
+        """通过Agent任务执行器执行任务"""
+        import requests
+        
+        # 从context获取参数
+        ctx = context if isinstance(context, dict) else {"value": str(context)}
+        
+        task_type = action.config.get("task_type", "exec")
+        payload = action.config.get("payload", {})
+        
+        # 替换变量
+        for key, value in ctx.items():
+            if isinstance(payload, dict):
+                for pk, pv in payload.items():
+                    if isinstance(pv, str):
+                        payload[pk] = pv.replace(f"{{{key}}}", str(value))
+        
+        executor_url = action.config.get("executor_url", "http://localhost:18210")
+        
+        try:
+            resp = requests.post(
+                f"{executor_url}/tasks",
+                json={
+                    "type": task_type,
+                    "payload": payload,
+                    "priority": action.config.get("priority", 1),
+                    "timeout": action.config.get("timeout", 300)
+                },
+                timeout=action.config.get("timeout", 300) + 10
+            )
+            
+            if resp.status_code == 200:
+                result = resp.json()
+                task_id = result.get("task_id", "unknown")
+                
+                # 等待任务完成
+                max_wait = action.config.get("max_wait", 60)
+                for _ in range(max_wait):
+                    await asyncio.sleep(1)
+                    task_result = requests.get(f"{executor_url}/tasks/{task_id}").json()
+                    if task_result.get("status") == "completed":
+                        return ExecutionResult(
+                            action_id=action.name,
+                            status=ExecutionStatus.SUCCESS,
+                            output=task_result
+                        )
+                    elif task_result.get("status") == "failed":
+                        return ExecutionResult(
+                            action_id=action.name,
+                            status=ExecutionStatus.FAILED,
+                            error=task_result.get("error", "Task failed"),
+                            output=task_result
+                        )
+                
+                return ExecutionResult(
+                    action_id=action.name,
+                    status=ExecutionStatus.SUCCESS,
+                    output={"task_id": task_id, "status": "running"}
+                )
+            else:
+                return ExecutionResult(
+                    action_id=action.name,
+                    status=ExecutionStatus.FAILED,
+                    error=f"HTTP {resp.status_code}"
+                )
+        except Exception as e:
+            return ExecutionResult(
+                action_id=action.name,
+                status=ExecutionStatus.FAILED,
+                error=str(e)
+            )
     
     async def _execute_webhook(self, action: Action, context: Any) -> ExecutionResult:
         """执行Webhook - 实际上也是HTTP请求"""

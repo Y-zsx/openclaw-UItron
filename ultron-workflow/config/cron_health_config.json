@@ -1,0 +1,7 @@
+{
+  "name": "ultron-health-check",
+  "schedule": "every 5m",
+  "enabled": true,
+  "module": "cron_health_trigger.py",
+  "description": "\u5b9a\u65f6\u5065\u5eb7\u68c0\u67e5\u4efb\u52a1"
+}

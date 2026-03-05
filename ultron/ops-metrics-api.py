@@ -28,7 +28,7 @@ class MetricsHandler(SimpleHTTPRequestHandler):
     """处理指标请求"""
     
     def do_GET(self):
-        if self.path == '/api/metrics':
+        if self.path == '/api/metrics' or self.path == '/metrics':
             self.send_response(200)
             self.send_header('Content-type', 'application/json')
             self.send_header('Access-Control-Allow-Origin', '*')
@@ -36,6 +36,26 @@ class MetricsHandler(SimpleHTTPRequestHandler):
             
             metrics = self.collect_metrics()
             self.wfile.write(json.dumps(metrics, default=str).encode())
+        elif self.path == '/status':
+            self.send_response(200)
+            self.send_header('Content-type', 'application/json')
+            self.send_header('Access-Control-Allow-Origin', '*')
+            self.end_headers()
+            
+            status = {
+                "status": "running",
+                "service": "ops-metrics-api",
+                "port": self.server.server_address[1],
+                "timestamp": datetime.now().isoformat(),
+                "endpoints": ["/api/metrics", "/metrics", "/status", "/health"]
+            }
+            self.wfile.write(json.dumps(status, default=str).encode())
+        elif self.path == '/health':
+            self.send_response(200)
+            self.send_header('Content-type', 'application/json')
+            self.send_header('Access-Control-Allow-Origin', '*')
+            self.end_headers()
+            self.wfile.write(json.dumps({"status": "ok"}).encode())
         else:
             # 静态文件服务
             super().do_GET()

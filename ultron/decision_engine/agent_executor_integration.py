@@ -10,9 +10,9 @@ from datetime import datetime
 
 logger = logging.getLogger(__name__)
 
-# Agent任务执行器配置
-AGENT_EXECUTOR_URL = "http://localhost:8096"
-AGENT_EXECUTOR_API = f"{AGENT_EXECUTOR_URL}/api"
+# Agent任务执行器配置 (更新为实际运行端口)
+AGENT_EXECUTOR_URL = "http://localhost:18210"
+AGENT_EXECUTOR_API = f"{AGENT_EXECUTOR_URL}/tasks"
 
 
 class AgentExecutorIntegration:
@@ -53,17 +53,18 @@ class AgentExecutorIntegration:
             执行结果
         """
         try:
-            # 构建执行请求
+            # 构建执行请求 (适配实际API格式)
             execution_request = {
-                "task_id": f"dec_{datetime.now().strftime('%Y%m%d%H%M%S')}",
-                "executor_type": task_type,
+                "type": task_type,
                 "payload": payload,
-                "timeout": timeout
+                "priority": "NORMAL",
+                "timeout": timeout,
+                "use_cache": False
             }
             
             # 发送执行请求
             resp = requests.post(
-                f"{self.api_base}/execute",
+                f"{self.executor_url}/tasks",
                 json=execution_request,
                 timeout=timeout + 10
             )

@@ -393,6 +393,82 @@ class EnhancedAgentExecutor:
             for subtask in subtasks:
                 results.append({"subtask": subtask, "status": "done"})
             return {"batch_results": results, "total": len(subtasks)}
+        
+        elif task_type == "shell":
+            # Shell 命令执行 (exec的别名)
+            cmd = task.payload.get("command", "echo 'hello'")
+            proc = await asyncio.create_subprocess_shell(
+                cmd,
+                stdout=asyncio.subprocess.PIPE,
+                stderr=asyncio.subprocess.PIPE
+            )
+            stdout, stderr = await proc.communicate()
+            return {
+                "stdout": stdout.decode(),
+                "stderr": stderr.decode(),
+                "returncode": proc.returncode
+            }
+            
+        elif task_type == "browser":
+            # 浏览器自动化任务
+            action = task.payload.get("action", "snapshot")
+            url = task.payload.get("url", "")
+            return {
+                "action": action,
+                "url": url,
+                "status": "browser_task_created",
+                "note": "Browser automation via OpenClaw"
+            }
+            
+        elif task_type == "file":
+            # 文件操作任务
+            operation = task.payload.get("operation", "read")
+            path = task.payload.get("path", "")
+            content = task.payload.get("content", "")
+            
+            if operation == "read":
+                try:
+                    with open(path, 'r') as f:
+                        data = f.read()
+                    return {"operation": "read", "content": data, "size": len(data)}
+                except Exception as e:
+                    return {"operation": "read", "error": str(e)}
+            elif operation == "write":
+                try:
+                    with open(path, 'w') as f:
+                        f.write(content)
+                    return {"operation": "write", "status": "success", "path": path}
+                except Exception as e:
+                    return {"operation": "write", "error": str(e)}
+            else:
+                return {"operation": operation, "status": "unsupported"}
+                
+        elif task_type == "http":
+            # HTTP 请求任务
+            import aiohttp
+            method = task.payload.get("method", "GET")
+            url = task.payload.get("url", "")
+            headers = task.payload.get("headers", {})
+            body = task.payload.get("body", "")
+            
+            try:
+                async with aiohttp.ClientSession() as session:
+                    async with session.request(method, url, headers=headers, data=body) as resp:
+                        result = {
+                            "status": resp.status,
+                            "headers": dict(resp.headers),
+                        }
+                        if resp.content_type.startswith("text/"):
+                            result["body"] = await resp.text()
+                        return result
+            except Exception as e:
+                return {"error": str(e)}
+        
+        elif task_type == "sleep":
+            # 延迟任务
+            duration = task.payload.get("duration", 1)
+            await asyncio.sleep(duration)
+            return {"slept": duration, "unit": "seconds"}
             
         else:
             return {"result": "unknown task type"}

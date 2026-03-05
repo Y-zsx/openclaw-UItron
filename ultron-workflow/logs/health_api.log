@@ -1,0 +1,9 @@
+2026-03-06T06:21:00.084365 - 服务已启动, PID: 2648559
+2026-03-06T06:22:58.074477 - 服务已停止, PID: 2648559
+2026-03-06T06:23:00.077895 - 服务已启动, PID: 2651412
+  File "/root/.openclaw/workspace/ultron-workflow/modules/health_api_server.py", line 68
+    elif path == '/api/enhanced-metrics':
+    ^^^^
+SyntaxError: invalid syntax
+2026-03-06T06:23:49.562907 - 停止失败
+2026-03-06T06:23:51.565960 - 服务已启动, PID: 2652627

@@ -1,0 +1,14 @@
+[Unit]
+Description=Decision Engine and Executor Integration Service
+After=network.target
+
+[Service]
+Type=simple
+User=root
+WorkingDirectory=/root/.openclaw/workspace/ultron/agents/integration
+ExecStart=/usr/bin/python3 /root/.openclaw/workspace/ultron/agents/integration/executor_integration.py
+Restart=always
+RestartSec=10
+
+[Install]
+WantedBy=multi-user.target

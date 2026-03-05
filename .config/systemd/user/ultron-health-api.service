@@ -1,0 +1,14 @@
+[Unit]
+Description=Ultron Health API Server
+After=network.target
+
+[Service]
+Type=simple
+User=root
+WorkingDirectory=/root/.openclaw/workspace
+ExecStart=/usr/bin/python3 /root/.openclaw/workspace/ultron-workflow/modules/health_api_server.py
+Restart=always
+RestartSec=10
+
+[Install]
+WantedBy=multi-user.target

@@ -1,0 +1,16 @@
+[Unit]
+Description=Scheduled Health Check with Alert Integration
+After=network.target
+
+[Service]
+Type=simple
+User=root
+WorkingDirectory=/root/.openclaw/workspace/ultron
+ExecStart=/usr/bin/python3 /root/.openclaw/workspace/ultron/scheduled_health_check.py --daemon 60
+Restart=always
+RestartSec=10
+StandardOutput=append:/root/.openclaw/workspace/ultron/logs/scheduled_health_check.log
+StandardError=append:/root/.openclaw/workspace/ultron/logs/scheduled_health_check.log
+
+[Install]
+WantedBy=multi-user.target

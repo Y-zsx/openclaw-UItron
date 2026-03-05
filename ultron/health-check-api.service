@@ -1,0 +1,14 @@
+[Unit]
+Description=Health Check API Service
+After=network.target
+
+[Service]
+Type=simple
+User=root
+WorkingDirectory=/root/.openclaw/workspace/ultron
+ExecStart=/usr/bin/python3 /root/.openclaw/workspace/ultron/health_check_api.py 18105
+Restart=always
+RestartSec=10
+
+[Install]
+WantedBy=multi-user.target

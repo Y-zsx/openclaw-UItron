@@ -129,16 +129,45 @@ def restart_service(service_name: str) -> bool:
         return False
 
 def auto_recover(port: int, service_name: str) -> Dict:
-    """尝试自动恢复服务"""
+    """尝试自动恢复服务 - 增强版"""
     result = {
         "port": port,
         "service_name": service_name,
         "action": None,
         "success": False,
-        "message": ""
+        "message": "",
+        "enhanced": True
     }
     
-    # 尝试通过systemd重启
+    # 尝试使用增强恢复机制
+    try:
+        from agents.health_recovery_enhanced import RecoveryManager
+        manager = RecoveryManager()
+        
+        # 检查是否应该自动恢复
+        should_recover, reason = manager.should_auto_recover(port)
+        if not should_recover:
+            result["message"] = reason
+            result["skipped"] = True
+            return result
+        
+        # 执行增强恢复
+        recovery_result = manager.execute_recovery(port, "/health")
+        result["success"] = recovery_result["success"]
+        result["message"] = f"Strategy: {recovery_result.get('final_strategy', 'none')}"
+        result["action"] = recovery_result.get("final_strategy")
+        
+        # 获取更新后的统计
+        stats = manager.get_recovery_stats()
+        result["recovery_stats"] = stats
+        
+        return result
+        
+    except ImportError:
+        # 回退到基础恢复
+        pass
+    
+    # 基础恢复（如果增强版不可用）
     systemd_name = SYSTEMD_SERVICES.get(port)
     if systemd_name:
         result["action"] = f"systemctl restart {systemd_name}"

@@ -21,6 +21,8 @@ from pathlib import Path
 from collections import defaultdict
 from typing import Dict, List, Optional, Any
 from flask import Flask, jsonify, request, render_template_string, make_response
+import urllib.request
+import urllib.error
 
 # 配置
 app = Flask(__name__)
@@ -480,6 +482,35 @@ DASHBOARD_HTML = '''
         </div>
         
         <div class="section">
+            <h2>🔌 服务健康状态</h2>
+            <div class="agents-grid">
+                {% if services %}
+                    {% for service in services %}
+                    <div class="agent-card {{ service.status }}">
+                        <div class="agent-header">
+                            <span class="agent-name">{{ service.service_name }}</span>
+                            <span class="status-badge status-{{ service.status }}">{{ service.status }}</span>
+                        </div>
+                        <div class="agent-metrics">
+                            <div class="metric">端口: <span>{{ service.port }}</span></div>
+                            <div class="metric">响应时间: <span>{{ service.response_time_ms }}ms</span></div>
+                            <div class="metric">HTTP状态: <span>{{ service.http_code }}</span></div>
+                            <div class="metric">检查时间: <span>{{ service.timestamp.split('T')[1].split('.')[0] }}</span></div>
+                        </div>
+                        <div class="health-bar">
+                            <div class="health-bar-fill" style="width: {% if service.status == 'healthy' %}100{% elif service.status == 'degraded' %}50{% else %}0{% endif %}%; background: {% if service.status == 'healthy' %}#10b981{% elif service.status == 'degraded' %}#f59e0b{% else %}#ef4444{% endif %}"></div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                {% else %}
+                    <div class="alert-item">
+                        <span style="color: #64748b;">暂无服务数据 (health-check-api 可能未运行)</span>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+        
+        <div class="section">
             <h2>⚠️ 实时告警</h2>
             <div class="alerts-list">
                 {% if alerts %}
@@ -510,6 +541,16 @@ def dashboard():
     agents = health_checker.check_all_agents()
     alerts = health_checker.get_alerts(5)
     
+    # 获取服务健康检查数据
+    services = []
+    try:
+        req = urllib.request.Request('http://127.0.0.1:18105/services')
+        with urllib.request.urlopen(req, timeout=5) as response:
+            data = json.loads(response.read().decode())
+            services = data.get('services', [])
+    except Exception:
+        pass
+    
     return render_template_string(DASHBOARD_HTML,
         system_status=system_health['system_status'],
         total_agents=system_health['total_agents'],
@@ -517,7 +558,8 @@ def dashboard():
         degraded_agents=system_health['degraded_agents'],
         avg_health_score=system_health['avg_health_score'],
         agents=agents,
-        alerts=alerts
+        alerts=alerts,
+        services=services
     )
 
 @app.route('/api/health')
@@ -585,6 +627,29 @@ def api_metrics_history():
     
     conn.close()
     return jsonify(history)
+
+@app.route('/api/services')
+def api_services():
+    """获取服务健康检查数据 (从 health-check-api 获取)"""
+    try:
+        req = urllib.request.Request('http://127.0.0.1:18105/services')
+        with urllib.request.urlopen(req, timeout=5) as response:
+            data = json.loads(response.read().decode())
+            return jsonify(data)
+    except Exception as e:
+        return jsonify({'error': str(e), 'services': []}), 500
+
+@app.route('/api/services/trigger', methods=['POST'])
+def api_trigger_check():
+    """触发健康检查"""
+    try:
+        req = urllib.request.Request('http://127.0.0.1:18105/trigger', 
+                                     method='POST')
+        with urllib.request.urlopen(req, timeout=10) as response:
+            data = json.loads(response.read().decode())
+            return jsonify(data)
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
 
 if __name__ == '__main__':
     print("🚀 多智能体协作网络健康监控仪表板启动")
