@@ -1,0 +1,129 @@
+{
+  "identities": {
+    "monitor-01": {
+      "agent_id": "monitor-01",
+      "name": "Monitor Agent",
+      "role": "agent",
+      "permissions": [
+        "agent:view",
+        "task:create",
+        "task:view",
+        "message:send",
+        "message:receive"
+      ],
+      "security_level": "ENCRYPTED",
+      "trusted": false,
+      "metadata": {},
+      "created_at": 1772701517.8752313,
+      "last_auth": 1772701517.8781285
+    },
+    "executor-01": {
+      "agent_id": "executor-01",
+      "name": "Executor Agent",
+      "role": "operator",
+      "permissions": [
+        "agent:view",
+        "agent:control",
+        "task:create",
+        "task:view",
+        "task:cancel",
+        "task:execute",
+        "message:send",
+        "message:receive"
+      ],
+      "security_level": "PUBLIC",
+      "trusted": false,
+      "metadata": {},
+      "created_at": 1772701517.876054,
+      "last_auth": 0.0
+    },
+    "admin-01": {
+      "agent_id": "admin-01",
+      "name": "Admin Agent",
+      "role": "admin",
+      "permissions": [
+        "agent:register",
+        "agent:unregister",
+        "agent:view",
+        "agent:control",
+        "task:create",
+        "task:view",
+        "task:cancel",
+        "task:execute",
+        "message:send",
+        "message:receive",
+        "message:broadcast",
+        "admin",
+        "system:config",
+        "user:manage"
+      ],
+      "security_level": "VERIFIED",
+      "trusted": false,
+      "metadata": {},
+      "created_at": 1772701517.8770247,
+      "last_auth": 1772701517.879606
+    }
+  },
+  "policies": {},
+  "acl": {
+    "task": [
+      {
+        "rule_id": "rule-001",
+        "name": "View Tasks",
+        "resource_type": "task",
+        "resource_id": null,
+        "actions": [
+          "read"
+        ],
+        "subjects": [
+          "agent",
+          "operator",
+          "admin"
+        ],
+        "effect": "allow",
+        "conditions": {},
+        "priority": 10,
+        "enabled": true
+      },
+      {
+        "rule_id": "rule-002",
+        "name": "Execute Tasks",
+        "resource_type": "task",
+        "resource_id": null,
+        "actions": [
+          "execute"
+        ],
+        "subjects": [
+          "operator",
+          "admin"
+        ],
+        "effect": "allow",
+        "conditions": {},
+        "priority": 20,
+        "enabled": true
+      }
+    ],
+    "system": [
+      {
+        "rule_id": "rule-003",
+        "name": "Deny Guest System",
+        "resource_type": "system",
+        "resource_id": null,
+        "actions": [
+          "*"
+        ],
+        "subjects": [
+          "guest"
+        ],
+        "effect": "deny",
+        "conditions": {},
+        "priority": 30,
+        "enabled": true
+      }
+    ]
+  },
+  "auth_attempts": 2,
+  "auth_failures": 0,
+  "access_checks": 5,
+  "access_denials": 3
+}

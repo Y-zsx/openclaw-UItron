@@ -1,0 +1,19 @@
+{
+  "policy": "least_conn",
+  "default_rate_limit": 100,
+  "services": {
+    "executor": {
+      "executor-1": {
+        "weight": 100
+      },
+      "executor-2": {
+        "weight": 150
+      }
+    },
+    "analyzer": {
+      "analyzer-1": {
+        "weight": 100
+      }
+    }
+  }
+}
