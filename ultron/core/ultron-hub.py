@@ -54,11 +54,11 @@ class UltronHub:
     
     def _load_modules(self):
         """加载4个核心模块"""
-        # 1. IntelligentMonitor (文件名有连字符，需要importlib)
+        import importlib.util
+        
+        # 1. IntelligentMonitor
         try:
-            import importlib.util
-            spec = importlib.util.spec_from_file_location("intelligent_monitor", 
-                f"{ULTRON_DIR}/intelligent-monitor.py")
+            spec = importlib.util.spec_from_file_location("intelligent_monitor", MODULE_PATHS["monitor"])
             monitor_module = importlib.util.module_from_spec(spec)
             spec.loader.exec_module(monitor_module)
             self.monitor = monitor_module.IntelligentMonitor()
@@ -70,8 +70,10 @@ class UltronHub:
         
         # 2. DecisionAdvisor
         try:
-            DecisionAdvisor = load_module("decision-advisor", "DecisionAdvisor")
-            self.advisor = DecisionAdvisor()
+            spec = importlib.util.spec_from_file_location("decision_advisor", MODULE_PATHS["advisor"])
+            advisor_module = importlib.util.module_from_spec(spec)
+            spec.loader.exec_module(advisor_module)
+            self.advisor = advisor_module.DecisionAdvisor()
             self.state["modules"]["advisor"] = "loaded"
             print("✓ Advisor loaded")
         except Exception as e:
@@ -80,8 +82,10 @@ class UltronHub:
         
         # 3. StreamProcessor (DataAnalytics)
         try:
-            StreamProcessor = load_module("data-analytics-engine", "StreamProcessor")
-            self.analytics = StreamProcessor()
+            spec = importlib.util.spec_from_file_location("data_analytics", MODULE_PATHS["analytics"])
+            analytics_module = importlib.util.module_from_spec(spec)
+            spec.loader.exec_module(analytics_module)
+            self.analytics = analytics_module.StreamProcessor()
             self.state["modules"]["analytics"] = "loaded"
             print("✓ Analytics loaded")
         except Exception as e:
@@ -90,8 +94,10 @@ class UltronHub:
         
         # 4. WorkflowOrchestrator
         try:
-            WorkflowOrchestrator = load_module("workflow-orchestrator", "WorkflowOrchestrator")
-            self.workflow = WorkflowOrchestrator()
+            spec = importlib.util.spec_from_file_location("workflow_orchestrator", MODULE_PATHS["workflow"])
+            workflow_module = importlib.util.module_from_spec(spec)
+            spec.loader.exec_module(workflow_module)
+            self.workflow = workflow_module.WorkflowOrchestrator()
             self.state["modules"]["workflow"] = "loaded"
             print("✓ Workflow loaded")
         except Exception as e:
