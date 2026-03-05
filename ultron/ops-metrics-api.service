@@ -1,0 +1,14 @@
+[Unit]
+Description=Ultron Ops Metrics API
+After=network.target
+
+[Service]
+Type=simple
+User=root
+WorkingDirectory=/root/.openclaw/workspace/ultron
+ExecStart=/usr/bin/python3 /root/.openclaw/workspace/ultron/ops-metrics-api.py --port 8888
+Restart=always
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target
