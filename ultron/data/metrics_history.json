@@ -143,5 +143,63 @@
         "dropout": 0
       }
     }
+  },
+  {
+    "timestamp": "2026-03-05T19:28:22.800901",
+    "data": {
+      "timestamp": "2026-03-05T19:28:22.800934",
+      "cpu": {
+        "usage_percent": 3.8
+      },
+      "memory": {
+        "percent": 18.0
+      },
+      "disk": {
+        "disks": [
+          {
+            "percent": 29.5
+          }
+        ]
+      },
+      "network": {
+        "bytes_sent": 9892008815,
+        "bytes_recv": 4412189278,
+        "packets_sent": 14846889,
+        "packets_recv": 8803744,
+        "errin": 0,
+        "errout": 0,
+        "dropin": 0,
+        "dropout": 0
+      }
+    }
+  },
+  {
+    "timestamp": "2026-03-05T19:28:28.284574",
+    "data": {
+      "timestamp": "2026-03-05T19:28:28.284574",
+      "cpu": {
+        "usage_percent": 1.0
+      },
+      "memory": {
+        "percent": 18.6
+      },
+      "disk": {
+        "disks": [
+          {
+            "percent": 29.5
+          }
+        ]
+      },
+      "network": {
+        "bytes_sent": 9892138004,
+        "bytes_recv": 4412223280,
+        "packets_sent": 14847017,
+        "packets_recv": 8803857,
+        "errin": 0,
+        "errout": 0,
+        "dropin": 0,
+        "dropout": 0
+      }
+    }
   }
 ]
