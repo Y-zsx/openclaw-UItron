@@ -1,0 +1,33 @@
+{
+  "global": {
+    "log_level": "INFO",
+    "health_check_interval": 30,
+    "auto_recovery": true,
+    "alert_threshold": 80
+  },
+  "load_balancer": {
+    "strategy": "random",
+    "max_retries": 3,
+    "timeout": 60,
+    "weight_algorithm": "dynamic"
+  },
+  "auto_scaler": {
+    "min_agents": 1,
+    "max_agents": 10,
+    "scale_up_threshold": 70,
+    "scale_down_threshold": 20,
+    "cooldown_period": 120
+  },
+  "monitor": {
+    "metrics_interval": 10,
+    "retention_days": 7,
+    "alert_channels": [
+      "dingtalk"
+    ]
+  },
+  "task_queue": {
+    "max_queue_size": 1000,
+    "task_timeout": 300,
+    "retry_policy": "exponential"
+  }
+}

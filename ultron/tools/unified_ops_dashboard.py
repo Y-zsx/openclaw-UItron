@@ -26,6 +26,8 @@ SERVICES = {
     "fault_predictor": 18170,
     "auto_healer": 18180,
     "auto_report": 18190,
+    "queue_lb_unified": 18162,
+    "config_manager": 18163,
 }
 
 def get_service_status(port):
