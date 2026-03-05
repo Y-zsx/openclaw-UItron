@@ -50,6 +50,43 @@
         }
       ],
       "completed_at": "2026-03-05T15:50:01.982603"
+    },
+    {
+      "workflow_id": "dde46ccb-2de0-4a80-9c56-0892ce4b7112",
+      "workflow": {
+        "steps": [
+          {
+            "type": "shell",
+            "payload": {
+              "command": "echo step1"
+            }
+          },
+          {
+            "type": "shell",
+            "payload": {
+              "command": "echo step2"
+            }
+          }
+        ]
+      },
+      "status": "completed",
+      "started_at": "2026-03-05T22:47:15.379113",
+      "current_step": 1,
+      "step_results": [
+        {
+          "step": 0,
+          "task_id": "eebf3754-09f0-4e24-94b9-8923dd8c0769",
+          "agent": "executor",
+          "status": "dispatched"
+        },
+        {
+          "step": 1,
+          "task_id": "bbf47120-b534-4305-9c83-155a30c87cb2",
+          "agent": "executor",
+          "status": "dispatched"
+        }
+      ],
+      "completed_at": "2026-03-05T22:47:15.381815"
     }
   ]
 }

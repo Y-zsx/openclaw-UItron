@@ -63,6 +63,53 @@
       "dispatched_at": "2026-03-05T15:50:01.981482",
       "status": "dispatched",
       "executed": true
+    },
+    {
+      "task_id": "41b75fb6-35b0-441a-adbf-e6ad0917bcd6",
+      "task": {
+        "type": "shell",
+        "payload": {
+          "command": "echo hello from coordinator test"
+        },
+        "task_id": "41b75fb6-35b0-441a-adbf-e6ad0917bcd6",
+        "target_agent": "executor"
+      },
+      "target_agent": "executor",
+      "dispatched_at": "2026-03-05T22:47:09.321494",
+      "status": "dispatched",
+      "executed": true
+    },
+    {
+      "task_id": "eebf3754-09f0-4e24-94b9-8923dd8c0769",
+      "task": {
+        "type": "shell",
+        "payload": {
+          "command": "echo step1"
+        },
+        "metadata": {},
+        "task_id": "eebf3754-09f0-4e24-94b9-8923dd8c0769",
+        "target_agent": "executor"
+      },
+      "target_agent": "executor",
+      "dispatched_at": "2026-03-05T22:47:15.379601",
+      "status": "dispatched",
+      "executed": true
+    },
+    {
+      "task_id": "bbf47120-b534-4305-9c83-155a30c87cb2",
+      "task": {
+        "type": "shell",
+        "payload": {
+          "command": "echo step2"
+        },
+        "metadata": {},
+        "task_id": "bbf47120-b534-4305-9c83-155a30c87cb2",
+        "target_agent": "executor"
+      },
+      "target_agent": "executor",
+      "dispatched_at": "2026-03-05T22:47:15.381106",
+      "status": "dispatched",
+      "executed": true
     }
   ],
   "completed": [],

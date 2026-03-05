@@ -1,26 +1,111 @@
 {
-  "timestamp": "2026-03-05 21:37:16",
   "agents": {
     "test-agent": {
       "agent_id": "test-agent",
-      "state": "starting",
+      "state": "running",
       "health_score": 100.0,
-      "start_time": 1772717836.2273335,
-      "last_check": 1772717836.2273347,
+      "start_time": 1772723514.6370416,
+      "last_check": 1772723515.8691237,
       "consecutive_failures": 0,
       "total_failures": 0,
       "recovery_attempts": 0,
       "restart_count": 0,
       "last_error": null,
-      "uptime": "0:00:00",
+      "uptime": "0:00:01",
       "metadata": {}
+    },
+    "agent-001": {
+      "agent_id": "agent-001",
+      "state": "running",
+      "health_score": 80.38959720704759,
+      "start_time": 1772723514.6373625,
+      "last_check": 1772723515.870493,
+      "consecutive_failures": 1,
+      "total_failures": 1,
+      "recovery_attempts": 0,
+      "restart_count": 0,
+      "last_error": null,
+      "uptime": "0:00:01",
+      "metadata": {}
+    },
+    "agent-002": {
+      "agent_id": "agent-002",
+      "state": "running",
+      "health_score": 86.16444802310369,
+      "start_time": 1772723514.6378515,
+      "last_check": 1772723515.872923,
+      "consecutive_failures": 0,
+      "total_failures": 1,
+      "recovery_attempts": 0,
+      "restart_count": 0,
+      "last_error": null,
+      "uptime": "0:00:01",
+      "metadata": {}
+    },
+    "agent-003": {
+      "agent_id": "agent-003",
+      "state": "failed",
+      "health_score": 90.58181780367858,
+      "start_time": 1772723514.6389384,
+      "last_check": 1772723515.8744056,
+      "consecutive_failures": 3,
+      "total_failures": 3,
+      "recovery_attempts": 1,
+      "restart_count": 0,
+      "last_error": null,
+      "uptime": "0:00:01",
+      "metadata": {}
+    },
+    "agent-004": {
+      "agent_id": "agent-004",
+      "state": "running",
+      "health_score": 86.150095271811,
+      "start_time": 1772723514.639977,
+      "last_check": 1772723515.8761463,
+      "consecutive_failures": 0,
+      "total_failures": 0,
+      "recovery_attempts": 0,
+      "restart_count": 0,
+      "last_error": null,
+      "uptime": "0:00:01",
+      "metadata": {}
+    },
+    "agent-005": {
+      "agent_id": "agent-005",
+      "state": "running",
+      "health_score": 76.33069938791678,
+      "start_time": 1772723514.6411397,
+      "last_check": 1772723515.877604,
+      "consecutive_failures": 0,
+      "total_failures": 0,
+      "recovery_attempts": 0,
+      "restart_count": 0,
+      "last_error": null,
+      "uptime": "0:00:01",
+      "metadata": {}
+    },
+    "ultron-core": {
+      "capabilities": [
+        "reasoning",
+        "execution",
+        "monitoring"
+      ],
+      "endpoint": "http://localhost:18789",
+      "state": "running",
+      "health_score": 100.0,
+      "failures": 0,
+      "last_check": 1772723559.2306075,
+      "registered": "2026-03-05T23:12:39.230609",
+      "uptime": 0,
+      "consecutive_failures": 0
     }
   },
   "stats": {
-    "total_checks": 0,
-    "total_failovers": 0,
-    "total_recoveries": 0,
+    "total_checks": 30,
+    "total_failovers": 2,
+    "total_recoveries": 1,
     "total_restarts": 0,
-    "agents_registered": 1
-  }
+    "agents_registered": 5
+  },
+  "updated": "2026-03-05T23:12:39.230902"
 }

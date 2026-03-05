@@ -1,0 +1,30 @@
+{
+  "timestamp": "2026-03-05T22:43:33.476925",
+  "metrics": {
+    "cpu_percent": 20.7,
+    "memory_percent": 28.0,
+    "disk_percent": 29.7,
+    "load_avg": [
+      1.412109375,
+      0.96533203125,
+      0.720703125
+    ],
+    "process_count": 197,
+    "timestamp": "2026-03-05T22:43:33.476925"
+  },
+  "services": {
+    "gateway": {
+      "status": "healthy",
+      "output": "active"
+    }
+  },
+  "cron_health": {
+    "running": 68,
+    "idle": 7,
+    "ok": 2,
+    "total": 77,
+    "issues": [
+      "\u8b66\u544a: 7\u4e2a\u4efb\u52a1\u5904\u4e8eidle\u72b6\u6001"
+    ]
+  }
+}

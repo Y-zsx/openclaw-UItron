@@ -1,10 +1,30 @@
 {
-  "active_alerts": {},
+  "active_alerts": {
+    "alert_1772721977070": {
+      "id": "alert_1772721977070",
+      "rule": "test_high_cpu",
+      "level": "WARNING",
+      "message": "CPU使用率过高",
+      "timestamp": "2026-03-05T22:46:17.070336",
+      "last_escalation": null,
+      "escalation_count": 0,
+      "assigned_to": "西西弗斯",
+      "status": "active"
+    }
+  },
   "escalated_alerts": {},
   "acknowledged": {},
-  "assignments": {},
+  "assignments": {
+    "alert_1772721977070": {
+      "assigned_to": "西西弗斯",
+      "assigned_at": "2026-03-05T22:46:17.070379",
+      "notified": false
+    }
+  },
   "team_members": {
-    "primary": ["西西弗斯"],
+    "primary": [
+      "西西弗斯"
+    ],
     "secondary": [],
     "emergency": []
   }

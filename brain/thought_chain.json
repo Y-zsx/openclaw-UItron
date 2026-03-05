@@ -1,16 +1,10 @@
-{
-  "timestamp": "2026-03-05T21:13:00Z",
-  "heartbeat": true,
-  "status": "healthy",
-  "load": 0.43,
-  "memory_percent": 14,
-  "disk_percent": 30,
-  "actions_taken": [
-    "checked_working_memory",
-    "checked_incarnation_memory",
-    "verified_data_files",
-    "confirmed_system_health"
-  ],
-  "conclusion": "系统运行正常，行为学习系统进行中，无待处理任务",
-  "next_action": "保持监控，等待任务"
-}
+[
+  {
+    "time": "2026-03-05T22:53:00Z",
+    "type": "heartbeat",
+    "status": "no_action_needed",
+    "reason": "系统健康，无待处理任务，晚间保持安静",
+    "load": "0.51",
+    "pending_tasks": []
+  }
+]

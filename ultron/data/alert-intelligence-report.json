@@ -1,0 +1,37 @@
+{
+  "timestamp": "2026-03-05T22:56:10.788760",
+  "metrics_count": 1,
+  "analysis": {
+    "status": "insufficient_data",
+    "message": "需要更多数据点"
+  },
+  "patterns": {
+    "patterns": [],
+    "timestamp": "2026-03-05T22:56:10.788779",
+    "alert_type_counts": {
+      "CPU使用率过高": 3,
+      "内存使用率过高": 3,
+      "CPU使用率严重": 3,
+      "预测:load": 1,
+      "升级:unknown": 2
+    },
+    "frequent_alerts": [
+      {
+        "rule": "CPU使用率过高",
+        "count": 3
+      },
+      {
+        "rule": "内存使用率过高",
+        "count": 3
+      },
+      {
+        "rule": "CPU使用率严重",
+        "count": 3
+      },
+      {
+        "rule": "升级:unknown",
+        "count": 2
+      }
+    ]
+  }
+}
