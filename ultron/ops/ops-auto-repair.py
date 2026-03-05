@@ -77,9 +77,12 @@ class RestartService(RepairBase):
         alert_type = alert.get("type", "")
         message = alert.get("message", "").lower()
         
-        # 服务宕机、响应超时等情况
-        keywords = ["service down", "not responding", "connection refused", "timeout"]
-        return any(k in message for k in keywords)
+        # 服务宕机、响应超时等情况 (支持中英文)
+        keywords = [
+            "service down", "not responding", "connection refused", "timeout",
+            "服务宕机", "服务 down", "服务停止", "服务异常", "服务无响应"
+        ]
+        return any(k in message for k in keywords) or alert_type == "service"
     
     def execute(self, alert: Dict, context: Dict) -> Dict:
         service_name = alert.get("service", "")
@@ -134,10 +137,11 @@ class ClearDiskSpace(RepairBase):
         super().__init__("ClearDiskSpace", "清理磁盘空间", priority=7)
     
     def can_handle(self, alert: Dict) -> bool:
+        alert_type = alert.get("type", "")
         message = alert.get("message", "").lower()
-        # 支持中英文关键字
-        return ("disk" in message or "磁盘" in message) and \
-               ("full" in message or "usage" in message or "使用" in message or "高" in message)
+        # 支持中英文关键字 + alert_type
+        return alert_type == "disk" or (("disk" in message or "磁盘" in message) and \
+               ("full" in message or "usage" in message or "使用" in message or "高" in message))
     
     def execute(self, alert: Dict, context: Dict) -> Dict:
         actions_taken = []
@@ -206,10 +210,12 @@ class FreeMemory(RepairBase):
         super().__init__("FreeMemory", "释放内存", priority=6)
     
     def can_handle(self, alert: Dict) -> bool:
+        alert_type = alert.get("type", "")
         message = alert.get("message", "").lower()
-        # 支持中英文关键字 (CPU和内存都可能导致高负载)
-        return ("memory" in message or "内存" in message or "cpu" in message or "CPU" in message) and \
-               ("high" in message or "over" in message or "usage" in message or "使用" in message or "高" in message or "超过" in message)
+        # 支持中英文关键字 + alert_type
+        return alert_type in ["memory", "cpu"] or \
+               (("memory" in message or "内存" in message or "cpu" in message or "CPU" in message) and \
+               ("high" in message or "over" in message or "usage" in message or "使用" in message or "高" in message or "超过" in message))
     
     def execute(self, alert: Dict, context: Dict) -> Dict:
         actions_taken = []
@@ -293,8 +299,10 @@ class KillProcess(RepairBase):
         super().__init__("KillProcess", "终止异常进程", priority=9)
     
     def can_handle(self, alert: Dict) -> bool:
+        alert_type = alert.get("type", "")
         message = alert.get("message", "").lower()
-        return "process" in message and ("hung" in message or "stuck" in message or "zombie" in message)
+        # 支持alert_type或关键字匹配
+        return alert_type == "process" or ("process" in message and ("hung" in message or "stuck" in message or "zombie" in message or "卡" in message or "僵死" in message))
     
     def execute(self, alert: Dict, context: Dict) -> Dict:
         process_pattern = alert.get("process", "")
@@ -341,8 +349,10 @@ class NetworkRepair(RepairBase):
         super().__init__("NetworkRepair", "网络故障修复", priority=9)
     
     def can_handle(self, alert: Dict) -> bool:
+        alert_type = alert.get("type", "")
         message = alert.get("message", "").lower()
-        return "network" in message or "connection" in message or "dns" in message
+        # 支持alert_type和网络相关关键字
+        return alert_type == "network" or "network" in message or "connection" in message or "dns" in message or "网络" in message or "连接" in message
     
     def execute(self, alert: Dict, context: Dict) -> Dict:
         actions = []
