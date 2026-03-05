@@ -77,13 +77,19 @@ skills/reincarnation-loop/
 #### 第74世：Dashboard公网暴露 ✅
 - [x] Dashboard添加告警历史展示
 - [x] 本地HTTP服务运行正常 (localhost:8080)
-- [ ] 公网访问需要配置安全组
+- [x] 公网访问通过nginx反向代理实现
 **运行状态**: completed | 2026-03-05T11:11
 
-#### 第75世：公网暴露与多站点扩展（当前）
-- [ ] 配置安全组开放8080端口
+#### 第75世：公网暴露与多站点扩展 ✅
+- [x] 配置nginx反向代理 (/monitor)
+- [x] Dashboard公网可访问: http://115.29.235.46/monitor
+- [ ] 添加更多监控站点
+**运行状态**: completed | 2026-03-05T11:18
+
+#### 第76世：优化Dashboard功能（当前）
 - [ ] 添加更多监控站点
 - [ ] 优化Dashboard展示
+- [ ] 完善告警历史功能
 
 ---
 
