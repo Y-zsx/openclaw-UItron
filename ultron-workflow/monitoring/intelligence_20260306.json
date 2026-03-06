@@ -1,0 +1,26 @@
+{
+  "collection_time": "2026-03-06T09:54:00+08:00",
+  "summary": {
+    "active_alerts": 0,
+    "warning_count": 0,
+    "error_count": 0,
+    "resolved_alerts": 3
+  },
+  "system_metrics": {
+    "cpu_percent": 52.0,
+    "memory_percent": 40.8,
+    "disk_percent": 30.1,
+    "gateway_reachable": true
+  },
+  "services": {
+    "health_api": "healthy",
+    "task_monitor": "healthy",
+    "collab_center": "healthy",
+    "task_retry": "healthy",
+    "system_summary": "healthy"
+  },
+  "intelligence": {
+    "status": "normal",
+    "recommendation": "系统运行正常，无活跃告警"
+  }
+}
