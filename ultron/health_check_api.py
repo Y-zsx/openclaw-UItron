@@ -18,6 +18,7 @@ import threading
 import sys
 sys.path.insert(0, '/root/.openclaw/workspace/ultron')
 from health_check_logger import HealthCheckLogger
+from health_check_trend_analyzer import HealthCheckTrendAnalyzer
 
 logging.basicConfig(
     level=logging.INFO,
@@ -47,6 +48,7 @@ class HealthCheckAPI:
     def __init__(self, db_path: str = DB_PATH):
         self.db_path = db_path
         self.logger = HealthCheckLogger(db_path)
+        self.trend_analyzer = HealthCheckTrendAnalyzer(db_path)
         self._ensure_db()
     
     def _ensure_db(self):
@@ -436,6 +438,54 @@ class HealthCheckAPIHandler(BaseHTTPRequestHandler):
                 # 今日vs昨日对比
                 comparison = self.api.get_daily_comparison()
                 self._send_json(comparison)
+            
+            # === 历史趋势分析新端点 ===
+            elif path == '/trend-analyzer/score':
+                # 综合健康评分
+                score = self.api.trend_analyzer.get_health_score()
+                self._send_json(score)
+            
+            elif path == '/trend-analyzer/time-series':
+                # 时间序列数据
+                hours = int(query.get('hours', [24])[0])
+                interval = query.get('interval', ['auto'])[0]
+                data = self.api.trend_analyzer.get_time_series(hours, interval)
+                self._send_json(data)
+            
+            elif path == '/trend-analyzer/service-trends':
+                # 服务趋势分析
+                hours = int(query.get('hours', [24])[0])
+                trends = self.api.trend_analyzer.get_service_trends(hours)
+                self._send_json(trends)
+            
+            elif path == '/trend-analyzer/weekly':
+                # 周趋势分析
+                weekly = self.api.trend_analyzer.get_weekly_trend()
+                self._send_json(weekly)
+            
+            elif path == '/trend-analyzer/monthly':
+                # 月趋势分析
+                monthly = self.api.trend_analyzer.get_monthly_trend()
+                self._send_json(monthly)
+            
+            elif path == '/trend-analyzer/anomalies':
+                # 异常检测
+                hours = int(query.get('hours', [24])[0])
+                threshold = float(query.get('threshold', [15.0])[0])
+                anomalies = self.api.trend_analyzer.detect_anomalies(hours, threshold)
+                self._send_json(anomalies)
+            
+            elif path == '/trend-analyzer/report':
+                # 完整趋势报告
+                period = query.get('period', ['24h'])[0]
+                report = self.api.trend_analyzer.generate_report(period)
+                self._send_json(report)
+            
+            elif path == '/trend-analyzer/chart':
+                # 图表数据
+                hours = int(query.get('hours', [24])[0])
+                chart = self.api.trend_analyzer.get_chart_data(hours)
+                self._send_json(chart)
             
             elif path == '/hourly':
                 # 小时统计
