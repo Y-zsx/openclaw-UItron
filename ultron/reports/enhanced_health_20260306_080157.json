@@ -1,0 +1,221 @@
+{
+  "timestamp": "2026-03-06T08:01:57.214175",
+  "period_hours": 24,
+  "health_score": 75.0,
+  "status": "unhealthy",
+  "summary": {
+    "total_services": 8,
+    "healthy": 6,
+    "degraded": 0,
+    "unhealthy": 2
+  },
+  "services": [
+    {
+      "service": "agent_network",
+      "total_checks": 4,
+      "healthy_checks": 4,
+      "uptime_percent": 100.0,
+      "avg_latency_ms": 3.83,
+      "min_latency_ms": 3.53,
+      "max_latency_ms": 4.47
+    },
+    {
+      "service": "automation_api",
+      "total_checks": 4,
+      "healthy_checks": 4,
+      "uptime_percent": 100.0,
+      "avg_latency_ms": 4.08,
+      "min_latency_ms": 3.79,
+      "max_latency_ms": 4.51
+    },
+    {
+      "service": "browser",
+      "total_checks": 4,
+      "healthy_checks": 0,
+      "uptime_percent": 0.0,
+      "avg_latency_ms": 3.15,
+      "min_latency_ms": 2.35,
+      "max_latency_ms": 4.0
+    },
+    {
+      "service": "collab_api",
+      "total_checks": 4,
+      "healthy_checks": 4,
+      "uptime_percent": 100.0,
+      "avg_latency_ms": 3.83,
+      "min_latency_ms": 3.58,
+      "max_latency_ms": 3.94
+    },
+    {
+      "service": "decision_api",
+      "total_checks": 4,
+      "healthy_checks": 4,
+      "uptime_percent": 100.0,
+      "avg_latency_ms": 3.78,
+      "min_latency_ms": 3.49,
+      "max_latency_ms": 4.07
+    },
+    {
+      "service": "executor_api",
+      "total_checks": 4,
+      "healthy_checks": 0,
+      "uptime_percent": 0.0,
+      "avg_latency_ms": 3.18,
+      "min_latency_ms": 2.56,
+      "max_latency_ms": 4.06
+    },
+    {
+      "service": "gateway",
+      "total_checks": 4,
+      "healthy_checks": 4,
+      "uptime_percent": 100.0,
+      "avg_latency_ms": 10.73,
+      "min_latency_ms": 5.67,
+      "max_latency_ms": 25.34
+    },
+    {
+      "service": "workflow_api",
+      "total_checks": 4,
+      "healthy_checks": 4,
+      "uptime_percent": 100.0,
+      "avg_latency_ms": 3.84,
+      "min_latency_ms": 3.44,
+      "max_latency_ms": 4.03
+    }
+  ],
+  "trends": {
+    "agent_network": "stable",
+    "automation_api": "stable",
+    "browser": "stable",
+    "collab_api": "stable",
+    "decision_api": "stable",
+    "executor_api": "stable",
+    "gateway": "stable",
+    "workflow_api": "stable"
+  },
+  "recent_failures": [
+    {
+      "timestamp": "2026-03-06T08:00:38.217485",
+      "service": "executor_api",
+      "port_status": true,
+      "http_status": 0,
+      "latency_ms": 2.7930736541748047,
+      "details": {}
+    },
+    {
+      "timestamp": "2026-03-06T08:00:38.217485",
+      "service": "browser",
+      "port_status": true,
+      "http_status": 0,
+      "latency_ms": 3.8700103759765625,
+      "details": {}
+    },
+    {
+      "timestamp": "2026-03-06T08:00:16.282145",
+      "service": "executor_api",
+      "port_status": true,
+      "http_status": 0,
+      "latency_ms": 3.3283233642578125,
+      "details": {}
+    },
+    {
+      "timestamp": "2026-03-06T08:00:16.282145",
+      "service": "browser",
+      "port_status": true,
+      "http_status": 0,
+      "latency_ms": 4.002094268798828,
+      "details": {}
+    },
+    {
+      "timestamp": "2026-03-06T07:59:56.026620",
+      "service": "executor_api",
+      "port_status": true,
+      "http_status": 0,
+      "latency_ms": 2.5568008422851562,
+      "details": {}
+    },
+    {
+      "timestamp": "2026-03-06T07:59:56.026620",
+      "service": "browser",
+      "port_status": true,
+      "http_status": 0,
+      "latency_ms": 2.3479461669921875,
+      "details": {}
+    },
+    {
+      "timestamp": "2026-03-06T07:59:43.675268",
+      "service": "executor_api",
+      "port_status": true,
+      "http_status": 0,
+      "latency_ms": 4.058599472045898,
+      "details": {}
+    },
+    {
+      "timestamp": "2026-03-06T07:59:43.675268",
+      "service": "browser",
+      "port_status": true,
+      "http_status": 0,
+      "latency_ms": 2.399444580078125,
+      "details": {}
+    }
+  ],
+  "yesterday_comparison": [
+    {
+      "service": "gateway",
+      "today": 100.0,
+      "yesterday": 0,
+      "change": 100.0,
+      "trend": "↑"
+    },
+    {
+      "service": "browser",
+      "today": 0.0,
+      "yesterday": 0,
+      "change": 0.0,
+      "trend": "→"
+    },
+    {
+      "service": "automation_api",
+      "today": 100.0,
+      "yesterday": 0,
+      "change": 100.0,
+      "trend": "↑"
+    },
+    {
+      "service": "workflow_api",
+      "today": 100.0,
+      "yesterday": 0,
+      "change": 100.0,
+      "trend": "↑"
+    },
+    {
+      "service": "agent_network",
+      "today": 100.0,
+      "yesterday": 0,
+      "change": 100.0,
+      "trend": "↑"
+    },
+    {
+      "service": "collab_api",
+      "today": 100.0,
+      "yesterday": 0,
+      "change": 100.0,
+      "trend": "↑"
+    },
+    {
+      "service": "executor_api",
+      "today": 0.0,
+      "yesterday": 0,
+      "change": 0.0,
+      "trend": "→"
+    },
+    {
+      "service": "decision_api",
+      "today": 100.0,
+      "yesterday": 0,
+      "change": 100.0,
+      "trend": "↑"
+    }
+  ],
+  "recommendation": "CRITICAL: 2 service(s) unhealthy. Immediate action required!"
+}
