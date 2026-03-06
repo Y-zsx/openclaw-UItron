@@ -2,62 +2,62 @@
   "predictions": {
     "cpu": {
       "metric_type": "cpu",
-      "current_value": 27.4,
-      "predicted_value": 29.87,
+      "current_value": 33.8,
+      "predicted_value": 33.89,
       "trend": {
-        "trend": "rising",
-        "strength": 7.234427363157617,
-        "velocity": 2.4727272727272736,
-        "predicted_next": 29.87272727272727
+        "trend": "stable",
+        "strength": 0.281753087139428,
+        "velocity": 0.0878787878787876,
+        "predicted_next": 33.88787878787878
       },
-      "confidence": 0.4962100885006273,
+      "confidence": 0.5087874937129491,
       "horizon": "5m",
-      "data_points": 25
+      "data_points": 50
     },
     "memory": {
       "metric_type": "memory",
-      "current_value": 48.5,
-      "predicted_value": 48.69,
+      "current_value": 52.6,
+      "predicted_value": 52.67,
       "trend": {
-        "trend": "rising",
-        "strength": 0.38064165307232134,
-        "velocity": 0.1866666666666664,
-        "predicted_next": 48.68666666666667
+        "trend": "stable",
+        "strength": 0.1468297312299679,
+        "velocity": 0.0745454545454547,
+        "predicted_next": 52.67454545454546
       },
       "confidence": 0.95,
       "horizon": "5m",
-      "data_points": 20
+      "data_points": 50
     },
     "disk": {
       "metric_type": "disk",
-      "current_value": 31.5,
-      "predicted_value": 31.5,
+      "current_value": 31.6,
+      "predicted_value": 31.6,
       "trend": {
         "trend": "stable",
         "strength": 0.0,
         "velocity": 0.0,
-        "predicted_next": 31.5
+        "predicted_next": 31.6
       },
       "confidence": 0.95,
       "horizon": "15m",
-      "data_points": 20
+      "data_points": 50
     },
     "load": {
       "metric_type": "load",
-      "current_value": 1.1728515625,
-      "predicted_value": 1.18,
+      "current_value": 1.87939453125,
+      "predicted_value": 1.91,
       "trend": {
         "trend": "stable",
-        "strength": 0.5097822023025524,
-        "velocity": 0.004862097537878788,
-        "predicted_next": 1.1777136600378788
+        "strength": 1.4569713894824436,
+        "velocity": 0.027512428977272727,
+        "predicted_next": 1.9069069602272728
       },
-      "confidence": 0.9279237505607475,
+      "confidence": 0.7470647992471446,
       "horizon": "5m",
-      "data_points": 20
+      "data_points": 50
     }
   },
   "alert_predictions": [],
   "suggestions": [],
-  "timestamp": "2026-03-06T03:05:35.938697"
+  "timestamp": "2026-03-06T03:34:08.661103"
 }

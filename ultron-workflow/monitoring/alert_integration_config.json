@@ -1,0 +1,12 @@
+{
+  "enabled": true,
+  "channels": [
+    "console",
+    "dingtalk"
+  ],
+  "rate_limit": {
+    "enabled": true,
+    "max_per_minute": 10
+  },
+  "integrations": {}
+}

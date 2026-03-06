@@ -351,11 +351,105 @@
       "total": 3,
       "failed": [],
       "recovered": []
+    },
+    {
+      "time": "2026-03-06T11:07:43.341365",
+      "status": "healthy",
+      "healthy": 3,
+      "total": 3,
+      "failed": [],
+      "recovered": []
+    },
+    {
+      "time": "2026-03-06T11:09:49.129590",
+      "status": "warning",
+      "healthy": 2,
+      "total": 3,
+      "failed": [
+        "status_panel"
+      ],
+      "recovered": []
+    },
+    {
+      "time": "2026-03-06T11:12:49.006486",
+      "status": "healthy",
+      "healthy": 3,
+      "total": 3,
+      "failed": [],
+      "recovered": []
+    },
+    {
+      "time": "2026-03-06T11:15:00.404693",
+      "status": "warning",
+      "healthy": 2,
+      "total": 3,
+      "failed": [
+        "status_panel"
+      ],
+      "recovered": []
+    },
+    {
+      "time": "2026-03-06T11:17:59.342290",
+      "status": "warning",
+      "healthy": 2,
+      "total": 3,
+      "failed": [
+        "status_panel"
+      ],
+      "recovered": []
+    },
+    {
+      "time": "2026-03-06T11:20:08.686588",
+      "status": "healthy",
+      "healthy": 3,
+      "total": 3,
+      "failed": [],
+      "recovered": []
+    },
+    {
+      "time": "2026-03-06T11:23:09.049278",
+      "status": "healthy",
+      "healthy": 3,
+      "total": 3,
+      "failed": [],
+      "recovered": []
+    },
+    {
+      "time": "2026-03-06T11:25:16.349475",
+      "status": "healthy",
+      "healthy": 3,
+      "total": 3,
+      "failed": [],
+      "recovered": []
+    },
+    {
+      "time": "2026-03-06T11:28:16.689599",
+      "status": "healthy",
+      "healthy": 3,
+      "total": 3,
+      "failed": [],
+      "recovered": []
+    },
+    {
+      "time": "2026-03-06T11:30:23.488885",
+      "status": "healthy",
+      "healthy": 3,
+      "total": 3,
+      "failed": [],
+      "recovered": []
+    },
+    {
+      "time": "2026-03-06T11:33:23.179901",
+      "status": "healthy",
+      "healthy": 3,
+      "total": 3,
+      "failed": [],
+      "recovered": []
     }
   ],
   "summary": {
-    "total": 30,
-    "healthy": 23,
-    "warning": 5
+    "total": 41,
+    "healthy": 31,
+    "warning": 8
   }
 }

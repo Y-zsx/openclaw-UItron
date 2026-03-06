@@ -1,0 +1,14 @@
+[Unit]
+Description=Ultron Alert Integration Service
+After=network.target
+
+[Service]
+Type=simple
+User=root
+WorkingDirectory=/root/.openclaw/workspace/ultron-workflow/monitoring
+ExecStart=/usr/bin/python3 /root/.openclaw/workspace/ultron-workflow/monitoring/alert_integration.py
+Restart=always
+RestartSec=10
+
+[Install]
+WantedBy=multi-user.target
