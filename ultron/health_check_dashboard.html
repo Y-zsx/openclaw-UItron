@@ -204,6 +204,30 @@
     </div>
     
     <div id="analysis" class="tab-content">
+        <!-- 趋势分析摘要 -->
+        <div class="status-cards" style="margin-bottom: 30px;">
+            <div class="status-card" id="trendDirectionCard">
+                <div class="status-label">📈 趋势方向</div>
+                <div class="status-value" id="trendDirection">--</div>
+                <div class="status-label" id="trendChange">变化: --</div>
+            </div>
+            <div class="status-card">
+                <div class="status-label">🔮 预测健康度</div>
+                <div class="status-value" id="predictedHealth">--</div>
+                <div class="status-label" id="predictionTrend">趋势: --</div>
+            </div>
+            <div class="status-card">
+                <div class="status-label">📅 今日vs昨日</div>
+                <div class="status-value" id="healthChange">--</div>
+                <div class="status-label">健康度变化</div>
+            </div>
+            <div class="status-card">
+                <div class="status-label">📊 数据波动性</div>
+                <div class="status-value" id="volatility">--</div>
+                <div class="status-label">Volatility</div>
+            </div>
+        </div>
+        
         <div class="charts-container three-col">
             <div class="chart-box">
                 <div class="chart-title">🥧 服务健康分布</div>
@@ -246,17 +270,23 @@
         
         async function loadData() {
             try {
-                const [statusRes, servicesRes, historyRes, hourlyRes] = await Promise.all([
+                const [statusRes, servicesRes, historyRes, hourlyRes, trendAnalysisRes, predictionRes, comparisonRes] = await Promise.all([
                     fetch('/status'),
                     fetch('/services'),
                     fetch('/history?limit=30'),
-                    fetch('/hourly?hours=24')
+                    fetch('/hourly?hours=24'),
+                    fetch('/trend-analysis?hours=24'),
+                    fetch('/prediction'),
+                    fetch('/comparison')
                 ]);
                 
                 const status = await statusRes.json();
                 const services = await servicesRes.json();
                 const history = await historyRes.json();
                 const hourly = await hourlyRes.json();
+                const trendAnalysis = await trendAnalysisRes.json();
+                const prediction = await predictionRes.json();
+                const comparison = await comparisonRes.json();
                 
                 currentServices = services.services;
                 currentHistory = history.history;
@@ -267,6 +297,36 @@
                 document.getElementById('totalCount').textContent = status.total_services;
                 document.getElementById('checkCount').textContent = status.check_count;
                 document.getElementById('lastUpdate').textContent = '最后更新: ' + new Date().toLocaleString('zh-CN');
+                
+                // 更新趋势分析卡片
+                if (trendAnalysis && trendAnalysis.status !== 'insufficient_data') {
+                    const trendDir = trendAnalysis.trend_direction || 'stable';
+                    const trendIcons = { improving: '↗️', declining: '↘️', stable: '➡️' };
+                    document.getElementById('trendDirection').textContent = trendIcons[trendDir] + ' ' + (trendDir === 'improving' ? '改善中' : trendDir === 'declining' ? '下降中' : '稳定');
+                    document.getElementById('trendChange').textContent = '变化: ' + (trendAnalysis.trend_change > 0 ? '+' : '') + trendAnalysis.trend_change + '%';
+                    document.getElementById('volatility').textContent = (trendAnalysis.volatility || 0).toFixed(1);
+                    
+                    // 根据趋势方向设置卡片颜色
+                    const trendCard = document.getElementById('trendDirectionCard');
+                    trendCard.className = 'status-card ' + (trendDir === 'improving' ? 'healthy' : trendDir === 'declining' ? 'error' : '');
+                } else {
+                    document.getElementById('trendDirection').textContent = '数据不足';
+                }
+                
+                // 更新预测卡片
+                if (prediction && prediction.status === 'success') {
+                    document.getElementById('predictedHealth').textContent = prediction.predicted_health + '%';
+                    const trendArrows = { up: '↗️', down: '↘️', stable: '➡️' };
+                    document.getElementById('predictionTrend').textContent = '趋势: ' + trendArrows[prediction.trend] + ' ' + prediction.trend;
+                }
+                
+                // 更新对比卡片
+                if (comparison && comparison.comparison) {
+                    const change = comparison.comparison.health_change;
+                    const changeText = change > 0 ? '+' + change : change;
+                    document.getElementById('healthChange').textContent = changeText + '%';
+                    document.getElementById('healthChange').style.color = change >= 0 ? '#4ade80' : '#f87171';
+                }
                 
                 // 更新服务卡片
                 const servicesGrid = document.getElementById('servicesGrid');

@@ -15,6 +15,9 @@ from pathlib import Path
 from http.server import HTTPServer, BaseHTTPRequestHandler
 from urllib.parse import urlparse, parse_qs
 import threading
+import sys
+sys.path.insert(0, '/root/.openclaw/workspace/ultron')
+from health_check_logger import HealthCheckLogger
 
 logging.basicConfig(
     level=logging.INFO,
@@ -43,6 +46,7 @@ class HealthCheckAPI:
     
     def __init__(self, db_path: str = DB_PATH):
         self.db_path = db_path
+        self.logger = HealthCheckLogger(db_path)
         self._ensure_db()
     
     def _ensure_db(self):
@@ -198,6 +202,62 @@ class HealthCheckAPI:
         results = [dict(row) for row in cursor.fetchall()]
         conn.close()
         return results
+    
+    def get_trend_analysis(self, hours: int = 24, window_size: int = 5) -> dict:
+        """获取趋势分析（使用logger的趋势分析功能）"""
+        return self.logger.get_trend_analysis(hours=hours, window_size=window_size)
+    
+    def get_health_prediction(self, hours_ahead: int = 1) -> dict:
+        """获取健康度预测"""
+        return self.logger.predict_health(hours_ahead=hours_ahead)
+    
+    def get_daily_comparison(self) -> dict:
+        """获取今日与昨日对比"""
+        conn = sqlite3.connect(self.db_path)
+        cursor = conn.cursor()
+        
+        today = datetime.now().strftime("%Y-%m-%d")
+        yesterday = (datetime.now() - timedelta(days=1)).strftime("%Y-%m-%d")
+        
+        # 今日统计
+        cursor.execute("""
+            SELECT COUNT(*), AVG(network_health), MIN(network_health), MAX(network_health)
+            FROM health_check_logs 
+            WHERE timestamp LIKE ?
+        """, (f"{today}%",))
+        today_row = cursor.fetchone()
+        
+        # 昨日统计
+        cursor.execute("""
+            SELECT COUNT(*), AVG(network_health), MIN(network_health), MAX(network_health)
+            FROM health_check_logs 
+            WHERE timestamp LIKE ?
+        """, (f"{yesterday}%",))
+        yesterday_row = cursor.fetchone()
+        
+        conn.close()
+        
+        today_count = today_row[0] or 0
+        yesterday_count = yesterday_row[0] or 0
+        
+        return {
+            "today": {
+                "checks": today_count,
+                "avg_health": round(today_row[1] or 0, 2),
+                "min_health": today_row[2] or 0,
+                "max_health": today_row[3] or 0
+            },
+            "yesterday": {
+                "checks": yesterday_count,
+                "avg_health": round(yesterday_row[1] or 0, 2),
+                "min_health": yesterday_row[2] or 0,
+                "max_health": yesterday_row[3] or 0
+            },
+            "comparison": {
+                "health_change": round((today_row[1] or 0) - (yesterday_row[1] or 0), 2),
+                "check_count_change": today_count - yesterday_count
+            }
+        }
     
     def trigger_health_check(self) -> dict:
         """触发一次健康检查"""
@@ -359,6 +419,24 @@ class HealthCheckAPIHandler(BaseHTTPRequestHandler):
                 trend = self.api.get_health_trend(hours)
                 self._send_json({"trend": trend})
             
+            elif path == '/trend-analysis':
+                # 趋势分析（高级）
+                hours = int(query.get('hours', [24])[0])
+                window_size = int(query.get('window', [5])[0])
+                analysis = self.api.get_trend_analysis(hours, window_size)
+                self._send_json(analysis)
+            
+            elif path == '/prediction':
+                # 健康度预测
+                hours_ahead = int(query.get('hours', [1])[0])
+                prediction = self.api.get_health_prediction(hours_ahead)
+                self._send_json(prediction)
+            
+            elif path == '/comparison':
+                # 今日vs昨日对比
+                comparison = self.api.get_daily_comparison()
+                self._send_json(comparison)
+            
             elif path == '/hourly':
                 # 小时统计
                 hours = int(query.get('hours', [24])[0])
@@ -427,18 +505,21 @@ def run_server(port: int = API_PORT):
     
     server = HTTPServer(('0.0.0.0', port), HealthCheckAPIHandler)
     logger.info(f"🚀 健康检查API服务启动成功 (端口: {port})")
-    logger.info(f"   - /health      : 服务健康检查")
-    logger.info(f"   - /status      : 当前健康状态")
-    logger.info(f"   - /services    : 所有服务状态")
-    logger.info(f"   - /history     : 健康检查历史")
-    logger.info(f"   - /service     : 单个服务历史 (?port=8089)")
-    logger.info(f"   - /stats       : 统计数据")
-    logger.info(f"   - /trend       : 健康趋势")
-    logger.info(f"   - /hourly      : 小时统计")
-    logger.info(f"   - /trigger     : 触发健康检查")
-    logger.info(f"   - /resources   : 系统资源(CPU/内存/磁盘)")
-    logger.info(f"   - /processes   : Top进程列表")
-    logger.info(f"   - /overview    : 综合概览")
+    logger.info(f"   - /health         : 服务健康检查")
+    logger.info(f"   - /status         : 当前健康状态")
+    logger.info(f"   - /services       : 所有服务状态")
+    logger.info(f"   - /history        : 健康检查历史")
+    logger.info(f"   - /service        : 单个服务历史 (?port=8089)")
+    logger.info(f"   - /stats          : 统计数据")
+    logger.info(f"   - /trend          : 健康趋势数据")
+    logger.info(f"   - /trend-analysis : 趋势分析(移动平均/异常检测)")
+    logger.info(f"   - /prediction     : 健康度预测")
+    logger.info(f"   - /comparison     : 今日vs昨日对比")
+    logger.info(f"   - /hourly         : 小时统计")
+    logger.info(f"   - /trigger        : 触发健康检查")
+    logger.info(f"   - /resources      : 系统资源(CPU/内存/磁盘)")
+    logger.info(f"   - /processes      : Top进程列表")
+    logger.info(f"   - /overview       : 综合概览")
     
     try:
         server.serve_forever()
