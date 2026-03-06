@@ -1069,7 +1069,304 @@
       "notification_count": 1,
       "escalate_level": 0,
       "group_key": null
+    },
+    {
+      "id": "alert-0db168d26e33",
+      "rule_id": "cron_health_status_panel",
+      "rule_name": "定时健康检查: status_panel",
+      "service_name": "cron-health-monitor",
+      "level": "error",
+      "message": "服务 status_panel 异常: 健康检查失败",
+      "value": 0,
+      "threshold": 200,
+      "status": "firing",
+      "created_at": "2026-03-06T15:10:32.960705",
+      "updated_at": "2026-03-06T15:10:32.960729",
+      "resolved_at": null,
+      "annotations": {
+        "checked_at": "2026-03-06T15:10:32.957890",
+        "trigger": "cron_health_trigger"
+      },
+      "labels": {
+        "service": "status_panel",
+        "check_type": "cron_health"
+      },
+      "source": "api",
+      "notified_channels": [],
+      "notification_count": 1,
+      "escalate_level": 0,
+      "group_key": null
+    },
+    {
+      "id": "alert-65a0187d6225",
+      "rule_id": "cron_health_status_panel",
+      "rule_name": "定时健康检查: status_panel",
+      "service_name": "cron-health-monitor",
+      "level": "error",
+      "message": "服务 status_panel 异常: 健康检查失败",
+      "value": 0,
+      "threshold": 200,
+      "status": "firing",
+      "created_at": "2026-03-06T15:15:34.533143",
+      "updated_at": "2026-03-06T15:15:34.533171",
+      "resolved_at": null,
+      "annotations": {
+        "checked_at": "2026-03-06T15:15:34.529496",
+        "trigger": "cron_health_trigger"
+      },
+      "labels": {
+        "service": "status_panel",
+        "check_type": "cron_health"
+      },
+      "source": "api",
+      "notified_channels": [],
+      "notification_count": 1,
+      "escalate_level": 0,
+      "group_key": null
+    },
+    {
+      "id": "alert-9608c889fc9f",
+      "rule_id": "cron_health_status_panel",
+      "rule_name": "定时健康检查: status_panel",
+      "service_name": "cron-health-monitor",
+      "level": "error",
+      "message": "服务 status_panel 异常: 健康检查失败",
+      "value": 0,
+      "threshold": 200,
+      "status": "firing",
+      "created_at": "2026-03-06T15:20:36.109059",
+      "updated_at": "2026-03-06T15:20:36.109086",
+      "resolved_at": null,
+      "annotations": {
+        "checked_at": "2026-03-06T15:20:36.105577",
+        "trigger": "cron_health_trigger"
+      },
+      "labels": {
+        "service": "status_panel",
+        "check_type": "cron_health"
+      },
+      "source": "api",
+      "notified_channels": [],
+      "notification_count": 1,
+      "escalate_level": 0,
+      "group_key": null
+    },
+    {
+      "id": "alert-a01b9f66ecfd",
+      "rule_id": "cron_health_status_panel",
+      "rule_name": "定时健康检查: status_panel",
+      "service_name": "cron-health-monitor",
+      "level": "error",
+      "message": "服务 status_panel 异常: 健康检查失败",
+      "value": 0,
+      "threshold": 200,
+      "status": "firing",
+      "created_at": "2026-03-06T15:25:37.585323",
+      "updated_at": "2026-03-06T15:25:37.585488",
+      "resolved_at": null,
+      "annotations": {
+        "checked_at": "2026-03-06T15:25:37.582364",
+        "trigger": "cron_health_trigger"
+      },
+      "labels": {
+        "service": "status_panel",
+        "check_type": "cron_health"
+      },
+      "source": "api",
+      "notified_channels": [],
+      "notification_count": 1,
+      "escalate_level": 0,
+      "group_key": null
+    },
+    {
+      "id": "alert-3b2c38abd926",
+      "rule_id": "cron_health_status_panel",
+      "rule_name": "定时健康检查: status_panel",
+      "service_name": "cron-health-monitor",
+      "level": "error",
+      "message": "服务 status_panel 异常: 健康检查失败",
+      "value": 0,
+      "threshold": 200,
+      "status": "firing",
+      "created_at": "2026-03-06T15:30:39.023750",
+      "updated_at": "2026-03-06T15:30:39.023785",
+      "resolved_at": null,
+      "annotations": {
+        "checked_at": "2026-03-06T15:30:39.020929",
+        "trigger": "cron_health_trigger"
+      },
+      "labels": {
+        "service": "status_panel",
+        "check_type": "cron_health"
+      },
+      "source": "api",
+      "notified_channels": [],
+      "notification_count": 1,
+      "escalate_level": 0,
+      "group_key": null
+    },
+    {
+      "id": "alert-55d22a2f8eb8",
+      "rule_id": "cron_health_status_panel",
+      "rule_name": "定时健康检查: status_panel",
+      "service_name": "cron-health-monitor",
+      "level": "error",
+      "message": "服务 status_panel 异常: 健康检查失败",
+      "value": 0,
+      "threshold": 200,
+      "status": "firing",
+      "created_at": "2026-03-06T15:35:40.506963",
+      "updated_at": "2026-03-06T15:35:40.507005",
+      "resolved_at": null,
+      "annotations": {
+        "checked_at": "2026-03-06T15:35:40.502435",
+        "trigger": "cron_health_trigger"
+      },
+      "labels": {
+        "service": "status_panel",
+        "check_type": "cron_health"
+      },
+      "source": "api",
+      "notified_channels": [],
+      "notification_count": 1,
+      "escalate_level": 0,
+      "group_key": null
+    },
+    {
+      "id": "alert-55776b96a709",
+      "rule_id": "cron_health_status_panel",
+      "rule_name": "定时健康检查: status_panel",
+      "service_name": "cron-health-monitor",
+      "level": "error",
+      "message": "服务 status_panel 异常: 健康检查失败",
+      "value": 0,
+      "threshold": 200,
+      "status": "firing",
+      "created_at": "2026-03-06T15:40:42.200670",
+      "updated_at": "2026-03-06T15:40:42.200686",
+      "resolved_at": null,
+      "annotations": {
+        "checked_at": "2026-03-06T15:40:42.197728",
+        "trigger": "cron_health_trigger"
+      },
+      "labels": {
+        "service": "status_panel",
+        "check_type": "cron_health"
+      },
+      "source": "api",
+      "notified_channels": [],
+      "notification_count": 1,
+      "escalate_level": 0,
+      "group_key": null
+    },
+    {
+      "id": "alert-671aad53b5e5",
+      "rule_id": "cron_health_status_panel",
+      "rule_name": "定时健康检查: status_panel",
+      "service_name": "cron-health-monitor",
+      "level": "error",
+      "message": "服务 status_panel 异常: 健康检查失败",
+      "value": 0,
+      "threshold": 200,
+      "status": "firing",
+      "created_at": "2026-03-06T15:45:43.651920",
+      "updated_at": "2026-03-06T15:45:43.651940",
+      "resolved_at": null,
+      "annotations": {
+        "checked_at": "2026-03-06T15:45:43.648879",
+        "trigger": "cron_health_trigger"
+      },
+      "labels": {
+        "service": "status_panel",
+        "check_type": "cron_health"
+      },
+      "source": "api",
+      "notified_channels": [],
+      "notification_count": 1,
+      "escalate_level": 0,
+      "group_key": null
+    },
+    {
+      "id": "alert-8409e1564943",
+      "rule_id": "cron_health_status_panel",
+      "rule_name": "定时健康检查: status_panel",
+      "service_name": "cron-health-monitor",
+      "level": "error",
+      "message": "服务 status_panel 异常: 健康检查失败",
+      "value": 0,
+      "threshold": 200,
+      "status": "firing",
+      "created_at": "2026-03-06T15:50:45.285056",
+      "updated_at": "2026-03-06T15:50:45.285089",
+      "resolved_at": null,
+      "annotations": {
+        "checked_at": "2026-03-06T15:50:45.275368",
+        "trigger": "cron_health_trigger"
+      },
+      "labels": {
+        "service": "status_panel",
+        "check_type": "cron_health"
+      },
+      "source": "api",
+      "notified_channels": [],
+      "notification_count": 1,
+      "escalate_level": 0,
+      "group_key": null
+    },
+    {
+      "id": "alert-983286336d25",
+      "rule_id": "cron_health_status_panel",
+      "rule_name": "定时健康检查: status_panel",
+      "service_name": "cron-health-monitor",
+      "level": "error",
+      "message": "服务 status_panel 异常: 健康检查失败",
+      "value": 0,
+      "threshold": 200,
+      "status": "firing",
+      "created_at": "2026-03-06T15:55:46.751464",
+      "updated_at": "2026-03-06T15:55:46.751496",
+      "resolved_at": null,
+      "annotations": {
+        "checked_at": "2026-03-06T15:55:46.748290",
+        "trigger": "cron_health_trigger"
+      },
+      "labels": {
+        "service": "status_panel",
+        "check_type": "cron_health"
+      },
+      "source": "api",
+      "notified_channels": [],
+      "notification_count": 1,
+      "escalate_level": 0,
+      "group_key": null
+    },
+    {
+      "id": "alert-566ac4d656cb",
+      "rule_id": "cron_health_status_panel",
+      "rule_name": "定时健康检查: status_panel",
+      "service_name": "cron-health-monitor",
+      "level": "error",
+      "message": "服务 status_panel 异常: 健康检查失败",
+      "value": 0,
+      "threshold": 200,
+      "status": "firing",
+      "created_at": "2026-03-06T16:00:48.343477",
+      "updated_at": "2026-03-06T16:00:48.343501",
+      "resolved_at": null,
+      "annotations": {
+        "checked_at": "2026-03-06T16:00:48.340457",
+        "trigger": "cron_health_trigger"
+      },
+      "labels": {
+        "service": "status_panel",
+        "check_type": "cron_health"
+      },
+      "source": "api",
+      "notified_channels": [],
+      "notification_count": 1,
+      "escalate_level": 0,
+      "group_key": null
     }
   ],
-  "saved_at": "2026-03-06T15:05:31.465481"
+  "saved_at": "2026-03-06T16:00:48.345980"
 }
