@@ -56,6 +56,14 @@ class MetricsHandler(SimpleHTTPRequestHandler):
             self.send_header('Access-Control-Allow-Origin', '*')
             self.end_headers()
             self.wfile.write(json.dumps({"status": "ok"}).encode())
+        elif self.path == '/procs':
+            self.send_response(200)
+            self.send_header('Content-type', 'application/json')
+            self.send_header('Access-Control-Allow-Origin', '*')
+            self.end_headers()
+            
+            procs = self.get_processes()
+            self.wfile.write(json.dumps(procs, default=str).encode())
         else:
             # 静态文件服务
             super().do_GET()
@@ -114,6 +122,30 @@ class MetricsHandler(SimpleHTTPRequestHandler):
                 "disk": {"disks": [{"percent": 0}]},
                 "network": {}
             }
+    
+    def get_processes(self):
+        """获取进程列表"""
+        if not PSUTIL_AVAILABLE:
+            return []
+        
+        processes = []
+        for p in psutil.process_iter(['pid', 'name', 'cpu_percent', 'memory_percent', 'status']):
+            try:
+                pinfo = p.info
+                if pinfo['name']:
+                    processes.append({
+                        'pid': pinfo['pid'],
+                        'name': pinfo['name'][:50],  # 限制长度
+                        'cpu': pinfo['cpu_percent'] or 0,
+                        'memory': pinfo['memory_percent'] or 0,
+                        'status': pinfo['status'] or 'unknown'
+                    })
+            except (psutil.NoSuchProcess, psutil.AccessDenied):
+                pass
+        
+        # 按CPU排序，返回前15个
+        processes.sort(key=lambda x: x['cpu'], reverse=True)
+        return processes[:15]
     
     def log_message(self, format, *args):
         # 减少日志输出

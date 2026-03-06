@@ -1,0 +1,19 @@
+{
+  "priorities": {
+    "critical": 1,
+    "high": 2,
+    "normal": 3,
+    "low": 4,
+    "background": 5
+  },
+  "retry_policy": {
+    "max_retries": 3,
+    "retry_delay": 5,
+    "backoff_multiplier": 2,
+    "timeout_default": 300
+  },
+  "scheduling": {
+    "max_concurrent": 5,
+    "queue_check_interval": 1
+  }
+}

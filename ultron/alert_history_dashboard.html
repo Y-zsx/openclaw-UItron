@@ -1,0 +1,535 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>告警历史仪表盘</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            color: #fff;
+            min-height: 100vh;
+            padding: 20px;
+        }
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding: 20px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 12px;
+        }
+        .header h1 { font-size: 24px; }
+        .refresh-btn {
+            background: #4ade80;
+            color: #000;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+        }
+        .refresh-btn:hover { background: #22c55e; }
+        
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+        .stat-card {
+            background: rgba(255,255,255,0.08);
+            border-radius: 12px;
+            padding: 20px;
+            text-align: center;
+        }
+        .stat-value { font-size: 32px; font-weight: bold; }
+        .stat-label { font-size: 12px; color: #94a3b8; margin-top: 5px; }
+        .stat-card.info .stat-value { color: #3b82f6; }
+        .stat-card.warning .stat-value { color: #fbbf24; }
+        .stat-card.error .stat-value { color: #f97316; }
+        .stat-card.critical .stat-value { color: #ef4444; }
+        .stat-card.total .stat-value { color: #8b5cf6; }
+        .stat-card.firing .stat-value { color: #f87171; }
+        .stat-card.resolved .stat-value { color: #4ade80; }
+        
+        .filter-bar {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+        .filter-group {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .filter-group label { font-size: 13px; color: #94a3b8; }
+        .filter-group select, .filter-group input {
+            background: rgba(255,255,255,0.1);
+            border: 1px solid rgba(255,255,255,0.2);
+            color: #fff;
+            padding: 8px 12px;
+            border-radius: 6px;
+            font-size: 13px;
+        }
+        .filter-group input[type="datetime-local"] {
+            color-scheme: dark;
+        }
+        .filter-group input::placeholder { color: #64748b; }
+        
+        .btn-search {
+            background: #3b82f6;
+            color: white;
+            border: none;
+            padding: 8px 20px;
+            border-radius: 6px;
+            cursor: pointer;
+        }
+        .btn-search:hover { background: #2563eb; }
+        
+        .charts-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+        .chart-box {
+            background: rgba(255,255,255,0.05);
+            border-radius: 12px;
+            padding: 20px;
+        }
+        .chart-title {
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 15px;
+            color: #e2e8f0;
+        }
+        
+        .alerts-table-container {
+            background: rgba(255,255,255,0.05);
+            border-radius: 12px;
+            padding: 20px;
+            overflow-x: auto;
+        }
+        .alerts-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        .alerts-table th, .alerts-table td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+        .alerts-table th {
+            color: #94a3b8;
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+        .alerts-table td { font-size: 13px; }
+        
+        .level-badge {
+            display: inline-block;
+            padding: 4px 10px;
+            border-radius: 12px;
+            font-size: 11px;
+            font-weight: 600;
+        }
+        .level-badge.info { background: rgba(59, 130, 246, 0.2); color: #3b82f6; }
+        .level-badge.warning { background: rgba(251, 191, 36, 0.2); color: #fbbf24; }
+        .level-badge.error { background: rgba(249, 115, 22, 0.2); color: #f97316; }
+        .level-badge.critical { background: rgba(239, 68, 68, 0.2); color: #ef4444; }
+        
+        .status-badge {
+            display: inline-block;
+            padding: 4px 10px;
+            border-radius: 12px;
+            font-size: 11px;
+            font-weight: 600;
+        }
+        .status-badge.firing { background: rgba(248, 113, 113, 0.2); color: #f87171; }
+        .status-badge.resolved { background: rgba(74, 222, 128, 0.2); color: #4ade80; }
+        
+        .time-range-selector {
+            display: flex;
+            gap: 8px;
+        }
+        .time-range-selector button {
+            background: rgba(255,255,255,0.1);
+            border: none;
+            color: #94a3b8;
+            padding: 6px 12px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 12px;
+        }
+        .time-range-selector button.active {
+            background: #3b82f6;
+            color: white;
+        }
+        
+        .timestamp { color: #64748b; font-size: 12px; }
+        
+        .empty-state {
+            text-align: center;
+            padding: 40px;
+            color: #64748b;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div>
+            <h1>📊 告警历史仪表盘</h1>
+            <p class="timestamp" id="lastUpdate">最后更新: --</p>
+        </div>
+        <div class="time-range-selector">
+            <button onclick="setTimeRange(1)" id="btn-1h">1小时</button>
+            <button onclick="setTimeRange(6)" id="btn-6h">6小时</button>
+            <button onclick="setTimeRange(24)" id="btn-24h" class="active">24小时</button>
+            <button onclick="setTimeRange(72)" id="btn-72h">3天</button>
+            <button onclick="setTimeRange(168)" id="btn-168h">7天</button>
+        </div>
+    </div>
+    
+    <!-- 统计卡片 -->
+    <div class="stats-grid" id="statsGrid">
+        <div class="stat-card total">
+            <div class="stat-value" id="statTotal">--</div>
+            <div class="stat-label">总告警数</div>
+        </div>
+        <div class="stat-card firing">
+            <div class="stat-value" id="statFiring">--</div>
+            <div class="stat-label">触发中</div>
+        </div>
+        <div class="stat-card resolved">
+            <div class="stat-value" id="statResolved">--</div>
+            <div class="stat-label">已解决</div>
+        </div>
+        <div class="stat-card info">
+            <div class="stat-value" id="statInfo">--</div>
+            <div class="stat-label">信息</div>
+        </div>
+        <div class="stat-card warning">
+            <div class="stat-value" id="statWarning">--</div>
+            <div class="stat-label">警告</div>
+        </div>
+        <div class="stat-card error">
+            <div class="stat-value" id="statError">--</div>
+            <div class="stat-label">错误</div>
+        </div>
+        <div class="stat-card critical">
+            <div class="stat-value" id="statCritical">--</div>
+            <div class="stat-label">严重</div>
+        </div>
+    </div>
+    
+    <!-- 过滤栏 -->
+    <div class="filter-bar">
+        <div class="filter-group">
+            <label>状态:</label>
+            <select id="filterStatus" onchange="loadAlerts()">
+                <option value="">全部</option>
+                <option value="firing">触发中</option>
+                <option value="resolved">已解决</option>
+            </select>
+        </div>
+        <div class="filter-group">
+            <label>级别:</label>
+            <select id="filterLevel" onchange="loadAlerts()">
+                <option value="">全部</option>
+                <option value="info">信息</option>
+                <option value="warning">警告</option>
+                <option value="error">错误</option>
+                <option value="critical">严重</option>
+            </select>
+        </div>
+        <div class="filter-group">
+            <label>服务:</label>
+            <select id="filterService" onchange="loadAlerts()">
+                <option value="">全部</option>
+            </select>
+        </div>
+        <div class="filter-group">
+            <label>搜索:</label>
+            <input type="text" id="filterSearch" placeholder="关键字搜索..." onkeyup="if(event.key==='Enter')loadAlerts()">
+        </div>
+        <button class="btn-search" onclick="loadAlerts()">🔍 搜索</button>
+        <button class="refresh-btn" onclick="loadAll()">🔄 刷新</button>
+    </div>
+    
+    <!-- 图表区域 -->
+    <div class="charts-container">
+        <div class="chart-box">
+            <div class="chart-title">📈 告警趋势</div>
+            <canvas id="trendChart" height="200"></canvas>
+        </div>
+        <div class="chart-box">
+            <div class="chart-title">🥧 告警级别分布</div>
+            <canvas id="levelChart" height="200"></canvas>
+        </div>
+    </div>
+    
+    <!-- 告警列表 -->
+    <div class="alerts-table-container">
+        <div class="chart-title">📋 告警历史 (最近100条)</div>
+        <table class="alerts-table">
+            <thead>
+                <tr>
+                    <th>时间</th>
+                    <th>级别</th>
+                    <th>状态</th>
+                    <th>服务</th>
+                    <th>规则</th>
+                    <th>消息</th>
+                    <th>通知次数</th>
+                </tr>
+            </thead>
+            <tbody id="alertsTable">
+                <tr><td colspan="7" class="empty-state">加载中...</td></tr>
+            </tbody>
+        </table>
+    </div>
+    
+    <script>
+        const API_BASE = 'http://localhost:18170';
+        let trendChart = null;
+        let levelChart = null;
+        let currentHours = 24;
+        
+        // 设置时间范围
+        function setTimeRange(hours) {
+            currentHours = hours;
+            document.querySelectorAll('.time-range-selector button').forEach(b => b.classList.remove('active'));
+            document.getElementById(`btn-${hours}h`).classList.add('active');
+            loadAll();
+        }
+        
+        // 加载所有数据
+        async function loadAll() {
+            await Promise.all([
+                loadStats(),
+                loadHistory(),
+                loadAlerts()
+            ]);
+            updateLastUpdate();
+        }
+        
+        // 加载统计数据
+        async function loadStats() {
+            try {
+                const resp = await fetch(`${API_BASE}/stats`);
+                const data = await resp.json();
+                
+                document.getElementById('statTotal').textContent = data.total_alerts || 0;
+                document.getElementById('statFiring').textContent = data.firing_count || 0;
+                document.getElementById('statResolved').textContent = data.resolved_count || 0;
+                document.getElementById('statInfo').textContent = data.by_level?.info || 0;
+                document.getElementById('statWarning').textContent = data.by_level?.warning || 0;
+                document.getElementById('statError').textContent = data.by_level?.error || 0;
+                document.getElementById('statCritical').textContent = data.by_level?.critical || 0;
+                
+                // 更新级别分布图
+                updateLevelChart(data.by_level || {});
+            } catch (e) {
+                console.error('加载统计失败:', e);
+            }
+        }
+        
+        // 加载历史趋势
+        async function loadHistory() {
+            try {
+                const resp = await fetch(`${API_BASE}/alerts/history?hours=${currentHours}`);
+                const data = await resp.json();
+                updateTrendChart(data.timeline || []);
+            } catch (e) {
+                console.error('加载历史失败:', e);
+            }
+        }
+        
+        // 加载告警列表
+        async function loadAlerts() {
+            const status = document.getElementById('filterStatus').value;
+            const level = document.getElementById('filterLevel').value;
+            const service = document.getElementById('filterService').value;
+            const search = document.getElementById('filterSearch').value;
+            
+            let url = `${API_BASE}/alerts?limit=100`;
+            if (status) url += `&status=${status}`;
+            if (level) url += `&level=${level}`;
+            if (service) url += `&service=${service}`;
+            if (search) url += `&search=${encodeURIComponent(search)}`;
+            
+            // 添加时间范围
+            const now = new Date();
+            const startTime = new Date(now - currentHours * 60 * 60 * 1000);
+            url += `&start_time=${startTime.toISOString()}`;
+            
+            try {
+                const resp = await fetch(url);
+                const data = await resp.json();
+                
+                // 更新服务过滤下拉
+                updateServiceFilter(data.alerts || []);
+                
+                // 渲染表格
+                renderAlertsTable(data.alerts || []);
+            } catch (e) {
+                console.error('加载告警失败:', e);
+                document.getElementById('alertsTable').innerHTML = 
+                    `<tr><td colspan="7" class="empty-state">加载失败: ${e.message}</td></tr>`;
+            }
+        }
+        
+        // 更新服务过滤下拉
+        function updateServiceFilter(alerts) {
+            const services = new Set();
+            alerts.forEach(a => services.add(a.service_name));
+            
+            const select = document.getElementById('filterService');
+            const currentValue = select.value;
+            const options = ['<option value="">全部</option>'];
+            services.forEach(s => {
+                options.push(`<option value="${s}" ${s === currentValue ? 'selected' : ''}>${s}</option>`);
+            });
+            select.innerHTML = options.join('');
+        }
+        
+        // 渲染告警表格
+        function renderAlertsTable(alerts) {
+            if (!alerts || alerts.length === 0) {
+                document.getElementById('alertsTable').innerHTML = 
+                    '<tr><td colspan="7" class="empty-state">暂无告警记录</td></tr>';
+                return;
+            }
+            
+            const html = alerts.map(alert => {
+                const time = new Date(alert.created_at).toLocaleString('zh-CN');
+                return `
+                    <tr>
+                        <td>${time}</td>
+                        <td><span class="level-badge ${alert.level}">${getLevelText(alert.level)}</span></td>
+                        <td><span class="status-badge ${alert.status}">${getStatusText(alert.status)}</span></td>
+                        <td>${alert.service_name}</td>
+                        <td>${alert.rule_name}</td>
+                        <td>${alert.message}</td>
+                        <td>${alert.notification_count}</td>
+                    </tr>
+                `;
+            }).join('');
+            
+            document.getElementById('alertsTable').innerHTML = html;
+        }
+        
+        // 级别文本映射
+        function getLevelText(level) {
+            const map = { info: '信息', warning: '警告', error: '错误', critical: '严重' };
+            return map[level] || level;
+        }
+        
+        // 状态文本映射
+        function getStatusText(status) {
+            return status === 'firing' ? '触发中' : '已解决';
+        }
+        
+        // 更新趋势图
+        function updateTrendChart(timeline) {
+            const ctx = document.getElementById('trendChart').getContext('2d');
+            
+            const labels = timeline.map(t => t.hour.slice(11, 16));
+            const totalData = timeline.map(t => t.total);
+            const firingData = timeline.map(t => t.firing);
+            const resolvedData = timeline.map(t => t.resolved);
+            
+            if (trendChart) trendChart.destroy();
+            
+            trendChart = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels,
+                    datasets: [
+                        {
+                            label: '总告警',
+                            data: totalData,
+                            borderColor: '#8b5cf6',
+                            backgroundColor: 'rgba(139, 92, 246, 0.1)',
+                            fill: true,
+                            tension: 0.4
+                        },
+                        {
+                            label: '触发中',
+                            data: firingData,
+                            borderColor: '#f87171',
+                            backgroundColor: 'rgba(248, 113, 113, 0.1)',
+                            fill: true,
+                            tension: 0.4
+                        },
+                        {
+                            label: '已解决',
+                            data: resolvedData,
+                            borderColor: '#4ade80',
+                            backgroundColor: 'rgba(74, 222, 128, 0.1)',
+                            fill: true,
+                            tension: 0.4
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        legend: { labels: { color: '#94a3b8' } }
+                    },
+                    scales: {
+                        x: { ticks: { color: '#94a3b8' }, grid: { color: 'rgba(255,255,255,0.1)' } },
+                        y: { ticks: { color: '#94a3b8' }, grid: { color: 'rgba(255,255,255,0.1)' }, beginAtZero: true }
+                    }
+                }
+            });
+        }
+        
+        // 更新级别分布图
+        function updateLevelChart(byLevel) {
+            const ctx = document.getElementById('levelChart').getContext('2d');
+            
+            const data = {
+                labels: ['信息', '警告', '错误', '严重'],
+                datasets: [{
+                    data: [byLevel.info || 0, byLevel.warning || 0, byLevel.error || 0, byLevel.critical || 0],
+                    backgroundColor: ['#3b82f6', '#fbbf24', '#f97316', '#ef4444'],
+                    borderWidth: 0
+                }]
+            };
+            
+            if (levelChart) levelChart.destroy();
+            
+            levelChart = new Chart(ctx, {
+                type: 'doughnut',
+                data,
+                options: {
+                    responsive: true,
+                    plugins: {
+                        legend: { position: 'right', labels: { color: '#94a3b8' } }
+                    }
+                }
+            });
+        }
+        
+        // 更新最后更新时间
+        function updateLastUpdate() {
+            document.getElementById('lastUpdate').textContent = `最后更新: ${new Date().toLocaleString('zh-CN')}`;
+        }
+        
+        // 初始化
+        loadAll();
+        
+        // 自动刷新
+        setInterval(loadAll, 30000);
+    </script>
+</body>
+</html>

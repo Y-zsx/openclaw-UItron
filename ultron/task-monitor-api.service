@@ -1,0 +1,14 @@
+[Unit]
+Description=Task Monitor API - 任务执行监控API服务
+After=network.target
+
+[Service]
+Type=simple
+User=root
+WorkingDirectory=/root/.openclaw/workspace/ultron
+ExecStart=/usr/bin/python3 task_monitor_api.py
+Restart=always
+RestartSec=10
+
+[Install]
+WantedBy=multi-user.target

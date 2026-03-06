@@ -1,0 +1,14 @@
+[Unit]
+Description=Agent Task Queue Dashboard
+After=network.target
+
+[Service]
+Type=simple
+User=root
+WorkingDirectory=/root/.openclaw/workspace/ultron-workflow/agents
+ExecStart=/usr/bin/python3 /root/.openclaw/workspace/ultron-workflow/agents/queue_dashboard.py
+Restart=always
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target

@@ -1,0 +1,18 @@
+[Unit]
+Description=Health Check Alert Bridge - 健康检查告警桥接器
+After=network.target
+
+[Service]
+Type=simple
+User=root
+WorkingDirectory=/root/.openclaw/workspace
+ExecStart=/usr/bin/python3 /root/.openclaw/workspace/ultron-workflow/modules/health_alert_bridge.py run
+Restart=always
+RestartSec=10
+
+# 日志
+StandardOutput=append:/root/.openclaw/workspace/ultron-workflow/logs/health_bridge.log
+StandardError=append:/root/.openclaw/workspace/ultron-workflow/logs/health_bridge_error.log
+
+[Install]
+WantedBy=multi-user.target

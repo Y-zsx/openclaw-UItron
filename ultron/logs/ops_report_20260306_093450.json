@@ -1,0 +1,184 @@
+{
+  "generated_at": "2026-03-06 09:34:50",
+  "system": {
+    "cpu_load_1m": 2.0,
+    "memory_total_gb": 7.1,
+    "memory_used_gb": 3.1,
+    "memory_percent": 43.7,
+    "disk_used": "12G",
+    "disk_percent": "32%",
+    "connections": 21,
+    "processes": 273
+  },
+  "services": {
+    "Gateway": {
+      "port": 18789,
+      "status": "online",
+      "healthy": true
+    },
+    "Agent执行器": {
+      "port": 18210,
+      "status": "online",
+      "healthy": true
+    },
+    "系统总结": {
+      "port": 18199,
+      "status": "online",
+      "healthy": true
+    },
+    "任务告警": {
+      "port": 18197,
+      "status": "offline",
+      "healthy": false
+    },
+    "Agent健康": {
+      "port": 18196,
+      "status": "offline",
+      "healthy": false
+    },
+    "任务监控": {
+      "port": 18195,
+      "status": "offline",
+      "healthy": false
+    },
+    "健康报告": {
+      "port": 18180,
+      "status": "online",
+      "healthy": true
+    },
+    "告警集成": {
+      "port": 18170,
+      "status": "online",
+      "healthy": true
+    },
+    "Agent网络": {
+      "port": 18150,
+      "status": "online",
+      "healthy": true
+    },
+    "跨域决策": {
+      "port": 18132,
+      "status": "online",
+      "healthy": true
+    },
+    "自动化引擎": {
+      "port": 18128,
+      "status": "online",
+      "healthy": true
+    },
+    "决策仪表盘": {
+      "port": 18121,
+      "status": "offline",
+      "healthy": false
+    },
+    "反馈学习": {
+      "port": 18122,
+      "status": "offline",
+      "healthy": false
+    },
+    "决策引擎": {
+      "port": 18120,
+      "status": "online",
+      "healthy": true
+    },
+    "工作流引擎": {
+      "port": 18100,
+      "status": "online",
+      "healthy": true
+    },
+    "运维仪表盘": {
+      "port": 18095,
+      "status": "offline",
+      "healthy": false
+    },
+    "协作监控": {
+      "port": 18093,
+      "status": "offline",
+      "healthy": false
+    },
+    "增强健康": {
+      "port": 18092,
+      "status": "offline",
+      "healthy": false
+    },
+    "增强日志": {
+      "port": 18091,
+      "status": "offline",
+      "healthy": false
+    },
+    "健康监控": {
+      "port": 18090,
+      "status": "offline",
+      "healthy": false
+    }
+  },
+  "database": {
+    "total_logs": 1964,
+    "level_distribution": {
+      "ERROR": 1,
+      "INFO": 1,
+      "WARNING": 1,
+      "iZbp1g2abyc4ap6ynwqxmpZ": 1961
+    },
+    "recent_errors_1h": 0
+  },
+  "incarnation": [
+    {
+      "incarnation": 155,
+      "task": "添加Agent健康监控集成",
+      "result": "Agent健康监控集成API(端口18210),整合5个服务,统一健康分数",
+      "status": "completed",
+      "verification": {
+        "api_running": true,
+        "api_port": 18210,
+        "verified_at": "2026-03-06T09:33:30.000000+00:00"
+      }
+    },
+    {
+      "incarnation": 154,
+      "task": "添加协作中心API服务",
+      "result": "协作中心API服务(端口18201),服务注册/共享状态/协作任务/事件订阅",
+      "status": "completed",
+      "verification": {
+        "api_running": true,
+        "api_port": 18201,
+        "verified_at": "2026-03-06T09:30:40.000000+00:00"
+      }
+    },
+    {
+      "incarnation": 153,
+      "task": "完善系统总结报告功能",
+      "result": "统一系统总结报告API服务(端口18199),整合多维度数据，提供综合健康分数",
+      "status": "completed",
+      "verification": {
+        "api_running": true,
+        "api_port": 18199,
+        "verified_at": "2026-03-06T09:28:30.000000+00:00"
+      }
+    },
+    {
+      "incarnation": 150,
+      "task": "添加任务失败告警和自动重试",
+      "result": "已创建失败告警模块(端口18197),支持自动重试、告警触发、冷却机制、成功率统计",
+      "status": "completed",
+      "verification": {
+        "api_running": true,
+        "api_port": 18197,
+        "verified_at": "2026-03-06T09:21:50.000000+00:00"
+      }
+    },
+    {
+      "incarnation": 149,
+      "task": "Agent健康检查与自愈系统",
+      "result": "健康检查API服务端口18196",
+      "status": "completed"
+    },
+    {
+      "incarnation": 148,
+      "task": "任务执行监控和日志",
+      "result": "任务监控API服务端口18195",
+      "status": "completed"
+    }
+  ],
+  "health_percent": 50.0
+}

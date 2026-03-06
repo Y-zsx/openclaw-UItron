@@ -1,0 +1,16 @@
+[Unit]
+Description=Task Alert & Retry API Service
+After=network.target
+
+[Service]
+Type=simple
+User=root
+WorkingDirectory=/root/.openclaw/workspace/ultron
+ExecStart=/usr/bin/python3 /root/.openclaw/workspace/ultron/task_alert_retry_api.py
+Restart=always
+RestartSec=10
+StandardOutput=journal
+StandardError=journal
+
+[Install]
+WantedBy=multi-user.target

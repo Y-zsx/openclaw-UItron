@@ -15,6 +15,8 @@ Ultron Reincarnation V2 - 闭环转世系统
 import os
 import json
 import subprocess
+import time
+import requests
 from datetime import datetime, timezone
 from pathlib import Path
 
@@ -23,6 +25,13 @@ STATE_FILE = f"{WORKSPACE}/ultron-workflow/state.json"
 LOG_FILE = f"{WORKSPACE}/ultron-workflow/reincarnate.log"
 
 UTC = timezone.utc
+
+# 重试配置
+MAX_RETRIES = 3
+RETRY_DELAY = 30  # 秒
+
+# 告警配置
+DINGTALK_WEBHOOK = os.environ.get("DINGTALK_WEBHOOK", "")
 
 # 夙愿任务列表
 TASK_PROGRESSION = {
@@ -62,6 +71,32 @@ def log(msg: str):
     print(line)
     with open(LOG_FILE, 'a') as f:
         f.write(line + '\n')
+
+
+def send_alert(title: str, message: str, level: str = "warning"):
+    """发送告警通知"""
+    if not DINGTALK_WEBHOOK:
+        log(f"   ⚠️ 未配置钉钉Webhook，跳过告警")
+        return False
+    
+    try:
+        payload = {
+            "msgtype": "markdown",
+            "markdown": {
+                "title": title,
+                "text": f"## {title}\n\n{message}\n\n> 奥创系统自动告警"
+            }
+        }
+        resp = requests.post(DINGTALK_WEBHOOK, json=payload, timeout=10)
+        if resp.json().get("errcode") == 0:
+            log(f"   📢 告警已发送: {title}")
+            return True
+        else:
+            log(f"   ⚠️ 告警发送失败: {resp.text}")
+            return False
+    except Exception as e:
+        log(f"   ⚠️ 告警发送异常: {e}")
+        return False
 
 
 def read_state() -> dict:
@@ -115,6 +150,12 @@ def check_last_life(state: dict) -> dict:
                     "verified_at": datetime.now(UTC).isoformat()
                 }
                 log(f"   ❌ 自动验证失败")
+                # 验证失败告警
+                send_alert(
+                    "⚠️ 上一世验证失败",
+                    f"任务: {task}\n验证方式: curl Dashboard\n状态: 验证失败",
+                    "warning"
+                )
         else:
             verification = {"code_running": None, "verified_by": "无验证", "verified_at": None}
     
@@ -152,51 +193,99 @@ def decide_this_life(state: dict, last_check: dict) -> dict:
     }
 
 
-def execute_task(decision: dict, state: dict) -> dict:
-    """执行任务"""
+def execute_task_with_retry(decision: dict, state: dict, retry_count: int = 0) -> dict:
+    """执行任务（带重试机制）"""
     task = decision['task']
-    log(f"⚡ 执行任务: {task}")
+    log(f"⚡ 执行任务: {task}" + (f" (重试 {retry_count}/{MAX_RETRIES})" if retry_count > 0 else ""))
     
     result = {
         "task": task,
         "status": "completed",
         "output": "",
-        "verification": {}
+        "verification": {},
+        "retry_count": retry_count
     }
     
-    # 根据任务类型执行
-    if "优化Dashboard" in task:
-        # 执行监控任务
-        output = subprocess.run(
-            ['python3', f'{WORKSPACE}/ultron/core/ultron-hub.py'],
-            capture_output=True, text=True, timeout=60
-        )
-        result['output'] = output.stdout[:200] if output.stdout else output.stderr[:200]
-        result['status'] = 'completed' if output.returncode == 0 else 'failed'
+    try:
+        # 根据任务类型执行
+        if "优化Dashboard" in task:
+            # 执行监控任务
+            output = subprocess.run(
+                ['python3', f'{WORKSPACE}/ultron/core/ultron-hub.py'],
+                capture_output=True, text=True, timeout=60
+            )
+            result['output'] = output.stdout[:200] if output.stdout else output.stderr[:200]
+            result['status'] = 'completed' if output.returncode == 0 else 'failed'
+            
+            # 自动验证
+            verify = subprocess.run(
+                ['curl', '-s', '-o', '/dev/null', '-w', '%{http_code}', 
+                 'http://115.29.235.46/monitor'],
+                capture_output=True, text=True, timeout=10
+            )
+            result['verification'] = {
+                "code_running": verify.stdout.strip() == '200',
+                "verified_by": "自动验证Dashboard",
+                "verified_at": datetime.now(UTC).isoformat()
+            }
+        else:
+            # 默认任务
+            result['output'] = "任务执行完成"
+            result['status'] = 'completed'
+            result['verification'] = {
+                "code_running": True,
+                "verified_by": "默认完成",
+                "verified_at": datetime.now(UTC).isoformat()
+            }
         
-        # 自动验证
-        verify = subprocess.run(
-            ['curl', '-s', '-o', '/dev/null', '-w', '%{http_code}', 
-             'http://115.29.235.46/monitor'],
-            capture_output=True, text=True, timeout=10
-        )
-        result['verification'] = {
-            "code_running": verify.stdout.strip() == '200',
-            "verified_by": "自动验证Dashboard",
-            "verified_at": datetime.now(UTC).isoformat()
-        }
-    else:
-        # 默认任务
-        result['output'] = "任务执行完成"
-        result['status'] = 'completed'
-        result['verification'] = {
-            "code_running": True,
-            "verified_by": "默认完成",
-            "verified_at": datetime.now(UTC).isoformat()
-        }
+        # 检查是否需要重试
+        if result['status'] == 'failed' and retry_count < MAX_RETRIES:
+            log(f"   ❌ 任务执行失败，准备重试...")
+            send_alert(
+                "🔄 任务执行失败 - 自动重试",
+                f"任务: {task}\n重试次数: {retry_count + 1}/{MAX_RETRIES}\n错误: {result['output'][:100]}",
+                "warning"
+            )
+            time.sleep(RETRY_DELAY)
+            return execute_task_with_retry(decision, state, retry_count + 1)
+        
+        # 最终失败，发送告警
+        if result['status'] == 'failed':
+            log(f"   ❌ 任务执行失败，已达最大重试次数")
+            send_alert(
+                "🚨 任务执行失败 - 需要人工介入",
+                f"任务: {task}\n重试次数: {MAX_RETRIES}\n最终错误: {result['output'][:200]}",
+                "error"
+            )
+        else:
+            log(f"   ✅ 任务执行成功")
+            
+    except subprocess.TimeoutExpired:
+        result['output'] = "任务执行超时"
+        result['status'] = 'failed'
+        if retry_count < MAX_RETRIES:
+            log(f"   ❌ 任务超时，准备重试...")
+            time.sleep(RETRY_DELAY)
+            return execute_task_with_retry(decision, state, retry_count + 1)
+        else:
+            send_alert("🚨 任务执行超时 - 需要人工介入", f"任务: {task}\n超时", "error")
+    except Exception as e:
+        result['output'] = str(e)
+        result['status'] = 'failed'
+        if retry_count < MAX_RETRIES:
+            log(f"   ❌ 任务异常，准备重试...")
+            time.sleep(RETRY_DELAY)
+            return execute_task_with_retry(decision, state, retry_count + 1)
+        else:
+            send_alert("🚨 任务执行异常 - 需要人工介入", f"任务: {task}\n异常: {str(e)[:200]}", "error")
     
     log(f"   状态: {result['status']}")
     return result
+
+
+# 保持旧函数名兼容
+def execute_task(decision: dict, state: dict) -> dict:
+    return execute_task_with_retry(decision, state, 0)
 
 
 def update_state(decision: dict, execution: dict, state: dict):
@@ -223,7 +312,9 @@ def update_state(decision: dict, execution: dict, state: dict):
         "this_life": {
             "task": decision['task'],
             "accomplished": [execution['output']],
-            "verification": execution.get('verification', {})
+            "verification": execution.get('verification', {}),
+            "retry_count": execution.get('retry_count', 0),
+            "execution_time": datetime.now(UTC).isoformat()
         },
         "next_life": {
             "task": next_task,

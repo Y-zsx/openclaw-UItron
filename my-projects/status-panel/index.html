@@ -49,11 +49,29 @@
         .weather { font-size: 1.5rem; }
         .time { font-size: 2.5rem; text-align: center; margin: 20px 0; }
         .uptime { color: #10b981; }
+        .refresh-info { 
+            text-align: center; 
+            margin-top: 20px; 
+            color: #6b7280; 
+            font-size: 0.85rem;
+        }
+        .auto-refresh-badge {
+            display: inline-block;
+            background: rgba(16, 185, 129, 0.2);
+            color: #10b981;
+            padding: 4px 12px;
+            border-radius: 12px;
+            font-size: 0.8rem;
+            margin-bottom: 10px;
+        }
     </style>
 </head>
 <body>
     <div class="container">
         <h1>🔧 奥创的状态面板</h1>
+        <div style="text-align: center;">
+            <span class="auto-refresh-badge">♻️ 自动刷新: 服务器30秒 | 天气5分钟</span>
+        </div>
         
         <div class="grid">
             <div class="card">
@@ -91,9 +109,26 @@
                 <div class="info">系统持续运行中</div>
             </div>
         </div>
+        
+        <div class="refresh-info" id="lastRefresh">🕐 等待更新...</div>
     </div>
 
     <script>
+        // Auto-refresh interval (30 seconds for server stats)
+        const STATS_REFRESH_INTERVAL = 30000;
+        const WEATHER_REFRESH_INTERVAL = 300000; // 5 minutes
+        
+        let lastStatsUpdate = null;
+        let lastWeatherUpdate = null;
+        
+        // Refresh indicator
+        function showRefreshStatus(elementId, text) {
+            const el = document.getElementById(elementId);
+            if (el) {
+                el.dataset.refresh = text;
+            }
+        }
+        
         // Time
         function updateTime() {
             const now = new Date();
@@ -105,33 +140,60 @@
         updateTime();
         setInterval(updateTime, 1000);
 
-        // Fetch server stats
-        fetch('/api/stats')
-            .then(r => r.json())
-            .then(data => {
-                document.getElementById('cpu').textContent = data.cpu + '%';
-                document.getElementById('loadavg').textContent = '负载: ' + data.load.join(' / ');
-                document.getElementById('mem').textContent = data.memPercent + '%';
-                document.getElementById('meminfo').textContent = data.memUsed + ' / ' + data.memTotal;
-                document.getElementById('disk').textContent = data.diskPercent + '%';
-                document.getElementById('diskinfo').textContent = data.diskUsed + ' / ' + data.diskTotal;
-                document.getElementById('uptime').textContent = data.uptime;
-            })
-            .catch(() => {
-                document.getElementById('cpu').textContent = 'API错误';
-            });
+        // Fetch server stats with auto-refresh
+        function fetchStats() {
+            fetch('/api/stats')
+                .then(r => r.json())
+                .then(data => {
+                    document.getElementById('cpu').textContent = data.cpu + '%';
+                    document.getElementById('loadavg').textContent = '负载: ' + data.load.join(' / ');
+                    document.getElementById('mem').textContent = data.memPercent + '%';
+                    document.getElementById('meminfo').textContent = data.memUsed + ' / ' + data.memTotal;
+                    document.getElementById('disk').textContent = data.diskPercent + '%';
+                    document.getElementById('diskinfo').textContent = data.diskUsed + ' / ' + data.diskTotal;
+                    document.getElementById('uptime').textContent = data.uptime;
+                    lastStatsUpdate = new Date();
+                    updateLastRefreshTime();
+                })
+                .catch(() => {
+                    document.getElementById('cpu').textContent = 'API错误';
+                });
+        }
+        
+        // Initial fetch
+        fetchStats();
+        
+        // Auto-refresh stats every 30 seconds
+        setInterval(fetchStats, STATS_REFRESH_INTERVAL);
 
-        // Weather
-        fetch('https://wttr.in/Shanghai?format=j1')
-            .then(r => r.json())
-            .then(data => {
-                const current = data.current_condition[0];
-                document.getElementById('weather').textContent = 
-                    current.temp_C + '°C ' + current.weatherDesc[0].value + ' 🌬️' + current.windspeedKmph + 'km/h';
-            })
-            .catch(() => {
-                document.getElementById('weather').textContent = '获取失败';
-            });
+        // Weather with auto-refresh
+        function fetchWeather() {
+            fetch('https://wttr.in/Shanghai?format=j1')
+                .then(r => r.json())
+                .then(data => {
+                    const current = data.current_condition[0];
+                    document.getElementById('weather').textContent = 
+                        current.temp_C + '°C ' + current.weatherDesc[0].value + ' 🌬️' + current.windspeedKmph + 'km/h';
+                    lastWeatherUpdate = new Date();
+                })
+                .catch(() => {
+                    document.getElementById('weather').textContent = '获取失败';
+                });
+        }
+        
+        // Initial weather fetch
+        fetchWeather();
+        
+        // Auto-refresh weather every 5 minutes
+        setInterval(fetchWeather, WEATHER_REFRESH_INTERVAL);
+        
+        // Show last refresh time
+        function updateLastRefreshTime() {
+            const refreshEl = document.getElementById('lastRefresh');
+            if (refreshEl && lastStatsUpdate) {
+                refreshEl.textContent = '🕐 数据更新: ' + lastStatsUpdate.toLocaleTimeString('zh-CN');
+            }
+        }
     </script>
 </body>
 </html>

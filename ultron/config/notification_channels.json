@@ -11,6 +11,17 @@
       },
       "min_level": "info",
       "services": []
+    },
+    {
+      "id": "dingtalk-ops",
+      "name": "运维钉钉群",
+      "channel_type": "dingtalk",
+      "enabled": true,
+      "config": {
+        "webhook_url": "https://oapi.dingtalk.com/robot/send?access_token=dummy"
+      },
+      "min_level": "warning",
+      "services": []
     }
   ]
 }

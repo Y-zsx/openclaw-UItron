@@ -1,0 +1,33 @@
+{
+  "tasks": {
+    "e2064eb9-89cf-4586-8d85-0081935044b5": {
+      "task_id": "e2064eb9-89cf-4586-8d85-0081935044b5",
+      "name": "test-task-1",
+      "type": "execute",
+      "payload": {
+        "action": "shell",
+        "command": "echo hello"
+      },
+      "priority": 2,
+      "status": "pending",
+      "created_at": "2026-03-06T09:08:23.364717",
+      "started_at": "2026-03-06T09:10:24.080776",
+      "completed_at": null,
+      "timeout": 300,
+      "max_retries": 3,
+      "retry_count": 1,
+      "dependencies": [],
+      "result": null,
+      "error": "null",
+      "metadata": {}
+    }
+  },
+  "waiting": [],
+  "ready": [
+    "e2064eb9-89cf-4586-8d85-0081935044b5"
+  ],
+  "running": [],
+  "completed": [],
+  "failed": [],
+  "dependencies": {}
+}

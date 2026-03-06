@@ -1,0 +1,14 @@
+[Unit]
+Description=Ultron Collaboration Center API
+After=network.target
+
+[Service]
+Type=simple
+User=root
+WorkingDirectory=/root/.openclaw/workspace/ultron
+ExecStart=/usr/bin/python3 /root/.openclaw/workspace/ultron/collab_center_api.py
+Restart=always
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target

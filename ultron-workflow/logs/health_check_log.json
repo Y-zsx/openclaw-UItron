@@ -1,55 +1,235 @@
 {
   "checks": [
     {
-      "time": "2026-03-06T06:11:50.709376",
+      "checks": [
+        {
+          "time": "2026-03-06T06:11:50.709376",
+          "status": "warning",
+          "healthy": 2,
+          "total": 3,
+          "failed": [
+            "status_panel"
+          ]
+        },
+        {
+          "time": "2026-03-06T06:28:32.253326",
+          "status": "warning",
+          "healthy": 2,
+          "total": 3,
+          "failed": [
+            "status_panel"
+          ]
+        },
+        {
+          "time": "2026-03-06T06:51:51.361447",
+          "status": "healthy",
+          "healthy": 3,
+          "total": 3,
+          "failed": []
+        },
+        {
+          "time": "2026-03-06T08:28:19.746365",
+          "status": "healthy",
+          "healthy": 3,
+          "total": 3,
+          "failed": []
+        },
+        {
+          "time": "2026-03-06T08:33:28.054371",
+          "status": "healthy",
+          "healthy": 3,
+          "total": 3,
+          "failed": []
+        },
+        {
+          "time": "2026-03-06T08:38:36.762938",
+          "status": "healthy",
+          "healthy": 3,
+          "total": 3,
+          "failed": []
+        },
+        {
+          "time": "2026-03-06T08:43:45.222897",
+          "status": "healthy",
+          "healthy": 3,
+          "total": 3,
+          "failed": []
+        },
+        {
+          "time": "2026-03-06T08:48:53.719135",
+          "status": "healthy",
+          "healthy": 3,
+          "total": 3,
+          "failed": []
+        }
+      ],
+      "summary": {
+        "total": 8,
+        "healthy": 6,
+        "warning": 2
+      }
+    },
+    {
+      "timestamp": "2026-03-06T08:51:46.096219",
+      "api_available": true,
+      "checks": [
+        {
+          "name": "gateway",
+          "healthy": true,
+          "status_code": 200,
+          "url": "http://localhost:18789/",
+          "error": null
+        },
+        {
+          "name": "status_panel",
+          "healthy": true,
+          "status_code": 200,
+          "url": "http://localhost:8889/",
+          "error": null
+        },
+        {
+          "name": "health_api",
+          "healthy": true,
+          "status_code": 200,
+          "url": "http://localhost:8890/health",
+          "error": null
+        },
+        {
+          "name": "alert_api",
+          "healthy": true,
+          "status_code": 200,
+          "url": "http://localhost:18170/health",
+          "error": null
+        },
+        {
+          "name": "browser",
+          "healthy": true,
+          "status_code": 200,
+          "url": "http://localhost:18800/json",
+          "error": null
+        }
+      ],
+      "alerts_sent": [],
+      "alerts_resolved": [],
+      "summary": {
+        "total": 5,
+        "healthy": 5,
+        "unhealthy": 0,
+        "status": "healthy"
+      }
+    },
+    {
+      "time": "2026-03-06T08:53:10.542376",
+      "status": "healthy",
+      "healthy": 3,
+      "total": 3,
+      "failed": [],
+      "recovered": []
+    },
+    {
+      "time": "2026-03-06T08:54:03.013596",
+      "status": "healthy",
+      "healthy": 3,
+      "total": 3,
+      "failed": [],
+      "recovered": []
+    },
+    {
+      "time": "2026-03-06T08:59:11.799865",
+      "status": "healthy",
+      "healthy": 3,
+      "total": 3,
+      "failed": [],
+      "recovered": []
+    },
+    {
+      "time": "2026-03-06T09:04:21.670990",
       "status": "warning",
       "healthy": 2,
       "total": 3,
       "failed": [
         "status_panel"
-      ]
+      ],
+      "recovered": []
     },
     {
-      "time": "2026-03-06T06:28:32.253326",
+      "time": "2026-03-06T09:09:31.833085",
+      "status": "healthy",
+      "healthy": 3,
+      "total": 3,
+      "failed": [],
+      "recovered": []
+    },
+    {
+      "time": "2026-03-06T09:14:40.752199",
+      "status": "healthy",
+      "healthy": 3,
+      "total": 3,
+      "failed": [],
+      "recovered": []
+    },
+    {
+      "time": "2026-03-06T09:19:49.563301",
+      "status": "healthy",
+      "healthy": 3,
+      "total": 3,
+      "failed": [],
+      "recovered": []
+    },
+    {
+      "time": "2026-03-06T09:24:59.323463",
       "status": "warning",
       "healthy": 2,
       "total": 3,
       "failed": [
         "status_panel"
-      ]
+      ],
+      "recovered": []
     },
     {
-      "time": "2026-03-06T06:51:51.361447",
+      "time": "2026-03-06T09:30:08.324985",
       "status": "healthy",
       "healthy": 3,
       "total": 3,
-      "failed": []
+      "failed": [],
+      "recovered": []
     },
     {
-      "time": "2026-03-06T08:28:19.746365",
+      "time": "2026-03-06T09:35:18.065441",
       "status": "healthy",
       "healthy": 3,
       "total": 3,
-      "failed": []
+      "failed": [],
+      "recovered": []
     },
     {
-      "time": "2026-03-06T08:33:28.054371",
+      "time": "2026-03-06T09:40:23.613299",
       "status": "healthy",
       "healthy": 3,
       "total": 3,
-      "failed": []
+      "failed": [],
+      "recovered": []
     },
     {
-      "time": "2026-03-06T08:38:36.762938",
+      "time": "2026-03-06T09:45:29.975469",
       "status": "healthy",
       "healthy": 3,
       "total": 3,
-      "failed": []
+      "failed": [],
+      "recovered": []
+    },
+    {
+      "time": "2026-03-06T09:50:36.801137",
+      "status": "healthy",
+      "healthy": 3,
+      "total": 3,
+      "failed": [],
+      "recovered": []
     }
   ],
   "summary": {
-    "total": 6,
-    "healthy": 4,
+    "total": 15,
+    "healthy": 11,
     "warning": 2
   }
 }

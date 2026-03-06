@@ -293,3 +293,40 @@
 
 ### 总结
 网站监控告警系统已完成全链路闭环，具备自动告警、Dashboard展示、告警历史记录、用户反馈等功能。
+
+---
+
+## 第142世: 告警通知集成 (2026-03-06)
+
+- **任务**: 创建告警通知集成
+- **状态**: completed ✅
+
+### 完成内容
+
+1. **告警通知集成API服务** (端口18170)
+   - alert_integration_api.py - 统一告警管理服务
+   - systemd服务: alert-integration-api.service
+
+2. **核心功能**
+   - 告警数据模型: Alert / AlertGroup
+   - 告警聚合: 5分钟窗口期内自动合并相同告警
+   - 告警升级: 按级别和时间自动升级通知
+   - 统一通知渠道集成 (钉钉/邮件/Webhook/飞书/Telegram)
+   - REST API接口完整
+
+3. **API端点**
+   - POST /alerts - 创建告警
+   - GET /alerts - 查询告警列表
+   - GET /alerts/firing - 获取触发中的告警
+   - GET /alerts/<id> - 获取告警详情
+   - POST /alerts/<id>/resolve - 解决告警
+   - GET /stats - 获取统计信息
+   - GET/POST/DELETE /channels - 通知渠道管理
+   - POST /test - 测试通知
+   - POST /escalation/check - 检查告警升级
+
+4. **验证结果**
+   - API服务正常响应
+   - 告警创建/解决功能正常
+   - 通知发送功能正常
+   - 统计功能正常

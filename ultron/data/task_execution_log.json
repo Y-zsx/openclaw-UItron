@@ -10,6 +10,72 @@
       "duration": 60.0,
       "error": null,
       "timestamp": "2026-03-06T06:56:39.613726"
+    },
+    {
+      "execution_id": "test-149-001",
+      "task": "测试任务执行监控",
+      "agent_id": "ultron",
+      "status": "completed",
+      "start_time": "2026-03-06T09:10:00",
+      "end_time": "2026-03-06T09:11:00",
+      "duration": 60.5,
+      "error": null,
+      "timestamp": "2026-03-06T09:12:59.944633"
+    },
+    {
+      "execution_id": "test-task-1",
+      "task": "Test Task",
+      "agent_id": "test-agent",
+      "status": "failed",
+      "start_time": "2026-03-06T09:20:00",
+      "end_time": "2026-03-06T09:21:22.086630",
+      "duration": null,
+      "error": "Connection timeout",
+      "timestamp": "2026-03-06T09:21:22.086633"
+    },
+    {
+      "execution_id": "test-task-1",
+      "task": "Test Task",
+      "agent_id": "test-agent",
+      "status": "failed",
+      "start_time": "2026-03-06T09:20:00",
+      "end_time": "2026-03-06T09:21:28.670387",
+      "duration": null,
+      "error": "Connection timeout",
+      "timestamp": "2026-03-06T09:21:28.670391"
+    },
+    {
+      "execution_id": "test-task-1",
+      "task": "Test Task",
+      "agent_id": "test-agent",
+      "status": "failed",
+      "start_time": "2026-03-06T09:20:00",
+      "end_time": "2026-03-06T09:21:35.704749",
+      "duration": null,
+      "error": "Connection timeout",
+      "timestamp": "2026-03-06T09:21:35.704755"
+    },
+    {
+      "execution_id": "test-task-1",
+      "task": "Test Task",
+      "agent_id": "test-agent",
+      "status": "completed",
+      "start_time": "2026-03-06T09:21:41.235115",
+      "end_time": "2026-03-06T09:21:41.235130",
+      "duration": null,
+      "error": null,
+      "timestamp": "2026-03-06T09:21:41.235134"
+    },
+    {
+      "execution_id": "test-reincarnation-76",
+      "task": "测试任务执行监控",
+      "agent_id": "ultron",
+      "status": "completed",
+      "start_time": "2026-03-06T09:22:52.123623",
+      "end_time": "2026-03-06T09:22:52.123655",
+      "duration": 1.5,
+      "error": null,
+      "timestamp": "2026-03-06T09:22:52.123658"
     }
   ]
 }
