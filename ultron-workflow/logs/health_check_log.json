@@ -1,149 +1,7 @@
 {
   "checks": [
     {
-      "checks": [
-        {
-          "time": "2026-03-06T06:11:50.709376",
-          "status": "warning",
-          "healthy": 2,
-          "total": 3,
-          "failed": [
-            "status_panel"
-          ]
-        },
-        {
-          "time": "2026-03-06T06:28:32.253326",
-          "status": "warning",
-          "healthy": 2,
-          "total": 3,
-          "failed": [
-            "status_panel"
-          ]
-        },
-        {
-          "time": "2026-03-06T06:51:51.361447",
-          "status": "healthy",
-          "healthy": 3,
-          "total": 3,
-          "failed": []
-        },
-        {
-          "time": "2026-03-06T08:28:19.746365",
-          "status": "healthy",
-          "healthy": 3,
-          "total": 3,
-          "failed": []
-        },
-        {
-          "time": "2026-03-06T08:33:28.054371",
-          "status": "healthy",
-          "healthy": 3,
-          "total": 3,
-          "failed": []
-        },
-        {
-          "time": "2026-03-06T08:38:36.762938",
-          "status": "healthy",
-          "healthy": 3,
-          "total": 3,
-          "failed": []
-        },
-        {
-          "time": "2026-03-06T08:43:45.222897",
-          "status": "healthy",
-          "healthy": 3,
-          "total": 3,
-          "failed": []
-        },
-        {
-          "time": "2026-03-06T08:48:53.719135",
-          "status": "healthy",
-          "healthy": 3,
-          "total": 3,
-          "failed": []
-        }
-      ],
-      "summary": {
-        "total": 8,
-        "healthy": 6,
-        "warning": 2
-      }
-    },
-    {
-      "timestamp": "2026-03-06T08:51:46.096219",
-      "api_available": true,
-      "checks": [
-        {
-          "name": "gateway",
-          "healthy": true,
-          "status_code": 200,
-          "url": "http://localhost:18789/",
-          "error": null
-        },
-        {
-          "name": "status_panel",
-          "healthy": true,
-          "status_code": 200,
-          "url": "http://localhost:8889/",
-          "error": null
-        },
-        {
-          "name": "health_api",
-          "healthy": true,
-          "status_code": 200,
-          "url": "http://localhost:8890/health",
-          "error": null
-        },
-        {
-          "name": "alert_api",
-          "healthy": true,
-          "status_code": 200,
-          "url": "http://localhost:18170/health",
-          "error": null
-        },
-        {
-          "name": "browser",
-          "healthy": true,
-          "status_code": 200,
-          "url": "http://localhost:18800/json",
-          "error": null
-        }
-      ],
-      "alerts_sent": [],
-      "alerts_resolved": [],
-      "summary": {
-        "total": 5,
-        "healthy": 5,
-        "unhealthy": 0,
-        "status": "healthy"
-      }
-    },
-    {
-      "time": "2026-03-06T08:53:10.542376",
-      "status": "healthy",
-      "healthy": 3,
-      "total": 3,
-      "failed": [],
-      "recovered": []
-    },
-    {
-      "time": "2026-03-06T08:54:03.013596",
-      "status": "healthy",
-      "healthy": 3,
-      "total": 3,
-      "failed": [],
-      "recovered": []
-    },
-    {
-      "time": "2026-03-06T08:59:11.799865",
-      "status": "healthy",
-      "healthy": 3,
-      "total": 3,
-      "failed": [],
-      "recovered": []
-    },
-    {
-      "time": "2026-03-06T09:04:21.670990",
+      "time": "2026-03-06T21:27:26.489945",
       "status": "warning",
       "healthy": 2,
       "total": 3,
@@ -153,31 +11,7 @@
       "recovered": []
     },
     {
-      "time": "2026-03-06T09:09:31.833085",
-      "status": "healthy",
-      "healthy": 3,
-      "total": 3,
-      "failed": [],
-      "recovered": []
-    },
-    {
-      "time": "2026-03-06T09:14:40.752199",
-      "status": "healthy",
-      "healthy": 3,
-      "total": 3,
-      "failed": [],
-      "recovered": []
-    },
-    {
-      "time": "2026-03-06T09:19:49.563301",
-      "status": "healthy",
-      "healthy": 3,
-      "total": 3,
-      "failed": [],
-      "recovered": []
-    },
-    {
-      "time": "2026-03-06T09:24:59.323463",
+      "time": "2026-03-06T21:32:28.068693",
       "status": "warning",
       "healthy": 2,
       "total": 3,
@@ -187,79 +21,7 @@
       "recovered": []
     },
     {
-      "time": "2026-03-06T09:30:08.324985",
-      "status": "healthy",
-      "healthy": 3,
-      "total": 3,
-      "failed": [],
-      "recovered": []
-    },
-    {
-      "time": "2026-03-06T09:35:18.065441",
-      "status": "healthy",
-      "healthy": 3,
-      "total": 3,
-      "failed": [],
-      "recovered": []
-    },
-    {
-      "time": "2026-03-06T09:40:23.613299",
-      "status": "healthy",
-      "healthy": 3,
-      "total": 3,
-      "failed": [],
-      "recovered": []
-    },
-    {
-      "time": "2026-03-06T09:45:29.975469",
-      "status": "healthy",
-      "healthy": 3,
-      "total": 3,
-      "failed": [],
-      "recovered": []
-    },
-    {
-      "time": "2026-03-06T09:50:36.801137",
-      "status": "healthy",
-      "healthy": 3,
-      "total": 3,
-      "failed": [],
-      "recovered": []
-    },
-    {
-      "time": "2026-03-06T09:55:42.642590",
-      "status": "healthy",
-      "healthy": 3,
-      "total": 3,
-      "failed": [],
-      "recovered": []
-    },
-    {
-      "time": "2026-03-06T10:00:50.525485",
-      "status": "healthy",
-      "healthy": 3,
-      "total": 3,
-      "failed": [],
-      "recovered": []
-    },
-    {
-      "time": "2026-03-06T10:05:55.706549",
-      "status": "healthy",
-      "healthy": 3,
-      "total": 3,
-      "failed": [],
-      "recovered": []
-    },
-    {
-      "time": "2026-03-06T10:11:00.829644",
-      "status": "healthy",
-      "healthy": 3,
-      "total": 3,
-      "failed": [],
-      "recovered": []
-    },
-    {
-      "time": "2026-03-06T10:16:11.225707",
+      "time": "2026-03-06T21:37:29.658512",
       "status": "warning",
       "healthy": 2,
       "total": 3,
@@ -269,55 +31,7 @@
       "recovered": []
     },
     {
-      "time": "2026-03-06T10:21:20.188029",
-      "status": "healthy",
-      "healthy": 3,
-      "total": 3,
-      "failed": [],
-      "recovered": []
-    },
-    {
-      "time": "2026-03-06T10:26:29.350955",
-      "status": "healthy",
-      "healthy": 3,
-      "total": 3,
-      "failed": [],
-      "recovered": []
-    },
-    {
-      "time": "2026-03-06T10:31:38.169428",
-      "status": "healthy",
-      "healthy": 3,
-      "total": 3,
-      "failed": [],
-      "recovered": []
-    },
-    {
-      "time": "2026-03-06T10:36:47.366077",
-      "status": "healthy",
-      "healthy": 3,
-      "total": 3,
-      "failed": [],
-      "recovered": []
-    },
-    {
-      "time": "2026-03-06T10:41:52.293833",
-      "status": "healthy",
-      "healthy": 3,
-      "total": 3,
-      "failed": [],
-      "recovered": []
-    },
-    {
-      "time": "2026-03-06T10:46:57.715112",
-      "status": "healthy",
-      "healthy": 3,
-      "total": 3,
-      "failed": [],
-      "recovered": []
-    },
-    {
-      "time": "2026-03-06T10:52:07.545385",
+      "time": "2026-03-06T21:42:31.240341",
       "status": "warning",
       "healthy": 2,
       "total": 3,
@@ -327,15 +41,7 @@
       "recovered": []
     },
     {
-      "time": "2026-03-06T10:57:23.187992",
-      "status": "healthy",
-      "healthy": 3,
-      "total": 3,
-      "failed": [],
-      "recovered": []
-    },
-    {
-      "time": "2026-03-06T11:02:32.884316",
+      "time": "2026-03-06T21:47:32.919519",
       "status": "warning",
       "healthy": 2,
       "total": 3,
@@ -345,23 +51,7 @@
       "recovered": []
     },
     {
-      "time": "2026-03-06T11:04:39.412906",
-      "status": "healthy",
-      "healthy": 3,
-      "total": 3,
-      "failed": [],
-      "recovered": []
-    },
-    {
-      "time": "2026-03-06T11:07:43.341365",
-      "status": "healthy",
-      "healthy": 3,
-      "total": 3,
-      "failed": [],
-      "recovered": []
-    },
-    {
-      "time": "2026-03-06T11:09:49.129590",
+      "time": "2026-03-06T21:52:34.468752",
       "status": "warning",
       "healthy": 2,
       "total": 3,
@@ -371,15 +61,7 @@
       "recovered": []
     },
     {
-      "time": "2026-03-06T11:12:49.006486",
-      "status": "healthy",
-      "healthy": 3,
-      "total": 3,
-      "failed": [],
-      "recovered": []
-    },
-    {
-      "time": "2026-03-06T11:15:00.404693",
+      "time": "2026-03-06T21:57:36.033486",
       "status": "warning",
       "healthy": 2,
       "total": 3,
@@ -389,7 +71,7 @@
       "recovered": []
     },
     {
-      "time": "2026-03-06T11:17:59.342290",
+      "time": "2026-03-06T22:02:37.507324",
       "status": "warning",
       "healthy": 2,
       "total": 3,
@@ -399,175 +81,7 @@
       "recovered": []
     },
     {
-      "time": "2026-03-06T11:20:08.686588",
-      "status": "healthy",
-      "healthy": 3,
-      "total": 3,
-      "failed": [],
-      "recovered": []
-    },
-    {
-      "time": "2026-03-06T11:23:09.049278",
-      "status": "healthy",
-      "healthy": 3,
-      "total": 3,
-      "failed": [],
-      "recovered": []
-    },
-    {
-      "time": "2026-03-06T11:25:16.349475",
-      "status": "healthy",
-      "healthy": 3,
-      "total": 3,
-      "failed": [],
-      "recovered": []
-    },
-    {
-      "time": "2026-03-06T11:28:16.689599",
-      "status": "healthy",
-      "healthy": 3,
-      "total": 3,
-      "failed": [],
-      "recovered": []
-    },
-    {
-      "time": "2026-03-06T11:30:23.488885",
-      "status": "healthy",
-      "healthy": 3,
-      "total": 3,
-      "failed": [],
-      "recovered": []
-    },
-    {
-      "time": "2026-03-06T11:33:23.179901",
-      "status": "healthy",
-      "healthy": 3,
-      "total": 3,
-      "failed": [],
-      "recovered": []
-    },
-    {
-      "time": "2026-03-06T11:38:30.676772",
-      "status": "healthy",
-      "healthy": 3,
-      "total": 3,
-      "failed": [],
-      "recovered": []
-    },
-    {
-      "time": "2026-03-06T11:43:36.965843",
-      "status": "healthy",
-      "healthy": 3,
-      "total": 3,
-      "failed": [],
-      "recovered": []
-    },
-    {
-      "time": "2026-03-06T11:48:40.628996",
-      "status": "healthy",
-      "healthy": 3,
-      "total": 3,
-      "failed": [],
-      "recovered": []
-    },
-    {
-      "time": "2026-03-06T11:53:47.166247",
-      "status": "healthy",
-      "healthy": 3,
-      "total": 3,
-      "failed": [],
-      "recovered": []
-    },
-    {
-      "time": "2026-03-06T11:58:53.176344",
-      "status": "healthy",
-      "healthy": 3,
-      "total": 3,
-      "failed": [],
-      "recovered": []
-    },
-    {
-      "time": "2026-03-06T12:04:02.362986",
-      "status": "healthy",
-      "healthy": 3,
-      "total": 3,
-      "failed": [],
-      "recovered": []
-    },
-    {
-      "time": "2026-03-06T12:09:04.889454",
-      "status": "healthy",
-      "healthy": 3,
-      "total": 3,
-      "failed": [],
-      "recovered": []
-    },
-    {
-      "time": "2026-03-06T12:14:08.223764",
-      "status": "healthy",
-      "healthy": 3,
-      "total": 3,
-      "failed": [],
-      "recovered": []
-    },
-    {
-      "time": "2026-03-06T12:19:10.368494",
-      "status": "healthy",
-      "healthy": 3,
-      "total": 3,
-      "failed": [],
-      "recovered": []
-    },
-    {
-      "time": "2026-03-06T12:24:14.503383",
-      "status": "healthy",
-      "healthy": 3,
-      "total": 3,
-      "failed": [],
-      "recovered": []
-    },
-    {
-      "time": "2026-03-06T12:29:19.870778",
-      "status": "healthy",
-      "healthy": 3,
-      "total": 3,
-      "failed": [],
-      "recovered": []
-    },
-    {
-      "time": "2026-03-06T12:34:26.336140",
-      "status": "healthy",
-      "healthy": 3,
-      "total": 3,
-      "failed": [],
-      "recovered": []
-    },
-    {
-      "time": "2026-03-06T12:39:32.877597",
-      "status": "healthy",
-      "healthy": 3,
-      "total": 3,
-      "failed": [],
-      "recovered": []
-    },
-    {
-      "time": "2026-03-06T12:44:37.609183",
-      "status": "healthy",
-      "healthy": 3,
-      "total": 3,
-      "failed": [],
-      "recovered": []
-    },
-    {
-      "time": "2026-03-06T12:48:59.693648",
-      "status": "healthy",
-      "healthy": 3,
-      "total": 3,
-      "failed": [],
-      "recovered": []
-    },
-    {
-      "time": "2026-03-06T12:54:03.554681",
+      "time": "2026-03-06T22:07:39.094251",
       "status": "warning",
       "healthy": 2,
       "total": 3,
@@ -577,7 +91,7 @@
       "recovered": []
     },
     {
-      "time": "2026-03-06T12:59:16.489930",
+      "time": "2026-03-06T22:12:40.536734",
       "status": "warning",
       "healthy": 2,
       "total": 3,
@@ -587,7 +101,7 @@
       "recovered": []
     },
     {
-      "time": "2026-03-06T13:04:22.892240",
+      "time": "2026-03-06T22:17:41.963310",
       "status": "warning",
       "healthy": 2,
       "total": 3,
@@ -597,7 +111,7 @@
       "recovered": []
     },
     {
-      "time": "2026-03-06T13:09:24.309393",
+      "time": "2026-03-06T22:22:43.442901",
       "status": "warning",
       "healthy": 2,
       "total": 3,
@@ -607,7 +121,7 @@
       "recovered": []
     },
     {
-      "time": "2026-03-06T13:14:25.873750",
+      "time": "2026-03-06T22:27:45.070745",
       "status": "warning",
       "healthy": 2,
       "total": 3,
@@ -617,7 +131,7 @@
       "recovered": []
     },
     {
-      "time": "2026-03-06T13:19:27.296687",
+      "time": "2026-03-06T22:32:46.495745",
       "status": "warning",
       "healthy": 2,
       "total": 3,
@@ -627,7 +141,7 @@
       "recovered": []
     },
     {
-      "time": "2026-03-06T13:24:28.753007",
+      "time": "2026-03-06T22:37:47.962684",
       "status": "warning",
       "healthy": 2,
       "total": 3,
@@ -637,7 +151,7 @@
       "recovered": []
     },
     {
-      "time": "2026-03-06T13:29:30.172570",
+      "time": "2026-03-06T22:42:49.471964",
       "status": "warning",
       "healthy": 2,
       "total": 3,
@@ -647,7 +161,7 @@
       "recovered": []
     },
     {
-      "time": "2026-03-06T13:34:31.650689",
+      "time": "2026-03-06T22:47:50.897263",
       "status": "warning",
       "healthy": 2,
       "total": 3,
@@ -657,7 +171,7 @@
       "recovered": []
     },
     {
-      "time": "2026-03-06T13:39:33.087558",
+      "time": "2026-03-06T22:52:52.422111",
       "status": "warning",
       "healthy": 2,
       "total": 3,
@@ -667,7 +181,7 @@
       "recovered": []
     },
     {
-      "time": "2026-03-06T13:44:34.727448",
+      "time": "2026-03-06T22:57:53.874446",
       "status": "warning",
       "healthy": 2,
       "total": 3,
@@ -677,7 +191,7 @@
       "recovered": []
     },
     {
-      "time": "2026-03-06T13:49:36.236616",
+      "time": "2026-03-06T23:02:55.608278",
       "status": "warning",
       "healthy": 2,
       "total": 3,
@@ -687,7 +201,7 @@
       "recovered": []
     },
     {
-      "time": "2026-03-06T13:54:37.814179",
+      "time": "2026-03-06T23:07:57.113032",
       "status": "warning",
       "healthy": 2,
       "total": 3,
@@ -697,7 +211,7 @@
       "recovered": []
     },
     {
-      "time": "2026-03-06T13:59:39.333534",
+      "time": "2026-03-06T23:12:58.732236",
       "status": "warning",
       "healthy": 2,
       "total": 3,
@@ -707,7 +221,7 @@
       "recovered": []
     },
     {
-      "time": "2026-03-06T14:04:40.754804",
+      "time": "2026-03-06T23:18:00.147240",
       "status": "warning",
       "healthy": 2,
       "total": 3,
@@ -717,7 +231,7 @@
       "recovered": []
     },
     {
-      "time": "2026-03-06T14:09:47.203596",
+      "time": "2026-03-06T23:23:01.673269",
       "status": "warning",
       "healthy": 2,
       "total": 3,
@@ -727,7 +241,7 @@
       "recovered": []
     },
     {
-      "time": "2026-03-06T14:14:48.717911",
+      "time": "2026-03-06T23:28:03.241295",
       "status": "warning",
       "healthy": 2,
       "total": 3,
@@ -737,7 +251,7 @@
       "recovered": []
     },
     {
-      "time": "2026-03-06T14:19:50.135639",
+      "time": "2026-03-06T23:33:04.805867",
       "status": "warning",
       "healthy": 2,
       "total": 3,
@@ -747,7 +261,7 @@
       "recovered": []
     },
     {
-      "time": "2026-03-06T14:24:51.669438",
+      "time": "2026-03-06T23:38:06.378872",
       "status": "warning",
       "healthy": 2,
       "total": 3,
@@ -757,7 +271,7 @@
       "recovered": []
     },
     {
-      "time": "2026-03-06T14:30:14.393378",
+      "time": "2026-03-06T23:43:08.045448",
       "status": "warning",
       "healthy": 2,
       "total": 3,
@@ -767,7 +281,7 @@
       "recovered": []
     },
     {
-      "time": "2026-03-06T14:35:21.437283",
+      "time": "2026-03-06T23:48:09.558067",
       "status": "warning",
       "healthy": 2,
       "total": 3,
@@ -777,7 +291,7 @@
       "recovered": []
     },
     {
-      "time": "2026-03-06T14:40:22.949134",
+      "time": "2026-03-06T23:53:11.198287",
       "status": "warning",
       "healthy": 2,
       "total": 3,
@@ -787,7 +301,7 @@
       "recovered": []
     },
     {
-      "time": "2026-03-06T14:45:24.520423",
+      "time": "2026-03-06T23:58:12.665750",
       "status": "warning",
       "healthy": 2,
       "total": 3,
@@ -797,7 +311,7 @@
       "recovered": []
     },
     {
-      "time": "2026-03-06T14:50:26.663526",
+      "time": "2026-03-07T00:03:14.447956",
       "status": "warning",
       "healthy": 2,
       "total": 3,
@@ -807,7 +321,7 @@
       "recovered": []
     },
     {
-      "time": "2026-03-06T14:55:28.307660",
+      "time": "2026-03-07T00:08:15.910192",
       "status": "warning",
       "healthy": 2,
       "total": 3,
@@ -817,7 +331,7 @@
       "recovered": []
     },
     {
-      "time": "2026-03-06T15:00:29.889641",
+      "time": "2026-03-07T00:13:17.363120",
       "status": "warning",
       "healthy": 2,
       "total": 3,
@@ -827,7 +341,7 @@
       "recovered": []
     },
     {
-      "time": "2026-03-06T15:05:31.457192",
+      "time": "2026-03-07T00:18:18.760713",
       "status": "warning",
       "healthy": 2,
       "total": 3,
@@ -837,7 +351,7 @@
       "recovered": []
     },
     {
-      "time": "2026-03-06T15:10:32.956366",
+      "time": "2026-03-07T00:23:20.246367",
       "status": "warning",
       "healthy": 2,
       "total": 3,
@@ -847,7 +361,7 @@
       "recovered": []
     },
     {
-      "time": "2026-03-06T15:15:34.527278",
+      "time": "2026-03-07T00:28:21.769898",
       "status": "warning",
       "healthy": 2,
       "total": 3,
@@ -857,7 +371,7 @@
       "recovered": []
     },
     {
-      "time": "2026-03-06T15:20:36.103715",
+      "time": "2026-03-07T00:33:23.349887",
       "status": "warning",
       "healthy": 2,
       "total": 3,
@@ -867,7 +381,7 @@
       "recovered": []
     },
     {
-      "time": "2026-03-06T15:25:37.579870",
+      "time": "2026-03-07T00:38:24.862741",
       "status": "warning",
       "healthy": 2,
       "total": 3,
@@ -877,7 +391,7 @@
       "recovered": []
     },
     {
-      "time": "2026-03-06T15:30:39.018988",
+      "time": "2026-03-07T00:43:26.441066",
       "status": "warning",
       "healthy": 2,
       "total": 3,
@@ -887,7 +401,7 @@
       "recovered": []
     },
     {
-      "time": "2026-03-06T15:35:40.497408",
+      "time": "2026-03-07T00:48:27.893393",
       "status": "warning",
       "healthy": 2,
       "total": 3,
@@ -897,7 +411,7 @@
       "recovered": []
     },
     {
-      "time": "2026-03-06T15:40:42.195545",
+      "time": "2026-03-07T00:53:29.441332",
       "status": "warning",
       "healthy": 2,
       "total": 3,
@@ -907,7 +421,7 @@
       "recovered": []
     },
     {
-      "time": "2026-03-06T15:45:43.646812",
+      "time": "2026-03-07T00:58:30.967078",
       "status": "warning",
       "healthy": 2,
       "total": 3,
@@ -917,7 +431,7 @@
       "recovered": []
     },
     {
-      "time": "2026-03-06T15:50:45.264575",
+      "time": "2026-03-07T01:03:32.489989",
       "status": "warning",
       "healthy": 2,
       "total": 3,
@@ -927,7 +441,7 @@
       "recovered": []
     },
     {
-      "time": "2026-03-06T15:55:46.746516",
+      "time": "2026-03-07T01:08:33.907816",
       "status": "warning",
       "healthy": 2,
       "total": 3,
@@ -937,7 +451,547 @@
       "recovered": []
     },
     {
-      "time": "2026-03-06T16:00:48.338706",
+      "time": "2026-03-07T01:13:35.342226",
+      "status": "warning",
+      "healthy": 2,
+      "total": 3,
+      "failed": [
+        "status_panel"
+      ],
+      "recovered": []
+    },
+    {
+      "time": "2026-03-07T01:18:36.910477",
+      "status": "warning",
+      "healthy": 2,
+      "total": 3,
+      "failed": [
+        "status_panel"
+      ],
+      "recovered": []
+    },
+    {
+      "time": "2026-03-07T01:23:38.349142",
+      "status": "warning",
+      "healthy": 2,
+      "total": 3,
+      "failed": [
+        "status_panel"
+      ],
+      "recovered": []
+    },
+    {
+      "time": "2026-03-07T01:28:39.928053",
+      "status": "warning",
+      "healthy": 2,
+      "total": 3,
+      "failed": [
+        "status_panel"
+      ],
+      "recovered": []
+    },
+    {
+      "time": "2026-03-07T01:33:41.338666",
+      "status": "warning",
+      "healthy": 2,
+      "total": 3,
+      "failed": [
+        "status_panel"
+      ],
+      "recovered": []
+    },
+    {
+      "time": "2026-03-07T01:38:42.872814",
+      "status": "warning",
+      "healthy": 2,
+      "total": 3,
+      "failed": [
+        "status_panel"
+      ],
+      "recovered": []
+    },
+    {
+      "time": "2026-03-07T01:43:44.311526",
+      "status": "warning",
+      "healthy": 2,
+      "total": 3,
+      "failed": [
+        "status_panel"
+      ],
+      "recovered": []
+    },
+    {
+      "time": "2026-03-07T01:48:45.820684",
+      "status": "warning",
+      "healthy": 2,
+      "total": 3,
+      "failed": [
+        "status_panel"
+      ],
+      "recovered": []
+    },
+    {
+      "time": "2026-03-07T01:53:47.311384",
+      "status": "warning",
+      "healthy": 2,
+      "total": 3,
+      "failed": [
+        "status_panel"
+      ],
+      "recovered": []
+    },
+    {
+      "time": "2026-03-07T01:58:48.837785",
+      "status": "warning",
+      "healthy": 2,
+      "total": 3,
+      "failed": [
+        "status_panel"
+      ],
+      "recovered": []
+    },
+    {
+      "time": "2026-03-07T02:03:50.269646",
+      "status": "warning",
+      "healthy": 2,
+      "total": 3,
+      "failed": [
+        "status_panel"
+      ],
+      "recovered": []
+    },
+    {
+      "time": "2026-03-07T02:08:51.795632",
+      "status": "warning",
+      "healthy": 2,
+      "total": 3,
+      "failed": [
+        "status_panel"
+      ],
+      "recovered": []
+    },
+    {
+      "time": "2026-03-07T02:13:53.464326",
+      "status": "warning",
+      "healthy": 2,
+      "total": 3,
+      "failed": [
+        "status_panel"
+      ],
+      "recovered": []
+    },
+    {
+      "time": "2026-03-07T02:18:55.037104",
+      "status": "warning",
+      "healthy": 2,
+      "total": 3,
+      "failed": [
+        "status_panel"
+      ],
+      "recovered": []
+    },
+    {
+      "time": "2026-03-07T02:23:56.497167",
+      "status": "warning",
+      "healthy": 2,
+      "total": 3,
+      "failed": [
+        "status_panel"
+      ],
+      "recovered": []
+    },
+    {
+      "time": "2026-03-07T02:28:58.025077",
+      "status": "warning",
+      "healthy": 2,
+      "total": 3,
+      "failed": [
+        "status_panel"
+      ],
+      "recovered": []
+    },
+    {
+      "time": "2026-03-07T02:33:59.436877",
+      "status": "warning",
+      "healthy": 2,
+      "total": 3,
+      "failed": [
+        "status_panel"
+      ],
+      "recovered": []
+    },
+    {
+      "time": "2026-03-07T02:39:00.943498",
+      "status": "warning",
+      "healthy": 2,
+      "total": 3,
+      "failed": [
+        "status_panel"
+      ],
+      "recovered": []
+    },
+    {
+      "time": "2026-03-07T02:44:02.462913",
+      "status": "warning",
+      "healthy": 2,
+      "total": 3,
+      "failed": [
+        "status_panel"
+      ],
+      "recovered": []
+    },
+    {
+      "time": "2026-03-07T02:49:03.903157",
+      "status": "warning",
+      "healthy": 2,
+      "total": 3,
+      "failed": [
+        "status_panel"
+      ],
+      "recovered": []
+    },
+    {
+      "time": "2026-03-07T02:54:05.328240",
+      "status": "warning",
+      "healthy": 2,
+      "total": 3,
+      "failed": [
+        "status_panel"
+      ],
+      "recovered": []
+    },
+    {
+      "time": "2026-03-07T02:59:07.316477",
+      "status": "warning",
+      "healthy": 2,
+      "total": 3,
+      "failed": [
+        "status_panel"
+      ],
+      "recovered": []
+    },
+    {
+      "time": "2026-03-07T03:04:08.828222",
+      "status": "warning",
+      "healthy": 2,
+      "total": 3,
+      "failed": [
+        "status_panel"
+      ],
+      "recovered": []
+    },
+    {
+      "time": "2026-03-07T03:09:10.312585",
+      "status": "warning",
+      "healthy": 2,
+      "total": 3,
+      "failed": [
+        "status_panel"
+      ],
+      "recovered": []
+    },
+    {
+      "time": "2026-03-07T03:14:11.976967",
+      "status": "warning",
+      "healthy": 2,
+      "total": 3,
+      "failed": [
+        "status_panel"
+      ],
+      "recovered": []
+    },
+    {
+      "time": "2026-03-07T03:19:13.503218",
+      "status": "warning",
+      "healthy": 2,
+      "total": 3,
+      "failed": [
+        "status_panel"
+      ],
+      "recovered": []
+    },
+    {
+      "time": "2026-03-07T03:24:15.221734",
+      "status": "warning",
+      "healthy": 2,
+      "total": 3,
+      "failed": [
+        "status_panel"
+      ],
+      "recovered": []
+    },
+    {
+      "time": "2026-03-07T03:29:16.694249",
+      "status": "warning",
+      "healthy": 2,
+      "total": 3,
+      "failed": [
+        "status_panel"
+      ],
+      "recovered": []
+    },
+    {
+      "time": "2026-03-07T03:34:18.125256",
+      "status": "warning",
+      "healthy": 2,
+      "total": 3,
+      "failed": [
+        "status_panel"
+      ],
+      "recovered": []
+    },
+    {
+      "time": "2026-03-07T03:39:19.633026",
+      "status": "warning",
+      "healthy": 2,
+      "total": 3,
+      "failed": [
+        "status_panel"
+      ],
+      "recovered": []
+    },
+    {
+      "time": "2026-03-07T03:44:21.140523",
+      "status": "warning",
+      "healthy": 2,
+      "total": 3,
+      "failed": [
+        "status_panel"
+      ],
+      "recovered": []
+    },
+    {
+      "time": "2026-03-07T03:49:22.649565",
+      "status": "warning",
+      "healthy": 2,
+      "total": 3,
+      "failed": [
+        "status_panel"
+      ],
+      "recovered": []
+    },
+    {
+      "time": "2026-03-07T03:54:24.089698",
+      "status": "warning",
+      "healthy": 2,
+      "total": 3,
+      "failed": [
+        "status_panel"
+      ],
+      "recovered": []
+    },
+    {
+      "time": "2026-03-07T03:59:25.516401",
+      "status": "warning",
+      "healthy": 2,
+      "total": 3,
+      "failed": [
+        "status_panel"
+      ],
+      "recovered": []
+    },
+    {
+      "time": "2026-03-07T04:04:26.985327",
+      "status": "warning",
+      "healthy": 2,
+      "total": 3,
+      "failed": [
+        "status_panel"
+      ],
+      "recovered": []
+    },
+    {
+      "time": "2026-03-07T04:09:28.445691",
+      "status": "warning",
+      "healthy": 2,
+      "total": 3,
+      "failed": [
+        "status_panel"
+      ],
+      "recovered": []
+    },
+    {
+      "time": "2026-03-07T04:14:29.874693",
+      "status": "warning",
+      "healthy": 2,
+      "total": 3,
+      "failed": [
+        "status_panel"
+      ],
+      "recovered": []
+    },
+    {
+      "time": "2026-03-07T04:19:31.350462",
+      "status": "warning",
+      "healthy": 2,
+      "total": 3,
+      "failed": [
+        "status_panel"
+      ],
+      "recovered": []
+    },
+    {
+      "time": "2026-03-07T04:24:32.799097",
+      "status": "warning",
+      "healthy": 2,
+      "total": 3,
+      "failed": [
+        "status_panel"
+      ],
+      "recovered": []
+    },
+    {
+      "time": "2026-03-07T04:29:34.395746",
+      "status": "warning",
+      "healthy": 2,
+      "total": 3,
+      "failed": [
+        "status_panel"
+      ],
+      "recovered": []
+    },
+    {
+      "time": "2026-03-07T04:34:35.872518",
+      "status": "warning",
+      "healthy": 2,
+      "total": 3,
+      "failed": [
+        "status_panel"
+      ],
+      "recovered": []
+    },
+    {
+      "time": "2026-03-07T04:39:37.725431",
+      "status": "warning",
+      "healthy": 2,
+      "total": 3,
+      "failed": [
+        "status_panel"
+      ],
+      "recovered": []
+    },
+    {
+      "time": "2026-03-07T04:44:39.433415",
+      "status": "warning",
+      "healthy": 2,
+      "total": 3,
+      "failed": [
+        "status_panel"
+      ],
+      "recovered": []
+    },
+    {
+      "time": "2026-03-07T04:49:41.045636",
+      "status": "warning",
+      "healthy": 2,
+      "total": 3,
+      "failed": [
+        "status_panel"
+      ],
+      "recovered": []
+    },
+    {
+      "time": "2026-03-07T04:54:42.635539",
+      "status": "warning",
+      "healthy": 2,
+      "total": 3,
+      "failed": [
+        "status_panel"
+      ],
+      "recovered": []
+    },
+    {
+      "time": "2026-03-07T04:59:44.246226",
+      "status": "warning",
+      "healthy": 2,
+      "total": 3,
+      "failed": [
+        "status_panel"
+      ],
+      "recovered": []
+    },
+    {
+      "time": "2026-03-07T05:04:45.890533",
+      "status": "warning",
+      "healthy": 2,
+      "total": 3,
+      "failed": [
+        "status_panel"
+      ],
+      "recovered": []
+    },
+    {
+      "time": "2026-03-07T05:09:47.522527",
+      "status": "warning",
+      "healthy": 2,
+      "total": 3,
+      "failed": [
+        "status_panel"
+      ],
+      "recovered": []
+    },
+    {
+      "time": "2026-03-07T05:14:49.324607",
+      "status": "warning",
+      "healthy": 2,
+      "total": 3,
+      "failed": [
+        "status_panel"
+      ],
+      "recovered": []
+    },
+    {
+      "time": "2026-03-07T05:19:51.030614",
+      "status": "warning",
+      "healthy": 2,
+      "total": 3,
+      "failed": [
+        "status_panel"
+      ],
+      "recovered": []
+    },
+    {
+      "time": "2026-03-07T05:24:53.174627",
+      "status": "warning",
+      "healthy": 2,
+      "total": 3,
+      "failed": [
+        "status_panel"
+      ],
+      "recovered": []
+    },
+    {
+      "time": "2026-03-07T05:29:54.688926",
+      "status": "warning",
+      "healthy": 2,
+      "total": 3,
+      "failed": [
+        "status_panel"
+      ],
+      "recovered": []
+    },
+    {
+      "time": "2026-03-07T05:34:56.243686",
+      "status": "warning",
+      "healthy": 2,
+      "total": 3,
+      "failed": [
+        "status_panel"
+      ],
+      "recovered": []
+    },
+    {
+      "time": "2026-03-07T05:39:57.715981",
+      "status": "warning",
+      "healthy": 2,
+      "total": 3,
+      "failed": [
+        "status_panel"
+      ],
+      "recovered": []
+    },
+    {
+      "time": "2026-03-07T05:44:59.344178",
       "status": "warning",
       "healthy": 2,
       "total": 3,
@@ -948,8 +1002,8 @@
     }
   ],
   "summary": {
-    "total": 94,
-    "healthy": 46,
-    "warning": 46
+    "total": 100,
+    "healthy": 0,
+    "warning": 100
   }
 }
