@@ -648,5 +648,31 @@
     "network": {
       "connections": 25
     }
+  },
+  {
+    "timestamp": "2026-03-06T10:21:20.462673",
+    "system": {
+      "load": {
+        "1m": 2.46,
+        "5m": 2.78,
+        "15m": 2.42
+      },
+      "memory": {
+        "total": 7266,
+        "available": 3789,
+        "used": 3477,
+        "percent": 47.9
+      },
+      "gateway_processes": 41
+    },
+    "services": {
+      "gateway": "healthy",
+      "status_panel": "error_000",
+      "health_api": "healthy",
+      "dashboard": "healthy"
+    },
+    "network": {
+      "connections": 22
+    }
   }
 ]

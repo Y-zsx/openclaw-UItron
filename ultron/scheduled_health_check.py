@@ -3,6 +3,7 @@
 定时健康检查与告警集成系统
 第123世: 添加定时健康检查与告警集成
 第125世: 集成日志记录到健康检查触发器
+第123世(当前): 添加自动恢复机制到网络健康检查
 """
 
 import json
@@ -11,6 +12,7 @@ import logging
 import requests
 import sqlite3
 import threading
+import subprocess
 from datetime import datetime
 from typing import Dict, List, Optional
 from pathlib import Path
@@ -115,12 +117,150 @@ class AlertIntegration:
         self.last_alert_time[key] = time.time()
 
 
+class AutoRecovery:
+    """自动恢复机制 - 检测到服务异常时自动尝试恢复"""
+    
+    def __init__(self):
+        self.recovery_attempts = {}  # 记录每个服务的恢复尝试
+        self.recovery_cooldown = 120  # 恢复尝试冷却时间（秒）
+        self.max_retry = 3  # 最大重试次数
+        self.recovery_log = []
+        
+    def get_service_manager(self, port: int) -> Optional[str]:
+        """根据端口返回服务管理器类型"""
+        # 映射端口到服务管理方式
+        service_map = {
+            8089: ("collab-api-gateway", "systemd"),
+            8090: ("collab-secure-channel", "systemd"),
+            8091: ("collab-identity-auth", "systemd"),
+            8095: ("collab-scheduler", "systemd"),
+            8096: ("collab-task-executor", "systemd"),
+        }
+        return service_map.get(port)
+    
+    def attempt_recovery(self, port: int, service_name: str) -> Dict:
+        """尝试恢复服务"""
+        key = f"{port}"
+        now = time.time()
+        
+        # 检查冷却时间
+        if key in self.recovery_attempts:
+            last_attempt = self.recovery_attempts[key].get("last_attempt", 0)
+            if now - last_attempt < self.recovery_cooldown:
+                return {"action": "skipped", "reason": "cooldown", "wait_seconds": int(self.recovery_cooldown - (now - last_attempt))}
+        
+        # 获取服务管理信息
+        service_info = self.get_service_manager(port)
+        if not service_info:
+            logger.info(f"端口{port}无自动恢复配置")
+            return {"action": "skipped", "reason": "no_recovery_config"}
+        
+        service_unit, manager = service_info
+        
+        # 检查当前重试次数
+        retry_count = self.recovery_attempts.get(key, {}).get("count", 0)
+        if retry_count >= self.max_retry:
+            logger.warning(f"⚠️ {service_name} 已达最大重试次数({self.max_retry}),停止自动恢复")
+            return {"action": "skipped", "reason": "max_retries_exceeded"}
+        
+        logger.info(f"🔧 尝试自动恢复 {service_name} (端口{port})...")
+        
+        recovery_result = {"action": "none", "success": False, "output": ""}
+        
+        try:
+            if manager == "systemd":
+                # 尝试重启systemd服务
+                result = subprocess.run(
+                    ["systemctl", "restart", service_unit],
+                    capture_output=True,
+                    text=True,
+                    timeout=30
+                )
+                recovery_result = {
+                    "action": "systemctl_restart",
+                    "success": result.returncode == 0,
+                    "output": result.stdout + result.stderr,
+                    "returncode": result.returncode
+                }
+            elif manager == "docker":
+                # 尝试重启docker容器
+                result = subprocess.run(
+                    ["docker", "restart", service_unit],
+                    capture_output=True,
+                    text=True,
+                    timeout=30
+                )
+                recovery_result = {
+                    "action": "docker_restart",
+                    "success": result.returncode == 0,
+                    "output": result.stdout + result.stderr,
+                    "returncode": result.returncode
+                }
+            
+            # 更新恢复尝试记录
+            self.recovery_attempts[key] = {
+                "count": retry_count + 1,
+                "last_attempt": now,
+                "last_result": recovery_result
+            }
+            
+            if recovery_result["success"]:
+                logger.info(f"✅ {service_name} 恢复命令已执行")
+                # 记录到恢复日志
+                self.recovery_log.append({
+                    "port": port,
+                    "service": service_name,
+                    "action": recovery_result["action"],
+                    "timestamp": datetime.now().isoformat(),
+                    "success": True
+                })
+            else:
+                logger.error(f"❌ {service_name} 恢复失败: {recovery_result['output']}")
+                self.recovery_log.append({
+                    "port": port,
+                    "service": service_name,
+                    "action": recovery_result["action"],
+                    "timestamp": datetime.now().isoformat(),
+                    "success": False,
+                    "error": recovery_result["output"]
+                })
+                
+        except subprocess.TimeoutExpired:
+            recovery_result = {"action": "timeout", "success": False, "error": "Command timeout"}
+            logger.error(f"❌ {service_name} 恢复超时")
+        except Exception as e:
+            recovery_result = {"action": "error", "success": False, "error": str(e)}
+            logger.error(f"❌ {service_name} 恢复异常: {e}")
+        
+        return recovery_result
+    
+    def get_recovery_status(self, port: int) -> Dict:
+        """获取服务恢复状态"""
+        key = f"{port}"
+        if key in self.recovery_attempts:
+            attempt = self.recovery_attempts[key]
+            return {
+                "retry_count": attempt.get("count", 0),
+                "max_retry": self.max_retry,
+                "last_attempt": datetime.fromtimestamp(attempt.get("last_attempt", 0)).isoformat() if attempt.get("last_attempt") else None,
+                "cooldown_remaining": max(0, self.recovery_cooldown - (time.time() - attempt.get("last_attempt", 0)))
+            }
+        return {"retry_count": 0, "max_retry": self.max_retry, "cooldown_remaining": 0}
+    
+    def reset_recovery(self, port: int):
+        """重置恢复状态（手动或成功后调用）"""
+        key = f"{port}"
+        if key in self.recovery_attempts:
+            del self.recovery_attempts[key]
+
+
 class ScheduledHealthCheck:
     """定时健康检查系统"""
     
     def __init__(self, interval: int = CHECK_INTERVAL):
         self.interval = interval
         self.alert_integration = AlertIntegration()
+        self.auto_recovery = AutoRecovery()  # 自动恢复机制
         self.health_logger = HealthCheckLogger()  # 集成日志记录器
         self.running = False
         self.check_count = 0
@@ -208,6 +348,20 @@ class ScheduledHealthCheck:
                 self.alert_integration.send_alert(
                     service_name, port, current_state, message, level
                 )
+                
+                # 🚀 触发自动恢复（仅对critical服务）
+                if config.get("critical", False) and current_state in ("down", "timeout"):
+                    logger.info(f"🚀 触发自动恢复机制 for {service_name}")
+                    recovery = self.auto_recovery.attempt_recovery(port, service_name)
+                    status["recovery_attempts"] = status.get("recovery_attempts", [])
+                    status["recovery_attempts"].append({
+                        "port": port,
+                        "service": service_name,
+                        "recovery": recovery,
+                        "timestamp": datetime.now().isoformat()
+                    })
+                    if recovery.get("success"):
+                        message += " (已触发自动恢复)"
             
             # 记录状态
             self.last_status[port] = {
