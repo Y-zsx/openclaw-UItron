@@ -1,0 +1,14 @@
+[Unit]
+Description=Ultron Decision Enhanced Engine
+After=network.target
+
+[Service]
+Type=simple
+User=root
+WorkingDirectory=/root/.openclaw/workspace/ultron-workflow
+ExecStart=/usr/bin/python3 api_service/decision_enhanced.py
+Restart=always
+RestartSec=10
+
+[Install]
+WantedBy=multi-user.target

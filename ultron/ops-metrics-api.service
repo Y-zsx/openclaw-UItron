@@ -1,12 +1,12 @@
 [Unit]
-Description=奥创运维指标API服务
+Description=OpenClaw Ops Metrics API (Enhanced)
 After=network.target
 
 [Service]
 Type=simple
 User=root
 WorkingDirectory=/root/.openclaw/workspace/ultron
-ExecStart=/usr/bin/python3 ops-metrics-api.py --port 18230
+ExecStart=/usr/bin/python3 /root/.openclaw/workspace/ultron/ops-metrics-api.py --port 18220
 Restart=always
 RestartSec=10
 

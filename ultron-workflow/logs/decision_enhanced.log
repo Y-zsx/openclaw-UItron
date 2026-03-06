@@ -1,0 +1,8 @@
+Traceback (most recent call last):
+  File "/root/.openclaw/workspace/ultron-workflow/api_service/decision_enhanced.py", line 259, in <module>
+    class DecisionEnhancedHandler(BaseHTTPRequestHandler):
+  File "/root/.openclaw/workspace/ultron-workflow/api_service/decision_enhanced.py", line 262, in DecisionEnhancedHandler
+    conn = init_db()
+  File "/root/.openclaw/workspace/ultron-workflow/api_service/decision_enhanced.py", line 24, in init_db
+    conn = sqlite3.connect(DB_PATH)
+sqlite3.OperationalError: unable to open database file

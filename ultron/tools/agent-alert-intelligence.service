@@ -1,0 +1,14 @@
+[Unit]
+Description=Agent智能告警服务 v2.0
+After=network.target
+
+[Service]
+Type=simple
+User=root
+WorkingDirectory=/root/.openclaw/workspace/ultron/tools
+ExecStart=/usr/bin/python3 /root/.openclaw/workspace/ultron/tools/agent_alert_intelligence.py
+Restart=always
+RestartSec=10
+
+[Install]
+WantedBy=multi-user.target

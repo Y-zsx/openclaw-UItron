@@ -506,7 +506,7 @@ def update_state(decision: Dict, execution: Dict, state: Dict) -> Dict:
 
 def register_cron(interval: str, task: str, incarnation: int):
     """注册新的cron"""
-    # 清理旧的
+    # 清理旧的（清理所有ultron-life和ultron-workflow开头的，避免重复）
     try:
         result = subprocess.run(["openclaw", "cron", "list", "--json"], 
                               capture_output=True, text=True, timeout=10)
@@ -515,9 +515,13 @@ def register_cron(interval: str, task: str, incarnation: int):
             jobs = data.get('jobs', data) if isinstance(data, dict) else data
             if isinstance(jobs, list):
                 for job in jobs:
-                    if isinstance(job, dict) and job.get('name') in ['ultron-life', 'ultron-learn']:
-                        subprocess.run(["openclaw", "cron", "rm", str(job['id'])], 
-                                     capture_output=True)
+                    if isinstance(job, dict):
+                        name = job.get('name', '')
+                        # 清理所有ultron-life、ultron-workflow开头的，避免重复累积
+                        if name.startswith('ultron-life') or name.startswith('ultron-workflow'):
+                            subprocess.run(["openclaw", "cron", "rm", str(job['id'])], 
+                                         capture_output=True)
+                            log(f"   🧹 清理旧cron: {name}", "INFO")
     except Exception as e:
         log(f"   清理旧cron失败: {e}", "WARN")
     
