@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """
-任务调度器守护进程
-持续运行，定时执行各种运维任务
+任务调度器守护进程 V2
+集成持久化与恢复机制
 """
 import os
 import sys
@@ -12,7 +12,15 @@ import subprocess
 from datetime import datetime
 from pathlib import Path
 
+# 导入持久化模块
 WORKSPACE = '/root/.openclaw/workspace'
+sys.path.insert(0, f'{WORKSPACE}/ultron-workflow/modules')
+from scheduler_persist import (
+    save_checkpoint, load_checkpoint, verify_checkpoint,
+    save_execution_log, perform_recovery, get_recovery_status,
+    backup_state, ensure_dirs
+)
+
 LOG_FILE = f'{WORKSPACE}/ultron-workflow/logs/scheduler_daemon.log'
 STATE_FILE = f'{WORKSPACE}/ultron-workflow/state/scheduler_daemon.json'
 
@@ -66,10 +74,21 @@ def load_state():
             pass
     return {'tasks': {}, 'start_time': datetime.now().isoformat()}
 
-def save_state(state):
+def save_state(state, create_checkpoint=True):
+    """保存状态，并可选地创建检查点"""
     os.makedirs(os.path.dirname(STATE_FILE), exist_ok=True)
     with open(STATE_FILE, 'w') as f:
         json.dump(state, f, indent=2)
+    
+    # 同时创建检查点用于崩溃恢复
+    if create_checkpoint:
+        checkpoint_data = {
+            'tasks': state.get('tasks', {}),
+            'last_save': datetime.now().isoformat(),
+            'start_time': state.get('start_time'),
+            'last_check': state.get('last_check')
+        }
+        save_checkpoint(checkpoint_data)
 
 def should_run(task_name, task_config, state):
     if not task_config.get('enabled', True):
@@ -118,11 +137,31 @@ def main():
     signal.signal(signal.SIGTERM, signal_handler)
     signal.signal(signal.SIGINT, signal_handler)
     
-    log('任务调度器守护进程启动')
+    log('任务调度器守护进程 V2 启动')
     
-    state = load_state()
+    # 检查是否需要崩溃恢复
+    recovery_status = get_recovery_status()
+    if recovery_status.get('crash_recovery_needed'):
+        log('检测到可能需要崩溃恢复，尝试恢复...')
+        recovered_state = perform_recovery()
+        if recovered_state:
+            log('✓ 从检查点恢复成功')
+            # 恢复任务状态
+            recovered_state['recovered_at'] = datetime.now().isoformat()
+            recovered_state['crash_recovery'] = True
+            state = recovered_state
+        else:
+            log('✓ 恢复失败或无需恢复，从头开始')
+            state = load_state()
+    else:
+        state = load_state()
+    
     state['start_time'] = datetime.now().isoformat()
-    save_state(state)
+    save_state(state, create_checkpoint=True)  # 立即创建初始检查点
+    
+    # 定时备份
+    backup_state()
+    log(f'✓ 初始检查点和备份已创建')
     
     check_interval = 30  # 每30秒检查一次
     
@@ -132,17 +171,26 @@ def main():
             
             for task_name, task_config in TASKS.items():
                 if should_run(task_name, task_config, state):
+                    start_time = datetime.now()
                     success = run_task(task_name, task_config)
+                    duration = (datetime.now() - start_time).total_seconds()
                     
                     if task_name not in tasks:
                         tasks[task_name] = {}
                     
                     tasks[task_name]['last_run'] = datetime.now().isoformat()
                     tasks[task_name]['success'] = success
+                    tasks[task_name]['duration'] = duration
+                    
+                    # 记录执行日志
+                    save_execution_log(task_name, 'success' if success else 'failed', {
+                        'duration': duration,
+                        'return_code': 0 if success else -1
+                    })
             
-            # 保存状态
+            # 保存状态和检查点
             state['last_check'] = datetime.now().isoformat()
-            save_state(state)
+            save_state(state, create_checkpoint=True)
             
             # 等待下次检查
             for _ in range(check_interval):

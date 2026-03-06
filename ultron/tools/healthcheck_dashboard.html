@@ -257,6 +257,104 @@
             font-weight: bold;
         }
         
+        /* 系统资源样式 */
+        .resource-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+        
+        .resource-item {
+            display: grid;
+            grid-template-columns: 50px 1fr 60px;
+            gap: 12px;
+            align-items: center;
+        }
+        
+        .resource-label {
+            font-weight: 600;
+            color: #9ca3af;
+            font-size: 0.9em;
+        }
+        
+        .resource-bar {
+            height: 12px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 6px;
+            overflow: hidden;
+        }
+        
+        .resource-fill {
+            height: 100%;
+            border-radius: 6px;
+            transition: width 0.5s ease, background 0.3s;
+        }
+        
+        .resource-fill.low { background: linear-gradient(90deg, #10b981, #34d399); }
+        .resource-fill.medium { background: linear-gradient(90deg, #f59e0b, #fbbf24); }
+        .resource-fill.high { background: linear-gradient(90deg, #ef4444, #f87171); }
+        
+        .resource-value {
+            text-align: right;
+            font-weight: 700;
+            font-size: 0.95em;
+        }
+        
+        .network-stats {
+            display: flex;
+            justify-content: space-around;
+            padding: 20px 0;
+        }
+        
+        .network-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 1.1em;
+        }
+        
+        .network-icon {
+            font-size: 1.5em;
+        }
+        
+        .trend-chart {
+            display: flex;
+            align-items: flex-end;
+            height: 150px;
+            gap: 3px;
+            padding: 10px 0;
+        }
+        
+        .trend-bar {
+            flex: 1;
+            background: linear-gradient(180deg, #3b82f6, #1d4ed8);
+            border-radius: 3px 3px 0 0;
+            min-width: 8px;
+            transition: height 0.3s ease;
+            position: relative;
+        }
+        
+        .trend-bar:hover {
+            background: linear-gradient(180deg, #60a5fa, #3b82f6);
+        }
+        
+        .trend-bar::after {
+            content: attr(data-value);
+            position: absolute;
+            bottom: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 0.65em;
+            color: #9ca3af;
+            white-space: nowrap;
+            opacity: 0;
+            transition: opacity 0.2s;
+        }
+        
+        .trend-bar:hover::after {
+            opacity: 1;
+        }
+        
         /* 图表样式 */
         .chart-container {
             margin-top: 15px;
@@ -564,6 +662,71 @@
         </div>
     </div>
     
+    <!-- 系统资源监控 -->
+    <div class="grid">
+        <div class="card">
+            <div class="card-header">
+                <h2>🖥️ 系统资源</h2>
+                <span class="card-badge" id="systemStatus">正常</span>
+            </div>
+            <div class="resource-grid" id="systemResources">
+                <div class="resource-item">
+                    <div class="resource-label">CPU</div>
+                    <div class="resource-bar"><div class="resource-fill" id="cpuBar" style="width:0%"></div></div>
+                    <div class="resource-value" id="cpuValue">--%</div>
+                </div>
+                <div class="resource-item">
+                    <div class="resource-label">内存</div>
+                    <div class="resource-bar"><div class="resource-fill" id="memBar" style="width:0%"></div></div>
+                    <div class="resource-value" id="memValue">--%</div>
+                </div>
+                <div class="resource-item">
+                    <div class="resource-label">磁盘</div>
+                    <div class="resource-bar"><div class="resource-fill" id="diskBar" style="width:0%"></div></div>
+                    <div class="resource-value" id="diskValue">--%</div>
+                </div>
+                <div class="resource-item">
+                    <div class="resource-label">负载</div>
+                    <div class="resource-bar"><div class="resource-fill" id="loadBar" style="width:0%"></div></div>
+                    <div class="resource-value" id="loadValue">--</div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="card">
+            <div class="card-header">
+                <h2>🌐 网络 I/O</h2>
+            </div>
+            <div class="network-stats" id="networkStats">
+                <div class="network-item">
+                    <span class="network-icon">⬇️</span>
+                    <span>入站: <b id="netIn">--</b></span>
+                </div>
+                <div class="network-item">
+                    <span class="network-icon">⬆️</span>
+                    <span>出站: <b id="netOut">--</b></span>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- 历史趋势 -->
+    <div class="grid">
+        <div class="card">
+            <div class="card-header">
+                <h2>📈 健康率趋势 (24h)</h2>
+            </div>
+            <div class="chart-container" id="healthTrendChart"></div>
+        </div>
+        
+        <div class="card">
+            <div class="card-header">
+                <h2>📊 响应时间趋势 (24h)</h2>
+            </div>
+            <div class="chart-container" id="responseTrendChart"></div>
+        </div>
+    </div>
+    
     <div class="grid">
         <div class="card">
             <div class="card-header">
@@ -754,6 +917,13 @@
             
             // 渲染每日指标
             renderDailyMetrics(data);
+            
+            // 渲染系统资源
+            renderSystemResources(data.system);
+            
+            // 渲染趋势图
+            renderHealthTrend();
+            renderResponseTrend();
         }
         
         function updateStatsFrom8098(data) {
@@ -903,6 +1073,139 @@
                 `;
             }
             document.getElementById('responseTimeChart').innerHTML = html || '<p style="color:#6b7280">暂无响应时间数据</p>';
+        }
+        
+        // 渲染系统资源
+        function renderSystemResources(system) {
+            if (!system) return;
+            
+            // CPU
+            const cpu = system.cpu || 0;
+            const cpuBar = document.getElementById('cpuBar');
+            const cpuValue = document.getElementById('cpuValue');
+            cpuBar.style.width = cpu + '%';
+            cpuBar.className = 'resource-fill ' + getResourceClass(cpu);
+            cpuValue.textContent = cpu.toFixed(1) + '%';
+            
+            // 内存
+            const mem = system.memory || 0;
+            const memBar = document.getElementById('memBar');
+            const memValue = document.getElementById('memValue');
+            memBar.style.width = mem + '%';
+            memBar.className = 'resource-fill ' + getResourceClass(mem);
+            memValue.textContent = mem.toFixed(1) + '%';
+            
+            // 磁盘
+            const disk = system.disk || 0;
+            const diskBar = document.getElementById('diskBar');
+            const diskValue = document.getElementById('diskValue');
+            diskBar.style.width = disk + '%';
+            diskBar.className = 'resource-fill ' + getResourceClass(disk);
+            diskValue.textContent = disk.toFixed(1) + '%';
+            
+            // 负载 (0-16核，映射到0-100%)
+            const load = system.load || 0;
+            const cpuCores = 8;
+            const loadPercent = Math.min((load / cpuCores) * 100, 100);
+            const loadBar = document.getElementById('loadBar');
+            const loadValue = document.getElementById('loadValue');
+            loadBar.style.width = loadPercent + '%';
+            loadBar.className = 'resource-fill ' + getResourceClass(loadPercent);
+            loadValue.textContent = load.toFixed(2);
+            
+            // 网络I/O
+            const netIn = system.network_in || 0;
+            const netOut = system.network_out || 0;
+            document.getElementById('netIn').textContent = formatBytes(netIn) + '/s';
+            document.getElementById('netOut').textContent = formatBytes(netOut) + '/s';
+            
+            // 系统状态
+            const maxResource = Math.max(cpu, mem, disk, loadPercent);
+            const statusBadge = document.getElementById('systemStatus');
+            if (maxResource < 60) {
+                statusBadge.textContent = '优秀';
+                statusBadge.style.background = 'rgba(16,185,129,0.2)';
+                statusBadge.style.color = '#10b981';
+            } else if (maxResource < 80) {
+                statusBadge.textContent = '良好';
+                statusBadge.style.background = 'rgba(59,130,246,0.2)';
+                statusBadge.style.color = '#3b82f6';
+            } else {
+                statusBadge.textContent = '警告';
+                statusBadge.style.background = 'rgba(239,68,68,0.2)';
+                statusBadge.style.color = '#ef4444';
+            }
+        }
+        
+        function getResourceClass(value) {
+            if (value < 50) return 'low';
+            if (value < 80) return 'medium';
+            return 'high';
+        }
+        
+        function formatBytes(bytes) {
+            if (bytes < 1024) return bytes + ' B';
+            if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + ' KB';
+            return (bytes / 1024 / 1024).toFixed(1) + ' MB';
+        }
+        
+        // 渲染健康率趋势图
+        let healthHistory = [];
+        async function renderHealthTrend() {
+            const resp = await fetchJSON('/api/history?limit=48');
+            if (!resp || !Array.isArray(resp)) {
+                document.getElementById('healthTrendChart').innerHTML = '<p style="color:#6b7280">暂无历史数据</p>';
+                return;
+            }
+            
+            healthHistory = resp.reverse();
+            if (healthHistory.length === 0) {
+                document.getElementById('healthTrendChart').innerHTML = '<p style="color:#6b7280">暂无历史数据</p>';
+                return;
+            }
+            
+            let html = '<div class="trend-chart">';
+            const maxHealth = 100;
+            
+            for (const entry of healthHistory) {
+                const health = entry.health || 0;
+                const height = (health / maxHealth) * 100;
+                const time = new Date(entry.timestamp).toLocaleTimeString('zh-CN', {hour:'2-digit', minute:'2-digit'});
+                const color = health >= 80 ? '#10b981' : (health >= 50 ? '#f59e0b' : '#ef4444');
+                
+                html += `<div class="trend-bar" style="height:${height}%;background:linear-gradient(180deg,${color},${color}88)" data-value="${health.toFixed(0)}% @ ${time}" title="${time}: ${health.toFixed(0)}%"></div>`;
+            }
+            html += '</div>';
+            document.getElementById('healthTrendChart').innerHTML = html;
+        }
+        
+        // 渲染响应时间趋势图
+        async function renderResponseTrend() {
+            const resp = await fetchJSON('/api/history?limit=48');
+            if (!resp || !Array.isArray(resp)) {
+                document.getElementById('responseTrendChart').innerHTML = '<p style="color:#6b7280">暂无历史数据</p>';
+                return;
+            }
+            
+            const history = resp.reverse();
+            if (history.length === 0) {
+                document.getElementById('responseTrendChart').innerHTML = '<p style="color:#6b7280">暂无历史数据</p>';
+                return;
+            }
+            
+            let html = '<div class="trend-chart">';
+            const maxRt = Math.max(...history.map(e => e.response_time || 0), 500);
+            
+            for (const entry of history) {
+                const rt = entry.response_time || 0;
+                const height = (rt / maxRt) * 100;
+                const time = new Date(entry.timestamp).toLocaleTimeString('zh-CN', {hour:'2-digit', minute:'2-digit'});
+                const color = rt < 200 ? '#10b981' : (rt < 500 ? '#3b82f6' : '#f59e0b');
+                
+                html += `<div class="trend-bar" style="height:${Math.max(height,2)}%;background:linear-gradient(180deg,${color},${color}88)" data-value="${rt.toFixed(0)}ms @ ${time}" title="${time}: ${rt.toFixed(0)}ms"></div>`;
+            }
+            html += '</div>';
+            document.getElementById('responseTrendChart').innerHTML = html;
         }
         
         function renderAlertStats(serviceStats) {

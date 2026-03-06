@@ -1,0 +1,14 @@
+[Unit]
+Description=Scheduler Log Analyzer API Service
+After=network.target
+
+[Service]
+Type=simple
+User=root
+WorkingDirectory=/root/.openclaw/workspace/ultron-workflow/logs
+ExecStart=/usr/bin/python3 /root/.openclaw/workspace/ultron-workflow/logs/scheduler_log_api.py
+Restart=always
+RestartSec=10
+
+[Install]
+WantedBy=multi-user.target

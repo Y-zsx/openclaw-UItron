@@ -1,0 +1,16 @@
+[Unit]
+Description=Ultron Auto Health Check Daemon
+After=network.target service-governance-api.service
+
+[Service]
+Type=simple
+User=root
+WorkingDirectory=/root/.openclaw/workspace/ultron
+ExecStart=/usr/bin/python3 /root/.openclaw/workspace/ultron/auto_health_check_daemon.py
+Restart=always
+RestartSec=30
+StandardOutput=journal
+StandardError=journal
+
+[Install]
+WantedBy=multi-user.target

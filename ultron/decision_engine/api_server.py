@@ -303,6 +303,16 @@ except ImportError:
     workflow_integration = None
     logger.warning("工作流集成模块不可用")
 
+# 导入预测性决策模块
+try:
+    from predictive_api import create_predictive_routes
+    create_predictive_routes(app)
+    PREDICTIVE_AVAILABLE = True
+    logger.info("预测性决策模块已集成")
+except ImportError as e:
+    PREDICTIVE_AVAILABLE = False
+    logger.warning(f"预测性决策模块不可用: {e}")
+
 
 @app.route('/workflow/trigger', methods=['POST'])
 def trigger_workflow():

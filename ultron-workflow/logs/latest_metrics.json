@@ -1,0 +1,26 @@
+{
+  "timestamp": "2026-03-06T10:50:40.900577",
+  "load": {
+    "1m": 0.97,
+    "5m": 0.99,
+    "15m": 1.27
+  },
+  "memory": {
+    "total": 7266,
+    "available": 3776,
+    "used": 3490,
+    "percent": 48.0
+  },
+  "disk": {},
+  "services": {
+    "gateway": "healthy",
+    "status_panel": "healthy",
+    "health_api": "healthy",
+    "dashboard": "healthy",
+    "metrics_api": "healthy"
+  },
+  "network": {},
+  "gateway_processes": 42,
+  "healthy_count": 5,
+  "total_services": 5
+}

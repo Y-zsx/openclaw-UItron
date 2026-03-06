@@ -3,11 +3,32 @@
     "tasks": {
       "test": {
         "status": "active"
+      },
+      "health_check": {
+        "last_run": "2026-03-06T11:04:39.461562",
+        "success": true,
+        "duration": 3.110748
+      },
+      "metrics_collect": {
+        "last_run": "2026-03-06T11:04:42.715211",
+        "success": true,
+        "duration": 3.253173
+      },
+      "api_health": {
+        "last_run": "2026-03-06T11:04:42.834091",
+        "success": true,
+        "duration": 0.118282
+      },
+      "self_healer": {
+        "last_run": "2026-03-06T11:04:43.009284",
+        "success": true,
+        "duration": 0.174171
       }
     },
-    "last_save": "2026-03-06T08:40:10.686645",
-    "incarnation": 139
+    "last_save": "2026-03-06T11:05:13.041193",
+    "start_time": "2026-03-06T11:04:36.348044",
+    "last_check": "2026-03-06T11:05:13.040389"
   },
-  "timestamp": "2026-03-06T08:40:10.686969",
-  "hash": "4871138c"
+  "timestamp": "2026-03-06T11:05:13.041249",
+  "hash": "3e0072c9"
 }

@@ -1,0 +1,14 @@
+[Unit]
+Description=Ultron Predictive Decision Scheduler
+After=network.target
+
+[Service]
+Type=simple
+User=root
+WorkingDirectory=/root/.openclaw/workspace/ultron/decision_engine
+ExecStart=/usr/bin/python3 /root/.openclaw/workspace/ultron/decision_engine/predictive_scheduler.py --interval 60
+Restart=always
+RestartSec=10
+
+[Install]
+WantedBy=multi-user.target

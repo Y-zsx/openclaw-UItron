@@ -1,0 +1,14 @@
+[Unit]
+Description=Agent Network Health API
+After=network.target
+
+[Service]
+Type=simple
+User=root
+WorkingDirectory=/root/.openclaw/workspace/ultron
+ExecStart=/usr/bin/python3 -c "from agent_network_health import start_api; start_api()"
+Restart=always
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target
