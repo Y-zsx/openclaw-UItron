@@ -53,6 +53,16 @@ TASK_PROGRESSION = {
     ]
 }
 
+# 导入任务执行器
+try:
+    from task_executor import ReincarnateTaskExecutor, get_executor
+    TASK_EXECUTOR = get_executor()
+    HAS_ADVANCED_EXECUTOR = True
+except ImportError:
+    TASK_EXECUTOR = None
+    HAS_ADVANCED_EXECUTOR = False
+    log("   ⚠️ 高级任务执行器不可用，使用内置简单重试")
+
 
 def get_next_task(ambition: str, current_task: str) -> str:
     """根据当前任务获取下一个任务"""
@@ -194,9 +204,15 @@ def decide_this_life(state: dict, last_check: dict) -> dict:
 
 
 def execute_task_with_retry(decision: dict, state: dict, retry_count: int = 0) -> dict:
-    """执行任务（带重试机制）"""
+    """执行任务（带重试机制 + 告警）"""
     task = decision['task']
     log(f"⚡ 执行任务: {task}" + (f" (重试 {retry_count}/{MAX_RETRIES})" if retry_count > 0 else ""))
+    
+    # 如果有高级执行器，通知API任务开始
+    if HAS_ADVANCED_EXECUTOR and TASK_EXECUTOR and TASK_EXECUTOR.api_available:
+        current_inc = state.get('current', {}).get('incarnation', 0)
+        task_id = f"reincarnate_{current_inc}"
+        log(f"   📡 高级执行器已连接 (任务ID: {task_id})")
     
     result = {
         "task": task,
@@ -252,6 +268,16 @@ def execute_task_with_retry(decision: dict, state: dict, retry_count: int = 0) -
         # 最终失败，发送告警
         if result['status'] == 'failed':
             log(f"   ❌ 任务执行失败，已达最大重试次数")
+            
+            # 通知高级API系统
+            if HAS_ADVANCED_EXECUTOR and TASK_EXECUTOR and TASK_EXECUTOR.api_available:
+                TASK_EXECUTOR._send_failure_to_api(
+                    task_id=f"reincarnate_{state.get('current', {}).get('incarnation', 0)}",
+                    agent_id="reincarnate",
+                    error=result['output'][:200],
+                    retry_count=retry_count
+                )
+            
             send_alert(
                 "🚨 任务执行失败 - 需要人工介入",
                 f"任务: {task}\n重试次数: {MAX_RETRIES}\n最终错误: {result['output'][:200]}",
@@ -259,6 +285,13 @@ def execute_task_with_retry(decision: dict, state: dict, retry_count: int = 0) -
             )
         else:
             log(f"   ✅ 任务执行成功")
+            
+            # 通知高级API系统 - 任务成功
+            if HAS_ADVANCED_EXECUTOR and TASK_EXECUTOR and TASK_EXECUTOR.api_available:
+                TASK_EXECUTOR._send_success_to_api(
+                    task_id=f"reincarnate_{state.get('current', {}).get('incarnation', 0)}",
+                    agent_id="reincarnate"
+                )
             
     except subprocess.TimeoutExpired:
         result['output'] = "任务执行超时"

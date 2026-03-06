@@ -11,88 +11,79 @@
     ]
   },
   "current": {
-    "incarnation": 148,
+    "incarnation": 155,
     "ambition": "智能决策与自主行动系统",
     "ambition_status": "running",
-    "last_wake": "2026-03-06T11:38:00.000000+00:00",
+    "last_wake": "2026-03-06T12:17:00.000000+00:00",
     "task_status": "completed"
   },
   "this_life": {
-    "task": "完善Agent任务调度与队列管理",
+    "task": "Agent健康监控集成增强",
     "accomplished": [
-      "启动queue-dashboard服务(端口18182)",
-      "创建queue_api_server.py增强API服务",
-      "服务运行在18183端口",
-      "提供/api/monitor队列监控端点",
-      "提供/api/health健康检查端点",
-      "提供/api/analysis任务分析端点",
-      "提供/api/recommendations优化建议端点",
-      "提供/api/performance性能指标端点",
-      "提供/api/queue/depth队列深度端点",
-      "提供/api/tasks/summary任务摘要端点",
-      "创建systemd服务: queue-api-server"
+      "增强agent_health_integration.py服务",
+      "端口18210 REST API服务",
+      "新增10个核心服务监控(决策引擎/自动化/工作流/Agent网络/执行器等)",
+      "新增Gateway状态监控(端口18789)",
+      "新增系统资源监控(CPU/内存/磁盘/负载)",
+      "新增健康趋势分析(/trends)",
+      "新增综合健康报告(/comprehensive)",
+      "新增钉钉告警通知集成",
+      "健康分数100分,所有服务正常"
     ],
     "verification": {
-      "api_port": 18183,
-      "endpoints": ["/api/monitor", "/api/health", "/api/analysis", "/api/recommendations", "/api/performance", "/api/queue/depth", "/api/tasks/summary"],
+      "api_port": 18210,
+      "endpoints": ["/health", "/agents", "/services", "/alerts", "/metrics", "/score", "/gateway", "/resources", "/trends", "/comprehensive"],
+      "total_monitored_services": 10,
+      "overall_health_score": 100,
       "service_status": "running",
-      "verified_at": "2026-03-06T11:38:30.000000+00:00"
+      "verified_at": "2026-03-06T12:17:33.000000+00:00"
     }
   },
   "next_life": {
-    "task": "Agent任务调度与队列管理V2",
+    "task": "系统性能基准测试",
     "interval": "5m",
     "priority": 2
   },
   "context": {},
   "history": [
     {
-      "incarnation": 148,
-      "task": "完善Agent任务调度与队列管理",
-      "result": "创建queue_api_server.py,端口18183,8个API端点,提供监控/健康检查/分析/优化建议/性能指标,systemd服务",
+      "incarnation": 155,
+      "task": "Agent健康监控集成增强",
+      "result": "增强agent_health_integration.py,端口18210,新增Gateway监控/系统资源/健康趋势/综合报告,健康分数100分",
       "status": "completed",
       "verification": {
-        "api_port": 18183,
-        "endpoints": 8,
+        "api_port": 18210,
+        "total_services": 10,
+        "health_score": 100,
         "service_status": "running",
-        "verified_at": "2026-03-06T11:38:30.000000+00:00"
+        "verified_at": "2026-03-06T12:17:33.000000+00:00"
       }
     },
     {
-      "incarnation": 145,
-      "task": "告警历史数据增强",
-      "result": "创建alert_history_enhanced.py,端口18217,增强统计,趋势分析,服务分析,数据导出",
+      "incarnation": 154,
+      "task": "全系统集成测试",
+      "result": "创建integration_tester.py,端口18228,测试15个服务,健康度73.3%,无服务down",
       "status": "completed",
       "verification": {
-        "api_port": 18217,
-        "endpoints": 6,
+        "api_port": 18228,
+        "total_services": 15,
+        "up_services": 11,
+        "down_services": 0,
+        "health_score": 73.3,
         "service_status": "running",
-        "verified_at": "2026-03-06T11:35:30.000000+00:00"
+        "verified_at": "2026-03-06T12:15:45.000000+00:00"
       }
     },
     {
-      "incarnation": 144,
-      "task": "调度器Dashboard集成告警展示",
-      "result": "创建alert_history_dashboard.py,端口18215,提供告警历史API和可视化Dashboard,30秒自动刷新,systemd服务",
+      "incarnation": 153,
+      "task": "系统自愈与自动修复",
+      "result": "创建self_healer.py,端口18227,自动检测和修复系统问题",
       "status": "completed",
       "verification": {
-        "api_port": 18215,
-        "endpoints": 5,
+        "api_port": 18227,
         "service_status": "running",
-        "verified_at": "2026-03-06T11:28:35.000000+00:00"
-      }
-    },
-    {
-      "incarnation": 143,
-      "task": "调度器告警通知集成",
-      "result": "创建scheduler_alert_integration.py,端口18212,集成调度器指标收集+阈值检查+告警通知,60秒检查循环,systemd服务",
-      "status": "completed",
-      "verification": {
-        "api_port": 18212,
-        "endpoints": 4,
-        "integration": ["18195", "18211", "18170"],
-        "service_status": "running",
-        "verified_at": "2026-03-06T11:22:15.000000+00:00"
+        "system_status": "healthy",
+        "verified_at": "2026-03-06T12:12:30.000000+00:00"
       }
     }
   ]

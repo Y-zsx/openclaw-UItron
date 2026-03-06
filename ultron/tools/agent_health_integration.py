@@ -2,6 +2,7 @@
 """
 Agent健康监控集成 - 端口18210
 整合多个健康检查源，提供统一的Agent健康状态管理
+增强版：增加OpenClaw节点监控、Gateway状态、健康趋势分析
 """
 import json
 import subprocess
@@ -17,6 +18,10 @@ import requests
 DATA_DIR = "/root/.openclaw/workspace/ultron/data"
 INTEGRATION_DB = f"{DATA_DIR}/agent_health_integration.db"
 
+# OpenClaw API配置
+OPENCLAW_API = "http://localhost:18789"
+GATEWAY_PORT = 18789
+
 # 集成端点配置 - 每个服务配置正确的健康检查端点
 INTEGRATED_SERVICES = {
     "health_api": {"url": "http://localhost:18196/", "name": "健康检查API"},
@@ -24,6 +29,11 @@ INTEGRATED_SERVICES = {
     "collab_center": {"url": "http://localhost:18201/health", "name": "协作中心"},
     "task_retry": {"url": "http://localhost:18197/", "name": "任务重试管理器"},
     "system_summary": {"url": "http://localhost:18199/health", "name": "系统总结API"},
+    "decision_engine": {"url": "http://localhost:18120/health", "name": "决策引擎"},
+    "automation": {"url": "http://localhost:18128/health", "name": "自动化引擎"},
+    "workflow": {"url": "http://localhost:18100/health", "name": "工作流引擎"},
+    "agent_network": {"url": "http://localhost:18150/health", "name": "Agent网络"},
+    "executor": {"url": "http://localhost:8096/health", "name": "Agent执行器"},
 }
 
 # Agent健康状态阈值
@@ -167,6 +177,151 @@ def calculate_agent_health_score(agent_data):
             score -= 10
     
     return max(0, min(100, score))
+
+def check_gateway_status():
+    """检查OpenClaw Gateway状态"""
+    try:
+        # 尝试多种端点
+        endpoints = [
+            f"http://localhost:{GATEWAY_PORT}/api/status",
+            f"http://localhost:{GATEWAY_PORT}/status",
+            f"http://localhost:{GATEWAY_PORT}/health",
+        ]
+        
+        for url in endpoints:
+            try:
+                resp = requests.get(url, timeout=2)
+                if resp.status_code == 200:
+                    data = resp.json()
+                    return {
+                        "status": "healthy",
+                        "gateway_status": data.get("status", "running"),
+                        "channels": data.get("channels", []),
+                        "uptime": data.get("uptime", 0)
+                    }
+            except:
+                continue
+        
+        # 如果API不可用，检查端口是否开放
+        import socket
+        sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        sock.settimeout(2)
+        result = sock.connect_ex(('localhost', GATEWAY_PORT))
+        sock.close()
+        
+        if result == 0:
+            return {"status": "healthy", "note": "Gateway port open, API not responding"}
+        else:
+            return {"status": "unhealthy", "error": "Gateway port not accessible"}
+    except Exception as e:
+        return {"status": "unknown", "error": str(e)}
+
+def get_system_resources():
+    """获取系统资源使用情况"""
+    try:
+        # CPU使用率
+        cpu_cmd = "top -bn1 | grep 'Cpu(s)' | awk '{print $2}' | cut -d'%' -f1"
+        cpu_result = subprocess.run(cpu_cmd, shell=True, capture_output=True, text=True)
+        cpu_usage = float(cpu_result.stdout.strip()) if cpu_result.stdout.strip() else 0
+        
+        # 内存使用率
+        mem_cmd = "free | grep Mem | awk '{printf \"%.1f\", $3/$2 * 100}'"
+        mem_result = subprocess.run(mem_cmd, shell=True, capture_output=True, text=True)
+        mem_usage = float(mem_result.stdout.strip()) if mem_result.stdout.strip() else 0
+        
+        # 磁盘使用率
+        disk_cmd = "df -h / | tail -1 | awk '{print $5}' | cut -d'%' -f1"
+        disk_result = subprocess.run(disk_cmd, shell=True, capture_output=True, text=True)
+        disk_usage = float(disk_result.stdout.strip()) if disk_result.stdout.strip() else 0
+        
+        # 负载平均值
+        load_cmd = "uptime | awk -F'load average:' '{print $2}' | awk '{print $1}' | cut -d',' -f1"
+        load_result = subprocess.run(load_cmd, shell=True, capture_output=True, text=True)
+        load_avg = float(load_result.stdout.strip()) if load_result.stdout.strip() else 0
+        
+        return {
+            "cpu_percent": round(cpu_usage, 1),
+            "memory_percent": round(mem_usage, 1),
+            "disk_percent": round(disk_usage, 1),
+            "load_avg_1m": round(load_avg, 2),
+            "timestamp": datetime.now().isoformat()
+        }
+    except Exception as e:
+        return {"error": str(e)}
+
+def send_dingtalk_alert(message, severity="warning"):
+    """发送钉钉告警通知"""
+    try:
+        # 从环境变量或配置文件获取钉钉webhook
+        webhook = os.environ.get("DINGTALK_WEBHOOK")
+        if not webhook:
+            # 尝试读取配置文件
+            config_path = "/root/.openclaw/workspace/ultron/config/dingtalk.json"
+            if os.path.exists(config_path):
+                with open(config_path) as f:
+                    config = json.load(f)
+                    webhook = config.get("webhook")
+        
+        if not webhook:
+            return {"status": "skipped", "reason": "no webhook configured"}
+        
+        data = {
+            "msgtype": "text",
+            "text": {
+                "content": f"🤖 奥创健康监控告警\n[{severity.upper()}]\n{message}\n时间: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}"
+            }
+        }
+        
+        resp = requests.post(webhook, json=data, timeout=5)
+        if resp.status_code == 200:
+            return {"status": "sent", "success": True}
+        else:
+            return {"status": "error", "code": resp.status_code}
+    except Exception as e:
+        return {"status": "error", "message": str(e)}
+
+def analyze_health_trends(hours=24):
+    """分析健康趋势"""
+    conn = sqlite3.connect(INTEGRATION_DB)
+    c = conn.cursor()
+    
+    # 获取历史服务状态
+    since = (datetime.now() - timedelta(hours=hours)).isoformat()
+    c.execute('''SELECT service_name, status, response_time, last_check 
+        FROM health_integrations 
+        WHERE last_check > ? 
+        ORDER BY last_check''', (since,))
+    
+    trends = {}
+    for row in c.fetchall():
+        svc = row[0]
+        if svc not in trends:
+            trends[svc] = {"healthy_count": 0, "unhealthy_count": 0, "avg_response": []}
+        
+        if row[1] == "healthy":
+            trends[svc]["healthy_count"] += 1
+        else:
+            trends[svc]["unhealthy_count"] += 1
+        
+        if row[2]:
+            trends[svc]["avg_response"].append(row[2])
+    
+    # 计算统计
+    result = {}
+    for svc, data in trends.items():
+        avg_resp = sum(data["avg_response"]) / len(data["avg_response"]) if data["avg_response"] else 0
+        total = data["healthy_count"] + data["unhealthy_count"]
+        health_rate = (data["healthy_count"] / total * 100) if total > 0 else 0
+        
+        result[svc] = {
+            "health_rate": round(health_rate, 1),
+            "total_checks": total,
+            "avg_response_ms": round(avg_resp, 1),
+            "status": "healthy" if health_rate >= 95 else "degraded" if health_rate >= 80 else "critical"
+        }
+    
+    conn.close()
+    return result
 
 def record_agent_health(agent_id, health_data):
     """记录Agent健康数据"""
@@ -331,11 +486,75 @@ class IntegrationHandler(BaseHTTPRequestHandler):
             conn.close()
             self.send_json_response({"agent_id": agent_id, "records": records})
         
+        elif path == "/gateway":
+            # OpenClaw Gateway状态
+            gateway_status = check_gateway_status()
+            self.send_json_response(gateway_status)
+        
+        elif path == "/resources":
+            # 系统资源使用情况
+            resources = get_system_resources()
+            self.send_json_response(resources)
+        
+        elif path == "/trends":
+            # 健康趋势分析
+            params = parse_qs(parsed.query)
+            hours = int(params.get("hours", ["24"])[0])
+            trends = analyze_health_trends(hours)
+            self.send_json_response({
+                "trends": trends,
+                "period_hours": hours,
+                "timestamp": datetime.now().isoformat()
+            })
+        
+        elif path == "/notify":
+            # 测试告警通知
+            params = parse_qs(parsed.query)
+            message = params.get("message", ["Test alert"])[0]
+            severity = params.get("severity", ["info"])[0]
+            result = send_dingtalk_alert(message, severity)
+            self.send_json_response(result)
+        
+        elif path == "/comprehensive":
+            # 综合健康报告
+            services = {}
+            for name, config in INTEGRATED_SERVICES.items():
+                health = check_service_health(config["url"])
+                services[name] = {"name": config["name"], "status": health.get("status"), "latency": health.get("latency_ms")}
+            
+            gateway = check_gateway_status()
+            resources = get_system_resources()
+            summary = get_agent_health_summary()
+            
+            # 计算综合分数
+            service_issues = sum(1 for s in services.values() if s.get("status") != "healthy")
+            alert_count = summary.get("alert_count", 0)
+            resource_penalty = 0
+            if resources.get("cpu_percent", 0) > 80:
+                resource_penalty += 10
+            if resources.get("memory_percent", 0) > 80:
+                resource_penalty += 10
+            if resources.get("disk_percent", 0) > 90:
+                resource_penalty += 15
+            
+            score = max(0, 100 - service_issues * 15 - alert_count * 3 - resource_penalty)
+            
+            self.send_json_response({
+                "overall_score": score,
+                "status": "healthy" if score >= 80 else "warning" if score >= 60 else "critical",
+                "services": services,
+                "gateway": gateway,
+                "resources": resources,
+                "alerts": alert_count,
+                "timestamp": datetime.now().isoformat()
+            })
+        
         else:
             self.send_json_response({
                 "service": "Agent Health Integration",
-                "version": "1.0",
-                "endpoints": ["/health", "/agents", "/services", "/alerts", "/metrics", "/score"]
+                "version": "2.0",
+                "endpoints": ["/health", "/agents", "/services", "/alerts", "/metrics", "/score", 
+                              "/gateway", "/resources", "/trends", "/comprehensive"]
             })
 
 def run_background_monitor():

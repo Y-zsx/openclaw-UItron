@@ -1,0 +1,14 @@
+[Unit]
+Description=Self-Healing API Service
+After=network.target
+
+[Service]
+Type=simple
+User=root
+WorkingDirectory=/root/.openclaw/workspace/ultron/tools
+ExecStart=/usr/bin/python3 /root/.openclaw/workspace/ultron/tools/self_healing_api.py
+Restart=always
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target

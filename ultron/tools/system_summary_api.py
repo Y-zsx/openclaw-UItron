@@ -31,6 +31,266 @@ DATA_DIR.mkdir(parents=True, exist_ok=True)
 # 端口配置
 PORT = 18199
 
+# ============= 增强功能: 趋势分析 =============
+import urllib.request
+import urllib.parse
+
+def push_summary_to_dingtalk(hours=24):
+    """推送总结报告到钉钉"""
+    try:
+        # 获取报告数据
+        report = generate_summary_report(hours)
+        insights = get_smart_insights(hours)
+        
+        # 格式化消息
+        timestamp = datetime.now().strftime('%Y-%m-%d %H:%M')
+        
+        # 告警图标
+        status_icon = "🟢" if report["health_score"] >= 90 else "🟡" if report["health_score"] >= 75 else "🔴"
+        
+        # 构建消息
+        msg = {
+            "msgtype": "markdown",
+            "markdown": {
+                "title": f"系统总结报告 - {report['health_score']}%",
+                "text": f"""## {status_icon} 系统总结报告 - {timestamp}
+
+**健康分数**: {report['health_score']}% ({report['status_cn']})
+**检查周期**: 过去 {hours} 小时
+**当前世**: 第{report['incarnation']['incarnation']}世
+
+---
+
+### 🖥️ 系统资源
+- CPU负载: {report['resources'].get('cpu_load_1m', 'N/A')}
+- 内存: {report['resources'].get('memory_percent', 'N/A')}%
+- 磁盘: {report['resources'].get('disk_percent', 'N/A')}
+
+### 🔧 服务状态
+在线: {report['services']['summary']['online']}/{report['services']['summary']['total']} ({report['services']['summary']['health_percent']}%)
+- 离线: {report['services']['summary']['offline']} 个
+
+### 🚨 告警
+过去{hours}小时共 {report['alerts'].get('total', 0)} 条告警
+
+### 💡 智能洞察 ({len(insights['insights'])}条)
+"""
+                + "\n".join([f"- {i['title']}: {i['message']}" for i in insights['insights'][:5]])
+                + f"""
+
+---
+
+*🤖 奥创系统自动生成*
+"""
+            }
+        }
+        
+        # 发送请求
+        config_path = WORKSPACE / "ultron" / "config" / "notification_channels.json"
+        if config_path.exists():
+            with open(config_path) as f:
+                config = json.load(f)
+            
+            webhook = os.environ.get("DINGTALK_WEBHOOK")
+            if not webhook:
+                # 使用默认的测试webhook
+                webhook = "https://oapi.dingtalk.com/robot/send?access_token=dingtalk_webhook_placeholder"
+            
+            # 检查是否有真实webhook
+            if "placeholder" in webhook:
+                return {"status": "skipped", "message": "未配置钉钉Webhook"}
+            
+            data = json.dumps(msg).encode('utf-8')
+            req = urllib.request.Request(
+                webhook,
+                data=data,
+                headers={'Content-Type': 'application/json'}
+            )
+            with urllib.request.urlopen(req, timeout=10) as resp:
+                result = json.loads(resp.read().decode('utf-8'))
+                if result.get('errcode') == 0:
+                    return {"status": "success", "message": "报告已推送"}
+                else:
+                    return {"status": "error", "message": result.get('errmsg', '未知错误')}
+        
+        return {"status": "skipped", "message": "无钉钉配置"}
+    
+    except Exception as e:
+        return {"status": "error", "message": str(e)}
+
+def get_trend_analysis(hours=24):
+    """趋势分析 - 对比不同时段的数据"""
+    current = generate_summary_report(hours)
+    
+    # 获取上一时段的数据作为对比
+    previous = generate_summary_report(hours * 2)
+    
+    def compare(key, current_val, previous_val, higher_is_better=True):
+        if current_val is None or previous_val is None or previous_val == 0:
+            return {"change": 0, "direction": "stable"}
+        
+        change = ((current_val - previous_val) / previous_val) * 100
+        
+        if abs(change) < 5:
+            direction = "stable"
+        elif change > 0:
+            direction = "up" if higher_is_better else "down"
+        else:
+            direction = "down" if higher_is_better else "up"
+        
+        return {
+            "change": round(change, 1),
+            "direction": direction,
+            "current": current_val,
+            "previous": previous_val
+        }
+    
+    def safe_get(d, key, default=0):
+        """安全获取字典值"""
+        if isinstance(d, dict):
+            return d.get(key, default) if "error" not in d else default
+        return default
+    
+    return {
+        "timestamp": datetime.now().isoformat(),
+        "period_hours": hours,
+        "health_score": compare("health_score", current["health_score"], previous["health_score"]),
+        "services": compare("services", current["services"]["summary"]["health_percent"], 
+                           previous["services"]["summary"]["health_percent"]),
+        "alerts": compare("alerts", safe_get(current["alerts"], "total"), 
+                         safe_get(previous["alerts"], "total"), 
+                         higher_is_better=False),
+        "memory": compare("memory", current["resources"]["memory_percent"], 
+                         previous["resources"]["memory_percent"], higher_is_better=False),
+        "cpu_load": compare("cpu_load", float(current["resources"]["cpu_load_1m"] or 0), 
+                           float(previous["resources"]["cpu_load_1m"] or 0), higher_is_better=False)
+    }
+
+def get_smart_insights(hours=24):
+    """智能洞察 - 基于数据生成优化建议"""
+    report = generate_summary_report(hours)
+    insights = []
+    
+    # 1. 服务可用性洞察
+    service_health = report["services"]["summary"]["health_percent"]
+    if service_health < 80:
+        offline_services = [name for name, info in report["services"]["services"].items() 
+                           if not info["healthy"]]
+        insights.append({
+            "type": "warning",
+            "category": "services",
+            "title": "服务可用性偏低",
+            "message": f"当前可用率仅 {service_health}%，以下服务离线: {', '.join(offline_services[:5])}",
+            "action": "检查离线服务状态并重启"
+        })
+    elif service_health >= 95:
+        insights.append({
+            "type": "success",
+            "category": "services",
+            "title": "服务运行良好",
+            "message": f"服务可用率 {service_health}%，所有核心服务正常运行",
+            "action": "继续保持"
+        })
+    
+    # 2. 资源使用洞察
+    mem_percent = report["resources"]["memory_percent"]
+    if mem_percent > 85:
+        insights.append({
+            "type": "critical",
+            "category": "resources",
+            "title": "内存使用率过高",
+            "message": f"内存使用率达 {mem_percent}%，建议清理不活跃进程",
+            "action": "执行内存清理或扩展swap"
+        })
+    
+    cpu_load = float(report["resources"]["cpu_load_1m"] or 0)
+    cpu_count = report["resources"]["cpu_count"]
+    if cpu_load > cpu_count * 2:
+        insights.append({
+            "type": "warning",
+            "category": "resources",
+            "title": "CPU负载过高",
+            "message": f"1分钟负载 {cpu_load} 超过CPU核心数 {cpu_count} 的2倍",
+            "action": "检查高负载进程，考虑扩容"
+        })
+    
+    # 3. 告警洞察
+    alert_data = report.get("alerts", {})
+    if isinstance(alert_data, dict):
+        alert_total = alert_data.get("total", 0) if "error" not in alert_data else 0
+        by_severity = alert_data.get("by_severity", {}) if "error" not in alert_data else {}
+    else:
+        alert_total = 0
+        by_severity = {}
+    
+    if alert_total > 10:
+        critical = by_severity.get("critical", 0)
+        error = by_severity.get("error", 0)
+        insights.append({
+            "type": "critical" if critical > 0 else "warning",
+            "category": "alerts",
+            "title": f"告警数量过多 ({alert_total}条)",
+            "message": f"其中 critical: {critical}, error: {error}",
+            "action": "分析告警根因并修复"
+        })
+    elif alert_total == 0:
+        insights.append({
+            "type": "success",
+            "category": "alerts",
+            "title": "无告警",
+            "message": "过去24小时没有告警，系统运行平稳",
+            "action": "继续保持"
+        })
+    
+    # 4. 健康检查洞察
+    health_uptime = report["health"].get("overall_uptime_percent", 0)
+    if health_uptime < 95:
+        failing_services = [s["service"] for s in report["health"].get("services", []) 
+                          if s["uptime_percent"] < 95]
+        insights.append({
+            "type": "warning",
+            "category": "health",
+            "title": f"健康检查可用率偏低 ({health_uptime}%)",
+            "message": f"以下服务可用率不足: {', '.join(failing_services[:3])}",
+            "action": "检查服务健康状态"
+        })
+    
+    # 5. 任务执行洞察
+    task_total = report["tasks"].get("total", 0)
+    if task_total == 0 and hours > 6:
+        insights.append({
+            "type": "info",
+            "category": "tasks",
+            "title": "无任务执行",
+            "message": f"过去{hours}小时没有任务执行记录",
+            "action": "检查任务调度器是否正常"
+        })
+    
+    # 6. 转世系统洞察
+    incarnation = report["incarnation"]
+    task_status = incarnation.get("task_status", "unknown")
+    if task_status != "completed":
+        insights.append({
+            "type": "info",
+            "category": "incarnation",
+            "title": f"第{incarnation['incarnation']}世任务进行中",
+            "message": f"当前任务状态: {task_status}",
+            "action": "监控任务执行进度"
+        })
+    
+    return {
+        "timestamp": datetime.now().isoformat(),
+        "health_score": report["health_score"],
+        "insights_count": len(insights),
+        "insights": insights,
+        "summary": {
+            "critical": len([i for i in insights if i["type"] == "critical"]),
+            "warning": len([i for i in insights if i["type"] == "warning"]),
+            "success": len([i for i in insights if i["type"] == "success"]),
+            "info": len([i for i in insights if i["type"] == "info"])
+        }
+    }
+
 # ============= 数据收集函数 =============
 
 def get_system_resources():
@@ -688,6 +948,31 @@ class RequestHandler(BaseHTTPRequestHandler):
             # 健康检查
             self.send_json({"status": "ok", "port": PORT})
         
+        # ========== 增强功能 ==========
+        elif path == '/trend':
+            # 趋势分析
+            self.send_json(get_trend_analysis(hours))
+        
+        elif path == '/insights':
+            # 智能洞察
+            self.send_json(get_smart_insights(hours))
+        
+        elif path == '/report/push':
+            # 推送报告到钉钉
+            result = push_summary_to_dingtalk(hours)
+            self.send_json(result)
+        
+        elif path == '/full':
+            # 完整报告（含趋势和洞察）
+            report = generate_summary_report(hours)
+            trend = get_trend_analysis(hours)
+            insights = get_smart_insights(hours)
+            self.send_json({
+                "report": report,
+                "trend": trend,
+                "insights": insights
+            })
+        
         else:
             self.send_json({"error": "Not found"}, 404)
     
@@ -715,6 +1000,10 @@ def run_server():
     print(f"   - GET /incarnation   转世信息")
     print(f"   - GET /health-score  健康分数")
     print(f"   - GET /healthz       健康检查")
+    print(f"   - GET /trend         趋势分析")
+    print(f"   - GET /insights      智能洞察")
+    print(f"   - GET /report/push   推送报告到钉钉")
+    print(f"   - GET /full          完整报告(含趋势+洞察)")
     print(f"\n📰 按 Ctrl+C 停止服务")
     
     try:
