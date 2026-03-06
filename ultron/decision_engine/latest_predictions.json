@@ -2,27 +2,27 @@
   "predictions": {
     "cpu": {
       "metric_type": "cpu",
-      "current_value": 9.8,
-      "predicted_value": 6.61,
+      "current_value": 42.6,
+      "predicted_value": 43.02,
       "trend": {
-        "trend": "falling",
-        "strength": 17.165200391006845,
-        "velocity": -3.1927272727272724,
-        "predicted_next": 6.607272727272728
+        "trend": "rising",
+        "strength": 2.266944251677076,
+        "velocity": 0.4157575757575757,
+        "predicted_next": 43.015757575757576
       },
-      "confidence": 0.33133919843597265,
+      "confidence": 0.3909322229932917,
       "horizon": "5m",
       "data_points": 50
     },
     "memory": {
       "metric_type": "memory",
-      "current_value": 33.0,
-      "predicted_value": 32.99,
+      "current_value": 28.7,
+      "predicted_value": 28.32,
       "trend": {
-        "trend": "stable",
-        "strength": 0.03874360038743525,
-        "velocity": -0.012727272727272478,
-        "predicted_next": 32.987272727272725
+        "trend": "falling",
+        "strength": 1.12032670172205,
+        "velocity": -0.3757575757575755,
+        "predicted_next": 28.324242424242424
       },
       "confidence": 0.95,
       "horizon": "5m",
@@ -30,13 +30,13 @@
     },
     "disk": {
       "metric_type": "disk",
-      "current_value": 33.9,
-      "predicted_value": 33.9,
+      "current_value": 34.0,
+      "predicted_value": 34.0,
       "trend": {
         "trend": "stable",
-        "strength": 0.007155379056205604,
-        "velocity": 0.0024242424242424585,
-        "predicted_next": 33.90242424242424
+        "strength": 0.0,
+        "velocity": 0.0,
+        "predicted_next": 34.0
       },
       "confidence": 0.95,
       "horizon": "15m",
@@ -44,20 +44,20 @@
     },
     "load": {
       "metric_type": "load",
-      "current_value": 0.3916015625,
-      "predicted_value": 0.38,
+      "current_value": 2.4677734375,
+      "predicted_value": 2.63,
       "trend": {
-        "trend": "stable",
-        "strength": 2.0266652565060186,
-        "velocity": -0.013609730113636363,
-        "predicted_next": 0.37799183238636364
+        "trend": "rising",
+        "strength": 12.616959763790831,
+        "velocity": 0.16388494318181818,
+        "predicted_next": 2.6316583806818183
       },
-      "confidence": 0.7277260503939171,
+      "confidence": 0.6316739711803088,
       "horizon": "5m",
       "data_points": 50
     }
   },
   "alert_predictions": [],
   "suggestions": [],
-  "timestamp": "2026-03-06T21:47:41.153263"
+  "timestamp": "2026-03-06T22:37:35.678025"
 }
