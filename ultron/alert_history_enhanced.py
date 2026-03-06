@@ -257,4 +257,4 @@ if __name__ == '__main__':
     print("启动告警历史数据增强服务...")
     print(f"端口: 18216")
     print(f"数据库: {DB_FILE}")
-    app.run(host='0.0.0.0', port=18216, debug=False)
+    app.run(host='0.0.0.0', port=18217, debug=False)
