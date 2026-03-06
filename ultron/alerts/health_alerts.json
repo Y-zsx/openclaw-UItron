@@ -50,5 +50,44 @@
     "service": "collaboration-scheduler",
     "port": 8095,
     "status": "down"
+  },
+  {
+    "rule": "health_check:collaboration-scheduler",
+    "level": "CRITICAL",
+    "message": "collaboration-scheduler 服务异常: down - Connection refused",
+    "metric": "network.health",
+    "value": 0,
+    "threshold": 1,
+    "condition": "gte",
+    "timestamp": "2026-03-06T12:54:40.791907",
+    "service": "collaboration-scheduler",
+    "port": 8095,
+    "status": "down"
+  },
+  {
+    "rule": "health_check:collaboration-scheduler",
+    "level": "CRITICAL",
+    "message": "collaboration-scheduler 服务异常: down - Connection refused",
+    "metric": "network.health",
+    "value": 0,
+    "threshold": 1,
+    "condition": "gte",
+    "timestamp": "2026-03-06T12:56:48.738485",
+    "service": "collaboration-scheduler",
+    "port": 8095,
+    "status": "down"
+  },
+  {
+    "rule": "health_check:collaboration-scheduler",
+    "level": "CRITICAL",
+    "message": "collaboration-scheduler 服务异常: down - Connection refused",
+    "metric": "network.health",
+    "value": 0,
+    "threshold": 1,
+    "condition": "gte",
+    "timestamp": "2026-03-06T12:58:17.316527",
+    "service": "collaboration-scheduler",
+    "port": 8095,
+    "status": "down"
   }
 ]

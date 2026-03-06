@@ -565,11 +565,31 @@
       "total": 3,
       "failed": [],
       "recovered": []
+    },
+    {
+      "time": "2026-03-06T12:54:03.554681",
+      "status": "warning",
+      "healthy": 2,
+      "total": 3,
+      "failed": [
+        "status_panel"
+      ],
+      "recovered": []
+    },
+    {
+      "time": "2026-03-06T12:59:16.489930",
+      "status": "warning",
+      "healthy": 2,
+      "total": 3,
+      "failed": [
+        "status_panel"
+      ],
+      "recovered": []
     }
   ],
   "summary": {
-    "total": 56,
+    "total": 58,
     "healthy": 46,
-    "warning": 8
+    "warning": 10
   }
 }

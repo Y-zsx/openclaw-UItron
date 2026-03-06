@@ -4670,3 +4670,37 @@
 2026-03-06 12:51:28,227 [INFO] werkzeug: [33mPress CTRL+C to quit[0m
 2026-03-06 12:51:47,071 [INFO] werkzeug: 127.0.0.1 - - [06/Mar/2026 12:51:47] "GET /health HTTP/1.1" 200 -
 2026-03-06 12:52:47,756 [INFO] werkzeug: 127.0.0.1 - - [06/Mar/2026 12:52:47] "GET /health HTTP/1.1" 200 -
+2026-03-06 12:53:48,451 [INFO] werkzeug: 127.0.0.1 - - [06/Mar/2026 12:53:48] "GET /health HTTP/1.1" 200 -
+2026-03-06 12:54:40,983 [INFO] AgentMonitor: 数据库初始化完成: /root/.openclaw/workspace/ultron/agents/data/agent_monitor.db
+2026-03-06 12:54:40,985 [INFO] AgentMonitor: 已加载 4 个Agent
+2026-03-06 12:54:40,985 [INFO] AgentMonitor: AgentMonitor 初始化完成
+2026-03-06 12:54:41,013 [INFO] AgentMonitorAPI: 启动 Agent Monitor API 服务 (端口 18098)
+2026-03-06 12:54:41,022 [INFO] werkzeug: [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:18098
+ * Running on http://172.16.204.191:18098
+2026-03-06 12:54:41,022 [INFO] werkzeug: [33mPress CTRL+C to quit[0m
+2026-03-06 12:54:59,869 [INFO] werkzeug: 127.0.0.1 - - [06/Mar/2026 12:54:59] "GET /health HTTP/1.1" 200 -
+2026-03-06 12:56:00,553 [INFO] werkzeug: 127.0.0.1 - - [06/Mar/2026 12:56:00] "GET /health HTTP/1.1" 200 -
+2026-03-06 12:56:48,606 [INFO] AgentMonitor: 数据库初始化完成: /root/.openclaw/workspace/ultron/agents/data/agent_monitor.db
+2026-03-06 12:56:48,608 [INFO] AgentMonitor: 已加载 4 个Agent
+2026-03-06 12:56:48,612 [INFO] AgentMonitor: AgentMonitor 初始化完成
+2026-03-06 12:56:48,658 [INFO] AgentMonitorAPI: 启动 Agent Monitor API 服务 (端口 18098)
+2026-03-06 12:56:48,686 [INFO] werkzeug: [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:18098
+ * Running on http://172.16.204.191:18098
+2026-03-06 12:56:48,687 [INFO] werkzeug: [33mPress CTRL+C to quit[0m
+2026-03-06 12:57:07,065 [INFO] werkzeug: 127.0.0.1 - - [06/Mar/2026 12:57:07] "GET /health HTTP/1.1" 200 -
+2026-03-06 12:58:17,471 [INFO] AgentMonitor: 数据库初始化完成: /root/.openclaw/workspace/ultron/agents/data/agent_monitor.db
+2026-03-06 12:58:17,473 [INFO] AgentMonitor: 已加载 4 个Agent
+2026-03-06 12:58:17,474 [INFO] AgentMonitor: AgentMonitor 初始化完成
+2026-03-06 12:58:17,500 [INFO] AgentMonitorAPI: 启动 Agent Monitor API 服务 (端口 18098)
+2026-03-06 12:58:17,518 [INFO] werkzeug: [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:18098
+ * Running on http://172.16.204.191:18098
+2026-03-06 12:58:17,519 [INFO] werkzeug: [33mPress CTRL+C to quit[0m
+2026-03-06 12:58:36,319 [INFO] werkzeug: 127.0.0.1 - - [06/Mar/2026 12:58:36] "GET /health HTTP/1.1" 200 -
+2026-03-06 12:59:37,192 [INFO] werkzeug: 127.0.0.1 - - [06/Mar/2026 12:59:37] "GET /health HTTP/1.1" 200 -
+2026-03-06 13:00:37,948 [INFO] werkzeug: 127.0.0.1 - - [06/Mar/2026 13:00:37] "GET /health HTTP/1.1" 200 -

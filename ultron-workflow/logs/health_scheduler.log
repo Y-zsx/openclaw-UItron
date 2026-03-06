@@ -152,3 +152,13 @@
 2026-03-06T12:44:37.608810 - OK: 3/3 服务正常
 2026-03-06T12:48:59.424371 - 开始健康检查...
 2026-03-06T12:48:59.692743 - OK: 3/3 服务正常
+2026-03-06T12:54:03.512569 - 开始健康检查...
+2026-03-06T12:54:03.547618 - 尝试恢复 status_panel: systemctl restart status-panel
+2026-03-06T12:54:03.553918 - status_panel: 恢复失败 - Failed to restart status-panel.service: Unit status-panel.service not found.
+
+2026-03-06T12:54:03.554325 - WARNING: 1个服务异常 - ['status_panel']
+2026-03-06T12:59:16.452203 - 开始健康检查...
+2026-03-06T12:59:16.484626 - 尝试恢复 status_panel: systemctl restart status-panel
+2026-03-06T12:59:16.489652 - status_panel: 恢复失败 - Failed to restart status-panel.service: Unit status-panel.service not found.
+
+2026-03-06T12:59:16.489790 - WARNING: 1个服务异常 - ['status_panel']

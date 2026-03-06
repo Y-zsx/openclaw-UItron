@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>日志分析面板 - 奥创系统</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            min-height: 100vh;
+            color: #fff;
+            padding: 20px;
+        }
+        .header {
+            text-align: center;
+            padding: 30px 0;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            margin-bottom: 30px;
+        }
+        .header h1 { font-size: 2em; color: #00d4ff; }
+        .header p { color: #888; margin-top: 10px; }
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            max-width: 1200px;
+            margin: 0 auto 40px;
+        }
+        .stat-card {
+            background: rgba(255,255,255,0.05);
+            border-radius: 15px;
+            padding: 25px;
+            text-align: center;
+            border: 1px solid rgba(255,255,255,0.1);
+            transition: transform 0.3s;
+        }
+        .stat-card:hover { transform: translateY(-5px); }
+        .stat-card.errors { border-color: #ff4757; }
+        .stat-card.warnings { border-color: #ffa502; }
+        .stat-card.info { border-color: #2ed573; }
+        .stat-card.files { border-color: #70a1ff; }
+        .stat-value { font-size: 3em; font-weight: bold; margin: 10px 0; }
+        .stat-card.errors .stat-value { color: #ff4757; }
+        .stat-card.warnings .stat-value { color: #ffa502; }
+        .stat-card.info .stat-value { color: #2ed573; }
+        .stat-card.files .stat-value { color: #70a1ff; }
+        .stat-label { color: #888; font-size: 0.9em; }
+        .status-badge {
+            display: inline-block;
+            padding: 8px 20px;
+            border-radius: 20px;
+            font-weight: bold;
+            margin-top: 10px;
+        }
+        .status-healthy { background: #2ed573; color: #000; }
+        .status-warning { background: #ffa502; color: #000; }
+        .status-critical { background: #ff4757; color: #fff; }
+        .section {
+            max-width: 1200px;
+            margin: 0 auto 40px;
+            background: rgba(255,255,255,0.05);
+            border-radius: 15px;
+            padding: 25px;
+        }
+        .section h2 { color: #00d4ff; margin-bottom: 20px; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 10px; }
+        .log-list { list-style: none; }
+        .log-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 12px 15px;
+            margin: 8px 0;
+            background: rgba(0,0,0,0.3);
+            border-radius: 8px;
+            border-left: 4px solid #00d4ff;
+        }
+        .log-item.errors { border-color: #ff4757; }
+        .log-item.warnings { border-color: #ffa502; }
+        .log-name { font-weight: bold; }
+        .log-count { font-family: monospace; }
+        .log-lines { color: #888; font-size: 0.9em; }
+        .btn {
+            background: #00d4ff;
+            color: #000;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1em;
+            font-weight: bold;
+            transition: all 0.3s;
+        }
+        .btn:hover { background: #00a8cc; transform: scale(1.05); }
+        .refresh-bar { text-align: center; margin-top: 30px; }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>📊 系统日志分析面板</h1>
+        <p>奥创智能监控系统 | 实时日志分析</p>
+    </div>
+    
+    <div class="stats-grid">
+        <div class="stat-card errors">
+            <div class="stat-label">错误总数</div>
+            <div class="stat-value" id="total-errors">-</div>
+        </div>
+        <div class="stat-card warnings">
+            <div class="stat-label">警告总数</div>
+            <div class="stat-value" id="total-warnings">-</div>
+        </div>
+        <div class="stat-card info">
+            <div class="stat-label">分析文件数</div>
+            <div class="stat-value" id="total-files">-</div>
+        </div>
+        <div class="stat-card files">
+            <div class="stat-label">错误模式</div>
+            <div class="stat-value" id="unique-patterns">-</div>
+        </div>
+    </div>
+    
+    <div style="text-align: center; margin-bottom: 30px;">
+        <span class="status-badge" id="status-badge">-</span>
+    </div>
+    
+    <div class="section">
+        <h2>📁 日志文件统计</h2>
+        <ul class="log-list" id="log-stats"></ul>
+    </div>
+    
+    <div class="section">
+        <h2>⚠️ 错误模式分析</h2>
+        <ul class="log-list" id="error-patterns"></ul>
+    </div>
+    
+    <div class="refresh-bar">
+        <button class="btn" onclick="refreshData()">🔄 刷新数据</button>
+    </div>
+    
+    <script>
+        const API_BASE = 'http://' + location.hostname + ':18270';
+        
+        async function loadSummary() {
+            try {
+                const res = await fetch(API_BASE + '/api/summary');
+                const data = await res.json();
+                
+                document.getElementById('total-errors').textContent = data.total_errors || 0;
+                document.getElementById('total-warnings').textContent = data.total_warnings || 0;
+                document.getElementById('total-files').textContent = data.total_files_analyzed || 0;
+                document.getElementById('unique-patterns').textContent = data.unique_patterns || 0;
+                
+                const badge = document.getElementById('status-badge');
+                badge.textContent = data.status === 'healthy' ? '✅ 系统健康' : '⚠️ 需要关注';
+                badge.className = 'status-badge ' + (data.status === 'healthy' ? 'status-healthy' : 'status-warning');
+            } catch(e) { console.error(e); }
+        }
+        
+        async function loadStats() {
+            try {
+                const res = await fetch(API_BASE + '/api/stats');
+                const data = await res.json();
+                const list = document.getElementById('log-stats');
+                list.innerHTML = '';
+                
+                data.stats.forEach(s => {
+                    const li = document.createElement('li');
+                    li.className = 'log-item' + (s.errors > 0 ? ' errors' : s.warnings > 0 ? ' warnings' : '');
+                    li.innerHTML = `
+                        <span class="log-name">${s.log_file}</span>
+                        <span class="log-count">
+                            <span style="color:#ff4757">E:${s.errors}</span> 
+                            <span style="color:#ffa502">W:${s.warnings}</span>
+                            <span class="log-lines">| ${s.total_lines.toLocaleString()}行</span>
+                        </span>
+                    `;
+                    list.appendChild(li);
+                });
+            } catch(e) { console.error(e); }
+        }
+        
+        async function loadPatterns() {
+            try {
+                const res = await fetch(API_BASE + '/api/patterns');
+                const data = await res.json();
+                const list = document.getElementById('error-patterns');
+                list.innerHTML = '';
+                
+                if (data.patterns && data.patterns.length > 0) {
+                    data.patterns.forEach(p => {
+                        const li = document.createElement('li');
+                        li.className = 'log-item errors';
+                        li.innerHTML = `
+                            <span class="log-name">${p.pattern}</span>
+                            <span class="log-count">出现 ${p.occurrences} 次</span>
+                        `;
+                        list.appendChild(li);
+                    });
+                } else {
+                    list.innerHTML = '<li class="log-item">暂无错误模式记录 ✅</li>';
+                }
+            } catch(e) { 
+                document.getElementById('error-patterns').innerHTML = '<li class="log-item">加载失败</li>';
+            }
+        }
+        
+        async function refreshData() {
+            // Trigger new analysis
+            fetch(API_BASE + '/api/analyze').then(() => {
+                loadSummary();
+                loadStats();
+                loadPatterns();
+            });
+        }
+        
+        // Auto refresh every 30s
+        loadSummary();
+        loadStats();
+        loadPatterns();
+        setInterval(refreshData, 30000);
+    </script>
+</body>
+</html>

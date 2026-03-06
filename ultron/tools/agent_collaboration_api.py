@@ -280,10 +280,232 @@ def get_stats():
         'total_messages': sum(len(msgs) for msgs in messages.values())
     })
 
+# ============ 联邦网络拓扑 ============
+
+@app.route('/api/network/topology', methods=['GET'])
+def get_topology():
+    """获取联邦网络拓扑"""
+    now = time.time()
+    nodes = []
+    edges = []
+    
+    for agent_id, info in agents.items():
+        is_online = (now - info['last_seen']) < 300
+        nodes.append({
+            'id': agent_id,
+            'status': info['status'] if is_online else 'offline',
+            'type': info.get('metadata', {}).get('type', 'unknown'),
+            'capabilities': info.get('metadata', {}).get('capabilities', []),
+            'last_seen': info['last_seen']
+        })
+    
+    # 建立Agent之间的连接关系（基于任务协作历史）
+    for task_id, task in tasks.items():
+        if task.get('assigned_to'):
+            edges.append({
+                'from': 'system',
+                'to': task['assigned_to'],
+                'task_id': task_id,
+                'type': 'assignment'
+            })
+    
+    return jsonify({
+        'nodes': nodes,
+        'edges': edges,
+        'summary': {
+            'total_nodes': len(nodes),
+            'online_nodes': len([n for n in nodes if n['status'] == 'online']),
+            'total_edges': len(edges)
+        }
+    })
+
+@app.route('/api/network/match', methods=['POST'])
+def match_agent():
+    """根据能力需求匹配最佳Agent"""
+    data = request.json
+    required_capabilities = data.get('capabilities', [])
+    preferred_type = data.get('type')
+    
+    now = time.time()
+    candidates = []
+    
+    for agent_id, info in agents.items():
+        is_online = (now - info['last_seen']) < 300
+        if not is_online:
+            continue
+        
+        metadata = info.get('metadata', {})
+        agent_type = metadata.get('type', '')
+        agent_caps = metadata.get('capabilities', [])
+        
+        # 过滤类型
+        if preferred_type and agent_type != preferred_type:
+            continue
+        
+        # 计算能力匹配度
+        matched = [c for c in required_capabilities if c in agent_caps]
+        match_score = len(matched) / len(required_capabilities) if required_capabilities else 1.0
+        
+        if match_score > 0:
+            candidates.append({
+                'agent_id': agent_id,
+                'type': agent_type,
+                'capabilities': agent_caps,
+                'match_score': match_score,
+                'matched_capabilities': matched,
+                'status': 'online',
+                'last_seen': info['last_seen']
+            })
+    
+    # 按匹配度排序
+    candidates.sort(key=lambda x: (-x['match_score'], -x['last_seen']))
+    
+    return jsonify({
+        'candidates': candidates,
+        'best_match': candidates[0] if candidates else None,
+        'total': len(candidates)
+    })
+
+@app.route('/api/network/stats', methods=['GET'])
+def network_stats():
+    """获取联邦网络统计"""
+    now = time.time()
+    
+    # 计算网络健康度
+    online_count = 0
+    total_latency = 0
+    for info in agents.values():
+        if (now - info['last_seen']) < 300:
+            online_count += 1
+            total_latency += now - info['last_seen']
+    
+    avg_latency = total_latency / online_count if online_count > 0 else 0
+    
+    # 任务分布
+    task_distribution = {}
+    for task in tasks.values():
+        agent = task.get('assigned_to', 'unassigned')
+        task_distribution[agent] = task_distribution.get(agent, 0) + 1
+    
+    return jsonify({
+        'network_health': {
+            'total_agents': len(agents),
+            'online_agents': online_count,
+            'health_score': (online_count / len(agents) * 100) if agents else 0,
+            'avg_response_latency': round(avg_latency, 2)
+        },
+        'task_distribution': task_distribution,
+        'capabilities': {
+            cap: sum(1 for a in agents.values() 
+                    if cap in a.get('metadata', {}).get('capabilities', []))
+            for cap in set(c for a in agents.values() 
+                         for c in a.get('metadata', {}).get('capabilities', []))
+        }
+    })
+
+# ============ 协作链 (多Agent协同) ============
+
+collaboration_chains = {}
+
+@app.route('/api/collaboration/chain', methods=['POST'])
+def create_collaboration_chain():
+    """创建多Agent协作链"""
+    data = request.json
+    chain_name = data.get('name', f'chain_{int(time.time())}')
+    agents_sequence = data.get('agents', [])  # Agent ID列表
+    task_payload = data.get('payload', {})
+    
+    chain_id = f"chain_{uuid.uuid4().hex[:8]}"
+    
+    chain = {
+        'id': chain_id,
+        'name': chain_name,
+        'agents': agents_sequence,
+        'status': 'created',
+        'current_step': 0,
+        'payload': task_payload,
+        'results': [],
+        'created_at': time.time(),
+        'updated_at': time.time()
+    }
+    
+    with lock:
+        collaboration_chains[chain_id] = chain
+    
+    return jsonify({'success': True, 'chain_id': chain_id, 'chain': chain})
+
+@app.route('/api/collaboration/chain/<chain_id>/execute', methods=['POST'])
+def execute_chain(chain_id):
+    """执行协作链下一跳"""
+    if chain_id not in collaboration_chains:
+        return jsonify({'error': 'Chain not found'}), 404
+    
+    chain = collaboration_chains[chain_id]
+    current_step = chain['current_step']
+    
+    if current_step >= len(chain['agents']):
+        return jsonify({'error': 'Chain already completed'}), 400
+    
+    # 获取当前应该执行的Agent
+    current_agent = chain['agents'][current_step]
+    result = request.json.get('result', {})
+    
+    # 记录结果
+    chain['results'].append({
+        'step': current_step,
+        'agent': current_agent,
+        'result': result,
+        'timestamp': time.time()
+    })
+    
+    # 移动到下一步
+    chain['current_step'] += 1
+    chain['updated_at'] = time.time()
+    
+    if chain['current_step'] >= len(chain['agents']):
+        chain['status'] = 'completed'
+    else:
+        chain['status'] = 'in_progress'
+        next_agent = chain['agents'][chain['current_step']]
+        # 通知下一个Agent
+        if next_agent in agents:
+            msg = {
+                'id': str(uuid.uuid4()),
+                'from': 'system',
+                'to': next_agent,
+                'content': json.dumps({
+                    'type': 'chain_execution',
+                    'chain_id': chain_id,
+                    'step': chain['current_step'],
+                    'previous_result': result
+                }),
+                'timestamp': time.time(),
+                'read': False
+            }
+            messages[next_agent].append(msg)
+    
+    return jsonify({'success': True, 'chain': chain})
+
+@app.route('/api/collaboration/chain/<chain_id>', methods=['GET'])
+def get_chain(chain_id):
+    """获取协作链状态"""
+    if chain_id not in collaboration_chains:
+        return jsonify({'error': 'Chain not found'}), 404
+    return jsonify(collaboration_chains[chain_id])
+
+@app.route('/api/collaboration/chains', methods=['GET'])
+def list_chains():
+    """列出所有协作链"""
+    return jsonify({
+        'chains': list(collaboration_chains.values()),
+        'total': len(collaboration_chains)
+    })
+
 @app.route('/health', methods=['GET'])
 def health():
     return jsonify({'status': 'ok', 'service': 'agent-collaboration-api'})
 
 if __name__ == '__main__':
     print("🤖 Starting Agent Collaboration API on port 18295...")
+    print("📡 Federation features enabled: topology, match, stats, collaboration chains")
     app.run(host='0.0.0.0', port=18295, debug=False)
