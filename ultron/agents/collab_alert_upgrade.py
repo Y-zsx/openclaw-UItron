@@ -401,6 +401,148 @@ class AgentCollabAlertSystem:
         self.running = False
 
 
+    def analyze_root_cause(self, alert: IntelligentAlert) -> Dict:
+        """根因分析 - 基于告警模式识别根本原因"""
+        # 服务依赖关系图
+        service_dependencies = {
+            "decision-engine": ["decision-api", "workflow-engine"],
+            "workflow-engine": ["agent-orchestration"],
+            "agent-orchestration": ["agent-mesh", "collab-perf-api"],
+            "collab-perf-api": ["ops-metrics"],
+            "agent-mesh": ["agent-monitor", "agent-scaling"],
+        }
+        
+        # 常见问题模式
+        problem_patterns = {
+            "cpu_high": {
+                "root_causes": ["负载过高", "内存泄漏", "恶意进程"],
+                "suggestions": ["检查进程占用", "查看内存使用", "考虑扩容"]
+            },
+            "memory_high": {
+                "root_causes": ["内存泄漏", "缓存过大", "JVM堆溢出"],
+                "suggestions": ["重启服务", "清理缓存", "增加内存"]
+            },
+            "timeout": {
+                "root_causes": ["网络延迟", "服务过载", "死锁"],
+                "suggestions": ["检查网络", "扩容服务", "检查死锁"]
+            },
+            "disk_full": {
+                "root_causes": ["日志文件过大", "临时文件未清理", "数据堆积"],
+                "suggestions": ["清理日志", "清理tmp", "扩容磁盘"]
+            },
+        }
+        
+        # 分析告警消息
+        message_lower = alert.message.lower()
+        analysis = {
+            "alert_id": alert.id,
+            "service": alert.service_name,
+            "detected_patterns": [],
+            "likely_root_causes": [],
+            "suggestions": [],
+            "related_services": [],
+            "confidence": 0.0
+        }
+        
+        # 模式匹配
+        for pattern, info in problem_patterns.items():
+            if pattern.replace('_', ' ') in message_lower or pattern in message_lower:
+                analysis["detected_patterns"].append(pattern)
+                analysis["likely_root_causes"].extend(info["root_causes"])
+                analysis["suggestions"].extend(info["suggestions"])
+                analysis["confidence"] += 0.3
+        
+        # 查找依赖服务
+        if alert.service_name in service_dependencies:
+            analysis["related_services"] = service_dependencies[alert.service_name]
+        
+        # 基于服务名的推理
+        if "health" in alert.service_name.lower():
+            analysis["likely_root_causes"].append("Agent服务健康检查失败")
+            analysis["suggestions"].append("检查Agent进程状态")
+        
+        analysis["confidence"] = min(analysis["confidence"], 1.0)
+        
+        return analysis
+    
+    def predict_alerts(self) -> List[Dict]:
+        """预测性分析 - 基于历史模式预测潜在问题"""
+        conn = sqlite3.connect(self.db_path)
+        cursor = conn.cursor()
+        
+        # 获取最近告警
+        cursor.execute('''
+            SELECT service_name, level, created_at FROM alerts 
+            WHERE created_at > datetime('now', '-24 hours')
+            ORDER BY created_at
+        ''')
+        
+        alerts = cursor.fetchall()
+        conn.close()
+        
+        predictions = []
+        
+        # 按服务统计告警频率
+        service_counts = defaultdict(int)
+        for alert in alerts:
+            service_counts[alert[0]] += 1
+        
+        # 预测可能的问题
+        for service, count in service_counts.items():
+            if count >= 3:
+                predictions.append({
+                    "service": service,
+                    "alert_count_24h": count,
+                    "risk_level": "high" if count >= 5 else "medium",
+                    "prediction": f"该服务过去24小时产生{count}个告警，可能存在持续性问题",
+                    "recommended_actions": [
+                        f"检查{service}服务日志",
+                        "查看资源使用情况",
+                        "考虑服务重启或扩容"
+                    ]
+                })
+        
+        return predictions
+    
+    def get_trend_analysis(self, hours: int = 24) -> Dict:
+        """告警趋势分析"""
+        conn = sqlite3.connect(self.db_path)
+        cursor = conn.cursor()
+        
+        cursor.execute(f'''
+            SELECT level, COUNT(*) as count, 
+                   strftime('%Y-%m-%d %H:00', created_at) as hour
+            FROM alerts 
+            WHERE created_at > datetime('now', '-{hours} hours')
+            GROUP BY level, hour
+            ORDER BY hour
+        ''')
+        
+        data = cursor.fetchall()
+        conn.close()
+        
+        # 聚合数据
+        trends = defaultdict(lambda: {"total": 0, "by_level": defaultdict(int)})
+        for level, count, hour in data:
+            trends[hour]["total"] += count
+            trends[hour]["by_level"][level] = count
+        
+        # 转换为列表
+        trend_list = []
+        for hour, data in sorted(trends.items()):
+            trend_list.append({
+                "hour": hour,
+                "total": data["total"],
+                "by_level": dict(data["by_level"])
+            })
+        
+        return {
+            "period_hours": hours,
+            "total_alerts": sum(t["total"] for t in trend_list),
+            "trend": trend_list
+        }
+
+
 # HTTP API服务
 from http.server import HTTPServer, BaseHTTPRequestHandler
 import urllib.parse
@@ -453,6 +595,46 @@ class AlertHandler(BaseHTTPRequestHandler):
             self.end_headers()
             groups = self.system.get_correlation_groups()
             self.wfile.write(json.dumps(groups).encode())
+            
+        elif path == '/api/root-cause':
+            params = urllib.parse.parse_qs(parsed.query)
+            alert_id = params.get('alert_id', [None])[0]
+            
+            if not alert_id:
+                self.send_response(400)
+                self.end_headers()
+                self.wfile.write(json.dumps({"error": "alert_id required"}).encode())
+                return
+            
+            # 获取告警
+            alert = self.system.alerts.get(alert_id)
+            if not alert:
+                self.send_response(404)
+                self.end_headers()
+                self.wfile.write(json.dumps({"error": "alert not found"}).encode())
+                return
+            
+            analysis = self.system.analyze_root_cause(alert)
+            self.send_response(200)
+            self.send_header('Content-type', 'application/json')
+            self.end_headers()
+            self.wfile.write(json.dumps(analysis).encode())
+            
+        elif path == '/api/predict':
+            predictions = self.system.predict_alerts()
+            self.send_response(200)
+            self.send_header('Content-type', 'application/json')
+            self.end_headers()
+            self.wfile.write(json.dumps(predictions).encode())
+            
+        elif path == '/api/trends':
+            params = urllib.parse.parse_qs(parsed.query)
+            hours = int(params.get('hours', [24])[0])
+            trends = self.system.get_trend_analysis(hours)
+            self.send_response(200)
+            self.send_header('Content-type', 'application/json')
+            self.end_headers()
+            self.wfile.write(json.dumps(trends).encode())
             
         else:
             self.send_response(404)
@@ -512,6 +694,9 @@ def main():
     logger.info(f"  - GET  /api/alerts - 告警列表 (支持status/level/service/limit参数)")
     logger.info(f"  - GET  /api/statistics - 告警统计")
     logger.info(f"  - GET  /api/correlations - 告警关联组")
+    logger.info(f"  - GET  /api/root-cause?alert_id=xxx - 根因分析")
+    logger.info(f"  - GET  /api/predict - 预测性分析")
+    logger.info(f"  - GET  /api/trends?hours=24 - 趋势分析")
     logger.info(f"  - POST /api/alerts - 创建告警")
     logger.info(f"  - POST /api/alerts/resolve - 解决告警")
     
