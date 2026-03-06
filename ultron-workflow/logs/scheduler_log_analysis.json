@@ -1,0 +1,347 @@
+{
+  "total_executions": 20,
+  "successful_executions": 20,
+  "failed_executions": 0,
+  "by_task": {
+    "health_check": {
+      "success": 3,
+      "fail": 0,
+      "total": 3,
+      "success_rate": 100.0
+    },
+    "metrics_collect": {
+      "success": 3,
+      "fail": 0,
+      "total": 3,
+      "success_rate": 100.0
+    },
+    "api_health": {
+      "success": 11,
+      "fail": 0,
+      "total": 11,
+      "success_rate": 100.0
+    },
+    "self_healer": {
+      "success": 3,
+      "fail": 0,
+      "total": 3,
+      "success_rate": 100.0
+    }
+  },
+  "hourly_stats": {
+    "2026-03-06 08:00": {
+      "success": 20,
+      "fail": 0
+    }
+  },
+  "last_24h": [
+    {
+      "timestamp": "2026-03-06T08:28:15.870854",
+      "message": "任务调度器守护进程启动",
+      "log_type": "scheduler_daemon"
+    },
+    {
+      "timestamp": "2026-03-06T08:28:15.871501",
+      "message": "执行任务: health_check",
+      "log_type": "scheduler_daemon",
+      "task": "health_check"
+    },
+    {
+      "timestamp": "2026-03-06T08:28:19.762976",
+      "message": "完成: returncode=0",
+      "log_type": "scheduler_daemon",
+      "status": "success"
+    },
+    {
+      "timestamp": "2026-03-06T08:28:19.763184",
+      "message": "执行任务: metrics_collect",
+      "log_type": "scheduler_daemon",
+      "task": "metrics_collect"
+    },
+    {
+      "timestamp": "2026-03-06T08:28:23.068025",
+      "message": "完成: returncode=0",
+      "log_type": "scheduler_daemon",
+      "status": "success"
+    },
+    {
+      "timestamp": "2026-03-06T08:28:23.069007",
+      "message": "执行任务: api_health",
+      "log_type": "scheduler_daemon",
+      "task": "api_health"
+    },
+    {
+      "timestamp": "2026-03-06T08:28:23.186016",
+      "message": "完成: returncode=0",
+      "log_type": "scheduler_daemon",
+      "status": "success"
+    },
+    {
+      "timestamp": "2026-03-06T08:28:23.186223",
+      "message": "执行任务: self_healer",
+      "log_type": "scheduler_daemon",
+      "task": "self_healer"
+    },
+    {
+      "timestamp": "2026-03-06T08:28:23.362451",
+      "message": "完成: returncode=0",
+      "log_type": "scheduler_daemon",
+      "status": "success"
+    },
+    {
+      "timestamp": "2026-03-06T08:29:23.428699",
+      "message": "执行任务: api_health",
+      "log_type": "scheduler_daemon",
+      "task": "api_health"
+    },
+    {
+      "timestamp": "2026-03-06T08:29:23.531851",
+      "message": "完成: returncode=0",
+      "log_type": "scheduler_daemon",
+      "status": "success"
+    },
+    {
+      "timestamp": "2026-03-06T08:30:23.595821",
+      "message": "执行任务: api_health",
+      "log_type": "scheduler_daemon",
+      "task": "api_health"
+    },
+    {
+      "timestamp": "2026-03-06T08:30:23.712456",
+      "message": "完成: returncode=0",
+      "log_type": "scheduler_daemon",
+      "status": "success"
+    },
+    {
+      "timestamp": "2026-03-06T08:31:23.769315",
+      "message": "执行任务: api_health",
+      "log_type": "scheduler_daemon",
+      "task": "api_health"
+    },
+    {
+      "timestamp": "2026-03-06T08:31:23.905000",
+      "message": "完成: returncode=0",
+      "log_type": "scheduler_daemon",
+      "status": "success"
+    },
+    {
+      "timestamp": "2026-03-06T08:32:23.957660",
+      "message": "执行任务: api_health",
+      "log_type": "scheduler_daemon",
+      "task": "api_health"
+    },
+    {
+      "timestamp": "2026-03-06T08:32:24.075930",
+      "message": "完成: returncode=0",
+      "log_type": "scheduler_daemon",
+      "status": "success"
+    },
+    {
+      "timestamp": "2026-03-06T08:33:24.146533",
+      "message": "执行任务: health_check",
+      "log_type": "scheduler_daemon",
+      "task": "health_check"
+    },
+    {
+      "timestamp": "2026-03-06T08:33:28.082047",
+      "message": "完成: returncode=0",
+      "log_type": "scheduler_daemon",
+      "status": "success"
+    },
+    {
+      "timestamp": "2026-03-06T08:33:28.082267",
+      "message": "执行任务: metrics_collect",
+      "log_type": "scheduler_daemon",
+      "task": "metrics_collect"
+    },
+    {
+      "timestamp": "2026-03-06T08:33:31.439474",
+      "message": "完成: returncode=0",
+      "log_type": "scheduler_daemon",
+      "status": "success"
+    },
+    {
+      "timestamp": "2026-03-06T08:33:31.439696",
+      "message": "执行任务: api_health",
+      "log_type": "scheduler_daemon",
+      "task": "api_health"
+    },
+    {
+      "timestamp": "2026-03-06T08:33:31.572380",
+      "message": "完成: returncode=0",
+      "log_type": "scheduler_daemon",
+      "status": "success"
+    },
+    {
+      "timestamp": "2026-03-06T08:33:31.572546",
+      "message": "执行任务: self_healer",
+      "log_type": "scheduler_daemon",
+      "task": "self_healer"
+    },
+    {
+      "timestamp": "2026-03-06T08:33:32.431008",
+      "message": "完成: returncode=0",
+      "log_type": "scheduler_daemon",
+      "status": "success"
+    },
+    {
+      "timestamp": "2026-03-06T08:34:32.484548",
+      "message": "执行任务: api_health",
+      "log_type": "scheduler_daemon",
+      "task": "api_health"
+    },
+    {
+      "timestamp": "2026-03-06T08:34:32.598099",
+      "message": "完成: returncode=0",
+      "log_type": "scheduler_daemon",
+      "status": "success"
+    },
+    {
+      "timestamp": "2026-03-06T08:35:32.649567",
+      "message": "执行任务: api_health",
+      "log_type": "scheduler_daemon",
+      "task": "api_health"
+    },
+    {
+      "timestamp": "2026-03-06T08:35:32.766215",
+      "message": "完成: returncode=0",
+      "log_type": "scheduler_daemon",
+      "status": "success"
+    },
+    {
+      "timestamp": "2026-03-06T08:36:32.817839",
+      "message": "执行任务: api_health",
+      "log_type": "scheduler_daemon",
+      "task": "api_health"
+    },
+    {
+      "timestamp": "2026-03-06T08:36:32.931736",
+      "message": "完成: returncode=0",
+      "log_type": "scheduler_daemon",
+      "status": "success"
+    },
+    {
+      "timestamp": "2026-03-06T08:37:32.992298",
+      "message": "执行任务: api_health",
+      "log_type": "scheduler_daemon",
+      "task": "api_health"
+    },
+    {
+      "timestamp": "2026-03-06T08:37:33.118635",
+      "message": "完成: returncode=0",
+      "log_type": "scheduler_daemon",
+      "status": "success"
+    },
+    {
+      "timestamp": "2026-03-06T08:38:33.174470",
+      "message": "执行任务: health_check",
+      "log_type": "scheduler_daemon",
+      "task": "health_check"
+    },
+    {
+      "timestamp": "2026-03-06T08:38:36.778792",
+      "message": "完成: returncode=0",
+      "log_type": "scheduler_daemon",
+      "status": "success"
+    },
+    {
+      "timestamp": "2026-03-06T08:38:36.779219",
+      "message": "执行任务: metrics_collect",
+      "log_type": "scheduler_daemon",
+      "task": "metrics_collect"
+    },
+    {
+      "timestamp": "2026-03-06T08:38:40.035688",
+      "message": "完成: returncode=0",
+      "log_type": "scheduler_daemon",
+      "status": "success"
+    },
+    {
+      "timestamp": "2026-03-06T08:38:40.035800",
+      "message": "执行任务: api_health",
+      "log_type": "scheduler_daemon",
+      "task": "api_health"
+    },
+    {
+      "timestamp": "2026-03-06T08:38:40.149836",
+      "message": "完成: returncode=0",
+      "log_type": "scheduler_daemon",
+      "status": "success"
+    },
+    {
+      "timestamp": "2026-03-06T08:38:40.150002",
+      "message": "执行任务: self_healer",
+      "log_type": "scheduler_daemon",
+      "task": "self_healer"
+    },
+    {
+      "timestamp": "2026-03-06T08:38:40.315240",
+      "message": "完成: returncode=0",
+      "log_type": "scheduler_daemon",
+      "status": "success"
+    }
+  ],
+  "success_rate": 100.0,
+  "recent_tasks": [
+    {
+      "timestamp": "2026-03-06T08:38:40.150002",
+      "message": "执行任务: self_healer",
+      "log_type": "scheduler_daemon",
+      "task": "self_healer"
+    },
+    {
+      "timestamp": "2026-03-06T08:38:40.035800",
+      "message": "执行任务: api_health",
+      "log_type": "scheduler_daemon",
+      "task": "api_health"
+    },
+    {
+      "timestamp": "2026-03-06T08:38:36.779219",
+      "message": "执行任务: metrics_collect",
+      "log_type": "scheduler_daemon",
+      "task": "metrics_collect"
+    },
+    {
+      "timestamp": "2026-03-06T08:38:33.174470",
+      "message": "执行任务: health_check",
+      "log_type": "scheduler_daemon",
+      "task": "health_check"
+    },
+    {
+      "timestamp": "2026-03-06T08:37:32.992298",
+      "message": "执行任务: api_health",
+      "log_type": "scheduler_daemon",
+      "task": "api_health"
+    },
+    {
+      "timestamp": "2026-03-06T08:36:32.817839",
+      "message": "执行任务: api_health",
+      "log_type": "scheduler_daemon",
+      "task": "api_health"
+    },
+    {
+      "timestamp": "2026-03-06T08:35:32.649567",
+      "message": "执行任务: api_health",
+      "log_type": "scheduler_daemon",
+      "task": "api_health"
+    },
+    {
+      "timestamp": "2026-03-06T08:34:32.484548",
+      "message": "执行任务: api_health",
+      "log_type": "scheduler_daemon",
+      "task": "api_health"
+    },
+    {
+      "timestamp": "2026-03-06T08:33:31.572546",
+      "message": "执行任务: self_healer",
+      "log_type": "scheduler_daemon",
+      "task": "self_healer"
+    },
+    {
+      "timestamp": "2026-03-06T08:33:31.439696",
+      "message": "执行任务: api_health",
+      "log_type": "scheduler_daemon",
+      "task": "api_health"
+    }
+  ]
+}
