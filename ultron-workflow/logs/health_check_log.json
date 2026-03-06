@@ -249,11 +249,29 @@
       "total": 3,
       "failed": [],
       "recovered": []
+    },
+    {
+      "time": "2026-03-06T10:11:00.829644",
+      "status": "healthy",
+      "healthy": 3,
+      "total": 3,
+      "failed": [],
+      "recovered": []
+    },
+    {
+      "time": "2026-03-06T10:16:11.225707",
+      "status": "warning",
+      "healthy": 2,
+      "total": 3,
+      "failed": [
+        "status_panel"
+      ],
+      "recovered": []
     }
   ],
   "summary": {
-    "total": 18,
-    "healthy": 14,
-    "warning": 2
+    "total": 20,
+    "healthy": 15,
+    "warning": 3
   }
 }

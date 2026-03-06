@@ -1,27 +1,7 @@
 {
-  "channels": [
-    {
-      "id": "test-webhook",
-      "name": "测试Webhook",
-      "channel_type": "webhook",
-      "enabled": true,
-      "config": {
-        "url": "https://httpbin.org/post",
-        "method": "POST"
-      },
-      "min_level": "info",
-      "services": []
-    },
-    {
-      "id": "dingtalk-ops",
-      "name": "运维钉钉群",
-      "channel_type": "dingtalk",
-      "enabled": true,
-      "config": {
-        "webhook_url": "https://oapi.dingtalk.com/robot/send?access_token=dummy"
-      },
-      "min_level": "warning",
-      "services": []
-    }
-  ]
+  "dingtalk": {
+    "user_id": "46690431641083220312",
+    "enabled": true,
+    "configured_at": "2026-03-06T10:13:00.000000+00:00"
+  }
 }

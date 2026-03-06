@@ -596,5 +596,57 @@
     "network": {
       "connections": 23
     }
+  },
+  {
+    "timestamp": "2026-03-06T10:11:01.052601",
+    "system": {
+      "load": {
+        "1m": 1.54,
+        "5m": 1.72,
+        "15m": 1.78
+      },
+      "memory": {
+        "total": 7266,
+        "available": 3871,
+        "used": 3395,
+        "percent": 46.7
+      },
+      "gateway_processes": 41
+    },
+    "services": {
+      "gateway": "healthy",
+      "status_panel": "error_000",
+      "health_api": "healthy",
+      "dashboard": "healthy"
+    },
+    "network": {
+      "connections": 23
+    }
+  },
+  {
+    "timestamp": "2026-03-06T10:16:13.083427",
+    "system": {
+      "load": {
+        "1m": 4.01,
+        "5m": 3.01,
+        "15m": 2.3
+      },
+      "memory": {
+        "total": 7266,
+        "available": 3480,
+        "used": 3786,
+        "percent": 52.1
+      },
+      "gateway_processes": 44
+    },
+    "services": {
+      "gateway": "healthy",
+      "status_panel": "error_000",
+      "health_api": "healthy",
+      "dashboard": "healthy"
+    },
+    "network": {
+      "connections": 25
+    }
   }
 ]
