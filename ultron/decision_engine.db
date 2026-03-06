@@ -1,0 +1,34 @@
+{
+  "decisions": [
+    {
+      "id": "dec_1772772799",
+      "timestamp": "2026-03-06T12:53:19.207294",
+      "context_summary": {
+        "health_score": 0,
+        "collaboration": "active"
+      },
+      "actions": [
+        {
+          "type": "heal",
+          "target": "low_health",
+          "priority": "high",
+          "result": {
+            "action": "heal",
+            "status": "failed"
+          }
+        },
+        {
+          "type": "sync",
+          "target": "collab_network",
+          "priority": "low",
+          "result": {
+            "action": "sync",
+            "status": "synced"
+          }
+        }
+      ],
+      "confidence": 0.85,
+      "priority": "high"
+    }
+  ]
+}

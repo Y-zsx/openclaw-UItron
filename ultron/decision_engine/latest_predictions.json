@@ -2,29 +2,29 @@
   "predictions": {
     "cpu": {
       "metric_type": "cpu",
-      "current_value": 36.8,
-      "predicted_value": 35.98,
+      "current_value": 47.5,
+      "predicted_value": 39.01,
       "trend": {
         "trend": "falling",
-        "strength": 1.6310961765507221,
-        "velocity": -0.8163636363636365,
-        "predicted_next": 35.98363636363636
+        "strength": 16.080471252885044,
+        "velocity": -8.487272727272726,
+        "predicted_next": 39.012727272727275
       },
-      "confidence": 0.7299230593962109,
+      "confidence": 0.6503642128853031,
       "horizon": "5m",
       "data_points": 50
     },
     "memory": {
       "metric_type": "memory",
-      "current_value": 34.2,
-      "predicted_value": 31.08,
+      "current_value": 38.5,
+      "predicted_value": 35.12,
       "trend": {
         "trend": "falling",
-        "strength": 6.409202958093674,
-        "velocity": -3.1200000000000006,
-        "predicted_next": 31.080000000000002
+        "strength": 7.507192600360304,
+        "velocity": -3.3842424242424243,
+        "predicted_next": 35.11575757575758
       },
-      "confidence": 0.9013096717777223,
+      "confidence": 0.8859759404326975,
       "horizon": "5m",
       "data_points": 50
     },
@@ -44,20 +44,20 @@
     },
     "load": {
       "metric_type": "load",
-      "current_value": 1.7314453125,
-      "predicted_value": 1.81,
+      "current_value": 0.7099609375,
+      "predicted_value": 0.41,
       "trend": {
-        "trend": "stable",
-        "strength": 2.753300785818441,
-        "velocity": 0.08185961174242425,
-        "predicted_next": 1.8133049242424242
+        "trend": "falling",
+        "strength": 10.675522991063788,
+        "velocity": -0.3044921875,
+        "predicted_next": 0.40546875
       },
-      "confidence": 0.7443312343036848,
+      "confidence": 0.6837212542048772,
       "horizon": "5m",
       "data_points": 50
     }
   },
   "alert_predictions": [],
   "suggestions": [],
-  "timestamp": "2026-03-06T04:51:29.003423"
+  "timestamp": "2026-03-06T04:53:31.184881"
 }

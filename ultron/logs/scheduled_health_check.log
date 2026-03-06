@@ -823,3 +823,14 @@
 2026-03-06 12:51:27,817 - __main__ - ERROR - ❌ collaboration-scheduler 恢复失败: Failed to restart collab-scheduler.service: Unit collab-scheduler.service not found.
 
 2026-03-06 12:51:27,817 - __main__ - ERROR - 健康检查异常: local variable 'status' referenced before assignment
+2026-03-06 12:52:27,870 - __main__ - INFO - 🔍 开始第2次健康检查...
+2026-03-06 12:52:27,889 - __main__ - WARNING - ⚠️ collaboration-scheduler 状态变化: None -> down
+2026-03-06 12:52:27,889 - __main__ - INFO - 🚀 触发自动恢复机制 for collaboration-scheduler
+2026-03-06 12:52:27,889 - __main__ - ERROR - 健康检查异常: local variable 'status' referenced before assignment
+2026-03-06 12:53:27,941 - __main__ - INFO - 🔍 开始第3次健康检查...
+2026-03-06 12:53:27,959 - __main__ - WARNING - ⚠️ collaboration-scheduler 状态变化: None -> down
+2026-03-06 12:53:27,959 - __main__ - INFO - 🚀 触发自动恢复机制 for collaboration-scheduler
+2026-03-06 12:53:27,959 - __main__ - INFO - 🔧 尝试自动恢复 collaboration-scheduler (端口8095)...
+2026-03-06 12:53:27,965 - __main__ - ERROR - ❌ collaboration-scheduler 恢复失败: Failed to restart collab-scheduler.service: Unit collab-scheduler.service not found.
+
+2026-03-06 12:53:27,966 - __main__ - ERROR - 健康检查异常: local variable 'status' referenced before assignment
