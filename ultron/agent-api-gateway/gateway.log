@@ -1,0 +1,52 @@
+🚀 Agent服务统一API网关 启动在端口 18309
+📍 已配置路由:
+   /api/agent/chat -> http://localhost:18301
+   /api/agent/exec -> http://localhost:18302
+   /api/agent/monitor -> http://localhost:18304
+   /api/agent/logs -> http://localhost:18305
+   /api/agent/trace -> http://localhost:18306
+   /api/agent/replay -> http://localhost:18307
+ * Serving Flask app 'server'
+ * Debug mode: off
+WARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:18309
+ * Running on http://172.16.204.191:18309
+Press CTRL+C to quit
+127.0.0.1 - - [06/Mar/2026 14:08:24] "GET /health HTTP/1.1" 200 -
+127.0.0.1 - - [06/Mar/2026 14:08:31] "GET /routes HTTP/1.1" 200 -
+127.0.0.1 - - [06/Mar/2026 14:08:35] "GET /proxy/api/agent/monitor/agents HTTP/1.1" 404 -
+127.0.0.1 - - [06/Mar/2026 14:08:35] "GET /stats HTTP/1.1" 200 -
+127.0.0.1 - - [06/Mar/2026 14:08:49] "GET /stats HTTP/1.1" 200 -
+127.0.0.1 - - [06/Mar/2026 14:08:52] "GET /health HTTP/1.1" 200 -
+127.0.0.1 - - [06/Mar/2026 14:08:52] "GET /routes HTTP/1.1" 200 -
+127.0.0.1 - - [06/Mar/2026 14:13:28] "GET /health HTTP/1.1" 200 -
+127.0.0.1 - - [06/Mar/2026 14:13:33] "GET /health HTTP/1.1" 200 -
+127.0.0.1 - - [06/Mar/2026 14:13:38] "GET /health HTTP/1.1" 200 -
+127.0.0.1 - - [06/Mar/2026 14:13:43] "GET /health HTTP/1.1" 200 -
+127.0.0.1 - - [06/Mar/2026 14:13:48] "GET /health HTTP/1.1" 200 -
+127.0.0.1 - - [06/Mar/2026 14:13:53] "GET /health HTTP/1.1" 200 -
+127.0.0.1 - - [06/Mar/2026 14:13:58] "GET /health HTTP/1.1" 200 -
+127.0.0.1 - - [06/Mar/2026 14:14:04] "GET /health HTTP/1.1" 200 -
+127.0.0.1 - - [06/Mar/2026 14:14:48] "GET /health HTTP/1.1" 200 -
+127.0.0.1 - - [06/Mar/2026 14:14:53] "GET /health HTTP/1.1" 200 -
+127.0.0.1 - - [06/Mar/2026 14:14:58] "GET /health HTTP/1.1" 200 -
+127.0.0.1 - - [06/Mar/2026 14:15:03] "GET /health HTTP/1.1" 200 -
+127.0.0.1 - - [06/Mar/2026 14:15:08] "GET /health HTTP/1.1" 200 -
+127.0.0.1 - - [06/Mar/2026 14:15:13] "GET /health HTTP/1.1" 200 -
+127.0.0.1 - - [06/Mar/2026 14:15:18] "GET /health HTTP/1.1" 200 -
+127.0.0.1 - - [06/Mar/2026 14:15:23] "GET /health HTTP/1.1" 200 -
+127.0.0.1 - - [06/Mar/2026 14:15:28] "GET /health HTTP/1.1" 200 -
+127.0.0.1 - - [06/Mar/2026 14:15:33] "GET /health HTTP/1.1" 200 -
+127.0.0.1 - - [06/Mar/2026 14:15:38] "GET /health HTTP/1.1" 200 -
+127.0.0.1 - - [06/Mar/2026 14:15:43] "GET /health HTTP/1.1" 200 -
+127.0.0.1 - - [06/Mar/2026 14:15:48] "GET /health HTTP/1.1" 200 -
+127.0.0.1 - - [06/Mar/2026 14:15:53] "GET /health HTTP/1.1" 200 -
+127.0.0.1 - - [06/Mar/2026 14:15:58] "GET /health HTTP/1.1" 200 -
+127.0.0.1 - - [06/Mar/2026 14:16:03] "GET /health HTTP/1.1" 200 -
+127.0.0.1 - - [06/Mar/2026 14:16:08] "GET /health HTTP/1.1" 200 -
+127.0.0.1 - - [06/Mar/2026 14:16:13] "GET /health HTTP/1.1" 200 -
+127.0.0.1 - - [06/Mar/2026 14:16:18] "GET /health HTTP/1.1" 200 -
+127.0.0.1 - - [06/Mar/2026 14:16:23] "GET /health HTTP/1.1" 200 -
+127.0.0.1 - - [06/Mar/2026 14:16:28] "GET /health HTTP/1.1" 200 -
+127.0.0.1 - - [06/Mar/2026 14:22:32] "GET /api/status HTTP/1.1" 404 -

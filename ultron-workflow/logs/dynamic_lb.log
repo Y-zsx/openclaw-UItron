@@ -1,0 +1,44 @@
+[DynamicLB] Starting on port 18310
+ * Serving Flask app 'dynamic_load_balancer'
+ * Debug mode: off
+WARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:18310
+ * Running on http://172.16.204.191:18310
+Press CTRL+C to quit
+127.0.0.1 - - [06/Mar/2026 14:12:05] "GET /health HTTP/1.1" 200 -
+127.0.0.1 - - [06/Mar/2026 14:12:18] "POST /api/service HTTP/1.1" 200 -
+127.0.0.1 - - [06/Mar/2026 14:12:27] "POST /api/service HTTP/1.1" 200 -
+127.0.0.1 - - [06/Mar/2026 14:12:27] "POST /api/service HTTP/1.1" 200 -
+127.0.0.1 - - [06/Mar/2026 14:12:27] "GET /api/services HTTP/1.1" 200 -
+127.0.0.1 - - [06/Mar/2026 14:12:35] "GET /api/health HTTP/1.1" 200 -
+127.0.0.1 - - [06/Mar/2026 14:12:35] "GET /api/stats HTTP/1.1" 200 -
+127.0.0.1 - - [06/Mar/2026 14:12:43] "GET /api/proxy/coordinator/health HTTP/1.1" 404 -
+127.0.0.1 - - [06/Mar/2026 14:12:43] "GET /api/proxy/executor/health HTTP/1.1" 404 -
+127.0.0.1 - - [06/Mar/2026 14:13:00] "GET /api/proxy/coordinator/ HTTP/1.1" 404 -
+127.0.0.1 - - [06/Mar/2026 14:13:00] "GET /api/service/coordinator HTTP/1.1" 200 -
+127.0.0.1 - - [06/Mar/2026 14:13:25] "POST /api/service/agent-api/backend HTTP/1.1" 200 -
+[2026-03-06 14:13:25,451] ERROR in app: Exception on / [GET]
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.10/dist-packages/flask/app.py", line 1511, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/usr/local/lib/python3.10/dist-packages/flask/app.py", line 919, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/usr/local/lib/python3.10/dist-packages/flask/app.py", line 917, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/usr/local/lib/python3.10/dist-packages/flask/app.py", line 902, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+  File "/root/.openclaw/workspace/ultron-workflow/agents/dynamic_load_balancer.py", line 523, in dashboard
+    return render_template_string(DASHBOARD_HTML,
+  File "/usr/local/lib/python3.10/dist-packages/flask/templating.py", line 163, in render_template_string
+    return _render(app, template, context)
+  File "/usr/local/lib/python3.10/dist-packages/flask/templating.py", line 132, in _render
+    rv = template.render(context)
+  File "/usr/local/lib/python3.10/dist-packages/jinja2/environment.py", line 1295, in render
+    self.environment.handle_exception()
+  File "/usr/local/lib/python3.10/dist-packages/jinja2/environment.py", line 942, in handle_exception
+    raise rewrite_traceback_stack(source=source)
+  File "<template>", line 48, in top-level template code
+TypeError: can only concatenate str (not "int") to str
+127.0.0.1 - - [06/Mar/2026 14:13:25] "GET / HTTP/1.1" 500 -
+127.0.0.1 - - [06/Mar/2026 14:13:33] "GET /api/service/agent-api HTTP/1.1" 200 -

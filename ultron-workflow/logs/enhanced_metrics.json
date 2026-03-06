@@ -1636,5 +1636,655 @@
     "network": {
       "connections": 15
     }
+  },
+  {
+    "timestamp": "2026-03-06T13:04:23.034570",
+    "system": {
+      "load": {
+        "1m": 0.22,
+        "5m": 0.92,
+        "15m": 2.44
+      },
+      "memory": {
+        "total": 7266,
+        "available": 4656,
+        "used": 2610,
+        "percent": 35.9
+      },
+      "gateway_processes": 51
+    },
+    "services": {
+      "gateway": "healthy",
+      "status_panel": "error_000",
+      "health_api": "healthy",
+      "dashboard": "error_000"
+    },
+    "network": {
+      "connections": 11
+    }
+  },
+  {
+    "timestamp": "2026-03-06T13:09:24.535374",
+    "system": {
+      "load": {
+        "1m": 0.12,
+        "5m": 0.49,
+        "15m": 1.83
+      },
+      "memory": {
+        "total": 7266,
+        "available": 4656,
+        "used": 2610,
+        "percent": 35.9
+      },
+      "gateway_processes": 53
+    },
+    "services": {
+      "gateway": "healthy",
+      "status_panel": "error_000",
+      "health_api": "healthy",
+      "dashboard": "error_000"
+    },
+    "network": {
+      "connections": 12
+    }
+  },
+  {
+    "timestamp": "2026-03-06T13:14:26.022774",
+    "system": {
+      "load": {
+        "1m": 0.58,
+        "5m": 0.39,
+        "15m": 1.4
+      },
+      "memory": {
+        "total": 7266,
+        "available": 4652,
+        "used": 2614,
+        "percent": 36.0
+      },
+      "gateway_processes": 51
+    },
+    "services": {
+      "gateway": "healthy",
+      "status_panel": "error_000",
+      "health_api": "healthy",
+      "dashboard": "error_000"
+    },
+    "network": {
+      "connections": 14
+    }
+  },
+  {
+    "timestamp": "2026-03-06T13:19:27.445262",
+    "system": {
+      "load": {
+        "1m": 0.36,
+        "5m": 0.33,
+        "15m": 1.08
+      },
+      "memory": {
+        "total": 7266,
+        "available": 4671,
+        "used": 2595,
+        "percent": 35.7
+      },
+      "gateway_processes": 51
+    },
+    "services": {
+      "gateway": "healthy",
+      "status_panel": "error_000",
+      "health_api": "healthy",
+      "dashboard": "error_000"
+    },
+    "network": {
+      "connections": 11
+    }
+  },
+  {
+    "timestamp": "2026-03-06T13:24:28.896521",
+    "system": {
+      "load": {
+        "1m": 0.12,
+        "5m": 0.25,
+        "15m": 0.83
+      },
+      "memory": {
+        "total": 7266,
+        "available": 4630,
+        "used": 2636,
+        "percent": 36.3
+      },
+      "gateway_processes": 51
+    },
+    "services": {
+      "gateway": "healthy",
+      "status_panel": "error_000",
+      "health_api": "healthy",
+      "dashboard": "error_000"
+    },
+    "network": {
+      "connections": 11
+    }
+  },
+  {
+    "timestamp": "2026-03-06T13:29:30.320287",
+    "system": {
+      "load": {
+        "1m": 0.65,
+        "5m": 0.42,
+        "15m": 0.73
+      },
+      "memory": {
+        "total": 7266,
+        "available": 4566,
+        "used": 2700,
+        "percent": 37.2
+      },
+      "gateway_processes": 51
+    },
+    "services": {
+      "gateway": "healthy",
+      "status_panel": "error_000",
+      "health_api": "healthy",
+      "dashboard": "error_000"
+    },
+    "network": {
+      "connections": 14
+    }
+  },
+  {
+    "timestamp": "2026-03-06T13:34:31.795974",
+    "system": {
+      "load": {
+        "1m": 1.14,
+        "5m": 0.64,
+        "15m": 0.71
+      },
+      "memory": {
+        "total": 7266,
+        "available": 4612,
+        "used": 2654,
+        "percent": 36.5
+      },
+      "gateway_processes": 51
+    },
+    "services": {
+      "gateway": "healthy",
+      "status_panel": "error_000",
+      "health_api": "healthy",
+      "dashboard": "error_000"
+    },
+    "network": {
+      "connections": 12
+    }
+  },
+  {
+    "timestamp": "2026-03-06T13:39:33.240443",
+    "system": {
+      "load": {
+        "1m": 0.27,
+        "5m": 0.38,
+        "15m": 0.57
+      },
+      "memory": {
+        "total": 7266,
+        "available": 4611,
+        "used": 2655,
+        "percent": 36.5
+      },
+      "gateway_processes": 51
+    },
+    "services": {
+      "gateway": "healthy",
+      "status_panel": "error_000",
+      "health_api": "healthy",
+      "dashboard": "error_000"
+    },
+    "network": {
+      "connections": 12
+    }
+  },
+  {
+    "timestamp": "2026-03-06T13:44:34.896568",
+    "system": {
+      "load": {
+        "1m": 0.47,
+        "5m": 0.32,
+        "15m": 0.48
+      },
+      "memory": {
+        "total": 7266,
+        "available": 4386,
+        "used": 2880,
+        "percent": 39.6
+      },
+      "gateway_processes": 53
+    },
+    "services": {
+      "gateway": "healthy",
+      "status_panel": "error_000",
+      "health_api": "healthy",
+      "dashboard": "error_000"
+    },
+    "network": {
+      "connections": 15
+    }
+  },
+  {
+    "timestamp": "2026-03-06T13:49:36.382652",
+    "system": {
+      "load": {
+        "1m": 0.19,
+        "5m": 0.27,
+        "15m": 0.42
+      },
+      "memory": {
+        "total": 7266,
+        "available": 4599,
+        "used": 2667,
+        "percent": 36.7
+      },
+      "gateway_processes": 51
+    },
+    "services": {
+      "gateway": "healthy",
+      "status_panel": "error_000",
+      "health_api": "healthy",
+      "dashboard": "error_000"
+    },
+    "network": {
+      "connections": 13
+    }
+  },
+  {
+    "timestamp": "2026-03-06T13:54:37.961712",
+    "system": {
+      "load": {
+        "1m": 0.79,
+        "5m": 0.55,
+        "15m": 0.5
+      },
+      "memory": {
+        "total": 7266,
+        "available": 4544,
+        "used": 2722,
+        "percent": 37.5
+      },
+      "gateway_processes": 51
+    },
+    "services": {
+      "gateway": "healthy",
+      "status_panel": "error_000",
+      "health_api": "healthy",
+      "dashboard": "error_000"
+    },
+    "network": {
+      "connections": 14
+    }
+  },
+  {
+    "timestamp": "2026-03-06T13:59:39.479583",
+    "system": {
+      "load": {
+        "1m": 0.78,
+        "5m": 0.62,
+        "15m": 0.52
+      },
+      "memory": {
+        "total": 7266,
+        "available": 4560,
+        "used": 2706,
+        "percent": 37.2
+      },
+      "gateway_processes": 51
+    },
+    "services": {
+      "gateway": "healthy",
+      "status_panel": "error_000",
+      "health_api": "healthy",
+      "dashboard": "error_000"
+    },
+    "network": {
+      "connections": 12
+    }
+  },
+  {
+    "timestamp": "2026-03-06T14:04:40.904478",
+    "system": {
+      "load": {
+        "1m": 0.52,
+        "5m": 0.48,
+        "15m": 0.48
+      },
+      "memory": {
+        "total": 7266,
+        "available": 4525,
+        "used": 2741,
+        "percent": 37.7
+      },
+      "gateway_processes": 51
+    },
+    "services": {
+      "gateway": "healthy",
+      "status_panel": "error_000",
+      "health_api": "healthy",
+      "dashboard": "error_000"
+    },
+    "network": {
+      "connections": 12
+    }
+  },
+  {
+    "timestamp": "2026-03-06T14:09:47.349687",
+    "system": {
+      "load": {
+        "1m": 0.27,
+        "5m": 0.39,
+        "15m": 0.44
+      },
+      "memory": {
+        "total": 7266,
+        "available": 4504,
+        "used": 2762,
+        "percent": 38.0
+      },
+      "gateway_processes": 51
+    },
+    "services": {
+      "gateway": "healthy",
+      "status_panel": "error_000",
+      "health_api": "healthy",
+      "dashboard": "error_000"
+    },
+    "network": {
+      "connections": 14
+    }
+  },
+  {
+    "timestamp": "2026-03-06T14:14:48.867379",
+    "system": {
+      "load": {
+        "1m": 0.21,
+        "5m": 0.25,
+        "15m": 0.35
+      },
+      "memory": {
+        "total": 7266,
+        "available": 4503,
+        "used": 2763,
+        "percent": 38.0
+      },
+      "gateway_processes": 51
+    },
+    "services": {
+      "gateway": "healthy",
+      "status_panel": "error_000",
+      "health_api": "healthy",
+      "dashboard": "error_000"
+    },
+    "network": {
+      "connections": 13
+    }
+  },
+  {
+    "timestamp": "2026-03-06T14:19:50.286740",
+    "system": {
+      "load": {
+        "1m": 0.44,
+        "5m": 0.27,
+        "15m": 0.32
+      },
+      "memory": {
+        "total": 7266,
+        "available": 4458,
+        "used": 2808,
+        "percent": 38.6
+      },
+      "gateway_processes": 51
+    },
+    "services": {
+      "gateway": "healthy",
+      "status_panel": "error_000",
+      "health_api": "healthy",
+      "dashboard": "error_000"
+    },
+    "network": {
+      "connections": 13
+    }
+  },
+  {
+    "timestamp": "2026-03-06T14:24:51.818982",
+    "system": {
+      "load": {
+        "1m": 0.49,
+        "5m": 0.43,
+        "15m": 0.37
+      },
+      "memory": {
+        "total": 7266,
+        "available": 4666,
+        "used": 2600,
+        "percent": 35.8
+      },
+      "gateway_processes": 50
+    },
+    "services": {
+      "gateway": "healthy",
+      "status_panel": "error_000",
+      "health_api": "healthy",
+      "dashboard": "error_000"
+    },
+    "network": {
+      "connections": 15
+    }
+  },
+  {
+    "timestamp": "2026-03-06T14:30:14.912465",
+    "system": {
+      "load": {
+        "1m": 0.32,
+        "5m": 0.5,
+        "15m": 0.42
+      },
+      "memory": {
+        "total": 7266,
+        "available": 4884,
+        "used": 2382,
+        "percent": 32.8
+      },
+      "gateway_processes": 39
+    },
+    "services": {
+      "gateway": "healthy",
+      "status_panel": "error_000",
+      "health_api": "error_000",
+      "dashboard": "error_000"
+    },
+    "network": {
+      "connections": 13
+    }
+  },
+  {
+    "timestamp": "2026-03-06T14:35:21.587858",
+    "system": {
+      "load": {
+        "1m": 0.29,
+        "5m": 0.46,
+        "15m": 0.44
+      },
+      "memory": {
+        "total": 7266,
+        "available": 4873,
+        "used": 2393,
+        "percent": 32.9
+      },
+      "gateway_processes": 39
+    },
+    "services": {
+      "gateway": "healthy",
+      "status_panel": "error_000",
+      "health_api": "healthy",
+      "dashboard": "error_000"
+    },
+    "network": {
+      "connections": 12
+    }
+  },
+  {
+    "timestamp": "2026-03-06T14:40:23.117660",
+    "system": {
+      "load": {
+        "1m": 0.21,
+        "5m": 0.46,
+        "15m": 0.45
+      },
+      "memory": {
+        "total": 7266,
+        "available": 4843,
+        "used": 2423,
+        "percent": 33.3
+      },
+      "gateway_processes": 41
+    },
+    "services": {
+      "gateway": "healthy",
+      "status_panel": "error_000",
+      "health_api": "healthy",
+      "dashboard": "error_000"
+    },
+    "network": {
+      "connections": 14
+    }
+  },
+  {
+    "timestamp": "2026-03-06T14:45:24.669123",
+    "system": {
+      "load": {
+        "1m": 0.88,
+        "5m": 0.74,
+        "15m": 0.57
+      },
+      "memory": {
+        "total": 7266,
+        "available": 4824,
+        "used": 2442,
+        "percent": 33.6
+      },
+      "gateway_processes": 40
+    },
+    "services": {
+      "gateway": "healthy",
+      "status_panel": "error_000",
+      "health_api": "healthy",
+      "dashboard": "error_000"
+    },
+    "network": {
+      "connections": 14
+    }
+  },
+  {
+    "timestamp": "2026-03-06T14:50:26.872544",
+    "system": {
+      "load": {
+        "1m": 0.54,
+        "5m": 0.82,
+        "15m": 0.67
+      },
+      "memory": {
+        "total": 7266,
+        "available": 4867,
+        "used": 2399,
+        "percent": 33.0
+      },
+      "gateway_processes": 40
+    },
+    "services": {
+      "gateway": "healthy",
+      "status_panel": "error_000",
+      "health_api": "healthy",
+      "dashboard": "error_000"
+    },
+    "network": {
+      "connections": 13
+    }
+  },
+  {
+    "timestamp": "2026-03-06T14:55:28.452762",
+    "system": {
+      "load": {
+        "1m": 0.54,
+        "5m": 0.77,
+        "15m": 0.69
+      },
+      "memory": {
+        "total": 7266,
+        "available": 4914,
+        "used": 2352,
+        "percent": 32.4
+      },
+      "gateway_processes": 40
+    },
+    "services": {
+      "gateway": "healthy",
+      "status_panel": "error_000",
+      "health_api": "healthy",
+      "dashboard": "error_000"
+    },
+    "network": {
+      "connections": 12
+    }
+  },
+  {
+    "timestamp": "2026-03-06T15:00:30.033688",
+    "system": {
+      "load": {
+        "1m": 1.01,
+        "5m": 0.97,
+        "15m": 0.79
+      },
+      "memory": {
+        "total": 7266,
+        "available": 4908,
+        "used": 2358,
+        "percent": 32.5
+      },
+      "gateway_processes": 40
+    },
+    "services": {
+      "gateway": "healthy",
+      "status_panel": "error_000",
+      "health_api": "healthy",
+      "dashboard": "error_000"
+    },
+    "network": {
+      "connections": 13
+    }
+  },
+  {
+    "timestamp": "2026-03-06T15:05:31.605542",
+    "system": {
+      "load": {
+        "1m": 0.83,
+        "5m": 0.93,
+        "15m": 0.83
+      },
+      "memory": {
+        "total": 7266,
+        "available": 4926,
+        "used": 2340,
+        "percent": 32.2
+      },
+      "gateway_processes": 40
+    },
+    "services": {
+      "gateway": "healthy",
+      "status_panel": "error_000",
+      "health_api": "healthy",
+      "dashboard": "error_000"
+    },
+    "network": {
+      "connections": 16
+    }
   }
 ]
