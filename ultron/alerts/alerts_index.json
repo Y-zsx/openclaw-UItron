@@ -1,6 +1,146 @@
 {
   "alerts": [
     {
+      "id": "alert_20260306_082512",
+      "type": "site_down",
+      "site": "YouTube",
+      "url": "https://www.youtube.com",
+      "error": "Connection error: HTTPSConnectionPool(host='www.youtube.com', port=4",
+      "severity": "error",
+      "timestamp": "2026-03-06T08:25:12.232956",
+      "status": "active"
+    },
+    {
+      "id": "alert_20260306_082512",
+      "type": "site_down",
+      "site": "Wikipedia",
+      "url": "https://www.wikipedia.org",
+      "error": "Connection error: HTTPSConnectionPool(host='www.wikipedia.org', port",
+      "severity": "error",
+      "timestamp": "2026-03-06T08:25:12.137491",
+      "status": "active"
+    },
+    {
+      "id": "alert_20260306_082512",
+      "type": "site_down",
+      "site": "Reddit",
+      "url": "https://www.reddit.com",
+      "error": "Connection error: HTTPSConnectionPool(host='www.reddit.com', port=44",
+      "severity": "error",
+      "timestamp": "2026-03-06T08:25:12.113795",
+      "status": "active"
+    },
+    {
+      "id": "alert_20260306_082511",
+      "type": "site_down",
+      "site": "OpenAI API",
+      "url": "https://api.openai.com",
+      "error": "Connection error: HTTPSConnectionPool(host='api.openai.com', port=44",
+      "severity": "error",
+      "timestamp": "2026-03-06T08:25:11.930192",
+      "status": "active"
+    },
+    {
+      "id": "alert_20260306_082511",
+      "type": "site_down",
+      "site": "Google",
+      "url": "https://www.google.com",
+      "error": "Connection error: HTTPSConnectionPool(host='www.google.com', port=44",
+      "severity": "error",
+      "timestamp": "2026-03-06T08:25:11.904044",
+      "status": "active"
+    },
+    {
+      "id": "alert_20260306_082502",
+      "type": "site_down",
+      "site": "Amazon",
+      "url": "https://www.amazon.com",
+      "error": "HTTP 503",
+      "severity": "error",
+      "timestamp": "2026-03-06T08:25:02.795289",
+      "status": "active"
+    },
+    {
+      "id": "alert_20260306_082502",
+      "type": "site_down",
+      "site": "Stack Overflow",
+      "url": "https://stackoverflow.com",
+      "error": "HTTP 403",
+      "severity": "error",
+      "timestamp": "2026-03-06T08:25:02.631990",
+      "status": "active"
+    },
+    {
+      "id": "alert_20260306_082502",
+      "type": "site_down",
+      "site": "Twitter/X",
+      "url": "https://twitter.com",
+      "error": "Connection error: ('Connection aborted.', ConnectionResetError(104, ",
+      "severity": "error",
+      "timestamp": "2026-03-06T08:25:02.250421",
+      "status": "active"
+    },
+    {
+      "id": "alert_20260306_082502",
+      "type": "site_down",
+      "site": "简书",
+      "url": "https://www.jianshu.com",
+      "error": "HTTP 403",
+      "severity": "error",
+      "timestamp": "2026-03-06T08:25:02.209464",
+      "status": "active"
+    },
+    {
+      "id": "alert_20260306_082502",
+      "type": "site_down",
+      "site": "CSDN",
+      "url": "https://www.csdn.net",
+      "error": "HTTP 521",
+      "severity": "error",
+      "timestamp": "2026-03-06T08:25:02.103999",
+      "status": "active"
+    },
+    {
+      "id": "alert_20260306_082502",
+      "type": "site_down",
+      "site": "豆瓣",
+      "url": "https://www.douban.com",
+      "error": "HTTP 418",
+      "severity": "error",
+      "timestamp": "2026-03-06T08:25:02.083268",
+      "status": "active"
+    },
+    {
+      "id": "alert_20260306_082502",
+      "type": "site_down",
+      "site": "知乎",
+      "url": "https://www.zhihu.com",
+      "error": "HTTP 403",
+      "severity": "error",
+      "timestamp": "2026-03-06T08:25:02.065693",
+      "status": "active"
+    },
+    {
+      "id": "alert_20260306_082502",
+      "type": "site_down",
+      "site": "B站",
+      "url": "https://www.bilibili.com",
+      "error": "HTTP 412",
+      "severity": "error",
+      "timestamp": "2026-03-06T08:25:02.020653",
+      "status": "active"
+    },
+    {
+      "id": "alert_20260306_082502",
+      "type": "site_down",
+      "site": "网易",
+      "url": "https://www.163.com",
+      "error": "HTTP 403",
+      "severity": "error",
+      "timestamp": "2026-03-06T08:25:02.002393",
+      "status": "active"
+    },
+    {
       "id": "alert_20260306_082012",
       "type": "site_down",
       "site": "YouTube",
@@ -9859,149 +9999,9 @@
       "severity": "error",
       "timestamp": "2026-03-06T02:45:01.878136",
       "status": "active"
-    },
-    {
-      "id": "alert_20260306_024501",
-      "type": "site_down",
-      "site": "知乎",
-      "url": "https://www.zhihu.com",
-      "error": "HTTP 403",
-      "severity": "error",
-      "timestamp": "2026-03-06T02:45:01.857066",
-      "status": "active"
-    },
-    {
-      "id": "alert_20260306_024501",
-      "type": "site_down",
-      "site": "网易",
-      "url": "https://www.163.com",
-      "error": "HTTP 403",
-      "severity": "error",
-      "timestamp": "2026-03-06T02:45:01.779118",
-      "status": "active"
-    },
-    {
-      "id": "alert_20260306_024501",
-      "type": "site_down",
-      "site": "B站",
-      "url": "https://www.bilibili.com",
-      "error": "HTTP 412",
-      "severity": "error",
-      "timestamp": "2026-03-06T02:45:01.762462",
-      "status": "active"
-    },
-    {
-      "id": "alert_20260306_024012",
-      "type": "site_down",
-      "site": "GitHub",
-      "url": "https://github.com",
-      "error": "Connection error: HTTPSConnectionPool(host='github.com', port=443): ",
-      "severity": "error",
-      "timestamp": "2026-03-06T02:40:12.346740",
-      "status": "active"
-    },
-    {
-      "id": "alert_20260306_024012",
-      "type": "site_down",
-      "site": "Wikipedia",
-      "url": "https://www.wikipedia.org",
-      "error": "Timeout",
-      "severity": "error",
-      "timestamp": "2026-03-06T02:40:12.265037",
-      "status": "active"
-    },
-    {
-      "id": "alert_20260306_024012",
-      "type": "site_down",
-      "site": "Twitter/X",
-      "url": "https://twitter.com",
-      "error": "Timeout",
-      "severity": "error",
-      "timestamp": "2026-03-06T02:40:12.251436",
-      "status": "active"
-    },
-    {
-      "id": "alert_20260306_024012",
-      "type": "site_down",
-      "site": "YouTube",
-      "url": "https://www.youtube.com",
-      "error": "Connection error: HTTPSConnectionPool(host='www.youtube.com', port=4",
-      "severity": "error",
-      "timestamp": "2026-03-06T02:40:12.185397",
-      "status": "active"
-    },
-    {
-      "id": "alert_20260306_024012",
-      "type": "site_down",
-      "site": "Reddit",
-      "url": "https://www.reddit.com",
-      "error": "Connection error: HTTPSConnectionPool(host='www.reddit.com', port=44",
-      "severity": "error",
-      "timestamp": "2026-03-06T02:40:12.103261",
-      "status": "active"
-    },
-    {
-      "id": "alert_20260306_024011",
-      "type": "site_down",
-      "site": "OpenAI API",
-      "url": "https://api.openai.com",
-      "error": "Connection error: HTTPSConnectionPool(host='api.openai.com', port=44",
-      "severity": "error",
-      "timestamp": "2026-03-06T02:40:11.890659",
-      "status": "active"
-    },
-    {
-      "id": "alert_20260306_024011",
-      "type": "site_down",
-      "site": "Google",
-      "url": "https://www.google.com",
-      "error": "Connection error: HTTPSConnectionPool(host='www.google.com', port=44",
-      "severity": "error",
-      "timestamp": "2026-03-06T02:40:11.877121",
-      "status": "active"
-    },
-    {
-      "id": "alert_20260306_024003",
-      "type": "site_down",
-      "site": "Amazon",
-      "url": "https://www.amazon.com",
-      "error": "HTTP 503",
-      "severity": "error",
-      "timestamp": "2026-03-06T02:40:03.402376",
-      "status": "active"
-    },
-    {
-      "id": "alert_20260306_024002",
-      "type": "site_down",
-      "site": "Stack Overflow",
-      "url": "https://stackoverflow.com",
-      "error": "HTTP 403",
-      "severity": "error",
-      "timestamp": "2026-03-06T02:40:02.625719",
-      "status": "active"
-    },
-    {
-      "id": "alert_20260306_024002",
-      "type": "site_down",
-      "site": "简书",
-      "url": "https://www.jianshu.com",
-      "error": "HTTP 403",
-      "severity": "error",
-      "timestamp": "2026-03-06T02:40:02.181650",
-      "status": "active"
-    },
-    {
-      "id": "alert_20260306_024002",
-      "type": "site_down",
-      "site": "豆瓣",
-      "url": "https://www.douban.com",
-      "error": "HTTP 418",
-      "severity": "error",
-      "timestamp": "2026-03-06T02:40:02.071445",
-      "status": "active"
     }
   ],
   "stats": {
-    "site_down": 3656
+    "site_down": 3670
   }
 }

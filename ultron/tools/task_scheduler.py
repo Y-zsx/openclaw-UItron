@@ -18,8 +18,26 @@ WORKSPACE = "/root/.openclaw/workspace"
 SCHEDULER_STATE = f"{WORKSPACE}/ultron-workflow/scheduler_state.json"
 sys.path.insert(0, f"{WORKSPACE}/ultron")
 sys.path.insert(0, f"{WORKSPACE}/ultron/tools")
-from health_check_logger import HealthCheckLogger
+import health_check_logger as hcl
 from scheduler_persistence import SchedulerPersistence
+
+class HealthCheckLogger:
+    """包装 health_check_logger 模块为类"""
+    def get_statistics(self, hours=1, use_cache=True):
+        return hcl.get_all_services_availability(hours)
+    
+    def get_trend_analysis(self, hours=1):
+        stats = hcl.get_all_services_availability(hours)
+        improving = sum(1 for s in stats if s.get("uptime_percent", 100) >= 99)
+        declining = sum(1 for s in stats if s.get("uptime_percent", 100) < 95)
+        if declining > improving:
+            return {"trend_direction": "declining"}
+        elif improving > declining:
+            return {"trend_direction": "improving"}
+        return {"trend_direction": "stable"}
+    
+    def get_recent_logs(self, hours=1, limit=10):
+        return hcl.get_recent_events(hours)
 
 class TaskScheduler:
     def __init__(self):
