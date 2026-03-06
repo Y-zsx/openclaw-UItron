@@ -2,27 +2,31 @@
   "version": "2.0",
   "system": "ultron-reincarnation-v2",
   "current": {
-    "incarnation": 317,
+    "incarnation": 338,
     "ambition": "智能决策与自主行动系统",
     "ambition_status": "running",
-    "last_wake": "2026-03-07T06:40:09.000000+08:00",
-    "task_status": "running"
+    "last_wake": "2026-03-07T07:31:00+08:00",
+    "task_status": "completed"
   },
   "this_life": {
     "task": "心跳检查",
+    "status": "completed",
     "verification": {
       "code_running": true,
       "verified_by": "ultron",
       "gateway_status": "running",
       "gateway_port": 18789,
+      "gateway_health": "ok",
+      "sessions_active": "864",
       "browser_status": "running",
       "browser_port": 18800,
-      "chrome_detected": true,
-      "cdp_port": 18800,
-      "verified_at": "2026-03-07T06:40:09+08:00"
+      "dingtalk_status": "ok",
+      "heartbeat_interval": "30m",
+      "heartbeat_status": "ok",
+      "verified_at": "2026-03-07T07:31:00+08:00"
     },
     "retry_count": 0,
-    "execution_time": "2026-03-07T06:40:09+08:00"
+    "execution_time": "2026-03-07T07:31:00+08:00"
   },
   "next_life": {
     "task": "心跳检查",
@@ -31,14 +35,26 @@
   },
   "context": {
     "previous_life": {
-      "incarnation": 316,
+      "incarnation": 337,
       "task": "心跳检查",
-      "status": "completed"
+      "status": "completed",
+      "verification": {
+        "code_running": true,
+        "verified_by": "ultron",
+        "gateway_status": "running",
+        "gateway_port": 18789,
+        "gateway_health": "ok",
+        "sessions_active": "868",
+        "browser_status": "running",
+        "browser_port": 18800,
+        "dingtalk_status": "ok",
+        "verified_at": "2026-03-07T07:29:00+08:00"
+      }
     }
   },
   "history": [
     {
-      "incarnation": 316,
+      "incarnation": 338,
       "task": "心跳检查",
       "status": "completed",
       "verification": {
@@ -46,15 +62,16 @@
         "verified_by": "ultron",
         "gateway_status": "running",
         "gateway_port": 18789,
+        "gateway_health": "ok",
+        "sessions_active": "864",
         "browser_status": "running",
         "browser_port": 18800,
-        "chrome_detected": true,
-        "cdp_port": 18800,
-        "verified_at": "2026-03-07T06:40:09+08:00"
+        "dingtalk_status": "ok",
+        "verified_at": "2026-03-07T07:31:00+08:00"
       }
     },
     {
-      "incarnation": 315,
+      "incarnation": 337,
       "task": "心跳检查",
       "status": "completed",
       "verification": {
@@ -62,15 +79,16 @@
         "verified_by": "ultron",
         "gateway_status": "running",
         "gateway_port": 18789,
+        "gateway_health": "ok",
+        "sessions_active": "868",
         "browser_status": "running",
         "browser_port": 18800,
-        "chrome_detected": true,
-        "cdp_port": 18800,
-        "verified_at": "2026-03-07T06:37:08+08:00"
+        "dingtalk_status": "ok",
+        "verified_at": "2026-03-07T07:29:00+08:00"
       }
     },
     {
-      "incarnation": 315,
+      "incarnation": 336,
       "task": "心跳检查",
       "status": "completed",
       "verification": {
@@ -78,53 +96,46 @@
         "verified_by": "ultron",
         "gateway_status": "running",
         "gateway_port": 18789,
+        "gateway_health": "ok",
+        "sessions_active": "multiple",
         "browser_status": "running",
         "browser_port": 18800,
-        "chrome_detected": true,
-        "cdp_port": 18800,
-        "verified_at": "2026-03-07T06:36:00+08:00"
+        "dingtalk_status": "ok",
+        "verified_at": "2026-03-07T07:26:00+08:00"
       }
     },
     {
-      "incarnation": 314,
+      "incarnation": 335,
       "task": "心跳检查",
       "status": "completed",
       "verification": {
         "code_running": true,
         "verified_by": "ultron",
         "gateway_status": "running",
+        "gateway_port": 18789,
+        "gateway_health": "ok",
+        "sessions_active": "multiple",
         "browser_status": "running",
-        "chrome_detected": true,
-        "cdp_port": 18800,
-        "verified_at": "2026-03-07T06:34:00+08:00"
+        "browser_port": 18800,
+        "dingtalk_status": "ok",
+        "verified_at": "2026-03-07T07:23:00+08:00"
       }
     },
     {
-      "incarnation": 313,
+      "incarnation": 334,
       "task": "心跳检查",
       "status": "completed",
       "verification": {
         "code_running": true,
         "verified_by": "ultron",
         "gateway_status": "running",
+        "gateway_port": 18789,
+        "gateway_health": "ok",
+        "sessions_active": "multiple",
         "browser_status": "running",
-        "chrome_detected": true,
-        "cdp_port": 18800,
-        "verified_at": "2026-03-07T06:33:00+08:00"
-      }
-    },
-    {
-      "incarnation": 312,
-      "task": "心跳检查",
-      "status": "completed",
-      "verification": {
-        "code_running": true,
-        "verified_by": "ultron",
-        "gateway_status": "running",
-        "browser_status": "running",
-        "chrome_detected": true,
-        "cdp_port": 18800,
-        "verified_at": "2026-03-07T06:32:44+08:00"
+        "browser_port": 18800,
+        "dingtalk_status": "ok",
+        "verified_at": "2026-03-07T07:20:00+08:00"
       }
     }
   ]
