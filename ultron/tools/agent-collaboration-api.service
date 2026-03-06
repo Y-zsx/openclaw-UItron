@@ -1,0 +1,14 @@
+[Unit]
+Description=Agent Collaboration API
+After=network.target
+
+[Service]
+Type=simple
+User=root
+WorkingDirectory=/root/.openclaw/workspace/ultron/tools
+ExecStart=/usr/bin/python3 agent_collaboration_api.py
+Restart=always
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target

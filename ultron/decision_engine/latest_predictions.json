@@ -2,29 +2,29 @@
   "predictions": {
     "cpu": {
       "metric_type": "cpu",
-      "current_value": 66.5,
-      "predicted_value": 63.24,
+      "current_value": 36.8,
+      "predicted_value": 35.98,
       "trend": {
         "trend": "falling",
-        "strength": 3.7355334020854816,
-        "velocity": -3.26,
-        "predicted_next": 63.24
+        "strength": 1.6310961765507221,
+        "velocity": -0.8163636363636365,
+        "predicted_next": 35.98363636363636
       },
-      "confidence": 0.8191859785154465,
+      "confidence": 0.7299230593962109,
       "horizon": "5m",
       "data_points": 50
     },
     "memory": {
       "metric_type": "memory",
-      "current_value": 55.4,
-      "predicted_value": 55.29,
+      "current_value": 34.2,
+      "predicted_value": 31.08,
       "trend": {
         "trend": "falling",
-        "strength": 0.18384683656650175,
-        "velocity": -0.1054545454545454,
-        "predicted_next": 55.29454545454546
+        "strength": 6.409202958093674,
+        "velocity": -3.1200000000000006,
+        "predicted_next": 31.080000000000002
       },
-      "confidence": 0.95,
+      "confidence": 0.9013096717777223,
       "horizon": "5m",
       "data_points": 50
     },
@@ -44,20 +44,20 @@
     },
     "load": {
       "metric_type": "load",
-      "current_value": 5.6005859375,
-      "predicted_value": 5.26,
+      "current_value": 1.7314453125,
+      "predicted_value": 1.81,
       "trend": {
-        "trend": "falling",
-        "strength": 4.740003219774367,
-        "velocity": -0.3398082386363636,
-        "predicted_next": 5.260777698863636
+        "trend": "stable",
+        "strength": 2.753300785818441,
+        "velocity": 0.08185961174242425,
+        "predicted_next": 1.8133049242424242
       },
-      "confidence": 0.7767163942857978,
+      "confidence": 0.7443312343036848,
       "horizon": "5m",
       "data_points": 50
     }
   },
   "alert_predictions": [],
   "suggestions": [],
-  "timestamp": "2026-03-06T04:42:22.355276"
+  "timestamp": "2026-03-06T04:51:29.003423"
 }

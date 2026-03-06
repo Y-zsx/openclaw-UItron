@@ -1,0 +1,54 @@
+[
+  {
+    "rule": "health_check:collaboration-scheduler",
+    "level": "CRITICAL",
+    "message": "collaboration-scheduler 服务异常: down - Connection refused",
+    "metric": "network.health",
+    "value": 0,
+    "threshold": 1,
+    "condition": "gte",
+    "timestamp": "2026-03-06T12:49:17.988296",
+    "service": "collaboration-scheduler",
+    "port": 8095,
+    "status": "down"
+  },
+  {
+    "rule": "health_check:secure-channel",
+    "level": "CRITICAL",
+    "message": "secure-channel 服务异常: down - Connection refused",
+    "metric": "network.health",
+    "value": 0,
+    "threshold": 1,
+    "condition": "gte",
+    "timestamp": "2026-03-06T12:49:35.967302",
+    "service": "secure-channel",
+    "port": 8090,
+    "status": "down"
+  },
+  {
+    "rule": "health_check:collaboration-scheduler",
+    "level": "CRITICAL",
+    "message": "collaboration-scheduler 服务异常: down - Connection refused",
+    "metric": "network.health",
+    "value": 0,
+    "threshold": 1,
+    "condition": "gte",
+    "timestamp": "2026-03-06T12:50:36.067712",
+    "service": "collaboration-scheduler",
+    "port": 8095,
+    "status": "down"
+  },
+  {
+    "rule": "health_check:collaboration-scheduler",
+    "level": "CRITICAL",
+    "message": "collaboration-scheduler 服务异常: down - Connection refused",
+    "metric": "network.health",
+    "value": 0,
+    "threshold": 1,
+    "condition": "gte",
+    "timestamp": "2026-03-06T12:51:27.767306",
+    "service": "collaboration-scheduler",
+    "port": 8095,
+    "status": "down"
+  }
+]

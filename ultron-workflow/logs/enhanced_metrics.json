@@ -1532,5 +1532,57 @@
     "network": {
       "connections": 16
     }
+  },
+  {
+    "timestamp": "2026-03-06T12:44:37.790759",
+    "system": {
+      "load": {
+        "1m": 1.62,
+        "5m": 4.94,
+        "15m": 5.37
+      },
+      "memory": {
+        "total": 7266,
+        "available": 3383,
+        "used": 3883,
+        "percent": 53.4
+      },
+      "gateway_processes": 49
+    },
+    "services": {
+      "gateway": "healthy",
+      "status_panel": "healthy",
+      "health_api": "healthy",
+      "dashboard": "healthy"
+    },
+    "network": {
+      "connections": 20
+    }
+  },
+  {
+    "timestamp": "2026-03-06T12:48:59.920950",
+    "system": {
+      "load": {
+        "1m": 4.09,
+        "5m": 4.03,
+        "15m": 4.83
+      },
+      "memory": {
+        "total": 7266,
+        "available": 4533,
+        "used": 2733,
+        "percent": 37.6
+      },
+      "gateway_processes": 50
+    },
+    "services": {
+      "gateway": "healthy",
+      "status_panel": "healthy",
+      "health_api": "error_000",
+      "dashboard": "error_000"
+    },
+    "network": {
+      "connections": 13
+    }
   }
 ]

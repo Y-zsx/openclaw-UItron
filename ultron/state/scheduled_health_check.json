@@ -1,50 +1,50 @@
 {
-  "check_count": 391,
-  "timestamp": "2026-03-06T12:42:15.708920",
+  "check_count": 398,
+  "timestamp": "2026-03-06T12:49:18.052221",
   "total_services": 6,
-  "healthy_services": 6,
-  "unhealthy_services": 0,
-  "network_health": 100.0,
+  "healthy_services": 5,
+  "unhealthy_services": 1,
+  "network_health": 83.3,
   "details": {
     "8089": {
       "port": 8089,
       "status": "healthy",
-      "response_time_ms": 11.41,
+      "response_time_ms": 6.02,
       "http_code": 200,
       "error": null
     },
     "8090": {
       "port": 8090,
       "status": "healthy",
-      "response_time_ms": 5.42,
+      "response_time_ms": 3.85,
       "http_code": 200,
       "error": null
     },
     "8091": {
       "port": 8091,
       "status": "healthy",
-      "response_time_ms": 5.31,
+      "response_time_ms": 3.4,
       "http_code": 200,
       "error": null
     },
     "8095": {
       "port": 8095,
-      "status": "healthy",
-      "response_time_ms": 106.7,
-      "http_code": 200,
-      "error": null
+      "status": "down",
+      "response_time_ms": null,
+      "http_code": null,
+      "error": "Connection refused"
     },
     "8096": {
       "port": 8096,
       "status": "healthy",
-      "response_time_ms": 9.12,
+      "response_time_ms": 4.84,
       "http_code": 200,
       "error": null
     },
     "18232": {
       "port": 18232,
       "status": "healthy",
-      "response_time_ms": 209.01,
+      "response_time_ms": 55.89,
       "http_code": 200,
       "error": null
     }
