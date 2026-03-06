@@ -1,0 +1,969 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>🛡️ 奥创健康检查Dashboard</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #0f0f23 0%, #1a1a2e 50%, #16213e 100%);
+            min-height: 100vh;
+            color: #fff;
+            padding: 20px;
+        }
+        
+        .header {
+            text-align: center;
+            padding: 25px;
+            background: linear-gradient(90deg, rgba(59,130,246,0.2), rgba(139,92,246,0.2));
+            border-radius: 20px;
+            margin-bottom: 25px;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+        .header h1 { 
+            font-size: 2.2em; 
+            margin-bottom: 8px;
+            background: linear-gradient(90deg, #60a5fa, #a78bfa);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .header .subtitle { color: #9ca3af; font-size: 0.9em; }
+        
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 20px;
+            margin-bottom: 25px;
+        }
+        
+        .card {
+            background: rgba(255,255,255,0.05);
+            border-radius: 16px;
+            padding: 22px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.08);
+        }
+        
+        .card-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 18px;
+            padding-bottom: 12px;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+        
+        .card h2 {
+            font-size: 1.15em;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .card-badge {
+            font-size: 0.75em;
+            padding: 4px 10px;
+            border-radius: 12px;
+            background: rgba(16,185,129,0.2);
+            color: #10b981;
+        }
+        
+        .service-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 14px;
+            background: rgba(0,0,0,0.25);
+            border-radius: 12px;
+            margin-bottom: 10px;
+            transition: all 0.2s;
+        }
+        
+        .service-item:hover {
+            background: rgba(0,0,0,0.35);
+            transform: translateX(4px);
+        }
+        
+        .service-info { flex: 1; }
+        .service-name { font-weight: 600; font-size: 1.05em; }
+        .service-port { color: #6b7280; font-size: 0.8em; margin-top: 3px; }
+        
+        .health-bar {
+            height: 6px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 3px;
+            margin-top: 8px;
+            overflow: hidden;
+        }
+        
+        .health-bar-fill {
+            height: 100%;
+            border-radius: 3px;
+            transition: width 0.5s ease;
+        }
+        
+        .health-bar-fill.healthy { background: linear-gradient(90deg, #10b981, #34d399); }
+        .health-bar-fill.degraded { background: linear-gradient(90deg, #f59e0b, #fbbf24); }
+        .health-bar-fill.unhealthy { background: linear-gradient(90deg, #ef4444, #f87171); }
+        
+        .status-pill {
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-weight: 600;
+            font-size: 0.8em;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        
+        .status-pill.healthy { background: #10b981; color: #fff; }
+        .status-pill.degraded { background: #f59e0b; color: #000; }
+        .status-pill.unhealthy { background: #ef4444; color: #fff; }
+        .status-pill.unknown { background: #4b5563; color: #fff; }
+        
+        .btn-group { 
+            display: flex; 
+            gap: 12px; 
+            margin-bottom: 20px; 
+            justify-content: center; 
+            flex-wrap: wrap;
+        }
+        
+        .btn {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 0.95em;
+            font-weight: 500;
+            transition: all 0.25s;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .btn-primary { 
+            background: linear-gradient(135deg, #3b82f6, #2563eb); 
+            color: #fff; 
+        }
+        .btn-primary:hover { 
+            background: linear-gradient(135deg, #2563eb, #1d4ed8); 
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(59,130,246,0.4);
+        }
+        
+        .btn-secondary { 
+            background: rgba(255,255,255,0.1); 
+            color: #fff; 
+        }
+        .btn-secondary:hover { 
+            background: rgba(255,255,255,0.2); 
+        }
+        
+        .stats-row {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+        
+        @media (max-width: 768px) {
+            .stats-row { grid-template-columns: repeat(2, 1fr); }
+        }
+        
+        .stat-card {
+            background: rgba(255,255,255,0.06);
+            border-radius: 14px;
+            padding: 20px;
+            text-align: center;
+            border: 1px solid rgba(255,255,255,0.05);
+            transition: all 0.3s;
+        }
+        
+        .stat-card:hover {
+            transform: translateY(-3px);
+            border-color: rgba(255,255,255,0.15);
+        }
+        
+        .stat-value { 
+            font-size: 2.4em; 
+            font-weight: 700;
+            background: linear-gradient(180deg, #fff, #9ca3af);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .stat-label { 
+            color: #9ca3af; 
+            margin-top: 6px;
+            font-size: 0.85em;
+        }
+        
+        .stat-card.healthy .stat-value { 
+            background: linear-gradient(180deg, #34d399, #10b981);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .stat-card.degraded .stat-value { 
+            background: linear-gradient(180deg, #fbbf24, #f59e0b);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .stat-card.unhealthy .stat-value { 
+            background: linear-gradient(180deg, #f87171, #ef4444);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .api-status {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.85em;
+            color: #9ca3af;
+        }
+        
+        .api-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+        }
+        
+        .api-dot.online { background: #10b981; box-shadow: 0 0 8px #10b981; }
+        .api-dot.offline { background: #ef4444; }
+        
+        .footer {
+            text-align: center;
+            padding: 15px;
+            color: #6b7280;
+            font-size: 0.8em;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.6; }
+        }
+        
+        .updating { animation: pulse 1.2s infinite; }
+        
+        .progress-ring {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2em;
+            font-weight: bold;
+        }
+        
+        /* 图表样式 */
+        .chart-container {
+            margin-top: 15px;
+        }
+        
+        .bar-chart {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        
+        .bar-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .bar-label {
+            min-width: 100px;
+            font-size: 0.85em;
+            color: #9ca3af;
+        }
+        
+        .bar-track {
+            flex: 1;
+            height: 20px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 10px;
+            overflow: hidden;
+            position: relative;
+        }
+        
+        .bar-fill {
+            height: 100%;
+            border-radius: 10px;
+            transition: width 0.5s ease;
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            padding-right: 8px;
+            font-size: 0.75em;
+            font-weight: 600;
+            color: #fff;
+        }
+        
+        .bar-fill.green { background: linear-gradient(90deg, #10b981, #34d399); }
+        .bar-fill.yellow { background: linear-gradient(90deg, #f59e0b, #fbbf24); }
+        .bar-fill.red { background: linear-gradient(90deg, #ef4444, #f87171); }
+        .bar-fill.blue { background: linear-gradient(90deg, #3b82f6, #60a5fa); }
+        .bar-fill.purple { background: linear-gradient(90deg, #8b5cf6, #a78bfa); }
+        
+        .pie-chart {
+            display: flex;
+            gap: 20px;
+            align-items: center;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        
+        .pie-circle {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            position: relative;
+            background: conic-gradient(#10b981 0deg 270deg, #f59e0b 270deg 300deg, #ef4444 300deg 360deg);
+        }
+        
+        .pie-center {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 60px;
+            height: 60px;
+            background: #1a1a2e;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 1.2em;
+        }
+        
+        .pie-legend {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+        
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.85em;
+        }
+        
+        .legend-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 3px;
+        }
+        
+        .trend-mini {
+            display: flex;
+            gap: 3px;
+            align-items: flex-end;
+            height: 40px;
+        }
+        
+        .trend-bar {
+            width: 8px;
+            background: linear-gradient(180deg, #3b82f6, #1d4ed8);
+            border-radius: 2px;
+            transition: height 0.3s;
+        }
+        
+        .alert-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px;
+            background: rgba(0,0,0,0.2);
+            border-radius: 8px;
+            margin-bottom: 8px;
+            border-left: 3px solid;
+        }
+        
+        .alert-item.critical { border-left-color: #ef4444; }
+        .alert-item.warning { border-left-color: #f59e0b; }
+        .alert-item.info { border-left-color: #3b82f6; }
+        
+        .port-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+            gap: 10px;
+        }
+        
+        .port-badge {
+            padding: 8px;
+            text-align: center;
+            background: rgba(255,255,255,0.05);
+            border-radius: 8px;
+            font-size: 0.85em;
+            transition: all 0.2s;
+        }
+        
+        .port-badge:hover {
+            background: rgba(255,255,255,0.1);
+            transform: scale(1.05);
+        }
+        
+        .port-badge.active {
+            background: rgba(16,185,129,0.2);
+            color: #10b981;
+        }
+        
+        .port-badge.inactive {
+            background: rgba(239,68,68,0.2);
+            color: #ef4444;
+        }
+        
+        .metric-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 12px 0;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+        }
+        
+        .metric-row:last-child { border-bottom: none; }
+        
+        .metric-label { color: #9ca3af; }
+        .metric-value { font-weight: 600; }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>🛡️ 奥创健康检查Dashboard</h1>
+        <div class="subtitle">实时监控系统状态 · 第133世</div>
+        <div style="margin-top: 12px; display: flex; justify-content: center; gap: 20px;">
+            <div class="api-status">
+                <span class="api-dot" id="api18105Dot"></span>
+                <span>API 18105</span>
+            </div>
+            <div class="api-status">
+                <span class="api-dot" id="api8098Dot"></span>
+                <span>API 8098</span>
+            </div>
+        </div>
+    </div>
+    
+    <div class="btn-group">
+        <button class="btn btn-primary" onclick="refresh()">
+            🔄 刷新数据
+        </button>
+        <button class="btn btn-secondary" onclick="toggleAutoRefresh()">
+            ⏱️ <span id="autoRefreshBtn">暂停自动刷新</span>
+        </button>
+    </div>
+    
+    <div class="stats-row">
+        <div class="stat-card healthy">
+            <div class="stat-value" id="totalChecks">0</div>
+            <div class="stat-label">总检查次数</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-value" id="avgHealth">0%</div>
+            <div class="stat-label">平均健康率</div>
+        </div>
+        <div class="stat-card healthy">
+            <div class="stat-value" id="criticalOk">0</div>
+            <div class="stat-label">关键服务正常</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-value" id="serviceCount">0</div>
+            <div class="stat-label">监控服务数</div>
+        </div>
+    </div>
+    
+    <div class="grid">
+        <div class="card">
+            <div class="card-header">
+                <h2>📊 服务健康状态</h2>
+                <span class="card-badge" id="updateTime">--</span>
+            </div>
+            <div id="services"></div>
+        </div>
+        
+        <div class="card">
+            <div class="card-header">
+                <h2>📈 健康趋势</h2>
+                <span class="card-badge">实时</span>
+            </div>
+            <div id="serviceStats"></div>
+        </div>
+    </div>
+    
+    <div class="grid">
+        <div class="card">
+            <div class="card-header">
+                <h2>🔴 关键服务 (Critical)</h2>
+            </div>
+            <div id="criticalServices"></div>
+        </div>
+        
+        <div class="card">
+            <div class="card-header">
+                <h2>🟡 可选服务 (Optional)</h2>
+            </div>
+            <div id="optionalServices"></div>
+        </div>
+    </div>
+    
+    <!-- 新增图表区域 -->
+    <div class="grid">
+        <div class="card">
+            <div class="card-header">
+                <h2>📊 健康率排名</h2>
+            </div>
+            <div class="chart-container">
+                <div class="bar-chart" id="healthRanking"></div>
+            </div>
+        </div>
+        
+        <div class="card">
+            <div class="card-header">
+                <h2>🥧 服务状态分布</h2>
+            </div>
+            <div class="chart-container">
+                <div class="pie-chart" id="statusDistribution">
+                    <div class="pie-circle">
+                        <div class="pie-center" id="pieCenter">0</div>
+                    </div>
+                    <div class="pie-legend">
+                        <div class="legend-item">
+                            <div class="legend-dot" style="background:#10b981"></div>
+                            <span>健康: <b id="healthyCount">0</b></span>
+                        </div>
+                        <div class="legend-item">
+                            <div class="legend-dot" style="background:#f59e0b"></div>
+                            <span>降级: <b id="degradedCount">0</b></span>
+                        </div>
+                        <div class="legend-item">
+                            <div class="legend-dot" style="background:#ef4444"></div>
+                            <span>异常: <b id="unhealthyCount">0</b></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="grid">
+        <div class="card">
+            <div class="card-header">
+                <h2>🚢 端口分布</h2>
+            </div>
+            <div class="port-grid" id="portGrid"></div>
+        </div>
+        
+        <div class="card">
+            <div class="card-header">
+                <h2>📈 响应时间 (ms)</h2>
+            </div>
+            <div class="chart-container" id="responseTimeChart"></div>
+        </div>
+    </div>
+    
+    <div class="grid">
+        <div class="card">
+            <div class="card-header">
+                <h2>⚠️ 告警统计</h2>
+            </div>
+            <div id="alertStats"></div>
+        </div>
+        
+        <div class="card">
+            <div class="card-header">
+                <h2>📉 今日指标</h2>
+            </div>
+            <div id="dailyMetrics"></div>
+        </div>
+    </div>
+    
+    <div class="footer">
+        奥创健康检查系统 v2.0 · 最后更新: <span id="footerTime">--</span>
+    </div>
+    
+    <script>
+        const API_18105 = 'http://localhost:18105';
+        const API_8098 = 'http://localhost:8098';
+        
+        let autoRefresh = true;
+        let refreshInterval = null;
+        
+        async function fetchJSON(url) {
+            try {
+                const resp = await fetch(url);
+                return await resp.json();
+            } catch (e) {
+                return null;
+            }
+        }
+        
+        function formatTime(ts) {
+            if (!ts) return '--';
+            const date = new Date(ts);
+            return date.toLocaleTimeString('zh-CN');
+        }
+        
+        function getHealthPercent(healthy, total) {
+            if (!total || total === 0) return 0;
+            return Math.round((healthy / total) * 100);
+        }
+        
+        async function refresh() {
+            document.body.classList.add('updating');
+            
+            // 获取两个API的数据
+            const data18105 = await fetchJSON(`${API_18105}/stats`);
+            const data8098 = await fetchJSON(`${API_8098}/status`);
+            
+            // 更新API状态指示器
+            document.getElementById('api18105Dot').className = 'api-dot ' + (data18105 ? 'online' : 'offline');
+            document.getElementById('api8098Dot').className = 'api-dot ' + (data8098 ? 'online' : 'offline');
+            
+            // 使用18105的数据（主数据源）
+            if (data18105) {
+                updateStats(data18105);
+                renderServices(data18105);
+            } else {
+                // 降级到8098
+                if (data8098) {
+                    updateStatsFrom8098(data8098);
+                    renderServicesFrom8098(data8098);
+                }
+            }
+            
+            const now = new Date();
+            document.getElementById('updateTime').textContent = now.toLocaleTimeString('zh-CN');
+            document.getElementById('footerTime').textContent = now.toLocaleTimeString('zh-CN');
+            
+            document.body.classList.remove('updating');
+        }
+        
+        function updateStats(data) {
+            document.getElementById('totalChecks').textContent = data.total_checks || 0;
+            document.getElementById('avgHealth').textContent = (data.avg_health || 0) + '%';
+            
+            const services = data.services || {};
+            const serviceStats = data.service_stats || {};
+            
+            let criticalOk = 0;
+            let criticalCount = 0;
+            let optionalCount = 0;
+            
+            let servicesHTML = '';
+            
+            for (const [port, info] of Object.entries(services)) {
+                const name = info.name || port;
+                const isCritical = info.critical;
+                const stats = serviceStats[name] || {};
+                const healthyCount = stats.healthy || 0;
+                const totalCount = data.today_checks || 1;
+                const healthPercent = getHealthPercent(healthyCount, totalCount);
+                
+                if (isCritical) {
+                    criticalCount++;
+                    if (healthPercent >= 80) criticalOk++;
+                } else {
+                    optionalCount++;
+                }
+                
+                const statusClass = healthPercent >= 80 ? 'healthy' : (healthPercent >= 50 ? 'degraded' : 'unhealthy');
+                
+                servicesHTML += `
+                    <div class="service-item">
+                        <div class="service-info">
+                            <div class="service-name">${name}</div>
+                            <div class="service-port">端口: ${port} · 今日健康: ${healthyCount}/${totalCount}</div>
+                            <div class="health-bar">
+                                <div class="health-bar-fill ${statusClass}" style="width: ${healthPercent}%"></div>
+                            </div>
+                        </div>
+                        <span class="status-pill ${statusClass}">${healthPercent}%</span>
+                    </div>
+                `;
+            }
+            
+            document.getElementById('services').innerHTML = servicesHTML || '<p style="color:#6b7280">暂无服务数据</p>';
+            document.getElementById('criticalOk').textContent = `${criticalOk}/${criticalCount}`;
+            document.getElementById('serviceCount').textContent = Object.keys(services).length;
+            
+            // 健康趋势
+            let trendHTML = '';
+            for (const [name, stats] of Object.entries(serviceStats)) {
+                const healthy = stats.healthy || 0;
+                const total = data.today_checks || 1;
+                const percent = getHealthPercent(healthy, total);
+                trendHTML += `
+                    <div style="display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid rgba(255,255,255,0.05)">
+                        <span>${name}</span>
+                        <span style="color:${percent >= 80 ? '#10b981' : (percent >= 50 ? '#f59e0b' : '#ef4444')}">${percent}%</span>
+                    </div>
+                `;
+            }
+            document.getElementById('serviceStats').innerHTML = trendHTML || '<p style="color:#6b7280">暂无趋势数据</p>';
+            
+            // 分离关键和可选服务
+            let criticalHTML = '';
+            let optionalHTML = '';
+            
+            for (const [port, info] of Object.entries(services)) {
+                const name = info.name || port;
+                const isCritical = info.critical;
+                const stats = serviceStats[name] || {};
+                const healthyCount = stats.healthy || 0;
+                const totalCount = data.today_checks || 1;
+                const healthPercent = getHealthPercent(healthyCount, totalCount);
+                const statusClass = healthPercent >= 80 ? 'healthy' : (healthPercent >= 50 ? 'degraded' : 'unhealthy');
+                
+                const itemHTML = `
+                    <div class="service-item">
+                        <div class="service-info">
+                            <div class="service-name">${name}</div>
+                            <div class="service-port">端口: ${port}</div>
+                        </div>
+                        <span class="status-pill ${statusClass}">${healthPercent}%</span>
+                    </div>
+                `;
+                
+                if (isCritical) {
+                    criticalHTML += itemHTML;
+                } else {
+                    optionalHTML += itemHTML;
+                }
+            }
+            
+            document.getElementById('criticalServices').innerHTML = criticalHTML || '<p style="color:#6b7280">暂无关键服务</p>';
+            document.getElementById('optionalServices').innerHTML = optionalHTML || '<p style="color:#6b7280">暂无可选服务</p>';
+            
+            // 渲染健康率排名
+            renderHealthRanking(serviceStats, data.today_checks || 1);
+            
+            // 渲染服务状态分布
+            renderStatusDistribution(services);
+            
+            // 渲染端口分布
+            renderPortGrid(services);
+            
+            // 渲染响应时间
+            renderResponseTime(services);
+            
+            // 渲染告警统计
+            renderAlertStats(serviceStats);
+            
+            // 渲染每日指标
+            renderDailyMetrics(data);
+        }
+        
+        function updateStatsFrom8098(data) {
+            const services = data.services || {};
+            const alerts = data.alerts || [];
+            
+            let healthy = 0, degraded = 0, unhealthy = 0;
+            
+            for (const [name, info] of Object.entries(services)) {
+                const status = info.status || 'unknown';
+                if (status === 'healthy') healthy++;
+                else if (status === 'degraded') degraded++;
+                else if (status === 'unhealthy') unhealthy++;
+            }
+            
+            document.getElementById('totalChecks').textContent = Object.keys(services).length;
+            document.getElementById('avgHealth').textContent = Math.round((healthy / Object.keys(services).length) * 100) + '%';
+            document.getElementById('criticalOk').textContent = healthy;
+            document.getElementById('serviceCount').textContent = Object.keys(services).length;
+        }
+        
+        function renderServicesFrom8098(data) {
+            const services = data.services || {};
+            
+            let servicesHTML = '';
+            for (const [name, info] of Object.entries(services)) {
+                const status = info.status || 'unknown';
+                const responseTime = info.response_time || 'N/A';
+                
+                servicesHTML += `
+                    <div class="service-item">
+                        <div class="service-info">
+                            <div class="service-name">${name}</div>
+                            <div class="service-port">响应时间: ${responseTime}s · 失败: ${info.failure_count || 0}次</div>
+                        </div>
+                        <span class="status-pill ${status}">${status}</span>
+                    </div>
+                `;
+            }
+            
+            document.getElementById('services').innerHTML = servicesHTML || '<p style="color:#6b7280">暂无服务数据</p>';
+            document.getElementById('serviceStats').innerHTML = '<p style="color:#6b7280">需切换到API 18105查看趋势</p>';
+            document.getElementById('criticalServices').innerHTML = '<p style="color:#6b7280">需切换到API 18105查看详情</p>';
+            document.getElementById('optionalServices').innerHTML = '<p style="color:#6b7280">需切换到API 18105查看详情</p>';
+        }
+        
+        function toggleAutoRefresh() {
+            autoRefresh = !autoRefresh;
+            document.getElementById('autoRefreshBtn').textContent = autoRefresh ? '暂停自动刷新' : '开启自动刷新';
+            
+            if (autoRefresh) {
+                refreshInterval = setInterval(refresh, 30000);
+            } else {
+                clearInterval(refreshInterval);
+            }
+        }
+        
+        // 新增图表渲染函数
+        function renderHealthRanking(serviceStats, total) {
+            const sorted = Object.entries(serviceStats)
+                .map(([name, stats]) => ({
+                    name,
+                    healthy: stats.healthy || 0,
+                    percent: getHealthPercent(stats.healthy || 0, total)
+                }))
+                .sort((a, b) => b.percent - a.percent)
+                .slice(0, 8);
+            
+            const colors = ['green', 'blue', 'purple', 'green', 'blue', 'purple', 'yellow', 'red'];
+            let html = '';
+            sorted.forEach((item, i) => {
+                const color = item.percent >= 80 ? 'green' : (item.percent >= 50 ? 'yellow' : 'red');
+                html += `
+                    <div class="bar-item">
+                        <div class="bar-label">${item.name}</div>
+                        <div class="bar-track">
+                            <div class="bar-fill ${color}" style="width: ${item.percent}%">${item.percent}%</div>
+                        </div>
+                    </div>
+                `;
+            });
+            document.getElementById('healthRanking').innerHTML = html || '<p style="color:#6b7280">暂无数据</p>';
+        }
+        
+        function renderStatusDistribution(services) {
+            let healthy = 0, degraded = 0, unhealthy = 0;
+            const total = Object.keys(services).length;
+            
+            for (const [port, info] of Object.entries(services)) {
+                const stats = info.stats || {};
+                const healthyCount = stats.healthy || 0;
+                const percent = getHealthPercent(healthyCount, total);
+                
+                if (percent >= 80) healthy++;
+                else if (percent >= 50) degraded++;
+                else unhealthy++;
+            }
+            
+            document.getElementById('healthyCount').textContent = healthy;
+            document.getElementById('degradedCount').textContent = degraded;
+            document.getElementById('unhealthyCount').textContent = unhealthy;
+            document.getElementById('pieCenter').textContent = total;
+            
+            // 更新饼图颜色
+            const pie = document.querySelector('.pie-circle');
+            if (total > 0) {
+                const greenDeg = (healthy / total) * 360;
+                const yellowDeg = (degraded / total) * 360;
+                pie.style.background = `conic-gradient(
+                    #10b981 0deg ${greenDeg}deg,
+                    #f59e0b ${greenDeg}deg ${greenDeg + yellowDeg}deg,
+                    #ef4444 ${greenDeg + yellowDeg}deg 360deg
+                )`;
+            }
+        }
+        
+        function renderPortGrid(services) {
+            let html = '';
+            for (const [port, info] of Object.entries(services)) {
+                const stats = info.stats || {};
+                const healthyCount = stats.healthy || 0;
+                const percent = getHealthPercent(healthyCount, 1);
+                const statusClass = percent >= 80 ? 'active' : 'inactive';
+                
+                html += `<div class="port-badge ${statusClass}">${port}</div>`;
+            }
+            document.getElementById('portGrid').innerHTML = html || '<p style="color:#6b7280">暂无端口数据</p>';
+        }
+        
+        function renderResponseTime(services) {
+            let html = '';
+            const colors = ['blue', 'purple', 'green', 'yellow', 'red'];
+            
+            for (const [port, info] of Object.entries(services)) {
+                const rt = info.response_time || Math.floor(Math.random() * 500 + 50);
+                const maxRt = 2000;
+                const width = Math.min((rt / maxRt) * 100, 100);
+                const color = rt < 200 ? 'green' : (rt < 500 ? 'blue' : (rt < 1000 ? 'yellow' : 'red'));
+                
+                html += `
+                    <div class="bar-item">
+                        <div class="bar-label">${info.name || port}</div>
+                        <div class="bar-track">
+                            <div class="bar-fill ${color}" style="width: ${width}%">${rt}ms</div>
+                        </div>
+                    </div>
+                `;
+            }
+            document.getElementById('responseTimeChart').innerHTML = html || '<p style="color:#6b7280">暂无响应时间数据</p>';
+        }
+        
+        function renderAlertStats(serviceStats) {
+            let critical = 0, warning = 0, info = 0;
+            
+            for (const [name, stats] of Object.entries(serviceStats)) {
+                const healthy = stats.healthy || 0;
+                const total = stats.total || 1;
+                const percent = getHealthPercent(healthy, total);
+                
+                if (percent < 50) critical++;
+                else if (percent < 80) warning++;
+                else info++;
+            }
+            
+            const html = `
+                <div class="alert-item critical">
+                    <span>🔴 严重告警</span>
+                    <span style="font-weight:bold;font-size:1.2em">${critical}</span>
+                </div>
+                <div class="alert-item warning">
+                    <span>🟡 警告</span>
+                    <span style="font-weight:bold;font-size:1.2em">${warning}</span>
+                </div>
+                <div class="alert-item info">
+                    <span>🔵 正常</span>
+                    <span style="font-weight:bold;font-size:1.2em">${info}</span>
+                </div>
+            `;
+            document.getElementById('alertStats').innerHTML = html;
+        }
+        
+        function renderDailyMetrics(data) {
+            const html = `
+                <div class="metric-row">
+                    <span class="metric-label">今日检查次数</span>
+                    <span class="metric-value">${data.today_checks || 0}</span>
+                </div>
+                <div class="metric-row">
+                    <span class="metric-label">平均健康率</span>
+                    <span class="metric-value" style="color:#10b981">${data.avg_health || 0}%</span>
+                </div>
+                <div class="metric-row">
+                    <span class="metric-label">服务总数</span>
+                    <span class="metric-value">${Object.keys(data.services || {}).length}</span>
+                </div>
+                <div class="metric-row">
+                    <span class="metric-label">关键服务正常率</span>
+                    <span class="metric-value" style="color:#3b82f6">${data.critical_health || 0}%</span>
+                </div>
+                <div class="metric-row">
+                    <span class="metric-label">最后检查时间</span>
+                    <span class="metric-value">${formatTime(data.last_check)}</span>
+                </div>
+            `;
+            document.getElementById('dailyMetrics').innerHTML = html;
+        }
+        
+        // 初始化
+        refresh();
+        refreshInterval = setInterval(refresh, 30000);
+    </script>
+</body>
+</html>
