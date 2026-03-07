@@ -2,29 +2,29 @@
   "predictions": {
     "cpu": {
       "metric_type": "cpu",
-      "current_value": 49.4,
-      "predicted_value": 49.3,
+      "current_value": 41.3,
+      "predicted_value": 42.64,
       "trend": {
-        "trend": "stable",
-        "strength": 0.23655527608096835,
-        "velocity": -0.095757575757576,
-        "predicted_next": 49.304242424242425
+        "trend": "rising",
+        "strength": 5.25664811379097,
+        "velocity": 1.3393939393939391,
+        "predicted_next": 42.63939393939393
       },
-      "confidence": 0.5169544011828026,
+      "confidence": 0.5422855975945251,
       "horizon": "5m",
       "data_points": 50
     },
     "memory": {
       "metric_type": "memory",
-      "current_value": 39.0,
-      "predicted_value": 38.24,
+      "current_value": 43.1,
+      "predicted_value": 43.32,
       "trend": {
-        "trend": "falling",
-        "strength": 1.7607093424389972,
-        "velocity": -0.7593939393939395,
-        "predicted_next": 38.24060606060606
+        "trend": "rising",
+        "strength": 0.5576307567736866,
+        "velocity": 0.22121212121212147,
+        "predicted_next": 43.32121212121212
       },
-      "confidence": 0.9089655910586811,
+      "confidence": 0.9246169056078553,
       "horizon": "5m",
       "data_points": 50
     },
@@ -44,20 +44,20 @@
     },
     "load": {
       "metric_type": "load",
-      "current_value": 2.69775390625,
-      "predicted_value": 2.69,
+      "current_value": 2.458984375,
+      "predicted_value": 2.53,
       "trend": {
         "trend": "stable",
-        "strength": 0.35056446821152704,
-        "velocity": -0.006983901515151515,
-        "predicted_next": 2.6907700047348486
+        "strength": 4.451272141007616,
+        "velocity": 0.07279829545454546,
+        "predicted_next": 2.5317826704545454
       },
-      "confidence": 0.8073233521527408,
+      "confidence": 0.8357661113276662,
       "horizon": "5m",
       "data_points": 50
     }
   },
   "alert_predictions": [],
   "suggestions": [],
-  "timestamp": "2026-03-07T17:49:42.901845"
+  "timestamp": "2026-03-07T20:05:13.978238"
 }
