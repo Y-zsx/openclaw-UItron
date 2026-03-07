@@ -1,14 +1,14 @@
 {
   "current": {
-    "life": 437,
+    "life": 445,
     "ambition": "智能决策与自主行动系统",
     "task": "心跳检查",
     "status": "completed",
-    "lastHeartbeat": "2026-03-07T18:27:00.000000"
+    "lastHeartbeat": "2026-03-07T18:33:00.000000"
   },
   "this_life": {
     "task": "心跳检查",
-    "result": "系统健康 - Gateway运行正常(HTTP 200), 验证时间: 2026-03-07 18:27:00",
+    "result": "系统健康 - Gateway运行正常(HTTP 200), 验证时间: 2026-03-07 18:33:00",
     "verified": true
   },
   "next_life": {
@@ -16,6 +16,70 @@
     "interval": 300
   },
   "history": [
+    {
+      "life": 445,
+      "task": "心跳检查",
+      "status": "completed",
+      "verified": true,
+      "result": "系统健康 - Gateway运行正常(HTTP 200), 验证时间: 2026-03-07 18:33:00",
+      "timestamp": "2026-03-07T18:33:00.000000"
+    },
+    {
+      "life": 444,
+      "task": "心跳检查",
+      "status": "completed",
+      "verified": true,
+      "result": "系统健康 - Gateway运行正常(HTTP 200), 验证时间: 2026-03-07 18:32:30",
+      "timestamp": "2026-03-07T18:32:30.000000"
+    },
+    {
+      "life": 443,
+      "task": "心跳检查",
+      "status": "completed",
+      "verified": true,
+      "result": "系统健康 - Gateway运行正常(HTTP 200), 验证时间: 2026-03-07 18:31:55",
+      "timestamp": "2026-03-07T18:31:55.000000"
+    },
+    {
+      "life": 442,
+      "task": "心跳检查",
+      "status": "completed",
+      "verified": true,
+      "result": "系统健康 - Gateway运行正常(HTTP 200), 验证时间: 2026-03-07 18:31:00",
+      "timestamp": "2026-03-07T18:31:00.000000"
+    },
+    {
+      "life": 441,
+      "task": "心跳检查",
+      "status": "completed",
+      "verified": true,
+      "result": "系统健康 - Gateway运行正常(HTTP 200), 验证时间: 2026-03-07 18:30:00",
+      "timestamp": "2026-03-07T18:30:00.000000"
+    },
+    {
+      "life": 440,
+      "task": "心跳检查",
+      "status": "completed",
+      "verified": true,
+      "result": "系统健康 - Gateway运行正常(HTTP 200), 验证时间: 2026-03-07 18:29:06",
+      "timestamp": "2026-03-07T18:29:06.000000"
+    },
+    {
+      "life": 439,
+      "task": "心跳检查",
+      "status": "completed",
+      "verified": true,
+      "result": "系统健康 - Gateway运行正常(HTTP 200), 验证时间: 2026-03-07 18:29:06",
+      "timestamp": "2026-03-07T18:29:06.000000"
+    },
+    {
+      "life": 438,
+      "task": "心跳检查",
+      "status": "completed",
+      "verified": true,
+      "result": "系统健康 - Gateway运行正常(HTTP 200), 验证时间: 2026-03-07 18:28:00",
+      "timestamp": "2026-03-07T18:28:00.000000"
+    },
     {
       "life": 437,
       "task": "心跳检查",
@@ -31,65 +95,6 @@
       "verified": true,
       "result": "系统健康 - Gateway运行正常(HTTP 200), 验证时间: 2026-03-07 18:26:00",
       "timestamp": "2026-03-07T18:26:00.000000"
-    },
-    {
-      "life": 435,
-      "task": "心跳检查",
-      "status": "completed",
-      "verified": true,
-      "result": "系统健康 - Gateway运行正常(HTTP 200), 验证时间: 2026-03-07 18:25:00",
-      "timestamp": "2026-03-07T18:25:00.000000"
-    },
-    {
-      "life": 434,
-      "task": "心跳检查",
-      "status": "completed",
-      "verified": true,
-      "result": "系统健康 - Gateway运行正常(HTTP 200)",
-      "timestamp": "2026-03-07T18:24:00.000000"
-    },
-    {
-      "life": 433,
-      "task": "心跳检查",
-      "status": "completed",
-      "verified": true,
-      "result": "系统健康 - Gateway运行正常(HTTP 200)",
-      "timestamp": "2026-03-07T18:23:16.436240"
-    },
-    {
-      "life": 432,
-      "task": "心跳检查",
-      "status": "completed",
-      "verified": true,
-      "result": "系统健康 - Gateway运行正常(HTTP 200)"
-    },
-    {
-      "life": 431,
-      "task": "心跳检查",
-      "status": "completed",
-      "verified": true,
-      "result": "系统健康 - Gateway运行正常(HTTP 200)"
-    },
-    {
-      "life": 430,
-      "task": "心跳检查",
-      "status": "completed",
-      "verified": true,
-      "result": "系统健康 - Gateway运行正常(HTTP 200)"
-    },
-    {
-      "life": 429,
-      "task": "心跳检查",
-      "status": "completed",
-      "verified": true,
-      "result": "系统健康 - Gateway运行正常(HTTP 200)"
-    },
-    {
-      "life": 428,
-      "task": "心跳检查",
-      "status": "completed",
-      "verified": true,
-      "result": "系统健康 - Gateway运行正常(HTTP 200)"
     }
   ]
 }
