@@ -5,8 +5,8 @@
     "incarnation": 360,
     "ambition": "智能决策与自主行动系统",
     "ambition_status": "running",
-    "last_wake": "2026-03-07T09:14:33.181271",
-    "task_status": "running"
+    "last_wake": "2026-03-07T09:55:38+08:00",
+    "task_status": "completed"
   },
   "this_life": {
     "task": "心跳检查",
@@ -19,13 +19,14 @@
       "gateway_status": "reachable",
       "gateway_port": 18789,
       "gateway_health": "200",
-      "uptime": "6 days 15h",
-      "load_avg": "0.97",
-      "memory_available": "4.9GB",
-      "verified_at": "2026-03-07T09:14:33.181340"
+      "uptime": "6 days 16h",
+      "load_avg": "1.04",
+      "memory_available": "4.7GB",
+      "disk_available": "25G",
+      "verified_at": "2026-03-07T09:55:38+08:00"
     },
     "retry_count": 0,
-    "execution_time": "2026-03-07T09:14:33.181343"
+    "execution_time": "2026-03-07T09:55:38+08:00"
   },
   "next_life": {
     "task": "心跳检查",
@@ -35,10 +36,11 @@
   "context": {
     "system_status": "healthy",
     "uptime_continuous": true,
-    "daily_check_count": 105
+    "daily_check_count": 140
   },
   "history": [
     {
+      "incarnation": 360,
       "task": "心跳检查",
       "status": "completed",
       "interval": "3m",
@@ -49,76 +51,32 @@
         "gateway_status": "reachable",
         "gateway_port": 18789,
         "gateway_health": "200",
-        "uptime": "6 days 15h",
-        "load_avg": "0.97",
-        "memory_available": "4.9GB",
-        "verified_at": "2026-03-07T09:14:33.181340"
+        "uptime": "6 days 16h",
+        "load_avg": "1.04",
+        "memory_available": "4.7GB",
+        "disk_available": "25G",
+        "verified_at": "2026-03-07T09:55:38+08:00"
       },
       "retry_count": 0,
-      "execution_time": "2026-03-07T09:14:33.181343"
+      "execution_time": "2026-03-07T09:55:38+08:00"
     },
     {
-      "incarnation": 359,
+      "incarnation": 345,
       "task": "心跳检查",
       "status": "completed",
+      "interval": "3m",
+      "priority": 1,
       "verification": {
         "code_running": true,
         "verified_by": "ultron",
         "gateway_status": "reachable",
         "gateway_port": 18789,
         "gateway_health": "200",
-        "uptime": "6 days 15h",
-        "load_avg": "0.97",
-        "memory_available": "4.9GB",
-        "verified_at": "2026-03-07T09:11:33+08:00"
+        "uptime": "6 days",
+        "verified_at": "2026-03-07T09:53:21+08:00"
       },
       "retry_count": 0,
-      "execution_time": "2026-03-07T09:11:33+08:00"
-    },
-    {
-      "incarnation": 358,
-      "task": "心跳检查",
-      "status": "completed",
-      "verification": {
-        "code_running": true,
-        "verified_by": "ultron",
-        "gateway_status": "reachable",
-        "gateway_port": 18789,
-        "gateway_health": "200",
-        "verified_at": "2026-03-07T09:09:00+08:00"
-      },
-      "retry_count": 0,
-      "execution_time": "2026-03-07T09:09:00+08:00"
-    },
-    {
-      "incarnation": 357,
-      "task": "心跳检查",
-      "status": "completed",
-      "verification": {
-        "code_running": true,
-        "verified_by": "ultron",
-        "gateway_status": "reachable",
-        "gateway_port": 18789,
-        "gateway_health": "200",
-        "verified_at": "2026-03-07T09:08:00+08:00"
-      },
-      "retry_count": 0,
-      "execution_time": "2026-03-07T09:08:00+08:00"
-    },
-    {
-      "incarnation": 356,
-      "task": "心跳检查",
-      "status": "completed",
-      "verification": {
-        "code_running": true,
-        "verified_by": "ultron",
-        "gateway_status": "reachable",
-        "gateway_port": 18789,
-        "gateway_health": "200",
-        "verified_at": "2026-03-07T09:07:00+08:00"
-      },
-      "retry_count": 0,
-      "execution_time": "2026-03-07T09:07:00+08:00"
+      "execution_time": "2026-03-07T09:53:21+08:00"
     }
   ]
 }
