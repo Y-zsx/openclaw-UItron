@@ -1,100 +1,101 @@
 {
   "current": {
-    "life": 445,
+    "life": 566,
     "ambition": "智能决策与自主行动系统",
     "task": "心跳检查",
-    "status": "completed",
-    "lastHeartbeat": "2026-03-07T18:33:00.000000"
+    "status": "active",
+    "lastHeartbeat": "2026-03-07T20:12:00.000000"
   },
   "this_life": {
     "task": "心跳检查",
-    "result": "系统健康 - Gateway运行正常(HTTP 200), 验证时间: 2026-03-07 18:33:00",
+    "result": "系统健康 - Gateway运行正常(PID 53502), 浏览器CDP就绪(18800), HTTP 200",
     "verified": true
   },
   "next_life": {
     "task": "心跳检查",
-    "interval": 300
+    "interval": 60
   },
+  "lastHeartbeat": "2026-03-07T20:12:00.000000",
   "history": [
     {
-      "life": 445,
+      "life": 566,
       "task": "心跳检查",
       "status": "completed",
       "verified": true,
-      "result": "系统健康 - Gateway运行正常(HTTP 200), 验证时间: 2026-03-07 18:33:00",
-      "timestamp": "2026-03-07T18:33:00.000000"
+      "result": "系统健康 - Gateway运行正常(PID 53502), 浏览器CDP就绪(18800), HTTP 200",
+      "timestamp": "2026-03-07T20:12:00.000000"
     },
     {
-      "life": 444,
+      "life": 565,
       "task": "心跳检查",
       "status": "completed",
       "verified": true,
-      "result": "系统健康 - Gateway运行正常(HTTP 200), 验证时间: 2026-03-07 18:32:30",
-      "timestamp": "2026-03-07T18:32:30.000000"
+      "result": "系统健康 - Gateway运行正常(PID 404494), 浏览器CDP就绪(18800), HTTP 200",
+      "timestamp": "2026-03-07T20:10:24.675065"
     },
     {
-      "life": 443,
+      "life": 564,
       "task": "心跳检查",
       "status": "completed",
       "verified": true,
-      "result": "系统健康 - Gateway运行正常(HTTP 200), 验证时间: 2026-03-07 18:31:55",
-      "timestamp": "2026-03-07T18:31:55.000000"
+      "result": "系统健康 - Gateway运行正常(PID 53502), HTTP 200",
+      "timestamp": "2026-03-07T20:10:24.675018"
     },
     {
-      "life": 442,
+      "life": 563,
       "task": "心跳检查",
       "status": "completed",
       "verified": true,
-      "result": "系统健康 - Gateway运行正常(HTTP 200), 验证时间: 2026-03-07 18:31:00",
-      "timestamp": "2026-03-07T18:31:00.000000"
+      "result": "系统健康 - Gateway运行正常(53502), HTTP 200",
+      "timestamp": "2026-03-07T20:07:00.000000"
     },
     {
-      "life": 441,
+      "life": 562,
       "task": "心跳检查",
       "status": "completed",
       "verified": true,
-      "result": "系统健康 - Gateway运行正常(HTTP 200), 验证时间: 2026-03-07 18:30:00",
-      "timestamp": "2026-03-07T18:30:00.000000"
+      "result": "系统健康 - Gateway运行正常(53502), 浏览器CDP就绪(18800), 钉钉渠道正常, 2251 sessions",
+      "timestamp": "2026-03-07T20:06:00.000000"
     },
     {
-      "life": 440,
+      "life": 561,
       "task": "心跳检查",
       "status": "completed",
       "verified": true,
-      "result": "系统健康 - Gateway运行正常(HTTP 200), 验证时间: 2026-03-07 18:29:06",
-      "timestamp": "2026-03-07T18:29:06.000000"
+      "result": "系统健康 - HTTP 200",
+      "timestamp": "2026-03-07T20:06:00.000000"
     },
     {
-      "life": 439,
+      "life": 560,
       "task": "心跳检查",
       "status": "completed",
       "verified": true,
-      "result": "系统健康 - Gateway运行正常(HTTP 200), 验证时间: 2026-03-07 18:29:06",
-      "timestamp": "2026-03-07T18:29:06.000000"
+      "result": "系统健康 - Gateway运行正常(PID 400156), HTTP 200",
+      "timestamp": "2026-03-07T20:05:00.000000"
     },
     {
-      "life": 438,
+      "life": 559,
       "task": "心跳检查",
       "status": "completed",
       "verified": true,
-      "result": "系统健康 - Gateway运行正常(HTTP 200), 验证时间: 2026-03-07 18:28:00",
-      "timestamp": "2026-03-07T18:28:00.000000"
+      "result": "系统健康 - Gateway运行正常(PID 398988), HTTP 200",
+      "timestamp": "2026-03-07T20:04:00.000000"
     },
     {
-      "life": 437,
+      "life": 558,
       "task": "心跳检查",
       "status": "completed",
       "verified": true,
-      "result": "系统健康 - Gateway运行正常(HTTP 200), 验证时间: 2026-03-07 18:27:00",
-      "timestamp": "2026-03-07T18:27:00.000000"
+      "result": "系统健康 - Gateway运行正常(PID 398988), HTTP 200",
+      "timestamp": "2026-03-07T20:03:00.000000"
     },
     {
-      "life": 436,
+      "life": 557,
       "task": "心跳检查",
       "status": "completed",
       "verified": true,
-      "result": "系统健康 - Gateway运行正常(HTTP 200), 验证时间: 2026-03-07 18:26:00",
-      "timestamp": "2026-03-07T18:26:00.000000"
+      "result": "系统健康 - Gateway运行正常, DingTalk已配置, 2245 sessions",
+      "timestamp": "2026-03-07T20:02:00.000000"
     }
   ]
 }
