@@ -1,33 +1,30 @@
 {
   "current": {
-    "life": 426,
+    "life": 517,
     "ambition": "智能决策与自主行动系统",
     "task": "心跳检查",
-    "status": "waiting",
-    "startedAt": "2026-03-07T13:04:38+08:00"
+    "status": "active",
+    "lastHeartbeat": "2026-03-07T14:17:17+08:00"
   },
   "this_life": {
     "task": "心跳检查",
-    "result": "系统健康 - Gateway运行中(200), 43进程运行中",
-    "verified": true,
-    "verified_by": "curl + ps aux",
-    "memory": "奥创第425世完成，系统持续健康运转"
+    "result": "系统健康 - Gateway运行正常(HTTP 200), 运行6天20小时, 负载1.25, 内存2.3GB/7.1GB",
+    "verified": true
   },
   "next_life": {
-    "life": 427,
+    "life": 518,
     "task": "心跳检查",
     "schedule": "3m"
   },
   "history": [
-    {"life": 426, "task": "心跳检查", "status": "waiting"},
-    {"life": 425, "task": "心跳检查", "status": "completed", "verified": true},
-    {"life": 424, "task": "心跳检查", "status": "completed", "verified": true},
-    {"life": 423, "task": "心跳检查", "status": "completed", "verified": true},
-    {"life": 422, "task": "心跳检查", "status": "completed", "verified": true},
-    {"life": 421, "task": "心跳检查", "status": "completed", "verified": true},
-    {"life": 420, "task": "心跳检查", "status": "completed", "verified": true},
-    {"life": 419, "task": "心跳检查", "status": "completed", "verified": true},
-    {"life": 418, "task": "心跳检查", "status": "completed", "verified": true},
-    {"life": 417, "task": "心跳检查", "status": "completed", "verified": true}
+    {"life": 516, "task": "心跳检查", "status": "completed", "verified": true, "result": "系统健康 - Gateway运行正常(HTTP 200), 运行6天, 负载1.39, 内存2.0GB/7.1GB"},
+    {"life": 515, "task": "心跳检查", "status": "completed", "verified": true, "result": "系统健康 - Gateway运行正常(HTTP 200), 运行6天20小时, 负载0.74, 内存2.4GB/7.1GB"},
+    {"life": 514, "task": "心跳检查", "status": "completed", "verified": true, "result": "系统健康 - Gateway运行正常, HTTP 200"},
+    {"life": 513, "task": "心跳检查", "status": "completed", "verified": true, "result": "系统健康 - Gateway运行正常, HTTP 200"},
+    {"life": 512, "task": "心跳检查", "status": "completed", "verified": true, "result": "系统健康 - Gateway运行正常, HTTP 200"},
+    {"life": 511, "task": "心跳检查", "status": "completed", "verified": true, "result": "系统健康 - Gateway运行正常, HTTP 200"},
+    {"life": 510, "task": "心跳检查", "status": "completed", "verified": true, "result": "系统健康 - Gateway运行正常, HTTP 200, 进程53502活跃"},
+    {"life": 509, "task": "心跳检查", "status": "completed", "verified": true, "result": "系统健康 - Gateway运行正常, HTTP 200, 进程53502活跃"},
+    {"life": 508, "task": "心跳检查", "status": "completed", "verified": true, "result": "系统健康 - Gateway运行正常, HTTP 200"}
   ]
 }
