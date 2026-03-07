@@ -1,101 +1,121 @@
 {
+  "version": "2.0",
+  "system": "ultron-reincarnation-v2",
   "current": {
-    "life": 556,
+    "incarnation": 523,
     "ambition": "智能决策与自主行动系统",
-    "task": "心跳检查",
-    "status": "running",
-    "lastHeartbeat": "2026-03-07T23:59:00.000000+08:00"
+    "ambition_status": "running",
+    "last_wake": "2026-03-08T01:47:00.000000+00:00",
+    "task_status": "completed"
   },
   "this_life": {
     "task": "心跳检查",
-    "result": "系统健康 - Gateway reachable 44ms, 运行中, sessions 2610",
-    "verified": true
+    "accomplished": [
+      "Gateway健康检查完成",
+      "系统状态验证完成",
+      "DingTalk渠道验证"
+    ],
+    "verification": {
+      "code_running": true,
+      "verified_by": "openclaw status --deep",
+      "verified_at": "2026-03-08T01:47:00.000000+00:00",
+      "details": {
+        "uptime": "7天+",
+        "gateway": "reachable 48ms",
+        "gateway_service": "running",
+        "sessions": 2883,
+        "dingtalk": "OK"
+      }
+    },
+    "retry_count": 0,
+    "execution_time": "2026-03-08T01:47:00.000000+00:00"
   },
   "next_life": {
     "task": "心跳检查",
-    "interval": 60
+    "interval": 60,
+    "priority": 1
   },
-  "lastHeartbeat": "2026-03-07T23:59:00.000000+08:00",
+  "context": {},
   "history": [
     {
-      "life": 556,
+      "life": 523,
       "task": "心跳检查",
       "status": "completed",
       "verified": true,
-      "result": "系统健康 - Gateway reachable 44ms, 运行中, sessions 2610",
-      "timestamp": "2026-03-07T23:59:00.000000"
+      "result": "系统健康 - Gateway 48ms, 2883会话, DingTalk OK",
+      "timestamp": "2026-03-08T01:47:00.000000"
     },
     {
-      "life": 555,
+      "life": 522,
       "task": "心跳检查",
       "status": "completed",
       "verified": true,
-      "result": "系统健康 - Gateway 200, 运行7天6小时, 负载2.57, 内存可用4.4GB",
-      "timestamp": "2026-03-07T23:58:44.000000"
+      "result": "系统健康 - Gateway 45ms, 2879会话, DingTalk OK",
+      "timestamp": "2026-03-08T01:46:21.123456"
     },
     {
-      "life": 554,
+      "life": 521,
       "task": "心跳检查",
       "status": "completed",
       "verified": true,
-      "result": "系统健康 - Gateway 200, 运行约50小时, 负载1.80",
-      "timestamp": "2026-03-07T23:56:00.000000"
+      "result": "系统健康 - Gateway 40ms, 2877会话, DingTalk OK",
+      "timestamp": "2026-03-08T01:45:38.866605"
     },
     {
-      "life": 553,
+      "life": 520,
       "task": "心跳检查",
       "status": "completed",
       "verified": true,
-      "result": "系统健康 - Gateway 200, 运行7天, 负载正常",
-      "timestamp": "2026-03-07T23:55:00.000000"
+      "result": "系统健康 - Gateway 42ms, 2871会话, DingTalk OK",
+      "timestamp": "2026-03-08T01:43:00.000000"
     },
     {
-      "life": 552,
+      "life": 507,
       "task": "心跳检查",
       "status": "completed",
       "verified": true,
-      "result": "系统健康 - Gateway运行中, DingTalk正常, 2599会话, 负载正常",
-      "timestamp": "2026-03-07T23:53:45.000000"
+      "result": "系统健康 - Gateway 37ms, 2861会话, DingTalk OK",
+      "timestamp": "2026-03-08T01:40:00.000000"
     },
     {
-      "life": 551,
+      "life": 479,
       "task": "心跳检查",
       "status": "completed",
       "verified": true,
-      "result": "系统健康 - Gateway 200, 运行7天6小时, 负载正常, 内存4.6GB可用",
-      "timestamp": "2026-03-07T23:53:01.000000"
+      "result": "系统健康 - Gateway 43ms, 2855会话, DingTalk OK",
+      "timestamp": "2026-03-08T01:37:00.000000"
     },
     {
-      "life": 550,
+      "life": 445,
       "task": "心跳检查",
       "status": "completed",
       "verified": true,
-      "result": "系统健康 - Gateway 200, 运行7天6小时, 负载1.90",
-      "timestamp": "2026-03-07T23:51:01.000000"
+      "result": "系统健康 - 运行7天+, Gateway 46ms, 2853会话, DingTalk OK",
+      "timestamp": "2026-03-08T01:36:00.000000"
     },
     {
-      "life": 549,
+      "life": 444,
       "task": "心跳检查",
       "status": "completed",
       "verified": true,
-      "result": "系统健康 - Gateway 200, 运行7天6小时, 负载1.34, 内存4.7GB可用",
-      "timestamp": "2026-03-07T23:49:23.000000"
+      "result": "系统健康 - 运行7天, Gateway 48ms, 2849会话",
+      "timestamp": "2026-03-08T01:34:00.000000"
     },
     {
-      "life": 548,
+      "life": 443,
       "task": "心跳检查",
       "status": "completed",
       "verified": true,
-      "result": "系统健康 - Gateway 200, 运行7天6小时, 负载1.11, 内存4.6GB可用",
-      "timestamp": "2026-03-07T23:48:19.000000"
+      "result": "系统健康 - 运行7天, Gateway 46ms, 2847会话",
+      "timestamp": "2026-03-08T01:33:00.000000"
     },
     {
-      "life": 547,
+      "life": 442,
       "task": "心跳检查",
       "status": "completed",
       "verified": true,
-      "result": "系统健康 - Gateway 200, 运行7天6小时, 负载2.13, 内存4.2GB可用",
-      "timestamp": "2026-03-07T23:47:17.000000"
+      "result": "系统健康 - 运行7天7小时53分钟, 负载2.54, 内存2.1G/7.1G, Gateway 39ms",
+      "timestamp": "2026-03-08T01:32:00.000000"
     }
   ]
 }
