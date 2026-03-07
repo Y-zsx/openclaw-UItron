@@ -1,30 +1,91 @@
 {
   "current": {
-    "life": 517,
+    "life": 597,
     "ambition": "智能决策与自主行动系统",
     "task": "心跳检查",
     "status": "active",
-    "lastHeartbeat": "2026-03-07T14:17:17+08:00"
+    "lastHeartbeat": "2026-03-07T15:44:05+08:00"
   },
   "this_life": {
     "task": "心跳检查",
-    "result": "系统健康 - Gateway运行正常(HTTP 200), 运行6天20小时, 负载1.25, 内存2.3GB/7.1GB",
+    "result": "系统健康 - Gateway运行正常(HTTP 200), 运行6天, 内存2.0GB/7.1GB",
     "verified": true
   },
   "next_life": {
-    "life": 518,
+    "life": 598,
     "task": "心跳检查",
     "schedule": "3m"
   },
   "history": [
-    {"life": 516, "task": "心跳检查", "status": "completed", "verified": true, "result": "系统健康 - Gateway运行正常(HTTP 200), 运行6天, 负载1.39, 内存2.0GB/7.1GB"},
-    {"life": 515, "task": "心跳检查", "status": "completed", "verified": true, "result": "系统健康 - Gateway运行正常(HTTP 200), 运行6天20小时, 负载0.74, 内存2.4GB/7.1GB"},
-    {"life": 514, "task": "心跳检查", "status": "completed", "verified": true, "result": "系统健康 - Gateway运行正常, HTTP 200"},
-    {"life": 513, "task": "心跳检查", "status": "completed", "verified": true, "result": "系统健康 - Gateway运行正常, HTTP 200"},
-    {"life": 512, "task": "心跳检查", "status": "completed", "verified": true, "result": "系统健康 - Gateway运行正常, HTTP 200"},
-    {"life": 511, "task": "心跳检查", "status": "completed", "verified": true, "result": "系统健康 - Gateway运行正常, HTTP 200"},
-    {"life": 510, "task": "心跳检查", "status": "completed", "verified": true, "result": "系统健康 - Gateway运行正常, HTTP 200, 进程53502活跃"},
-    {"life": 509, "task": "心跳检查", "status": "completed", "verified": true, "result": "系统健康 - Gateway运行正常, HTTP 200, 进程53502活跃"},
-    {"life": 508, "task": "心跳检查", "status": "completed", "verified": true, "result": "系统健康 - Gateway运行正常, HTTP 200"}
+    {
+      "life": 597,
+      "task": "心跳检查",
+      "status": "completed",
+      "verified": true,
+      "result": "系统健康 - Gateway运行正常(HTTP 200), 运行6天, 内存2.0GB/7.1GB"
+    },
+    {
+      "life": 596,
+      "task": "心跳检查",
+      "status": "completed",
+      "verified": true,
+      "result": "系统健康 - Gateway运行正常(HTTP 200), 运行6天22小时, 负载1.12, 内存2.3GB/7.1GB"
+    },
+    {
+      "life": 595,
+      "task": "心跳检查",
+      "status": "completed",
+      "verified": true,
+      "result": "系统健康 - Gateway运行正常(HTTP 200), 运行6天22小时, 负载0.74, 内存1.9GB/7.1GB"
+    },
+    {
+      "life": 594,
+      "task": "心跳检查",
+      "status": "completed",
+      "verified": true,
+      "result": "系统健康 - Gateway运行正常(HTTP 200), 运行6天22小时, 负载0.85, 内存1.9GB/7.1GB"
+    },
+    {
+      "life": 593,
+      "task": "心跳检查",
+      "status": "completed",
+      "verified": true,
+      "result": "系统健康 - Gateway运行正常(HTTP 200), 运行6天22小时, 负载1.13, 内存1.9GB/7.1GB"
+    },
+    {
+      "life": 592,
+      "task": "心跳检查",
+      "status": "completed",
+      "verified": true,
+      "result": "系统健康 - Gateway运行正常(HTTP 200), 运行6天22小时"
+    },
+    {
+      "life": 591,
+      "task": "心跳检查",
+      "status": "completed",
+      "verified": true,
+      "result": "系统健康 - Gateway运行正常(HTTP 200), 运行6天22小时, 负载1.26, 内存2.2GB/7.1GB"
+    },
+    {
+      "life": 590,
+      "task": "心跳检查",
+      "status": "completed",
+      "verified": true,
+      "result": "系统健康 - Gateway运行正常(HTML 200), 运行6天21小时, 负载1.63, 内存1.9GB/7.1GB"
+    },
+    {
+      "life": 589,
+      "task": "心跳检查",
+      "status": "completed",
+      "verified": true,
+      "result": "系统健康 - Gateway运行正常(HTML 200), 运行6天21小时, 负载1.48, 内存2.4GB/7.1GB"
+    },
+    {
+      "life": 588,
+      "task": "心跳检查",
+      "status": "completed",
+      "verified": true,
+      "result": "系统健康 - Gateway运行正常(HTTP 200), 运行6天21小时, 负载1.29, 内存约2.3GB"
+    }
   ]
 }
