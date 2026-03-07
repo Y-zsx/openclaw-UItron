@@ -1,12 +1,19 @@
 {
-  "last_check": "2026-03-07T10:32:00+08:00",
+  "last_check": "2026-03-07T14:30:00+08:00",
   "system": {
     "status": "healthy",
-    "gateway": "reachable 43ms",
-    "uptime": "6 days 16 hours",
-    "load": "1.09, 1.23, 1.37",
-    "memory": "1.8Gi/7.1Gi (25%)",
-    "disk": "35%"
+    "gateway": "reachable",
+    "uptime": "6 days 20 hours",
+    "load": "2.54, 1.83, 1.66",
+    "memory": "2.6Gi/7.1Gi (37%)",
+    "disk": "14G/40G (36%)",
+    "dashboard": "HTTP 200 OK"
   },
-  "notes": "心跳检查完成，系统运行正常"
+  "reincarnation": {
+    "current_life": 528,
+    "task": "心跳检查",
+    "status": "active",
+    "verified": true
+  },
+  "notes": "心跳检查完成，系统运行正常。Dashboard可访问(HTTP 200)，转世系统第528世运行中。"
 }
