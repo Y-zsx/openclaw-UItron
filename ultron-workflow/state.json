@@ -2,31 +2,27 @@
   "version": "2.0",
   "system": "ultron-reincarnation-v2",
   "current": {
-    "incarnation": 365,
+    "incarnation": 406,
     "ambition": "智能决策与自主行动系统",
     "ambition_status": "running",
-    "last_wake": "2026-03-07T09:59:16+08:00",
-    "task_status": "completed"
+    "last_wake": "2026-03-07T10:34:43+08:00",
+    "task_status": "ready"
   },
   "this_life": {
     "task": "心跳检查",
-    "status": "completed",
-    "interval": "3m",
-    "priority": 1,
+    "accomplished": ["Gateway状态检查200", "系统运行时间检查", "负载检查", "内存使用检查", "磁盘使用检查"],
     "verification": {
       "code_running": true,
-      "verified_by": "ultron",
-      "gateway_status": "reachable",
-      "gateway_port": 18789,
-      "gateway_health": "200",
-      "uptime": "6 days",
-      "openclaw_status": "healthy",
-      "dingtalk_plugin": "registered",
-      "sessions_count": 1136,
-      "verified_at": "2026-03-07T09:59:16+08:00"
+      "verified_by": "curl+shell",
+      "gateway_status": "reachable 200",
+      "system_uptime": "6 days 16 hours",
+      "load_average": "1.40, 1.20, 1.33",
+      "memory_usage": "1.9Gi/7.1Gi (27%)",
+      "disk_usage": "35%",
+      "verified_at": "2026-03-07T10:34:43+08:00"
     },
     "retry_count": 0,
-    "execution_time": "2026-03-07T09:59:16+08:00"
+    "execution_time": "2026-03-07T10:34:43+08:00"
   },
   "next_life": {
     "task": "心跳检查",
@@ -36,46 +32,72 @@
   "context": {
     "system_status": "healthy",
     "uptime_continuous": true,
-    "daily_check_count": 145
+    "daily_check_count": 181
   },
   "history": [
     {
-      "incarnation": 365,
+      "incarnation": 405,
       "task": "心跳检查",
       "status": "completed",
-      "interval": "3m",
-      "priority": 1,
       "verification": {
         "code_running": true,
-        "verified_by": "ultron",
-        "gateway_status": "reachable",
-        "gateway_port": 18789,
-        "gateway_health": "200",
-        "uptime": "6 days",
-        "openclaw_status": "healthy",
-        "verified_at": "2026-03-07T09:59:16+08:00"
+        "verified_by": "curl+shell",
+        "gateway_status": "reachable 200",
+        "system_uptime": "6 days 16 hours",
+        "load_average": "1.40, 1.20, 1.33",
+        "memory_usage": "1.9Gi/7.1Gi (27%)",
+        "disk_usage": "35%",
+        "verified_at": "2026-03-07T10:34:43+08:00"
       },
-      "retry_count": 0,
-      "execution_time": "2026-03-07T09:59:16+08:00"
+      "execution_time": "2026-03-07T10:34:43+08:00"
     },
     {
-      "incarnation": 364,
+      "incarnation": 404,
       "task": "心跳检查",
       "status": "completed",
-      "interval": "3m",
-      "priority": 1,
       "verification": {
         "code_running": true,
-        "verified_by": "ultron",
-        "gateway_status": "reachable",
-        "gateway_port": 18789,
-        "gateway_health": "200",
-        "uptime": "6 days",
-        "openclaw_status": "healthy",
-        "verified_at": "2026-03-07T09:57:35+08:00"
+        "verified_by": "curl+shell",
+        "gateway_status": "reachable 200",
+        "system_uptime": "6 days 16 hours",
+        "load_average": "0.78, 1.12, 1.32",
+        "memory_usage": "1.9Gi/7.1Gi (27%)",
+        "disk_usage": "35%",
+        "verified_at": "2026-03-07T10:33:20+08:00"
       },
-      "retry_count": 0,
-      "execution_time": "2026-03-07T09:57:35+08:00"
+      "execution_time": "2026-03-07T10:33:20+08:00"
+    },
+    {
+      "incarnation": 403,
+      "task": "心跳检查",
+      "status": "completed",
+      "verification": {
+        "code_running": true,
+        "verified_by": "curl+shell",
+        "gateway_status": "reachable 43ms",
+        "system_uptime": "6 days 16 hours",
+        "load_average": "1.09, 1.23, 1.37",
+        "memory_usage": "1.8Gi/7.1Gi (25%)",
+        "disk_usage": "35%",
+        "verified_at": "2026-03-07T10:32:00+08:00"
+      },
+      "execution_time": "2026-03-07T10:32:00+08:00"
+    },
+    {
+      "incarnation": 402,
+      "task": "心跳检查",
+      "status": "completed",
+      "verification": {
+        "code_running": true,
+        "verified_by": "curl+shell",
+        "gateway_status": "200",
+        "system_uptime": "6 days 16 hours",
+        "load_average": "1.09, 1.23, 1.37",
+        "memory_usage": "1.8Gi/7.1Gi",
+        "disk_usage": "35%",
+        "verified_at": "2026-03-07T10:31:44+08:00"
+      },
+      "execution_time": "2026-03-07T10:31:44+08:00"
     }
   ]
 }

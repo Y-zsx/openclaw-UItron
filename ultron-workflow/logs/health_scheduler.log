@@ -1407,3 +1407,43 @@
 2026-03-07T09:51:25.240486 - status_panel: 恢复失败 - Failed to restart status-panel.service: Unit status-panel.service not found.
 
 2026-03-07T09:51:25.240679 - WARNING: 1个服务异常 - ['status_panel']
+2026-03-07T09:56:26.949265 - 开始健康检查...
+2026-03-07T09:56:26.982148 - 尝试恢复 status_panel: systemctl restart status-panel
+2026-03-07T09:56:26.987589 - status_panel: 恢复失败 - Failed to restart status-panel.service: Unit status-panel.service not found.
+
+2026-03-07T09:56:26.987677 - WARNING: 1个服务异常 - ['status_panel']
+2026-03-07T10:01:28.548356 - 开始健康检查...
+2026-03-07T10:01:28.607409 - 尝试恢复 status_panel: systemctl restart status-panel
+2026-03-07T10:01:28.616339 - status_panel: 恢复失败 - Failed to restart status-panel.service: Unit status-panel.service not found.
+
+2026-03-07T10:01:28.616442 - WARNING: 1个服务异常 - ['status_panel']
+2026-03-07T10:06:30.321873 - 开始健康检查...
+2026-03-07T10:06:30.353537 - 尝试恢复 status_panel: systemctl restart status-panel
+2026-03-07T10:06:30.358604 - status_panel: 恢复失败 - Failed to restart status-panel.service: Unit status-panel.service not found.
+
+2026-03-07T10:06:30.358697 - WARNING: 1个服务异常 - ['status_panel']
+2026-03-07T10:11:32.061896 - 开始健康检查...
+2026-03-07T10:11:32.097693 - 尝试恢复 status_panel: systemctl restart status-panel
+2026-03-07T10:11:32.104218 - status_panel: 恢复失败 - Failed to restart status-panel.service: Unit status-panel.service not found.
+
+2026-03-07T10:11:32.104352 - WARNING: 1个服务异常 - ['status_panel']
+2026-03-07T10:16:33.842007 - 开始健康检查...
+2026-03-07T10:16:33.884983 - 尝试恢复 status_panel: systemctl restart status-panel
+2026-03-07T10:16:33.893501 - status_panel: 恢复失败 - Failed to restart status-panel.service: Unit status-panel.service not found.
+
+2026-03-07T10:16:33.893658 - WARNING: 1个服务异常 - ['status_panel']
+2026-03-07T10:21:35.420854 - 开始健康检查...
+2026-03-07T10:21:35.453484 - 尝试恢复 status_panel: systemctl restart status-panel
+2026-03-07T10:21:35.460282 - status_panel: 恢复失败 - Failed to restart status-panel.service: Unit status-panel.service not found.
+
+2026-03-07T10:21:35.460399 - WARNING: 1个服务异常 - ['status_panel']
+2026-03-07T10:26:37.145389 - 开始健康检查...
+2026-03-07T10:26:37.178614 - 尝试恢复 status_panel: systemctl restart status-panel
+2026-03-07T10:26:37.185623 - status_panel: 恢复失败 - Failed to restart status-panel.service: Unit status-panel.service not found.
+
+2026-03-07T10:26:37.185737 - WARNING: 1个服务异常 - ['status_panel']
+2026-03-07T10:31:38.956202 - 开始健康检查...
+2026-03-07T10:31:38.988759 - 尝试恢复 status_panel: systemctl restart status-panel
+2026-03-07T10:31:38.994303 - status_panel: 恢复失败 - Failed to restart status-panel.service: Unit status-panel.service not found.
+
+2026-03-07T10:31:38.994457 - WARNING: 1个服务异常 - ['status_panel']

@@ -1,1 +1,12 @@
-[2026-03-04 02:58] 监控: CPU正常 内存正常 磁盘29% Gateway运行中
+{
+  "last_check": "2026-03-07T10:32:00+08:00",
+  "system": {
+    "status": "healthy",
+    "gateway": "reachable 43ms",
+    "uptime": "6 days 16 hours",
+    "load": "1.09, 1.23, 1.37",
+    "memory": "1.8Gi/7.1Gi (25%)",
+    "disk": "35%"
+  },
+  "notes": "心跳检查完成，系统运行正常"
+}
