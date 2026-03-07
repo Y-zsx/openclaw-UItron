@@ -2,10 +2,10 @@
   "version": "2.0",
   "system": "ultron-reincarnation-v2",
   "current": {
-    "incarnation": 360,
+    "incarnation": 365,
     "ambition": "智能决策与自主行动系统",
     "ambition_status": "running",
-    "last_wake": "2026-03-07T09:55:38+08:00",
+    "last_wake": "2026-03-07T09:59:16+08:00",
     "task_status": "completed"
   },
   "this_life": {
@@ -19,14 +19,14 @@
       "gateway_status": "reachable",
       "gateway_port": 18789,
       "gateway_health": "200",
-      "uptime": "6 days 16h",
-      "load_avg": "1.04",
-      "memory_available": "4.7GB",
-      "disk_available": "25G",
-      "verified_at": "2026-03-07T09:55:38+08:00"
+      "uptime": "6 days",
+      "openclaw_status": "healthy",
+      "dingtalk_plugin": "registered",
+      "sessions_count": 1136,
+      "verified_at": "2026-03-07T09:59:16+08:00"
     },
     "retry_count": 0,
-    "execution_time": "2026-03-07T09:55:38+08:00"
+    "execution_time": "2026-03-07T09:59:16+08:00"
   },
   "next_life": {
     "task": "心跳检查",
@@ -36,32 +36,11 @@
   "context": {
     "system_status": "healthy",
     "uptime_continuous": true,
-    "daily_check_count": 140
+    "daily_check_count": 145
   },
   "history": [
     {
-      "incarnation": 360,
-      "task": "心跳检查",
-      "status": "completed",
-      "interval": "3m",
-      "priority": 1,
-      "verification": {
-        "code_running": true,
-        "verified_by": "ultron",
-        "gateway_status": "reachable",
-        "gateway_port": 18789,
-        "gateway_health": "200",
-        "uptime": "6 days 16h",
-        "load_avg": "1.04",
-        "memory_available": "4.7GB",
-        "disk_available": "25G",
-        "verified_at": "2026-03-07T09:55:38+08:00"
-      },
-      "retry_count": 0,
-      "execution_time": "2026-03-07T09:55:38+08:00"
-    },
-    {
-      "incarnation": 345,
+      "incarnation": 365,
       "task": "心跳检查",
       "status": "completed",
       "interval": "3m",
@@ -73,10 +52,30 @@
         "gateway_port": 18789,
         "gateway_health": "200",
         "uptime": "6 days",
-        "verified_at": "2026-03-07T09:53:21+08:00"
+        "openclaw_status": "healthy",
+        "verified_at": "2026-03-07T09:59:16+08:00"
       },
       "retry_count": 0,
-      "execution_time": "2026-03-07T09:53:21+08:00"
+      "execution_time": "2026-03-07T09:59:16+08:00"
+    },
+    {
+      "incarnation": 364,
+      "task": "心跳检查",
+      "status": "completed",
+      "interval": "3m",
+      "priority": 1,
+      "verification": {
+        "code_running": true,
+        "verified_by": "ultron",
+        "gateway_status": "reachable",
+        "gateway_port": 18789,
+        "gateway_health": "200",
+        "uptime": "6 days",
+        "openclaw_status": "healthy",
+        "verified_at": "2026-03-07T09:57:35+08:00"
+      },
+      "retry_count": 0,
+      "execution_time": "2026-03-07T09:57:35+08:00"
     }
   ]
 }
