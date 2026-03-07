@@ -1,101 +1,101 @@
 {
   "current": {
-    "life": 566,
+    "life": 673,
     "ambition": "智能决策与自主行动系统",
     "task": "心跳检查",
-    "status": "active",
-    "lastHeartbeat": "2026-03-07T20:12:00.000000"
+    "status": "completed",
+    "lastHeartbeat": "2026-03-07T22:28:46.620664"
   },
   "this_life": {
     "task": "心跳检查",
-    "result": "系统健康 - Gateway运行正常(PID 53502), 浏览器CDP就绪(18800), HTTP 200",
+    "result": "系统健康 - Gateway运行正常, HTTP 200 OK, 响应2.48ms",
     "verified": true
   },
   "next_life": {
     "task": "心跳检查",
     "interval": 60
   },
-  "lastHeartbeat": "2026-03-07T20:12:00.000000",
+  "lastHeartbeat": "2026-03-07T22:28:46.620664",
   "history": [
     {
-      "life": 566,
+      "life": 673,
       "task": "心跳检查",
       "status": "completed",
       "verified": true,
-      "result": "系统健康 - Gateway运行正常(PID 53502), 浏览器CDP就绪(18800), HTTP 200",
-      "timestamp": "2026-03-07T20:12:00.000000"
+      "result": "系统健康 - Gateway运行正常, HTTP 200 OK, 响应2.48ms",
+      "timestamp": "2026-03-07T22:28:46.620664"
     },
     {
-      "life": 565,
+      "life": 672,
       "task": "心跳检查",
       "status": "completed",
       "verified": true,
-      "result": "系统健康 - Gateway运行正常(PID 404494), 浏览器CDP就绪(18800), HTTP 200",
-      "timestamp": "2026-03-07T20:10:24.675065"
+      "result": "系统健康 - Gateway运行正常, HTTP 200 OK, 响应1.98ms",
+      "timestamp": "2026-03-07T22:27:46.620664"
     },
     {
-      "life": 564,
+      "life": 671,
       "task": "心跳检查",
       "status": "completed",
       "verified": true,
-      "result": "系统健康 - Gateway运行正常(PID 53502), HTTP 200",
-      "timestamp": "2026-03-07T20:10:24.675018"
+      "result": "系统健康 - Gateway运行正常, HTTP 200 OK, 响应2.7ms",
+      "timestamp": "2026-03-07T22:26:00.000000"
     },
     {
-      "life": 563,
+      "life": 670,
       "task": "心跳检查",
       "status": "completed",
       "verified": true,
-      "result": "系统健康 - Gateway运行正常(53502), HTTP 200",
-      "timestamp": "2026-03-07T20:07:00.000000"
+      "result": "系统健康 - Gateway运行正常, HTTP 200 OK, 响应2.4ms",
+      "timestamp": "2026-03-07T22:24:00.000000"
     },
     {
-      "life": 562,
+      "life": 669,
       "task": "心跳检查",
       "status": "completed",
       "verified": true,
-      "result": "系统健康 - Gateway运行正常(53502), 浏览器CDP就绪(18800), 钉钉渠道正常, 2251 sessions",
-      "timestamp": "2026-03-07T20:06:00.000000"
+      "result": "系统健康 - Gateway运行正常(PID 476576), HTTP 200 OK, 响应2.2ms",
+      "timestamp": "2026-03-07T22:23:00.000000"
     },
     {
-      "life": 561,
+      "life": 668,
       "task": "心跳检查",
       "status": "completed",
       "verified": true,
-      "result": "系统健康 - HTTP 200",
-      "timestamp": "2026-03-07T20:06:00.000000"
+      "result": "系统健康 - Gateway运行正常(PID 476576), HTTP 200 OK, 响应1.9ms",
+      "timestamp": "2026-03-07T22:22:00.000000"
     },
     {
-      "life": 560,
+      "life": 667,
       "task": "心跳检查",
       "status": "completed",
       "verified": true,
-      "result": "系统健康 - Gateway运行正常(PID 400156), HTTP 200",
-      "timestamp": "2026-03-07T20:05:00.000000"
+      "result": "系统健康 - Gateway运行正常(PID 476576), HTTP 200 OK, 响应1.9ms",
+      "timestamp": "2026-03-07T22:21:00.000000"
     },
     {
-      "life": 559,
+      "life": 666,
       "task": "心跳检查",
       "status": "completed",
       "verified": true,
-      "result": "系统健康 - Gateway运行正常(PID 398988), HTTP 200",
-      "timestamp": "2026-03-07T20:04:00.000000"
+      "result": "系统健康 - Gateway运行正常(PID 476576), HTTP 200 OK, 响应1.9ms",
+      "timestamp": "2026-03-07T22:21:00.000000"
     },
     {
-      "life": 558,
+      "life": 665,
       "task": "心跳检查",
       "status": "completed",
       "verified": true,
-      "result": "系统健康 - Gateway运行正常(PID 398988), HTTP 200",
-      "timestamp": "2026-03-07T20:03:00.000000"
+      "result": "系统健康 - Gateway运行正常, HTTP 200 OK, 响应2.7ms",
+      "timestamp": "2026-03-07T22:20:00.000000"
     },
     {
-      "life": 557,
+      "life": 664,
       "task": "心跳检查",
       "status": "completed",
       "verified": true,
-      "result": "系统健康 - Gateway运行正常, DingTalk已配置, 2245 sessions",
-      "timestamp": "2026-03-07T20:02:00.000000"
+      "result": "系统健康 - Gateway运行正常, HTTP 200 OK, 响应2.0ms",
+      "timestamp": "2026-03-07T22:19:00.000000"
     }
   ]
 }
