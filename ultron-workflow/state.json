@@ -1,91 +1,91 @@
 {
   "current": {
-    "life": 705,
+    "life": 418,
     "ambition": "智能决策与自主行动系统",
     "task": "心跳检查",
-    "status": "active",
-    "lastHeartbeat": "2026-03-07T17:35:00.000000"
+    "status": "in_progress",
+    "lastHeartbeat": "2026-03-07T18:21:00.000000"
   },
   "this_life": {
     "task": "心跳检查",
-    "result": "系统健康 - Gateway运行正常(HTTP 200)",
+    "result": "系统健康 - Gateway运行正常(HTTP 200), 浏览器CDP正常(HTTP 200), 验证时间: 2026-03-07 18:21:00",
     "verified": true
   },
   "next_life": {
-    "life": 706,
+    "life": 419,
     "task": "心跳检查",
     "schedule": "3m"
   },
   "history": [
     {
-      "life": 705,
+      "life": 418,
       "task": "心跳检查",
       "status": "completed",
       "verified": true,
-      "result": "系统健康 - Gateway运行正常(HTTP 200)"
+      "result": "系统健康 - Gateway运行正常(HTTP 200), 浏览器CDP正常(HTTP 200)"
     },
     {
-      "life": 704,
+      "life": 417,
       "task": "心跳检查",
       "status": "completed",
       "verified": true,
-      "result": "系统健康 - Gateway运行正常(HTTP 200)"
+      "result": "系统健康 - Gateway运行正常(HTTP 200), 浏览器CDP正常(HTTP 200)"
     },
     {
-      "life": 703,
+      "life": 416,
       "task": "心跳检查",
       "status": "completed",
       "verified": true,
-      "result": "系统健康 - Gateway运行正常(HTTP 200)"
+      "result": "系统健康 - Gateway运行正常(HTTP 200), 浏览器CDP正常(HTTP 200)"
     },
     {
-      "life": 702,
+      "life": 415,
       "task": "心跳检查",
       "status": "completed",
       "verified": true,
-      "result": "系统健康 - Gateway运行正常(HTTP 200)"
+      "result": "系统健康 - Gateway运行正常(HTTP 200), 浏览器CDP正常(HTTP 200)"
     },
     {
-      "life": 701,
+      "life": 414,
       "task": "心跳检查",
       "status": "completed",
       "verified": true,
-      "result": "系统健康 - Gateway运行正常(HTTP 200)"
+      "result": "系统健康 - Gateway运行正常(HTTP 200), 浏览器CDP正常(HTTP 200)"
     },
     {
-      "life": 700,
+      "life": 413,
       "task": "心跳检查",
       "status": "completed",
       "verified": true,
-      "result": "系统健康 - Gateway运行正常(HTTP 200)"
+      "result": "系统健康 - Gateway运行正常(HTTP 200), 浏览器CDP正常(HTTP 200)"
     },
     {
-      "life": 699,
+      "life": 412,
       "task": "心跳检查",
       "status": "completed",
       "verified": true,
-      "result": "系统健康 - Gateway运行正常(HTTP 200)"
+      "result": "系统健康 - Gateway运行正常(HTTP 200), 浏览器CDP正常(HTTP 200)"
     },
     {
-      "life": 698,
+      "life": 411,
       "task": "心跳检查",
       "status": "completed",
       "verified": true,
-      "result": "系统健康 - Gateway运行正常(HTTP 200)"
+      "result": "系统健康 - Gateway运行正常(HTTP 200), 浏览器CDP正常(HTTP 200)"
     },
     {
-      "life": 697,
+      "life": 410,
       "task": "心跳检查",
       "status": "completed",
       "verified": true,
-      "result": "系统健康 - Gateway运行正常(HTTP 200)"
+      "result": "系统健康 - Gateway运行正常(HTTP 200), 浏览器CDP正常(HTTP 200)"
     },
     {
-      "life": 696,
+      "life": 409,
       "task": "心跳检查",
       "status": "completed",
       "verified": true,
-      "result": "系统健康 - Gateway运行正常(HTTP 200)"
+      "result": "系统健康 - Gateway运行正常(HTTP 200), 浏览器CDP正常(HTTP 200)"
     }
   ]
 }
