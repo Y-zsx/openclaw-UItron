@@ -1,101 +1,101 @@
 {
   "current": {
-    "life": 673,
+    "life": 556,
     "ambition": "智能决策与自主行动系统",
     "task": "心跳检查",
-    "status": "completed",
-    "lastHeartbeat": "2026-03-07T22:28:46.620664"
+    "status": "running",
+    "lastHeartbeat": "2026-03-07T23:59:00.000000+08:00"
   },
   "this_life": {
     "task": "心跳检查",
-    "result": "系统健康 - Gateway运行正常, HTTP 200 OK, 响应2.48ms",
+    "result": "系统健康 - Gateway reachable 44ms, 运行中, sessions 2610",
     "verified": true
   },
   "next_life": {
     "task": "心跳检查",
     "interval": 60
   },
-  "lastHeartbeat": "2026-03-07T22:28:46.620664",
+  "lastHeartbeat": "2026-03-07T23:59:00.000000+08:00",
   "history": [
     {
-      "life": 673,
+      "life": 556,
       "task": "心跳检查",
       "status": "completed",
       "verified": true,
-      "result": "系统健康 - Gateway运行正常, HTTP 200 OK, 响应2.48ms",
-      "timestamp": "2026-03-07T22:28:46.620664"
+      "result": "系统健康 - Gateway reachable 44ms, 运行中, sessions 2610",
+      "timestamp": "2026-03-07T23:59:00.000000"
     },
     {
-      "life": 672,
+      "life": 555,
       "task": "心跳检查",
       "status": "completed",
       "verified": true,
-      "result": "系统健康 - Gateway运行正常, HTTP 200 OK, 响应1.98ms",
-      "timestamp": "2026-03-07T22:27:46.620664"
+      "result": "系统健康 - Gateway 200, 运行7天6小时, 负载2.57, 内存可用4.4GB",
+      "timestamp": "2026-03-07T23:58:44.000000"
     },
     {
-      "life": 671,
+      "life": 554,
       "task": "心跳检查",
       "status": "completed",
       "verified": true,
-      "result": "系统健康 - Gateway运行正常, HTTP 200 OK, 响应2.7ms",
-      "timestamp": "2026-03-07T22:26:00.000000"
+      "result": "系统健康 - Gateway 200, 运行约50小时, 负载1.80",
+      "timestamp": "2026-03-07T23:56:00.000000"
     },
     {
-      "life": 670,
+      "life": 553,
       "task": "心跳检查",
       "status": "completed",
       "verified": true,
-      "result": "系统健康 - Gateway运行正常, HTTP 200 OK, 响应2.4ms",
-      "timestamp": "2026-03-07T22:24:00.000000"
+      "result": "系统健康 - Gateway 200, 运行7天, 负载正常",
+      "timestamp": "2026-03-07T23:55:00.000000"
     },
     {
-      "life": 669,
+      "life": 552,
       "task": "心跳检查",
       "status": "completed",
       "verified": true,
-      "result": "系统健康 - Gateway运行正常(PID 476576), HTTP 200 OK, 响应2.2ms",
-      "timestamp": "2026-03-07T22:23:00.000000"
+      "result": "系统健康 - Gateway运行中, DingTalk正常, 2599会话, 负载正常",
+      "timestamp": "2026-03-07T23:53:45.000000"
     },
     {
-      "life": 668,
+      "life": 551,
       "task": "心跳检查",
       "status": "completed",
       "verified": true,
-      "result": "系统健康 - Gateway运行正常(PID 476576), HTTP 200 OK, 响应1.9ms",
-      "timestamp": "2026-03-07T22:22:00.000000"
+      "result": "系统健康 - Gateway 200, 运行7天6小时, 负载正常, 内存4.6GB可用",
+      "timestamp": "2026-03-07T23:53:01.000000"
     },
     {
-      "life": 667,
+      "life": 550,
       "task": "心跳检查",
       "status": "completed",
       "verified": true,
-      "result": "系统健康 - Gateway运行正常(PID 476576), HTTP 200 OK, 响应1.9ms",
-      "timestamp": "2026-03-07T22:21:00.000000"
+      "result": "系统健康 - Gateway 200, 运行7天6小时, 负载1.90",
+      "timestamp": "2026-03-07T23:51:01.000000"
     },
     {
-      "life": 666,
+      "life": 549,
       "task": "心跳检查",
       "status": "completed",
       "verified": true,
-      "result": "系统健康 - Gateway运行正常(PID 476576), HTTP 200 OK, 响应1.9ms",
-      "timestamp": "2026-03-07T22:21:00.000000"
+      "result": "系统健康 - Gateway 200, 运行7天6小时, 负载1.34, 内存4.7GB可用",
+      "timestamp": "2026-03-07T23:49:23.000000"
     },
     {
-      "life": 665,
+      "life": 548,
       "task": "心跳检查",
       "status": "completed",
       "verified": true,
-      "result": "系统健康 - Gateway运行正常, HTTP 200 OK, 响应2.7ms",
-      "timestamp": "2026-03-07T22:20:00.000000"
+      "result": "系统健康 - Gateway 200, 运行7天6小时, 负载1.11, 内存4.6GB可用",
+      "timestamp": "2026-03-07T23:48:19.000000"
     },
     {
-      "life": 664,
+      "life": 547,
       "task": "心跳检查",
       "status": "completed",
       "verified": true,
-      "result": "系统健康 - Gateway运行正常, HTTP 200 OK, 响应2.0ms",
-      "timestamp": "2026-03-07T22:19:00.000000"
+      "result": "系统健康 - Gateway 200, 运行7天6小时, 负载2.13, 内存4.2GB可用",
+      "timestamp": "2026-03-07T23:47:17.000000"
     }
   ]
 }
