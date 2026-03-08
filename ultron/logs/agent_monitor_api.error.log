@@ -3358,3 +3358,12 @@ Port 18098 is in use by another program. Either identify and stop that program, 
  * Running on http://127.0.0.1:18098
  * Running on http://172.16.204.191:18098
 2026-03-06 14:30:14,934 [INFO] werkzeug: [33mPress CTRL+C to quit[0m
+2026-03-09 06:20:52,931 [INFO] AgentMonitor: 数据库初始化完成: /root/.openclaw/workspace/ultron/agents/data/agent_monitor.db
+2026-03-09 06:20:53,073 [INFO] AgentMonitor: 已加载 4 个Agent
+2026-03-09 06:20:53,083 [INFO] AgentMonitor: AgentMonitor 初始化完成
+2026-03-09 06:20:53,724 [INFO] AgentMonitorAPI: 启动 Agent Monitor API 服务 (端口 18098)
+2026-03-09 06:20:53,987 [INFO] werkzeug: [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:18098
+ * Running on http://172.16.204.191:18098
+2026-03-09 06:20:53,990 [INFO] werkzeug: [33mPress CTRL+C to quit[0m
