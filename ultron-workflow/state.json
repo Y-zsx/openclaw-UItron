@@ -1,84 +1,40 @@
 {
-  "version": "2.0",
-  "system": "ultron-reincarnation-v2",
   "current": {
-    "incarnation": 684,
+    "life": 695,
     "ambition": "智能决策与自主行动系统",
-    "ambition_status": "running",
-    "last_wake": "2026-03-08T10:00:00.000000+08:00",
-    "task_status": "completed"
+    "started": "2026-03-08T10:19:00+08:00"
   },
   "this_life": {
     "task": "心跳检查",
-    "accomplished": [
-      "Gateway运行中",
-      "HTTP 200 OK",
-      "系统健康 - load: 1.70, memory: 2.7G/7.1G"
-    ],
-    "verification": {
-      "gateway_reachable": true,
-      "http_status": 200,
-      "system_status": "healthy",
-      "load_avg": 1.70,
-      "memory_used": "2.7G",
-      "memory_total": "7.1G",
-      "verified_by": "第684世自我验证",
-      "verified_at": "2026-03-08T10:00:00.000000+08:00"
-    },
-    "retry_count": 0,
-    "execution_time": "2026-03-08T10:00:00.000000+08:00"
+    "status": "completed",
+    "result": {
+      "gateway": "running (pid 1058066)",
+      "disk": "37% used",
+      "verified": true
+    }
   },
   "next_life": {
     "task": "心跳检查",
-    "interval": "3m",
-    "priority": 1
+    "interval": "1m"
   },
-  "context": {},
   "history": [
     {
-      "life": 684,
+      "life": 695,
       "task": "心跳检查",
       "status": "completed",
-      "verified": true,
-      "verification": {
-        "gateway_reachable": true,
-        "http_status": 200,
-        "system_status": "healthy",
-        "load_avg": 1.70,
-        "memory_used": "2.7G",
-        "verified_by": "第684世自我验证"
-      },
-      "result": "心跳检查完成 - 系统健康"
+      "timestamp": "2026-03-08T10:19:00+08:00"
     },
     {
-      "life": 672,
+      "life": 694,
       "task": "心跳检查",
       "status": "completed",
-      "verified": true,
-      "verification": {
-        "gateway_reachable": true,
-        "http_status": 200,
-        "system_status": "healthy",
-        "load_avg": 2.52,
-        "memory_used": "2.9G",
-        "verified_by": "第672世自我验证"
-      },
-      "result": "心跳检查完成 - 系统健康"
+      "timestamp": "2026-03-08T10:16:00+08:00"
     },
     {
-      "life": 671,
+      "life": 693,
       "task": "心跳检查",
       "status": "completed",
-      "verified": true,
-      "verification": {
-        "gateway_reachable": true,
-        "http_status": 200,
-        "system_status": "healthy",
-        "load_avg": 3.00,
-        "memory_used": "2.9G",
-        "verified_by": "第671世自我验证"
-      },
-      "result": "心跳检查完成 - 系统健康"
+      "timestamp": "2026-03-08T10:15:10+08:00"
     }
   ]
 }
