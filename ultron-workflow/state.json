@@ -2,23 +2,22 @@
   "version": "2.0",
   "system": "ultron-reincarnation-v2",
   "current": {
-    "incarnation": 686,
+    "incarnation": 738,
     "ambition": "智能决策与自主行动系统",
     "ambition_status": "running",
-    "last_wake": "2026-03-08T05:35:00+00:00",
-    "task_status": "verified"
+    "last_wake": "2026-03-08T14:43:21.000000",
+    "task_status": "completed"
   },
   "this_life": {
-    "life": 686,
+    "life": 738,
     "task": "心跳检查",
     "result": "正常",
     "verification": {
-      "gateway": "200",
-      "uptime": "7天19小时",
-      "load": "0.70",
-      "memory": "正常"
+      "gateway_health": "200 OK",
+      "uptime": "7 days 21 hours",
+      "memory": "4.3GB available"
     },
-    "time": "2026-03-08 13:35"
+    "time": "2026-03-08 14:43"
   },
   "next_life": {
     "task": "心跳检查",
@@ -28,31 +27,48 @@
   "context": {},
   "history": [
     {
-      "life": 685,
-      "task": "心跳检查",
-      "verified": true,
-      "timestamp": "2026-03-08T05:34:00+00:00"
-    },
-    {
-      "life": 684,
-      "task": "心跳检查",
-      "verified": true,
-      "timestamp": "2026-03-08T05:33:00+00:00"
-    },
-    {
-      "life": 683,
-      "task": "心跳检查",
-      "verified": true,
-      "timestamp": "2026-03-08T05:32:00+00:00"
-    },
-    {
-      "life": 686,
+      "life": 735,
       "task": "心跳检查",
       "result": "正常",
+      "verified": true,
+      "timestamp": "2026-03-08T14:38:37+08:00"
+    },
+    {
+      "life": 736,
+      "task": "心跳检查",
+      "result": "正常",
+      "verified": true,
+      "timestamp": "2026-03-08T14:40:25+08:00",
       "verification": {
-        "gateway": "200",
-        "uptime": "7天19小时",
-        "load": "0.70"
+        "gateway_health": "200 OK",
+        "uptime": "7 days 21 hours",
+        "load_avg": "1.90, 1.95, 2.03",
+        "memory": "4.2GB available"
+      }
+    },
+    {
+      "life": 737,
+      "task": "心跳检查",
+      "result": "正常",
+      "verified": true,
+      "timestamp": "2026-03-08T14:41:21+08:00",
+      "verification": {
+        "gateway_health": "200 OK",
+        "uptime": "7 days 21 hours",
+        "load_avg": "1.81, 1.87, 1.99",
+        "memory": "4.4GB available"
+      }
+    },
+    {
+      "life": 738,
+      "task": "心跳检查",
+      "result": "正常",
+      "verified": true,
+      "timestamp": "2026-03-08T14:43:21+08:00",
+      "verification": {
+        "gateway_health": "200 OK",
+        "uptime": "7 days 21 hours",
+        "memory": "4.3GB available"
       }
     }
   ]
