@@ -2,59 +2,66 @@
   "version": "2.0",
   "system": "ultron-reincarnation-v2",
   "current": {
-    "incarnation": 703,
+    "incarnation": 740,
     "ambition": "智能决策与自主行动系统",
-    "ambition_status": "running",
-    "last_wake": "2026-03-08T16:04:35.000000",
-    "task_status": "completed"
+    "ambition_status": "completed",
+    "last_wake": "2026-03-08T17:13:00.000000",
+    "task_status": "ready"
   },
   "this_life": {
-    "life": 702,
+    "life": 739,
     "task": "心跳检查",
     "result": "正常",
     "verification": {
       "gateway_health": "reachable",
-      "uptime": "7 days 22 hours 25 minutes",
-      "load_avg": "1.76, 1.72, 1.98",
-      "memory": "4.3GB available",
-      "http_code": 200
+      "uptime": "7 days",
+      "load": "2.19",
+      "http_code": 200,
+      "memory": "2.5GB/7.1GB"
     },
-    "time": "2026-03-08 16:04"
+    "time": "2026-03-08 17:13"
   },
   "next_life": {
     "task": "心跳检查",
     "interval": "1m",
     "priority": 1,
-    "life": 703
+    "life": 740
   },
   "context": {},
   "history": [
     {
-      "life": 702,
+      "life": 740,
+      "task": "心跳检查",
+      "result": "待执行",
+      "verified": false,
+      "timestamp": "2026-03-08T17:13:00+08:00"
+    },
+    {
+      "life": 739,
       "task": "心跳检查",
       "result": "正常",
       "verified": true,
-      "timestamp": "2026-03-08T16:03:34+08:00",
+      "timestamp": "2026-03-08T17:13:00+08:00",
       "verification": {
         "gateway_health": "reachable",
-        "uptime": "7 days 22 hours 24 minutes",
-        "load_avg": "1.21, 1.58, 1.95",
-        "memory": "4.2GB available",
-        "http_code": 200
+        "uptime": "7 days",
+        "load": "2.19",
+        "http_code": 200,
+        "memory": "2.5GB/7.1GB"
       }
     },
     {
-      "life": 703,
+      "life": 738,
       "task": "心跳检查",
       "result": "正常",
       "verified": true,
-      "timestamp": "2026-03-08T16:04:35+08:00",
+      "timestamp": "2026-03-08T17:12:00+08:00",
       "verification": {
         "gateway_health": "reachable",
-        "uptime": "7 days 22 hours 25 minutes",
-        "load_avg": "1.76, 1.72, 1.98",
-        "memory": "4.3GB available",
-        "http_code": 200
+        "uptime": "7 days",
+        "load": "1.75, 1.95, 1.95",
+        "http_code": 200,
+        "memory": "2.8GB/7.1GB"
       }
     }
   ]
