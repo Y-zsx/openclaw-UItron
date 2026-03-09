@@ -1,19 +1,17 @@
 {
-  "last_check": "2026-03-09T10:46:00+08:00",
+  "last_check": "2026-03-09T18:03:00+08:00",
   "system": {
     "status": "healthy",
     "gateway": "reachable",
-    "uptime": "4 hours 26 minutes",
-    "load": "high (9.01)",
-    "memory": "2.8G/7.1G (39%)"
+    "uptime": "11 hours 45 minutes",
+    "load": "8.20 (normal)",
+    "memory": "3.4G/7.1G (48%)"
   },
   "reincarnation": {
-    "current_life": 396,
+    "current_life": 521,
     "task": "心跳检查",
-    "status": "running"
+    "status": "completed"
   },
-  "alerts": [
-    "Load average is high but stable (9.01)"
-  ],
-  "notes": "第396世心跳检查完成。系统运行正常，负载较高但稳定。"
+  "alerts": [],
+  "notes": "第521世心跳检查完成。系统运行正常，Gateway(18789端口)可达，负载8.20，内存使用48%。"
 }
