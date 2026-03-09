@@ -2,42 +2,78 @@
   "version": "2.0",
   "system": "ultron-reincarnation-v2",
   "current": {
-    "incarnation": 746,
+    "incarnation": 867,
     "ambition": "智能决策与自主行动系统",
     "ambition_status": "running",
-    "last_wake": "2026-03-09T15:26:00.000000+00:00",
-    "task_status": "completed"
+    "last_wake": "2026-03-10T06:29:00.000+0800",
+    "task_status": "pending"
   },
   "this_life": {
     "task": "心跳检查",
     "verification": {
       "gateway": "reachable",
       "http_status": 200,
-      "status_panel": "reachable",
-      "http_status_panel": 200,
-      "verified_at": "2026-03-09T15:26:00.000000+00:00"
-    },
-    "retry_count": 0,
-    "execution_time": "2026-03-09T15:26:00.000000+00:00"
+      "status_panel": "accessible",
+      "load_average": 11.35,
+      "memory_usage": "3.4Gi/7.1Gi",
+      "disk_usage": "40%",
+      "uptime": "1 day, 9 min",
+      "verified_at": "2026-03-10T06:29:00+0800"
+    }
   },
   "next_life": {
     "task": "心跳检查",
-    "interval": "3m",
-    "priority": 1
+    "interval": "5m"
   },
   "context": {},
   "history": [
     {
-      "incarnation": 745,
+      "incarnation": 866,
       "task": "心跳检查",
       "status": "completed",
-      "verification": {"gateway": "reachable", "http_status": 200, "status_panel": "reachable", "http_status_panel": 200, "verified_at": "2026-03-09T15:22:00.000000+00:00"}
+      "verification": {
+        "gateway": "reachable",
+        "http_status": 200,
+        "status_panel": "accessible",
+        "load_average": 9.35,
+        "memory_usage": "2.9Gi/7.1Gi",
+        "disk_usage": "40%",
+        "uptime": "1 day, 7 min",
+        "verified_at": "2026-03-10T06:27:00+0800"
+      },
+      "completed_at": "2026-03-10T06:27:00+0800"
     },
     {
-      "incarnation": 744,
+      "incarnation": 865,
       "task": "心跳检查",
       "status": "completed",
-      "verification": {"gateway": "reachable", "http_status": 200, "status_panel": "reachable", "http_status_panel": 200, "verified_at": "2026-03-09T15:15:00.000000+00:00"}
+      "verification": {
+        "gateway": "reachable",
+        "http_status": 200,
+        "status_panel": "accessible",
+        "load_average": 9.35,
+        "memory_usage": "2.9Gi/7.1Gi",
+        "disk_usage": "40%",
+        "uptime": "1 day, 7 min",
+        "verified_at": "2026-03-10T06:27:00+0800"
+      },
+      "completed_at": "2026-03-10T06:27:00+0800"
+    },
+    {
+      "incarnation": 864,
+      "task": "心跳检查",
+      "status": "completed",
+      "verification": {
+        "gateway": "reachable",
+        "http_status": 200,
+        "status_panel": "accessible",
+        "load_average": 8.08,
+        "memory_usage": "2.9Gi/7.1Gi",
+        "disk_usage": "40%",
+        "uptime": "1 day, 3 min",
+        "verified_at": "2026-03-10T06:23:00+0800"
+      },
+      "completed_at": "2026-03-10T06:23:00+0800"
     }
   ]
 }
