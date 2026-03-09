@@ -1,21 +1,19 @@
 {
-  "last_check": "2026-03-09T09:05:00+08:00",
+  "last_check": "2026-03-09T10:46:00+08:00",
   "system": {
     "status": "healthy",
     "gateway": "reachable",
-    "uptime": "2 hours 45 minutes",
-    "load": "high (8.34)",
-    "memory": "14G/40G (37%)",
-    "openclaw_version": "2026.3.2"
+    "uptime": "4 hours 26 minutes",
+    "load": "high (9.01)",
+    "memory": "2.8G/7.1G (39%)"
   },
   "reincarnation": {
-    "current_life": 466,
+    "current_life": 396,
     "task": "心跳检查",
     "status": "running"
   },
   "alerts": [
-    "Load average is high (8.34)",
-    "Update: OpenClaw 2026.3.7 available"
+    "Load average is high but stable (9.01)"
   ],
-  "notes": "第683世心跳检查完成。负载较高但系统运行正常。"
+  "notes": "第396世心跳检查完成。系统运行正常，负载较高但稳定。"
 }
