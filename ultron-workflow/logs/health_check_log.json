@@ -1,78 +1,6 @@
 {
   "checks": [
     {
-      "time": "2026-03-08T20:41:35.424431",
-      "status": "healthy",
-      "healthy": 3,
-      "total": 3,
-      "failed": [],
-      "recovered": []
-    },
-    {
-      "time": "2026-03-08T20:46:37.695282",
-      "status": "healthy",
-      "healthy": 3,
-      "total": 3,
-      "failed": [],
-      "recovered": []
-    },
-    {
-      "time": "2026-03-08T20:51:39.399783",
-      "status": "healthy",
-      "healthy": 3,
-      "total": 3,
-      "failed": [],
-      "recovered": []
-    },
-    {
-      "time": "2026-03-08T20:56:41.010617",
-      "status": "healthy",
-      "healthy": 3,
-      "total": 3,
-      "failed": [],
-      "recovered": []
-    },
-    {
-      "time": "2026-03-08T21:01:43.620357",
-      "status": "healthy",
-      "healthy": 3,
-      "total": 3,
-      "failed": [],
-      "recovered": []
-    },
-    {
-      "time": "2026-03-08T21:06:45.227717",
-      "status": "healthy",
-      "healthy": 3,
-      "total": 3,
-      "failed": [],
-      "recovered": []
-    },
-    {
-      "time": "2026-03-08T21:11:47.277009",
-      "status": "healthy",
-      "healthy": 3,
-      "total": 3,
-      "failed": [],
-      "recovered": []
-    },
-    {
-      "time": "2026-03-08T21:16:49.484028",
-      "status": "healthy",
-      "healthy": 3,
-      "total": 3,
-      "failed": [],
-      "recovered": []
-    },
-    {
-      "time": "2026-03-08T21:21:52.495903",
-      "status": "healthy",
-      "healthy": 3,
-      "total": 3,
-      "failed": [],
-      "recovered": []
-    },
-    {
       "time": "2026-03-08T21:26:54.493083",
       "status": "healthy",
       "healthy": 3,
@@ -934,11 +862,104 @@
         "chrome"
       ],
       "recovered": []
+    },
+    {
+      "time": "2026-03-09T11:47:55.743255",
+      "status": "warning",
+      "healthy": 2,
+      "total": 3,
+      "failed": [
+        "chrome"
+      ],
+      "recovered": []
+    },
+    {
+      "time": "2026-03-09T11:53:19.784393",
+      "status": "warning",
+      "healthy": 2,
+      "total": 3,
+      "failed": [
+        "chrome"
+      ],
+      "recovered": []
+    },
+    {
+      "time": "2026-03-09T11:59:13.179697",
+      "status": "warning",
+      "healthy": 1,
+      "total": 3,
+      "failed": [
+        "gateway",
+        "chrome"
+      ],
+      "recovered": []
+    },
+    {
+      "time": "2026-03-09T12:05:17.395490",
+      "status": "warning",
+      "healthy": 1,
+      "total": 3,
+      "failed": [
+        "gateway",
+        "chrome"
+      ],
+      "recovered": []
+    },
+    {
+      "time": "2026-03-09T12:10:41.717576",
+      "status": "warning",
+      "healthy": 2,
+      "total": 3,
+      "failed": [
+        "chrome"
+      ],
+      "recovered": []
+    },
+    {
+      "time": "2026-03-09T12:16:43.460289",
+      "status": "warning",
+      "healthy": 1,
+      "total": 3,
+      "failed": [
+        "gateway",
+        "chrome"
+      ],
+      "recovered": []
+    },
+    {
+      "time": "2026-03-09T12:22:03.172478",
+      "status": "warning",
+      "healthy": 2,
+      "total": 3,
+      "failed": [
+        "chrome"
+      ],
+      "recovered": []
+    },
+    {
+      "time": "2026-03-09T12:27:31.799954",
+      "status": "warning",
+      "healthy": 2,
+      "total": 3,
+      "failed": [
+        "chrome"
+      ],
+      "recovered": []
+    },
+    {
+      "time": "2026-03-09T12:32:58.230515",
+      "status": "warning",
+      "healthy": 2,
+      "total": 3,
+      "failed": [
+        "chrome"
+      ],
+      "recovered": []
     }
   ],
   "summary": {
     "total": 100,
-    "healthy": 42,
-    "warning": 58
+    "healthy": 33,
+    "warning": 67
   }
 }
