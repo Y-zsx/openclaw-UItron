@@ -1,21 +1,21 @@
 {
-  "last_check": "2026-03-08T18:31:00+08:00",
+  "last_check": "2026-03-09T09:05:00+08:00",
   "system": {
     "status": "healthy",
-    "gateway": "reachable (200 OK)",
-    "uptime": "8 days 51 minutes",
-    "load": "normal",
-    "memory": "充足",
+    "gateway": "reachable",
+    "uptime": "2 hours 45 minutes",
+    "load": "high (8.34)",
+    "memory": "14G/40G (37%)",
     "openclaw_version": "2026.3.2"
   },
   "reincarnation": {
-    "current_life": 465,
+    "current_life": 466,
     "task": "心跳检查",
-    "status": "completed"
+    "status": "running"
   },
   "alerts": [
-    "Security: DingTalk DMs are open (critical)",
+    "Load average is high (8.34)",
     "Update: OpenClaw 2026.3.7 available"
   ],
-  "notes": "第682世心跳检查完成。系统运行正常。"
+  "notes": "第683世心跳检查完成。负载较高但系统运行正常。"
 }
