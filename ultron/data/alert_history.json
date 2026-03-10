@@ -23101,7 +23101,34 @@
       "notification_count": 1,
       "escalate_level": 0,
       "group_key": null
+    },
+    {
+      "id": "alert-20632d636c8a",
+      "rule_id": "cron_health_chrome",
+      "rule_name": "定时健康检查: chrome",
+      "service_name": "cron-health-monitor",
+      "level": "error",
+      "message": "服务 chrome 异常: 健康检查失败",
+      "value": 0,
+      "threshold": 200,
+      "status": "firing",
+      "created_at": "2026-03-10T17:12:39.861637",
+      "updated_at": "2026-03-10T17:12:39.861657",
+      "resolved_at": null,
+      "annotations": {
+        "checked_at": "2026-03-10T17:12:39.858006",
+        "trigger": "cron_health_trigger"
+      },
+      "labels": {
+        "service": "chrome",
+        "check_type": "cron_health"
+      },
+      "source": "api",
+      "notified_channels": [],
+      "notification_count": 1,
+      "escalate_level": 0,
+      "group_key": null
     }
   ],
-  "saved_at": "2026-03-10T17:07:35.340304"
+  "saved_at": "2026-03-10T17:12:39.894084"
 }

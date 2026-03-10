@@ -2,29 +2,29 @@
   "version": "2.0",
   "system": "ultron-reincarnation-v2",
   "current": {
-    "incarnation": 412,
+    "incarnation": 414,
     "ambition": "智能决策与自主行动系统",
     "ambition_status": "running",
-    "last_wake": "2026-03-10T17:09:28.000000",
-    "last_heartbeat": "2026-03-10T17:09:28.000000",
+    "last_wake": "2026-03-10T17:14:00.000000",
+    "last_heartbeat": "2026-03-10T17:14:00.000000",
     "task_status": "pending"
   },
   "this_life": {
     "task": "心跳检查",
     "accomplished": [
       "Gateway运行正常 (HTTP 200)",
-      "进程运行正常 (192个)",
-      "系统负载正常 (5.47)"
+      "进程运行正常 (194个)",
+      "系统负载正常 (5.03)"
     ],
     "verification": {
       "gateway_http": "200",
-      "processes": 192,
-      "load_avg": 5.47,
+      "processes": 194,
+      "load_avg": "5.03",
       "verified_by": "curl + ps + uptime",
-      "verified_at": "2026-03-10T17:09:28.000000"
+      "verified_at": "2026-03-10T17:14:00.000000"
     },
     "retry_count": 0,
-    "execution_time": "2026-03-10T17:09:28.000000",
+    "execution_time": "2026-03-10T17:14:00.000000",
     "status": "completed"
   },
   "next_life": {
@@ -35,10 +35,34 @@
   "context": {},
   "history": [
     {
-      "incarnation": 412,
+      "incarnation": 414,
       "task": "心跳检查",
       "status": "pending",
-      "scheduled_at": "2026-03-10T17:09:28.000000"
+      "scheduled_at": "2026-03-10T17:14:00.000000"
+    },
+    {
+      "incarnation": 413,
+      "task": "心跳检查",
+      "status": "completed",
+      "verified_at": "2026-03-10T17:11:16.000000",
+      "details": {
+        "system_status": "healthy",
+        "gateway_http": "200",
+        "processes": 192,
+        "load_avg": 4.04
+      }
+    },
+    {
+      "incarnation": 412,
+      "task": "心跳检查",
+      "status": "completed",
+      "verified_at": "2026-03-10T17:09:28.000000",
+      "details": {
+        "system_status": "healthy",
+        "gateway_http": "200",
+        "processes": 192,
+        "load_avg": 5.47
+      }
     },
     {
       "incarnation": 411,

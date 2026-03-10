@@ -1,50 +1,5 @@
 [
   {
-    "task": "self_healer",
-    "status": "success",
-    "timestamp": "2026-03-10T16:06:30.044977",
-    "details": {
-      "duration": 0.150828,
-      "return_code": 0
-    }
-  },
-  {
-    "task": "api_health",
-    "status": "success",
-    "timestamp": "2026-03-10T16:07:30.350323",
-    "details": {
-      "duration": 0.231318,
-      "return_code": 0
-    }
-  },
-  {
-    "task": "api_health",
-    "status": "success",
-    "timestamp": "2026-03-10T16:08:30.671829",
-    "details": {
-      "duration": 0.242888,
-      "return_code": 0
-    }
-  },
-  {
-    "task": "api_health",
-    "status": "success",
-    "timestamp": "2026-03-10T16:09:31.085208",
-    "details": {
-      "duration": 0.340876,
-      "return_code": 0
-    }
-  },
-  {
-    "task": "api_health",
-    "status": "success",
-    "timestamp": "2026-03-10T16:10:31.553351",
-    "details": {
-      "duration": 0.361079,
-      "return_code": 0
-    }
-  },
-  {
     "task": "health_check",
     "status": "success",
     "timestamp": "2026-03-10T16:11:33.248331",
@@ -896,6 +851,51 @@
     "timestamp": "2026-03-10T17:10:38.135512",
     "details": {
       "duration": 0.55895,
+      "return_code": 0
+    }
+  },
+  {
+    "task": "api_health",
+    "status": "success",
+    "timestamp": "2026-03-10T17:11:38.898647",
+    "details": {
+      "duration": 0.666101,
+      "return_code": 0
+    }
+  },
+  {
+    "task": "health_check",
+    "status": "success",
+    "timestamp": "2026-03-10T17:12:40.002351",
+    "details": {
+      "duration": 0.956738,
+      "return_code": 0
+    }
+  },
+  {
+    "task": "metrics_collect",
+    "status": "success",
+    "timestamp": "2026-03-10T17:12:40.332296",
+    "details": {
+      "duration": 0.325895,
+      "return_code": 0
+    }
+  },
+  {
+    "task": "api_health",
+    "status": "success",
+    "timestamp": "2026-03-10T17:12:41.177147",
+    "details": {
+      "duration": 0.842678,
+      "return_code": 0
+    }
+  },
+  {
+    "task": "self_healer",
+    "status": "success",
+    "timestamp": "2026-03-10T17:12:41.573654",
+    "details": {
+      "duration": 0.370766,
       "return_code": 0
     }
   }

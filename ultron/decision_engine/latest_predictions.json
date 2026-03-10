@@ -2,27 +2,27 @@
   "predictions": {
     "cpu": {
       "metric_type": "cpu",
-      "current_value": 92.8,
-      "predicted_value": 91.74,
+      "current_value": 65.2,
+      "predicted_value": 63.51,
       "trend": {
         "trend": "falling",
-        "strength": 1.320467242254952,
-        "velocity": -1.0636363636363637,
-        "predicted_next": 91.73636363636363
+        "strength": 2.213611525086934,
+        "velocity": -1.687878787878787,
+        "predicted_next": 63.512121212121215
       },
-      "confidence": 0.8334480907090507,
+      "confidence": 0.8286391573868985,
       "horizon": "5m",
       "data_points": 50
     },
     "memory": {
       "metric_type": "memory",
-      "current_value": 45.2,
-      "predicted_value": 44.7,
+      "current_value": 42.9,
+      "predicted_value": 42.49,
       "trend": {
         "trend": "falling",
-        "strength": 1.0570676255506886,
-        "velocity": -0.5024242424242423,
-        "predicted_next": 44.69757575757576
+        "strength": 0.8956170246492824,
+        "velocity": -0.4109090909090908,
+        "predicted_next": 42.489090909090905
       },
       "confidence": 0.95,
       "horizon": "5m",
@@ -44,30 +44,20 @@
     },
     "load": {
       "metric_type": "load",
-      "current_value": 4.294921875,
-      "predicted_value": 4.28,
+      "current_value": 4.62841796875,
+      "predicted_value": 4.63,
       "trend": {
         "trend": "stable",
-        "strength": 0.3428650323689135,
-        "velocity": -0.015873579545454545,
-        "predicted_next": 4.279048295454546
+        "strength": 0.0726121087204337,
+        "velocity": 0.0032167376893939394,
+        "predicted_next": 4.631634706439394
       },
-      "confidence": 0.9221276368749404,
+      "confidence": 0.9197289723457485,
       "horizon": "5m",
       "data_points": 50
     }
   },
-  "alert_predictions": [
-    {
-      "alert_type": "cpu_high",
-      "probability": 0.89,
-      "current_value": 92.8,
-      "predicted_value": 91.74,
-      "threshold": 80,
-      "severity": "critical",
-      "estimated_time": "unknown"
-    }
-  ],
+  "alert_predictions": [],
   "suggestions": [],
-  "timestamp": "2026-03-10T09:10:27.262253"
+  "timestamp": "2026-03-10T09:12:29.859864"
 }

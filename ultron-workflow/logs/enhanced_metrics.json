@@ -1,31 +1,5 @@
 [
   {
-    "timestamp": "2026-03-10T08:34:17.541987",
-    "system": {
-      "load": {
-        "1m": 9.46,
-        "5m": 7.49,
-        "15m": 6.75
-      },
-      "memory": {
-        "total": 7266,
-        "available": 3354,
-        "used": 3912,
-        "percent": 53.8
-      },
-      "gateway_processes": 41
-    },
-    "services": {
-      "gateway": "healthy",
-      "status_panel": "healthy",
-      "health_api": "healthy",
-      "dashboard": "error_000"
-    },
-    "network": {
-      "connections": 7
-    }
-  },
-  {
     "timestamp": "2026-03-10T08:40:14.326058",
     "system": {
       "load": {
@@ -2597,6 +2571,32 @@
     },
     "network": {
       "connections": 5
+    }
+  },
+  {
+    "timestamp": "2026-03-10T17:12:40.100314",
+    "system": {
+      "load": {
+        "1m": 4.68,
+        "5m": 4.55,
+        "15m": 4.65
+      },
+      "memory": {
+        "total": 7266,
+        "available": 3867,
+        "used": 3399,
+        "percent": 46.8
+      },
+      "gateway_processes": 37
+    },
+    "services": {
+      "gateway": "healthy",
+      "status_panel": "healthy",
+      "health_api": "healthy",
+      "dashboard": "error_000"
+    },
+    "network": {
+      "connections": 6
     }
   }
 ]
