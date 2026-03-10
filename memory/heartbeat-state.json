@@ -1,17 +1,14 @@
 {
-  "last_check": "2026-03-09T18:03:00+08:00",
-  "system": {
-    "status": "healthy",
-    "gateway": "reachable",
-    "uptime": "11 hours 45 minutes",
-    "load": "8.20 (normal)",
-    "memory": "3.4G/7.1G (48%)"
+  "lastChecks": {
+    "ultron-life": 1773116318,
+    "system": 1773116318,
+    "resources": 1773116318
   },
-  "reincarnation": {
-    "current_life": 521,
+  "this-life": {
+    "life": 614,
     "task": "心跳检查",
-    "status": "completed"
-  },
-  "alerts": [],
-  "notes": "第521世心跳检查完成。系统运行正常，Gateway(18789端口)可达，负载8.20，内存使用48%。"
+    "status": "ok",
+    "time": "2026-03-10T12:18:38+08:00",
+    "notes": "系统正常，内存3.5GB可用，磁盘41%"
+  }
 }
