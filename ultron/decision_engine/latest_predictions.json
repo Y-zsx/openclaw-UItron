@@ -2,29 +2,29 @@
   "predictions": {
     "cpu": {
       "metric_type": "cpu",
-      "current_value": 99.7,
-      "predicted_value": 98.82,
+      "current_value": 42.7,
+      "predicted_value": 37.95,
       "trend": {
         "trend": "falling",
-        "strength": 1.026336036818217,
-        "velocity": -0.8812121212121212,
-        "predicted_next": 98.81878787878789
+        "strength": 6.315009821917365,
+        "velocity": -4.753939393939393,
+        "predicted_next": 37.94606060606061
       },
-      "confidence": 0.9062562010379043,
+      "confidence": 0.8627579963064798,
       "horizon": "5m",
       "data_points": 50
     },
     "memory": {
       "metric_type": "memory",
-      "current_value": 44.2,
-      "predicted_value": 43.85,
+      "current_value": 39.5,
+      "predicted_value": 38.86,
       "trend": {
         "trend": "falling",
-        "strength": 0.8430002684252149,
-        "velocity": -0.3521212121212123,
-        "predicted_next": 43.84787878787879
+        "strength": 1.539388063866978,
+        "velocity": -0.635151515151515,
+        "predicted_next": 38.86484848484849
       },
-      "confidence": 0.9279780392474402,
+      "confidence": 0.9222745806724173,
       "horizon": "5m",
       "data_points": 50
     },
@@ -44,30 +44,20 @@
     },
     "load": {
       "metric_type": "load",
-      "current_value": 4.64111328125,
-      "predicted_value": 4.48,
+      "current_value": 4.2265625,
+      "predicted_value": 4.17,
       "trend": {
-        "trend": "falling",
-        "strength": 3.2664214958327316,
-        "velocity": -0.1596383759469697,
-        "predicted_next": 4.48147490530303
+        "trend": "stable",
+        "strength": 1.1371734532497477,
+        "velocity": -0.05298295454545455,
+        "predicted_next": 4.173579545454546
       },
-      "confidence": 0.8846351369236983,
+      "confidence": 0.8847294070963543,
       "horizon": "5m",
       "data_points": 50
     }
   },
-  "alert_predictions": [
-    {
-      "alert_type": "cpu_high",
-      "probability": 1.0,
-      "current_value": 99.7,
-      "predicted_value": 98.82,
-      "threshold": 80,
-      "severity": "critical",
-      "estimated_time": "unknown"
-    }
-  ],
+  "alert_predictions": [],
   "suggestions": [],
-  "timestamp": "2026-03-10T12:55:37.455625"
+  "timestamp": "2026-03-10T12:58:41.111192"
 }
