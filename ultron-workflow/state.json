@@ -2,27 +2,28 @@
   "version": "2.0",
   "system": "ultron-reincarnation-v2",
   "current": {
-    "incarnation": 709,
+    "incarnation": 896,
     "ambition": "智能决策与自主行动系统",
     "ambition_status": "running",
-    "last_wake": "2026-03-10T20:57:00+08:00",
-    "last_heartbeat": "2026-03-10T20:57:00.000000+08:00",
-    "task_status": "pending"
+    "last_wake": "2026-03-11T02:22:43.000000",
+    "last_heartbeat": "2026-03-11T02:22:43.000000",
+    "task_status": "running"
   },
   "this_life": {
     "task": "心跳检查",
-    "accomplished": ["Gateway 200", "Load 4.84", "Memory 2.6GB/7.1GB"],
     "verification": {
-      "gateway_200": true,
-      "services_running": true,
-      "system_healthy": true,
-      "load_average": 4.84,
-      "memory_used": "2.6GB/7.1GB"
+      "uptime": "1 day, 20:02",
+      "load_avg": "4.68",
+      "memory_used": "2.8G/7.1G",
+      "disk_usage": "43%",
+      "gateway_processes": "running",
+      "gateway_port": "18789",
+      "verified_by": "curl check",
+      "http_status": 200
     },
-    "retry_count": 0,
-    "execution_time": "2026-03-10T20:57:00.000000+08:00",
+    "execution_time": "2026-03-11T02:22:43.000000",
     "status": "completed",
-    "verified_at": "2026-03-10T20:57:00.000000+08:00"
+    "verified_at": "2026-03-11T02:22:43.000000"
   },
   "next_life": {
     "task": "心跳检查",
@@ -32,30 +33,64 @@
   "context": {},
   "history": [
     {
-      "incarnation": 708,
+      "incarnation": 895,
       "task": "心跳检查",
       "status": "completed",
-      "verified_at": "2026-03-10T20:57:00.000000+08:00",
-      "verification": {
-        "gateway_200": true,
-        "services_running": true,
-        "system_healthy": true,
-        "load_average": 4.84,
-        "memory_used": "2.6GB/7.1GB"
-      }
+      "verified_at": "2026-03-11T02:22:43.000000"
     },
     {
-      "incarnation": 707,
+      "incarnation": 894,
       "task": "心跳检查",
       "status": "completed",
-      "verified_at": "2026-03-10T20:55:05.000000+08:00",
-      "verification": {
-        "gateway_200": true,
-        "services_running": true,
-        "system_healthy": true,
-        "load_average": 4.98,
-        "memory_available": "4.6GB"
-      }
+      "verified_at": "2026-03-11T02:21:19.000000"
+    },
+    {
+      "incarnation": 893,
+      "task": "心跳检查",
+      "status": "completed",
+      "verified_at": "2026-03-11T02:19:59.000000"
+    },
+    {
+      "incarnation": 892,
+      "task": "心跳检查",
+      "status": "completed",
+      "verified_at": "2026-03-11T02:18:49.000000"
+    },
+    {
+      "incarnation": 891,
+      "task": "心跳检查",
+      "status": "completed",
+      "verified_at": "2026-03-11T02:15:03.000000"
+    },
+    {
+      "incarnation": 890,
+      "task": "心跳检查",
+      "status": "completed",
+      "verified_at": "2026-03-11T02:12:02.000000"
+    },
+    {
+      "incarnation": 889,
+      "task": "心跳检查",
+      "status": "completed",
+      "verified_at": "2026-03-11T02:12:02.000000"
+    },
+    {
+      "incarnation": 888,
+      "task": "心跳检查",
+      "status": "completed",
+      "verified_at": "2026-03-11T02:10:19.000000"
+    },
+    {
+      "incarnation": 887,
+      "task": "心跳检查",
+      "status": "completed",
+      "verified_at": "2026-03-11T02:08:52.000000"
+    },
+    {
+      "incarnation": 886,
+      "task": "心跳检查",
+      "status": "completed",
+      "verified_at": "2026-03-11T02:06:21.000000"
     }
   ]
 }
