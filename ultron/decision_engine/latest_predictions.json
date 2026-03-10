@@ -2,41 +2,41 @@
   "predictions": {
     "cpu": {
       "metric_type": "cpu",
-      "current_value": 71.8,
-      "predicted_value": 69.63,
+      "current_value": 92.2,
+      "predicted_value": 88.26,
       "trend": {
         "trend": "falling",
-        "strength": 2.7799804095340277,
-        "velocity": -2.167272727272728,
-        "predicted_next": 69.63272727272727
+        "strength": 4.954522601581425,
+        "velocity": -3.9418181818181823,
+        "predicted_next": 88.25818181818182
       },
-      "confidence": 0.8859883560797048,
+      "confidence": 0.7774987950057991,
       "horizon": "5m",
       "data_points": 50
     },
     "memory": {
       "metric_type": "memory",
-      "current_value": 45.5,
-      "predicted_value": 45.28,
+      "current_value": 47.3,
+      "predicted_value": 47.04,
       "trend": {
         "trend": "falling",
-        "strength": 0.48258677028475305,
-        "velocity": -0.2224242424242427,
-        "predicted_next": 45.277575757575754
+        "strength": 0.5607305218200166,
+        "velocity": -0.2593939393939397,
+        "predicted_next": 47.04060606060606
       },
-      "confidence": 0.95,
+      "confidence": 0.9400725791708643,
       "horizon": "5m",
       "data_points": 50
     },
     "disk": {
       "metric_type": "disk",
-      "current_value": 40.4,
-      "predicted_value": 40.4,
+      "current_value": 40.9,
+      "predicted_value": 40.9,
       "trend": {
         "trend": "stable",
         "strength": 0.0,
         "velocity": 0.0,
-        "predicted_next": 40.4
+        "predicted_next": 40.9
       },
       "confidence": 0.95,
       "horizon": "15m",
@@ -44,20 +44,30 @@
     },
     "load": {
       "metric_type": "load",
-      "current_value": 5.63330078125,
-      "predicted_value": 5.72,
+      "current_value": 5.36572265625,
+      "predicted_value": 5.42,
       "trend": {
         "trend": "stable",
-        "strength": 1.540448239823393,
-        "velocity": 0.08293974905303031,
-        "predicted_next": 5.71624053030303
+        "strength": 1.058160552897395,
+        "velocity": 0.051538825757575756,
+        "predicted_next": 5.417261482007576
       },
-      "confidence": 0.913528165481851,
+      "confidence": 0.9118781464216622,
       "horizon": "5m",
       "data_points": 50
     }
   },
-  "alert_predictions": [],
+  "alert_predictions": [
+    {
+      "alert_type": "cpu_high",
+      "probability": 0.71,
+      "current_value": 92.2,
+      "predicted_value": 88.26,
+      "threshold": 80,
+      "severity": "critical",
+      "estimated_time": "unknown"
+    }
+  ],
   "suggestions": [],
-  "timestamp": "2026-03-10T04:31:27.852135"
+  "timestamp": "2026-03-10T07:42:35.264746"
 }
