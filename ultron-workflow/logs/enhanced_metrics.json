@@ -1,57 +1,5 @@
 [
   {
-    "timestamp": "2026-03-10T12:16:34.345804",
-    "system": {
-      "load": {
-        "1m": 6.22,
-        "5m": 6.12,
-        "15m": 6.18
-      },
-      "memory": {
-        "total": 7266,
-        "available": 3822,
-        "used": 3444,
-        "percent": 47.4
-      },
-      "gateway_processes": 37
-    },
-    "services": {
-      "gateway": "healthy",
-      "status_panel": "healthy",
-      "health_api": "healthy",
-      "dashboard": "error_000"
-    },
-    "network": {
-      "connections": 5
-    }
-  },
-  {
-    "timestamp": "2026-03-10T12:21:44.450957",
-    "system": {
-      "load": {
-        "1m": 5.33,
-        "5m": 5.85,
-        "15m": 6.07
-      },
-      "memory": {
-        "total": 7266,
-        "available": 3943,
-        "used": 3323,
-        "percent": 45.7
-      },
-      "gateway_processes": 38
-    },
-    "services": {
-      "gateway": "healthy",
-      "status_panel": "healthy",
-      "health_api": "healthy",
-      "dashboard": "error_000"
-    },
-    "network": {
-      "connections": 5
-    }
-  },
-  {
     "timestamp": "2026-03-10T12:26:53.379010",
     "system": {
       "load": {
@@ -2597,6 +2545,58 @@
     },
     "network": {
       "connections": 5
+    }
+  },
+  {
+    "timestamp": "2026-03-10T20:48:44.227247",
+    "system": {
+      "load": {
+        "1m": 5.86,
+        "5m": 6.19,
+        "15m": 6.61
+      },
+      "memory": {
+        "total": 7266,
+        "available": 3923,
+        "used": 3343,
+        "percent": 46.0
+      },
+      "gateway_processes": 37
+    },
+    "services": {
+      "gateway": "healthy",
+      "status_panel": "healthy",
+      "health_api": "healthy",
+      "dashboard": "error_000"
+    },
+    "network": {
+      "connections": 7
+    }
+  },
+  {
+    "timestamp": "2026-03-10T20:53:52.295666",
+    "system": {
+      "load": {
+        "1m": 4.13,
+        "5m": 5.04,
+        "15m": 5.99
+      },
+      "memory": {
+        "total": 7266,
+        "available": 3998,
+        "used": 3268,
+        "percent": 45.0
+      },
+      "gateway_processes": 35
+    },
+    "services": {
+      "gateway": "healthy",
+      "status_panel": "healthy",
+      "health_api": "healthy",
+      "dashboard": "error_000"
+    },
+    "network": {
+      "connections": 4
     }
   }
 ]
