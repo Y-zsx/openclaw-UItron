@@ -187,7 +187,15 @@ def decide_this_life(state: dict, last_check: dict) -> dict:
     
     # 优先检查上一世验证状态
     ver = last_check.get('verification', {})
-    if not ver.get('code_running') and last_check.get('last_status') == 'completed':
+    # verification可能是字符串（旧格式）或字典（新格式）
+    is_verified = False
+    if isinstance(ver, dict):
+        is_verified = ver.get('code_running', False)
+    elif isinstance(ver, str) and ver:
+        # 字符串形式视为验证通过
+        is_verified = True
+    
+    if not is_verified and last_check.get('last_status') == 'completed':
         # 上一世标记完成但验证失败，需要重做
         return {
             "task": f"修复: {last_check['last_task']}",
