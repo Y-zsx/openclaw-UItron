@@ -2,25 +2,25 @@
   "version": "2.0",
   "system": "ultron-reincarnation-v2",
   "current": {
-    "incarnation": 746,
+    "incarnation": 729,
     "ambition": "智能决策与自主行动系统",
     "ambition_status": "running",
-    "last_wake": "2026-03-10T15:50:00.000000",
+    "last_wake": "2026-03-10T16:45:00.000000",
+    "last_heartbeat": "2026-03-10T16:45:00.000000",
     "task_status": "pending"
   },
   "this_life": {
     "task": "心跳检查",
     "accomplished": [
-      "Gateway运行正常 (HTTP 200)",
-      "OpenClaw服务运行中 (36进程)"
+      "Gateway运行正常 (HTTP 200)"
     ],
     "verification": {
       "code_running": true,
-      "verified_by": "curl 200 + ps check",
-      "verified_at": "2026-03-10T15:50:00.000000"
+      "verified_by": "curl 200",
+      "verified_at": "2026-03-10T16:45:00.000000"
     },
     "retry_count": 0,
-    "execution_time": "2026-03-10T07:50:00.000000+00:00",
+    "execution_time": "2026-03-10T16:45:00.000000",
     "status": "completed"
   },
   "next_life": {
@@ -31,25 +31,33 @@
   "context": {},
   "history": [
     {
-      "incarnation": 745,
+      "incarnation": 728,
       "task": "心跳检查",
       "status": "completed",
-      "verified_at": "2026-03-10T15:50:00.000000",
+      "verified_at": "2026-03-10T16:45:00.000000",
       "details": {
         "system_status": "healthy",
-        "gateway_http": "200",
-        "openclaw_processes": 36
+        "gateway_http": "200"
       }
     },
     {
-      "incarnation": 744,
+      "incarnation": 727,
       "task": "心跳检查",
       "status": "completed",
-      "verified_at": "2026-03-10T15:47:00.000000",
+      "verified_at": "2026-03-10T16:42:00.000000",
       "details": {
         "system_status": "healthy",
-        "gateway_http": "200",
-        "openclaw_processes": 34
+        "gateway_http": "200"
+      }
+    },
+    {
+      "incarnation": 726,
+      "task": "心跳检查",
+      "status": "completed",
+      "verified_at": "2026-03-10T16:39:00.000000",
+      "details": {
+        "system_status": "healthy",
+        "gateway_http": "200"
       }
     }
   ]
