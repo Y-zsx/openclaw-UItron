@@ -14,11 +14,12 @@ HEALTH_DB = f"{DATA_DIR}/health_db.json"
 # Agent端点配置
 AGENT_ENDPOINTS = {
     "gateway": {"url": "http://localhost:18789", "name": "OpenClaw Gateway"},
+    "health_integration": {"url": "http://localhost:18210", "name": "Health Integration"},
     "monitor_api": {"url": "http://localhost:18195", "name": "任务监控API"},
     "agent_api": {"url": "http://localhost:18131", "name": "Agent API Gateway"},
-    "orchestrator": {"url": "http://localhost:18220", "name": "Agent Orchestrator"},
-    "service_mesh": {"url": "http://localhost:18270", "name": "Service Mesh"},
-    "scaling_api": {"url": "http://localhost:16046", "name": "Scaling API"},
+    "orchestrator": {"url": "http://localhost:18102", "name": "Agent Orchestrator"},
+    "service_mesh": {"url": "http://localhost:8094", "name": "Service Mesh"},
+    "scaling_api": {"url": "http://localhost:18120", "name": "Scaling API"},
 }
 
 def load_health_db():

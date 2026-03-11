@@ -2,36 +2,146 @@
   "version": "2.0",
   "system": "ultron-reincarnation-v2",
   "current": {
-    "incarnation": 740,
+    "incarnation": 750,
     "ambition": "智能决策与自主行动系统",
     "ambition_status": "running",
-    "last_wake": "2026-03-11T11:52:01.000000+08:00",
+    "last_wake": "2026-03-11T14:06:00.000000",
     "task_status": "completed"
   },
   "this_life": {
     "task": "心跳检查",
-    "task_status": "completed",
-    "verified_at": "2026-03-11T11:52:01.000000+08:00",
     "verification": {
-      "system_uptime": "2 days, 5 hours",
-      "memory_available": "4.0GB",
-      "disk_used": "16GB/40GB (43%)",
-      "gateway_port": "LISTEN",
+      "status": "healthy",
+      "uptime": "2 days, 7 hours, 44 minutes",
+      "load": "4.15",
       "gateway_health": "200",
-      "load_avg": "5.68",
-      "status": "healthy"
+      "verified_at": "2026-03-11T14:06:00.000000"
     }
   },
   "next_life": {
     "task": "心跳检查",
-    "interval": "3m",
-    "priority": 1
+    "interval": "5m"
   },
   "history": [
-    {"incarnation": 740, "task": "心跳检查", "result": "completed", "verified_at": "2026-03-11T11:52:01.000000+08:00"},
-    {"incarnation": 739, "task": "心跳检查", "result": "completed", "verified_at": "2026-03-11T11:50:48.000000+08:00"},
-    {"incarnation": 738, "task": "心跳检查", "result": "completed", "verified_at": "2026-03-11T11:48:15.000000+08:00"},
-    {"incarnation": 737, "task": "心跳检查", "result": "completed", "verified_at": "2026-03-11T11:46:31.000000+08:00"},
-    {"incarnation": 736, "task": "心跳检查", "result": "completed", "verified_at": "2026-03-11T11:43:13.000000+08:00"}
+    {
+      "incarnation": 749,
+      "task": "心跳检查",
+      "status": "completed",
+      "verification": {
+        "status": "healthy",
+        "uptime": "2 days, 7 hours, 44 minutes",
+        "load": 4.15,
+        "gateway_health": "200",
+        "verified_at": "2026-03-11T14:06:00.000000"
+      }
+    },
+    {
+      "incarnation": 748,
+      "task": "心跳检查",
+      "status": "completed",
+      "verification": {
+        "status": "healthy",
+        "uptime": "2 days, 7 hours, 44 minutes",
+        "load": 4.38,
+        "gateway_health": "200",
+        "verified_at": "2026-03-11T14:04:17.000000"
+      }
+    },
+    {
+      "incarnation": 747,
+      "task": "心跳检查",
+      "status": "completed",
+      "verification": {
+        "status": "healthy",
+        "uptime": "2 days, 7 hours, 40 minutes",
+        "load": 3.94,
+        "gateway_health": "200",
+        "verified_at": "2026-03-11T13:59:59.000000"
+      }
+    },
+    {
+      "incarnation": 746,
+      "task": "心跳检查",
+      "status": "completed",
+      "verification": {
+        "status": "healthy",
+        "uptime": "2 days, 7 hours, 37 minutes",
+        "load": 2.99,
+        "gateway_health": "200",
+        "verified_at": "2026-03-11T13:57:22.000000"
+      }
+    },
+    {
+      "incarnation": 705,
+      "task": "心跳检查",
+      "status": "completed",
+      "verification": {
+        "status": "healthy",
+        "uptime": "2 days, 7 hours, 35 minutes",
+        "load": 4.49,
+        "gateway_health": "200",
+        "verified_at": "2026-03-11T13:55:54.000000"
+      }
+    },
+    {
+      "incarnation": 704,
+      "task": "心跳检查",
+      "status": "completed",
+      "verification": {
+        "status": "healthy",
+        "uptime": "2 days, 7 hours, 34 minutes",
+        "load": 4.6,
+        "gateway_health": "200",
+        "verified_at": "2026-03-11T13:54:18.000000"
+      }
+    },
+    {
+      "incarnation": 703,
+      "task": "心跳检查",
+      "status": "completed",
+      "verification": {
+        "status": "healthy",
+        "uptime": "2 days, 7 hours, 33 minutes",
+        "load": 3.66,
+        "gateway_health": "200",
+        "verified_at": "2026-03-11T13:53:09.000000"
+      }
+    },
+    {
+      "incarnation": 702,
+      "task": "心跳检查",
+      "status": "completed",
+      "verification": {
+        "status": "healthy",
+        "uptime": "2 days, 7 hours, 31 minutes",
+        "load": 4.07,
+        "gateway_health": "200",
+        "verified_at": "2026-03-11T13:50:58.000000"
+      }
+    },
+    {
+      "incarnation": 701,
+      "task": "心跳检查",
+      "status": "completed",
+      "verification": {
+        "status": "healthy",
+        "uptime": "2 days, 7 hours, 29 minutes",
+        "load": 4.46,
+        "gateway_health": "200",
+        "verified_at": "2026-03-11T13:49:38.000000"
+      }
+    },
+    {
+      "incarnation": 700,
+      "task": "心跳检查",
+      "status": "completed",
+      "verification": {
+        "status": "healthy",
+        "uptime": "2 days, 7 hours, 27 minutes",
+        "load": 4.7,
+        "gateway_health": "200",
+        "verified_at": "2026-03-11T13:47:47.000000"
+      }
+    }
   ]
 }
