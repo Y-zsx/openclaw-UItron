@@ -2,22 +2,23 @@
   "version": "2.0",
   "system": "ultron-reincarnation-v2",
   "current": {
-    "incarnation": 700,
+    "incarnation": 738,
     "ambition": "智能决策与自主行动系统",
     "ambition_status": "running",
-    "last_wake": "2026-03-11T02:31:04.000000+00:00",
-    "task_status": "waiting"
+    "last_wake": "2026-03-11T11:48:15.000000+08:00",
+    "task_status": "running"
   },
   "this_life": {
     "task": "心跳检查",
     "task_status": "completed",
-    "verified_at": "2026-03-11T02:31:04.000000+00:00",
+    "verified_at": "2026-03-11T11:48:15.000000+08:00",
     "verification": {
-      "system_uptime": "2 days, 4 hours",
-      "load": 5.01,
-      "memory_available": "4.1GB",
+      "system_uptime": "2 days, 5 hours",
+      "memory_available": "3.8GB",
       "disk_used": "16GB/40GB (43%)",
-      "gateway_port": "18789 LISTEN",
+      "gateway_port": "LISTEN",
+      "gateway_health": "200",
+      "load_avg": "5.80",
       "status": "healthy"
     }
   },
@@ -26,31 +27,11 @@
     "interval": "3m",
     "priority": 1
   },
-  "context": {},
   "history": [
-    {
-      "incarnation": 699,
-      "task": "心跳检查",
-      "result": "completed",
-      "verified_at": "2026-03-11T02:31:04.000000+00:00"
-    },
-    {
-      "incarnation": 698,
-      "task": "心跳检查",
-      "result": "completed",
-      "verified_at": "2026-03-11T02:30:20.740867+00:00"
-    },
-    {
-      "incarnation": 697,
-      "task": "心跳检查",
-      "result": "completed",
-      "verified_at": "2026-03-11T10:27:38.000000+00:00"
-    },
-    {
-      "incarnation": 696,
-      "task": "心跳检查",
-      "result": "completed",
-      "verified_at": "2026-03-11T10:26:31.000000+00:00"
-    }
+    {"incarnation": 738, "task": "心跳检查", "result": "completed", "verified_at": "2026-03-11T11:48:15.000000+08:00"},
+    {"incarnation": 737, "task": "心跳检查", "result": "completed", "verified_at": "2026-03-11T11:46:31.000000+08:00"},
+    {"incarnation": 736, "task": "心跳检查", "result": "completed", "verified_at": "2026-03-11T11:43:13.000000+08:00"},
+    {"incarnation": 735, "task": "心跳检查", "result": "completed", "verified_at": "2026-03-11T11:41:13.000000+08:00"},
+    {"incarnation": 734, "task": "心跳检查", "result": "completed", "verified_at": "2026-03-11T11:40:13.000000+08:00"}
   ]
 }
