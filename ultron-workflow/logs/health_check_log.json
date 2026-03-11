@@ -1,16 +1,6 @@
 {
   "checks": [
     {
-      "time": "2026-03-11T05:41:30.174410",
-      "status": "warning",
-      "healthy": 2,
-      "total": 3,
-      "failed": [
-        "chrome"
-      ],
-      "recovered": []
-    },
-    {
       "time": "2026-03-11T05:46:44.506580",
       "status": "warning",
       "healthy": 2,
@@ -993,6 +983,16 @@
     },
     {
       "time": "2026-03-11T14:09:13.436312",
+      "status": "warning",
+      "healthy": 2,
+      "total": 3,
+      "failed": [
+        "chrome"
+      ],
+      "recovered": []
+    },
+    {
+      "time": "2026-03-11T14:14:18.888289",
       "status": "warning",
       "healthy": 2,
       "total": 3,

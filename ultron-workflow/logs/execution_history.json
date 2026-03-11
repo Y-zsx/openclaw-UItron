@@ -1,95 +1,5 @@
 [
   {
-    "task": "health_check",
-    "status": "success",
-    "timestamp": "2026-03-11T13:08:01.985354",
-    "details": {
-      "duration": 2.31436,
-      "return_code": 0
-    }
-  },
-  {
-    "task": "metrics_collect",
-    "status": "success",
-    "timestamp": "2026-03-11T13:08:05.179449",
-    "details": {
-      "duration": 3.189275,
-      "return_code": 0
-    }
-  },
-  {
-    "task": "api_health",
-    "status": "success",
-    "timestamp": "2026-03-11T13:08:05.530962",
-    "details": {
-      "duration": 0.345316,
-      "return_code": 0
-    }
-  },
-  {
-    "task": "self_healer",
-    "status": "success",
-    "timestamp": "2026-03-11T13:08:05.744916",
-    "details": {
-      "duration": 0.211424,
-      "return_code": 0
-    }
-  },
-  {
-    "task": "api_health",
-    "status": "success",
-    "timestamp": "2026-03-11T13:09:06.059412",
-    "details": {
-      "duration": 0.235501,
-      "return_code": 0
-    }
-  },
-  {
-    "task": "api_health",
-    "status": "success",
-    "timestamp": "2026-03-11T13:10:06.477754",
-    "details": {
-      "duration": 0.304905,
-      "return_code": 0
-    }
-  },
-  {
-    "task": "api_health",
-    "status": "success",
-    "timestamp": "2026-03-11T13:11:06.742954",
-    "details": {
-      "duration": 0.186072,
-      "return_code": 0
-    }
-  },
-  {
-    "task": "api_health",
-    "status": "success",
-    "timestamp": "2026-03-11T13:12:07.725469",
-    "details": {
-      "duration": 0.880548,
-      "return_code": 0
-    }
-  },
-  {
-    "task": "health_check",
-    "status": "success",
-    "timestamp": "2026-03-11T13:13:09.745985",
-    "details": {
-      "duration": 1.918957,
-      "return_code": 0
-    }
-  },
-  {
-    "task": "metrics_collect",
-    "status": "success",
-    "timestamp": "2026-03-11T13:13:10.902039",
-    "details": {
-      "duration": 1.149027,
-      "return_code": 0
-    }
-  },
-  {
     "task": "api_health",
     "status": "success",
     "timestamp": "2026-03-11T13:13:11.290076",
@@ -896,6 +806,96 @@
     "timestamp": "2026-03-11T14:09:15.871259",
     "details": {
       "duration": 0.32058,
+      "return_code": 0
+    }
+  },
+  {
+    "task": "api_health",
+    "status": "success",
+    "timestamp": "2026-03-11T14:10:16.499916",
+    "details": {
+      "duration": 0.557637,
+      "return_code": 0
+    }
+  },
+  {
+    "task": "api_health",
+    "status": "success",
+    "timestamp": "2026-03-11T14:11:16.824690",
+    "details": {
+      "duration": 0.229006,
+      "return_code": 0
+    }
+  },
+  {
+    "task": "api_health",
+    "status": "success",
+    "timestamp": "2026-03-11T14:12:17.278129",
+    "details": {
+      "duration": 0.37062,
+      "return_code": 0
+    }
+  },
+  {
+    "task": "api_health",
+    "status": "success",
+    "timestamp": "2026-03-11T14:13:17.544895",
+    "details": {
+      "duration": 0.182842,
+      "return_code": 0
+    }
+  },
+  {
+    "task": "health_check",
+    "status": "success",
+    "timestamp": "2026-03-11T14:14:19.201951",
+    "details": {
+      "duration": 1.586708,
+      "return_code": 0
+    }
+  },
+  {
+    "task": "metrics_collect",
+    "status": "success",
+    "timestamp": "2026-03-11T14:14:20.558593",
+    "details": {
+      "duration": 1.348949,
+      "return_code": 0
+    }
+  },
+  {
+    "task": "api_health",
+    "status": "success",
+    "timestamp": "2026-03-11T14:14:21.138908",
+    "details": {
+      "duration": 0.548772,
+      "return_code": 0
+    }
+  },
+  {
+    "task": "self_healer",
+    "status": "success",
+    "timestamp": "2026-03-11T14:14:21.599742",
+    "details": {
+      "duration": 0.455399,
+      "return_code": 0
+    }
+  },
+  {
+    "task": "api_health",
+    "status": "success",
+    "timestamp": "2026-03-11T14:15:22.489831",
+    "details": {
+      "duration": 0.233988,
+      "return_code": 0
+    }
+  },
+  {
+    "task": "api_health",
+    "status": "success",
+    "timestamp": "2026-03-11T14:16:23.040718",
+    "details": {
+      "duration": 0.451199,
       "return_code": 0
     }
   }
