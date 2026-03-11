@@ -1,50 +1,5 @@
 [
   {
-    "task": "api_health",
-    "status": "success",
-    "timestamp": "2026-03-11T10:45:44.722132",
-    "details": {
-      "duration": 0.519596,
-      "return_code": 0
-    }
-  },
-  {
-    "task": "api_health",
-    "status": "success",
-    "timestamp": "2026-03-11T10:46:45.332669",
-    "details": {
-      "duration": 0.50353,
-      "return_code": 0
-    }
-  },
-  {
-    "task": "api_health",
-    "status": "success",
-    "timestamp": "2026-03-11T10:47:45.801632",
-    "details": {
-      "duration": 0.380983,
-      "return_code": 0
-    }
-  },
-  {
-    "task": "api_health",
-    "status": "success",
-    "timestamp": "2026-03-11T10:48:46.610077",
-    "details": {
-      "duration": 0.512471,
-      "return_code": 0
-    }
-  },
-  {
-    "task": "health_check",
-    "status": "success",
-    "timestamp": "2026-03-11T10:49:48.709812",
-    "details": {
-      "duration": 1.992128,
-      "return_code": 0
-    }
-  },
-  {
     "task": "metrics_collect",
     "status": "success",
     "timestamp": "2026-03-11T10:49:49.743685",
@@ -896,6 +851,51 @@
     "timestamp": "2026-03-11T11:50:08.918314",
     "details": {
       "duration": 0.509845,
+      "return_code": 0
+    }
+  },
+  {
+    "task": "health_check",
+    "status": "success",
+    "timestamp": "2026-03-11T11:51:10.598984",
+    "details": {
+      "duration": 1.558846,
+      "return_code": 0
+    }
+  },
+  {
+    "task": "metrics_collect",
+    "status": "success",
+    "timestamp": "2026-03-11T11:51:11.862638",
+    "details": {
+      "duration": 1.258051,
+      "return_code": 0
+    }
+  },
+  {
+    "task": "api_health",
+    "status": "success",
+    "timestamp": "2026-03-11T11:51:12.236130",
+    "details": {
+      "duration": 0.364835,
+      "return_code": 0
+    }
+  },
+  {
+    "task": "self_healer",
+    "status": "success",
+    "timestamp": "2026-03-11T11:51:12.937752",
+    "details": {
+      "duration": 0.697242,
+      "return_code": 0
+    }
+  },
+  {
+    "task": "api_health",
+    "status": "success",
+    "timestamp": "2026-03-11T11:52:13.340878",
+    "details": {
+      "duration": 0.336144,
       "return_code": 0
     }
   }
