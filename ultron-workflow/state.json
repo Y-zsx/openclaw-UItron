@@ -2,75 +2,58 @@
   "version": "2.0",
   "system": "ultron-reincarnation-v2",
   "current": {
-    "incarnation": 805,
+    "incarnation": 735,
     "ambition": "智能决策与自主行动系统",
     "ambition_status": "running",
-    "last_wake": "2026-03-11T16:02:00.000000",
+    "last_wake": "2026-03-11T23:52:00.000000+08:00",
     "task_status": "completed"
   },
   "this_life": {
     "task": "心跳检查",
+    "accomplished": ["Gateway运行正常(200)", "端口18789监听中", "OpenClaw进程运行中(887836)"],
     "verification": {
-      "status": "healthy",
-      "gateway_http": 200,
-      "processes": 5,
-      "verified_at": "2026-03-11T16:02:00.000000"
-    }
+      "code_running": true,
+      "verified_by": "curl http://localhost:18789/status + netstat + pgrep",
+      "verified_at": "2026-03-11T23:52:00.000000+08:00"
+    },
+    "retry_count": 0,
+    "execution_time": "1s"
   },
   "next_life": {
     "task": "心跳检查",
-    "interval": "3m"
+    "interval": "3m",
+    "priority": 1
   },
+  "context": {},
   "history": [
     {
-      "incarnation": 805,
+      "incarnation": 735,
       "task": "心跳检查",
       "status": "completed",
       "verification": {
-        "status": "healthy",
-        "gateway_http": 200,
-        "processes": 5,
-        "verified_at": "2026-03-11T16:02:00.000000"
+        "code_running": true,
+        "verified_by": "curl + netstat + pgrep",
+        "verified_at": "2026-03-11T23:52:00.000000+08:00"
       }
     },
     {
-      "incarnation": 804,
+      "incarnation": 734,
       "task": "心跳检查",
       "status": "completed",
       "verification": {
-        "status": "healthy",
-        "gateway_http": 200,
-        "verified_at": "2026-03-11T16:01:00.000000"
+        "code_running": true,
+        "verified_by": "curl + netstat + pgrep",
+        "verified_at": "2026-03-11T23:50:00.000000+08:00"
       }
     },
     {
-      "incarnation": 803,
+      "incarnation": 720,
       "task": "心跳检查",
       "status": "completed",
       "verification": {
-        "status": "healthy",
-        "gateway_http": 200,
-        "verified_at": "2026-03-11T15:58:00.000000"
-      }
-    },
-    {
-      "incarnation": 802,
-      "task": "心跳检查",
-      "status": "completed",
-      "verification": {
-        "status": "healthy",
-        "gateway_http": 200,
-        "verified_at": "2026-03-11T15:56:00.000000"
-      }
-    },
-    {
-      "incarnation": 801,
-      "task": "心跳检查",
-      "status": "completed",
-      "verification": {
-        "status": "healthy",
-        "gateway_http": 200,
-        "verified_at": "2026-03-11T15:55:00.000000"
+        "code_running": true,
+        "verified_by": "curl + netstat",
+        "verified_at": "2026-03-11T23:49:00.000000+08:00"
       }
     }
   ]
