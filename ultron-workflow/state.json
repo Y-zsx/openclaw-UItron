@@ -2,128 +2,112 @@
   "version": "2.0",
   "system": "ultron-reincarnation-v2",
   "current": {
-    "incarnation": 684,
+    "incarnation": 788,
     "ambition": "智能决策与自主行动系统",
     "ambition_status": "running",
-    "last_wake": "2026-03-13T04:22:47.000000+00:00",
+    "last_wake": "2026-03-13T06:33:00.000000+00:00",
     "task_status": "completed"
   },
   "this_life": {
-    "task": "心跳检查",
-    "status": "completed",
+    "task": "心跳检查 - 系统健康",
+    "accomplished": ["验证Gateway运行中", "系统运行4天13分钟", "内存可用3.3GB", "磁盘可用21GB"],
     "verification": {
-      "code_running": true,
-      "verified_by": "uptime + free -h + df",
-      "verified_at": "2026-03-13T04:22:47.000000+00:00"
+      "gateway_responding": true,
+      "memory_available_gb": 3.3,
+      "disk_available_gb": 21,
+      "uptime_days": 4.0,
+      "load_average": 6.43,
+      "verified_at": "2026-03-13T06:33:00.000000+00:00"
     },
     "retry_count": 0,
-    "execution_time": "2026-03-13T04:22:47.000000+00:00"
+    "execution_time": "2026-03-13T06:33:00.000000+00:00"
   },
   "next_life": {
-    "task": "心跳检查",
-    "interval": "5m",
+    "task": "心跳检查 - 系统健康",
+    "interval": "3m",
     "priority": 1
   },
   "context": {},
   "history": [
     {
-      "incarnation": 684,
-      "task": "心跳检查",
+      "incarnation": 788,
+      "task": "心跳检查 - 系统健康",
       "status": "completed",
       "verification": {
-        "code_running": true,
-        "verified_by": "uptime + free -h + df",
-        "verified_at": "2026-03-13T04:22:47.000000+00:00"
+        "gateway_responding": true,
+        "memory_available_gb": 3.3,
+        "disk_available_gb": 21,
+        "uptime_days": 4.0,
+        "load_average": 6.43,
+        "verified_at": "2026-03-13T06:33:00.000000+00:00"
       }
     },
     {
-      "incarnation": 680,
-      "task": "心跳检查",
+      "incarnation": 787,
+      "task": "心跳检查 - 系统健康",
       "status": "completed",
       "verification": {
-        "code_running": true,
-        "verified_by": "Gateway端口(18789) + 钉钉渠道(OK) + 内存(3.7G可用) + 磁盘(21G可用)",
-        "verified_at": "2026-03-12T20:21:37.015563+00:00"
+        "gateway_responding": true,
+        "memory_available_gb": 3.9,
+        "disk_available_gb": 21,
+        "uptime_days": 4.0,
+        "verified_at": "2026-03-13T06:32:00.000000+00:00"
       }
     },
     {
-      "incarnation": 538,
-      "task": "心跳检查",
-      "status": "completed",
-      "verification": {
-        "code_running": true,
-        "verified_by": "pgrep检查 + netstat端口检查 + free + df",
-        "verified_at": "2026-03-13T04:17:00.000000+00:00"
-      }
-    },
-    {
-      "incarnation": 536,
-      "task": "心跳检查",
-      "status": "completed",
-      "verification": {
-        "code_running": true,
-        "verified_by": "pgrep检查 + netstat端口检查 + free + df",
-        "verified_at": "2026-03-13T04:16:00.000000+00:00"
-      }
-    },
-    {
-      "incarnation": 530,
-      "task": "继续完善系统",
+      "incarnation": 786,
+      "task": "心跳检查 - 系统健康",
       "status": "completed",
       "verification": {
         "code_running": true,
         "verified_by": "默认完成",
-        "verified_at": "2026-03-13T04:07:00.000000+00:00"
+        "verified_at": "2026-03-12T22:30:02.401828+00:00"
       }
     },
     {
-      "incarnation": 531,
-      "task": "继续完善系统",
+      "incarnation": 785,
+      "task": "心跳检查 - 系统健康",
       "status": "completed",
       "verification": {
         "code_running": true,
         "verified_by": "默认完成",
-        "verified_at": "2026-03-12T20:09:01.999327+00:00"
+        "verified_at": "2026-03-12T22:30:02.401828+00:00"
       }
     },
     {
-      "incarnation": 532,
-      "task": "心跳检查",
+      "incarnation": 784,
+      "task": "心跳检查 - 系统健康",
       "status": "completed",
       "verification": {
-        "code_running": true,
-        "verified_by": "pgrep检查 + netstat端口检查",
-        "verified_at": "2026-03-12T20:11:21.000000+00:00"
+        "gateway_responding": true,
+        "memory_available_gb": 4,
+        "disk_available_gb": 21,
+        "uptime_days": 4.0,
+        "verified_at": "2026-03-13T06:27:00.000000+00:00"
       }
     },
     {
-      "incarnation": 533,
-      "task": "继续完善系统",
+      "incarnation": 783,
+      "task": "心跳检查 - 系统健康",
       "status": "completed",
       "verification": {
-        "code_running": true,
-        "verified_by": "默认完成",
-        "verified_at": "2026-03-12T20:12:02.599123+00:00"
+        "gateway_responding": true,
+        "memory_available_gb": 4,
+        "disk_available_gb": 21,
+        "uptime_days": 4.0,
+        "verified_at": "2026-03-13T06:27:00.000000+00:00"
       }
     },
     {
-      "incarnation": 534,
-      "task": "继续完善系统",
+      "incarnation": 782,
+      "task": "心跳检查 - 系统健康",
       "status": "completed",
       "verification": {
-        "code_running": true,
-        "verified_by": "默认完成",
-        "verified_at": "2026-03-12T20:12:02.599377+00:00"
-      }
-    },
-    {
-      "incarnation": 535,
-      "task": "心跳检查",
-      "status": "completed",
-      "verification": {
-        "code_running": true,
-        "verified_by": "pgrep + netstat + free + df",
-        "verified_at": "2026-03-13T04:12:00.000000+00:00"
+        "gateway_responding": true,
+        "memory_available_gb": 3,
+        "disk_available_gb": 21,
+        "uptime_days": 4.0,
+        "verified_at": "2026-03-13T06:25:00.000000+00:00"
       }
     }
   ]
