@@ -2,41 +2,41 @@
   "predictions": {
     "cpu": {
       "metric_type": "cpu",
-      "current_value": 90.6,
-      "predicted_value": 91.79,
+      "current_value": 87.1,
+      "predicted_value": 87.2,
       "trend": {
-        "trend": "rising",
-        "strength": 1.3826879030640775,
-        "velocity": 1.1909090909090898,
-        "predicted_next": 91.79090909090908
+        "trend": "stable",
+        "strength": 0.11782726522917382,
+        "velocity": 0.09999999999999983,
+        "predicted_next": 87.19999999999999
       },
-      "confidence": 0.880841103727372,
+      "confidence": 0.8826633615009745,
       "horizon": "5m",
       "data_points": 50
     },
     "memory": {
       "metric_type": "memory",
-      "current_value": 43.9,
-      "predicted_value": 44.12,
+      "current_value": 46.2,
+      "predicted_value": 45.84,
       "trend": {
-        "trend": "rising",
-        "strength": 0.4786104164986148,
-        "velocity": 0.21575757575757554,
-        "predicted_next": 44.11575757575758
+        "trend": "falling",
+        "strength": 0.843348979491605,
+        "velocity": -0.3642424242424242,
+        "predicted_next": 45.835757575757576
       },
-      "confidence": 0.9473988005107852,
+      "confidence": 0.9397781456133707,
       "horizon": "5m",
       "data_points": 50
     },
     "disk": {
       "metric_type": "disk",
-      "current_value": 44.1,
-      "predicted_value": 44.1,
+      "current_value": 44.2,
+      "predicted_value": 44.2,
       "trend": {
         "trend": "stable",
-        "strength": 0.0,
-        "velocity": 0.0,
-        "predicted_next": 44.1
+        "strength": 0.0013708676907047536,
+        "velocity": 0.0006060606060605716,
+        "predicted_next": 44.20060606060606
       },
       "confidence": 0.95,
       "horizon": "15m",
@@ -44,15 +44,15 @@
     },
     "load": {
       "metric_type": "load",
-      "current_value": 5.93603515625,
-      "predicted_value": 5.98,
+      "current_value": 5.390625,
+      "predicted_value": 5.2,
       "trend": {
-        "trend": "stable",
-        "strength": 0.7259783000262549,
-        "velocity": 0.04222301136363636,
-        "predicted_next": 5.978258167613636
+        "trend": "falling",
+        "strength": 3.56812527014286,
+        "velocity": -0.18859493371212122,
+        "predicted_next": 5.202030066287879
       },
-      "confidence": 0.9223981241306505,
+      "confidence": 0.8947592261649652,
       "horizon": "5m",
       "data_points": 50
     }
@@ -60,22 +60,14 @@
   "alert_predictions": [
     {
       "alert_type": "cpu_high",
-      "probability": 0.89,
-      "current_value": 90.6,
-      "predicted_value": 91.79,
+      "probability": 0.66,
+      "current_value": 87.1,
+      "predicted_value": 87.2,
       "threshold": 80,
-      "severity": "critical",
-      "estimated_time": "within 5 minutes"
+      "severity": "warning",
+      "estimated_time": "unknown"
     }
   ],
-  "suggestions": [
-    {
-      "type": "preventive_action",
-      "action": "scale_down_services",
-      "reason": "CPU\u8d8b\u52bf\u4e0a\u5347\uff0c\u5f53\u524d90.6%\uff0c\u9884\u6d4b\u5c06\u7ee7\u7eed\u4e0a\u5347",
-      "priority": "high",
-      "metric": "cpu"
-    }
-  ],
-  "timestamp": "2026-03-12T13:11:36.165558"
+  "suggestions": [],
+  "timestamp": "2026-03-12T15:34:13.346166"
 }
