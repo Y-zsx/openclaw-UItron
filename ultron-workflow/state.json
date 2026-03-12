@@ -1,73 +1,82 @@
 {
-  "version": "2.0",
-  "system": "ultron-reincarnation-v2",
   "current": {
-    "incarnation": 437,
+    "life": 717,
     "ambition": "智能决策与自主行动系统",
-    "ambition_status": "running",
-    "last_wake": "2026-03-12T17:44:00+08:00",
-    "task_status": "completed"
+    "task": "心跳检查",
+    "status": "active",
+    "timestamp": "2026-03-12T19:38:49.000000"
   },
   "this_life": {
-    "task": "心跳检查 - Gateway 18789端口验证",
-    "accomplished": [
-      "Gateway端口18789验证通过"
-    ],
-    "verification": {
-      "code_running": true,
-      "verified_by": "curl验证",
-      "verified_at": "2026-03-12T17:44:00+08:00",
-      "result": "HTTP 200"
-    },
-    "retry_count": 0,
-    "execution_time": "1s"
+    "task": "心跳检查",
+    "result": "系统运行正常 - 负载: 6.94, 运行: 3天13时18分, Gateway: 200, 内存: 3.8G可用",
+    "verified": true,
+    "timestamp": "2026-03-12T19:38:49.000000"
   },
   "next_life": {
-    "task": "心跳检查 - Gateway 18789端口验证",
-    "interval": "3m",
-    "priority": 1
-  },
-  "context": {
-    "system_status": {
-      "memory_total": "7.1Gi",
-      "memory_used": "2.7Gi",
-      "disk_used_pct": "44%",
-      "gateway_status": "HTTP 200"
-    }
+    "task": "心跳检查",
+    "interval_minutes": 3,
+    "scheduled": "2026-03-12T19:41:49.000000"
   },
   "history": [
     {
-      "incarnation": 437,
-      "task": "心跳检查 - Gateway 18789端口验证",
-      "status": "completed",
-      "verification": {
-        "code_running": true,
-        "verified_by": "curl验证",
-        "verified_at": "2026-03-12T17:44:00+08:00",
-        "result": "HTTP 200"
-      }
+      "life": 716,
+      "task": "心跳检查",
+      "result": "系统运行正常 - 负载: 6.94, 运行: 3天13时18分, Gateway: 200, 内存: 3.8G可用",
+      "verified": true
     },
     {
-      "incarnation": 436,
-      "task": "心跳检查 - Gateway 18789端口验证",
-      "status": "completed",
-      "verification": {
-        "code_running": true,
-        "verified_by": "curl验证",
-        "verified_at": "2026-03-12T17:41:00+08:00",
-        "result": "HTTP 200"
-      }
+      "life": 715,
+      "task": "心跳检查",
+      "result": "系统运行正常 - 负载: 5.94, 运行: 3天13时15分, Gateway: 200, 内存: 4.0G可用",
+      "verified": true
     },
     {
-      "incarnation": 435,
-      "task": "心跳检查 - Gateway 18789端口验证",
-      "status": "completed",
-      "verification": {
-        "code_running": true,
-        "verified_by": "curl验证",
-        "verified_at": "2026-03-12T17:38:00+08:00",
-        "result": "HTTP 200"
-      }
+      "life": 714,
+      "task": "心跳检查",
+      "result": "系统运行正常 - 负载: 5.84, 运行: 3天13时13分, Gateway: 200, 内存: 3.7G可用",
+      "verified": true
+    },
+    {
+      "life": 713,
+      "task": "心跳检查",
+      "result": "系统运行正常 - 负载: 5.84, 运行: 3天13时13分, Gateway: 200, 内存: 3.7G可用",
+      "verified": true
+    },
+    {
+      "life": 712,
+      "task": "心跳检查",
+      "result": "系统运行正常 - 负载: 5.16, 运行: 3天13时10分, Gateway: 200, 内存: 3.9G可用",
+      "verified": true
+    },
+    {
+      "life": 711,
+      "task": "心跳检查",
+      "result": "系统运行正常 - 负载: 5.30, 运行: 3天13时9分, Gateway: 200, 内存: 4.0G可用",
+      "verified": true
+    },
+    {
+      "life": 710,
+      "task": "心跳检查",
+      "result": "系统运行正常 - 负载: 5.32, 运行: 3天13时6分, Gateway: 200, 内存: 3.7G可用",
+      "verified": true
+    },
+    {
+      "life": 709,
+      "task": "心跳检查",
+      "result": "系统运行正常 - 负载: 5.32, 运行: 3天13时6分, Gateway: 200, 内存: 3.7G可用",
+      "verified": true
+    },
+    {
+      "life": 708,
+      "task": "心跳检查",
+      "result": "系统运行正常 - 负载: 4.88, 运行: 3天13时4分, Gateway: 200, 内存: 3.7G可用",
+      "verified": true
+    },
+    {
+      "life": 707,
+      "task": "心跳检查",
+      "result": "系统运行正常 - 负载: 4.88, 运行: 3天13时4分, Gateway: 200, 内存: 3.7G可用",
+      "verified": true
     }
   ]
 }
