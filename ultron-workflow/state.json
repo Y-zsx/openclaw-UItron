@@ -1,81 +1,88 @@
 {
+  "version": "2.0",
+  "system": "ultron-reincarnation-v2",
   "current": {
-    "life": 722,
+    "incarnation": 747,
     "ambition": "智能决策与自主行动系统",
-    "task": "心跳检查",
-    "status": "completed",
-    "timestamp": "2026-03-12T19:47:47.000000"
+    "ambition_status": "running",
+    "last_wake": "2026-03-12T21:11:35.000000",
+    "task_status": "completed"
   },
   "this_life": {
     "task": "心跳检查",
-    "result": "系统运行正常 - 负载: 4.55, Gateway: 200",
-    "verified": true,
-    "timestamp": "2026-03-12T19:47:47.000000"
+    "result": "系统运行正常 - 负载: 5.94, 运行: 3天14时51分, Gateway: 200, 内存: 2.9G已用/3.9G可用",
+    "verification": {
+      "code_running": true,
+      "verified_by": "uptime+curl+free"
+    },
+    "retry_count": 0,
+    "execution_time": "2026-03-12T21:11:35.000000"
   },
   "next_life": {
     "task": "心跳检查",
-    "interval_minutes": 3,
-    "scheduled": "2026-03-12T19:50:47.000000"
+    "interval": "3m",
+    "priority": 1
   },
+  "context": {},
   "history": [
     {
-      "life": 719,
+      "life": 747,
       "task": "心跳检查",
-      "result": "系统运行正常 - 负载: 5.73, 运行: 3天13时22分, Gateway: 200",
+      "result": "系统运行正常 - 负载: 5.94, 运行: 3天14时51分, Gateway: 200, 内存: 2.9G已用/3.9G可用",
       "verified": true
     },
     {
-      "life": 718,
+      "life": 746,
       "task": "心跳检查",
-      "result": "系统运行正常 - 负载: 6.11, 运行: 3天13时20分, Gateway: 200, 内存: 3.8G可用",
+      "result": "系统运行正常 - 负载: 5.95, 运行: 3天14时49分, Gateway: 200, 内存: 2.6G已用/4.2G可用",
       "verified": true
     },
     {
-      "life": 717,
+      "life": 745,
       "task": "心跳检查",
-      "result": "系统运行正常 - 负载: 6.11, 运行: 3天13时20分, Gateway: 200, 内存: 3.8G可用",
+      "result": "系统运行正常 - 负载: 5.53, 运行: 3天14时48分, Gateway: 200, 内存: 3.4G已用/3.7G可用",
       "verified": true
     },
     {
-      "life": 716,
+      "life": 744,
       "task": "心跳检查",
-      "result": "系统运行正常 - 负载: 6.94, 运行: 3天13时18分, Gateway: 200, 内存: 3.8G可用",
+      "result": "系统运行正常 - 负载: 5.60, 运行: 3天14时47分, Gateway: 200, 内存: 2.9G已用/3.9G可用",
       "verified": true
     },
     {
-      "life": 715,
+      "life": 742,
       "task": "心跳检查",
-      "result": "系统运行正常 - 负载: 5.94, 运行: 3天13时15分, Gateway: 200, 内存: 4.0G可用",
+      "result": "系统运行正常 - 负载: 6.02, 运行: 3天14时46分, Gateway: 200, 内存: 2.8G已用/4.0G可用",
       "verified": true
     },
     {
-      "life": 714,
+      "life": 740,
       "task": "心跳检查",
-      "result": "系统运行正常 - 负载: 5.84, 运行: 3天13时13分, Gateway: 200, 内存: 3.7G可用",
+      "result": "系统运行正常 - 负载: 6.16, 运行: 3天14时44分, Gateway: 200, 内存: 2.7G已用/4.1G可用",
       "verified": true
     },
     {
-      "life": 713,
+      "life": 739,
       "task": "心跳检查",
-      "result": "系统运行正常 - 负载: 5.84, 运行: 3天13时13分, Gateway: 200, 内存: 3.7G可用",
+      "result": "系统运行正常 - 负载: 5.90, 运行: 3天14时43分, Gateway: 200, 内存: 2.7G已用/4.1G可用",
       "verified": true
     },
     {
-      "life": 712,
+      "life": 737,
       "task": "心跳检查",
-      "result": "系统运行正常 - 负载: 5.16, 运行: 3天13时10分, Gateway: 200, 内存: 3.9G可用",
+      "result": "系统运行正常 - 负载: 5.80, 运行: 3天14时40分, Gateway: 200, 内存: 2.6G已用/4.2G可用",
       "verified": true
     },
     {
-      "life": 711,
+      "life": 735,
       "task": "心跳检查",
-      "result": "系统运行正常 - 负载: 5.30, 运行: 3天13时9分, Gateway: 200, 内存: 4.0G可用",
+      "result": "系统运行正常 - 负载: 6.29, 运行: 3天14时39分, Gateway: 200, 内存: 2.4G已用/4.3G可用",
       "verified": true
     },
     {
-      "life": 721,
+      "life": 733,
       "task": "心跳检查",
-      "result": "系统运行正常 - 负载: 5.09, 运行: 3天13时27分, Gateway: 200, 内存: 3.8G可用",
+      "result": "系统运行正常 - 负载: 5.52, 运行: 3天14时33分, Gateway: 200, 内存: 3.0G已用/3.8G可用",
       "verified": true
     }
   ]
