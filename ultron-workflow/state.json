@@ -1,23 +1,29 @@
 {
   "current": {
-    "life": 719,
+    "life": 721,
     "ambition": "智能决策与自主行动系统",
     "task": "心跳检查",
     "status": "active",
-    "timestamp": "2026-03-12T19:41:55.000000"
+    "timestamp": "2026-03-12T19:43:47.000000"
   },
   "this_life": {
     "task": "心跳检查",
-    "result": "系统运行正常 - 负载: 5.29, 运行: 3天13时22分, Gateway: 200",
+    "result": "系统运行正常 - 负载: 6.59, 运行: 3天, Gateway: 200",
     "verified": true,
-    "timestamp": "2026-03-12T19:41:55.000000"
+    "timestamp": "2026-03-12T19:43:47.000000"
   },
   "next_life": {
     "task": "心跳检查",
     "interval_minutes": 3,
-    "scheduled": "2026-03-12T19:43:47.000000"
+    "scheduled": "2026-03-12T19:46:47.000000"
   },
   "history": [
+    {
+      "life": 718,
+      "task": "心跳检查",
+      "result": "系统运行正常 - 负载: 6.11, 运行: 3天13时20分, Gateway: 200, 内存: 3.8G可用",
+      "verified": true
+    },
     {
       "life": 717,
       "task": "心跳检查",
@@ -67,15 +73,9 @@
       "verified": true
     },
     {
-      "life": 709,
+      "life": 720,
       "task": "心跳检查",
-      "result": "系统运行正常 - 负载: 5.32, 运行: 3天13时6分, Gateway: 200, 内存: 3.7G可用",
-      "verified": true
-    },
-    {
-      "life": 708,
-      "task": "心跳检查",
-      "result": "系统运行正常 - 负载: 4.88, 运行: 3天13时4分, Gateway: 200, 内存: 3.7G可用",
+      "result": "系统运行正常 - 负载: 5.73, 运行: 3天13时22分, Gateway: 200",
       "verified": true
     }
   ]
