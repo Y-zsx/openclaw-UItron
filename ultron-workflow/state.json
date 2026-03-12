@@ -2,26 +2,25 @@
   "version": "2.0",
   "system": "ultron-reincarnation-v2",
   "current": {
-    "incarnation": 789,
+    "incarnation": 760,
     "ambition": "智能决策与自主行动系统",
     "ambition_status": "running",
-    "last_wake": "2026-03-12T09:21:15+08:00",
+    "last_wake": "2026-03-12T11:35:18+08:00",
     "task_status": "completed"
   },
   "this_life": {
     "task": "心跳检查",
     "accomplished": [
-      "Gateway健康检查返回200",
-      "OpenClaw进程运行正常 (36个进程)",
-      "系统资源正常: 2.7G/7.1G内存"
+      "Gateway服务运行正常(返回200)",
+      "OpenClaw进程运行正常(36个进程)"
     ],
     "verification": {
       "code_running": true,
-      "verified_by": "curl健康检查+进程检查+内存检查",
-      "verified_at": "2026-03-12T09:21:15+08:00"
+      "verified_by": "curl健康检查+进程检查",
+      "verified_at": "2026-03-12T11:35:18+08:00"
     },
     "retry_count": 0,
-    "execution_time": "2026-03-12T09:21:15+08:00"
+    "execution_time": "2026-03-12T11:35:18+08:00"
   },
   "next_life": {
     "task": "心跳检查",
@@ -31,103 +30,23 @@
   "context": {},
   "history": [
     {
-      "incarnation": 788,
+      "incarnation": 760,
       "task": "心跳检查",
       "status": "completed",
       "verification": {
         "code_running": true,
-        "verified_by": "curl健康检查+进程检查+内存检查",
-        "verified_at": "2026-03-12T09:19:10+08:00"
+        "verified_by": "curl健康检查+进程检查",
+        "verified_at": "2026-03-12T11:35:18+08:00"
       }
     },
     {
-      "incarnation": 787,
+      "incarnation": 759,
       "task": "心跳检查",
       "status": "completed",
       "verification": {
         "code_running": true,
-        "verified_by": "curl健康检查+进程检查+内存检查",
-        "verified_at": "2026-03-12T09:18:05+08:00"
-      }
-    },
-    {
-      "incarnation": 786,
-      "task": "心跳检查",
-      "status": "completed",
-      "verification": {
-        "code_running": true,
-        "verified_by": "curl健康检查+进程检查+内存检查",
-        "verified_at": "2026-03-12T09:16:30+08:00"
-      }
-    },
-    {
-      "incarnation": 785,
-      "task": "心跳检查",
-      "status": "completed",
-      "verification": {
-        "code_running": true,
-        "verified_by": "curl健康检查+进程检查+内存检查",
-        "verified_at": "2026-03-12T09:15:55+08:00"
-      }
-    },
-    {
-      "incarnation": 784,
-      "task": "心跳检查",
-      "status": "completed",
-      "verification": {
-        "code_running": true,
-        "verified_by": "curl健康检查+进程检查+内存检查",
-        "verified_at": "2026-03-12T09:14:50+08:00"
-      }
-    },
-    {
-      "incarnation": 783,
-      "task": "心跳检查",
-      "status": "completed",
-      "verification": {
-        "code_running": true,
-        "verified_by": "curl健康检查+进程检查+内存检查",
-        "verified_at": "2026-03-12T09:12:45+08:00"
-      }
-    },
-    {
-      "incarnation": 782,
-      "task": "心跳检查",
-      "status": "completed",
-      "verification": {
-        "code_running": true,
-        "verified_by": "curl健康检查+进程检查+内存检查",
-        "verified_at": "2026-03-12T09:10:40+08:00"
-      }
-    },
-    {
-      "incarnation": 781,
-      "task": "心跳检查",
-      "status": "completed",
-      "verification": {
-        "code_running": true,
-        "verified_by": "curl健康检查+进程检查+内存检查",
-        "verified_at": "2026-03-12T09:08:35+08:00"
-      }
-    },
-    {
-      "incarnation": 780,
-      "task": "心跳检查",
-      "status": "completed",
-      "verification": {
-        "code_running": true,
-        "verified_by": "curl健康检查+进程检查+内存检查",
-        "verified_at": "2026-03-12T09:07:00+08:00"
-      }
-    },
-    {
-      "incarnation": 779,
-      "task": "心跳检查",
-      "status": "completed",
-      "verification": {
-        "code_running": true,
-        "verified_by": "curl健康检查+进程检查+内存检查",
-        "verified_at": "2026-03-12T09:06:30+08:00"
+        "verified_by": "curl健康检查+进程检查",
+        "verified_at": "2026-03-12T11:34:18+08:00"
       }
     }
   ]
