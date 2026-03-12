@@ -7148,3 +7148,46 @@
 2026-03-13T03:30:06.713369 - 尝试恢复 chrome: pkill -f chrome.*headless
 2026-03-13T03:30:06.793171 - chrome: 恢复失败 - 
 2026-03-13T03:30:06.793513 - WARNING: 1个服务异常 - ['chrome']
+2026-03-13T03:35:20.555073 - 开始健康检查...
+2026-03-13T03:35:20.829791 - 尝试恢复 chrome: pkill -f chrome.*headless
+2026-03-13T03:35:20.856389 - chrome: 恢复失败 - 
+2026-03-13T03:35:20.856971 - WARNING: 1个服务异常 - ['chrome']
+2026-03-13T03:40:26.269164 - 开始健康检查...
+2026-03-13T03:40:29.378154 - 尝试恢复 chrome: pkill -f chrome.*headless
+2026-03-13T03:40:29.402249 - chrome: 恢复失败 - 
+2026-03-13T03:40:29.403059 - WARNING: 1个服务异常 - ['chrome']
+2026-03-13T03:45:36.286413 - 开始健康检查...
+2026-03-13T03:45:41.996057 - 尝试恢复 gateway: openclaw gateway restart
+2026-03-13T03:46:09.084185 - gateway: 恢复失败 - Gateway service check failed: Error: systemctl is-enabled unavailable: Failed to connect to bus: $DBUS_SESSION_BUS_ADDRESS and $XDG_RUNTIME_DIR not defined (consider using --machine=<user>@.host --user to connect to bus of other user)
+
+2026-03-13T03:46:09.084886 - 尝试恢复 chrome: pkill -f chrome.*headless
+2026-03-13T03:46:09.113371 - chrome: 恢复失败 - 
+2026-03-13T03:46:09.113626 - WARNING: 2个服务异常 - ['gateway', 'chrome']
+2026-03-13T03:51:17.862304 - 开始健康检查...
+2026-03-13T03:51:18.533374 - 尝试恢复 chrome: pkill -f chrome.*headless
+2026-03-13T03:51:18.613373 - chrome: 恢复失败 - 
+2026-03-13T03:51:18.613999 - WARNING: 1个服务异常 - ['chrome']
+2026-03-13T03:56:24.726330 - 开始健康检查...
+2026-03-13T03:56:25.043225 - 尝试恢复 chrome: pkill -f chrome.*headless
+2026-03-13T03:56:25.098167 - chrome: 恢复失败 - 
+2026-03-13T03:56:25.098442 - WARNING: 1个服务异常 - ['chrome']
+2026-03-13T04:01:30.268949 - 开始健康检查...
+2026-03-13T04:01:30.690234 - 尝试恢复 chrome: pkill -f chrome.*headless
+2026-03-13T04:01:30.716685 - chrome: 恢复失败 - 
+2026-03-13T04:01:30.717143 - WARNING: 1个服务异常 - ['chrome']
+2026-03-13T04:06:34.287890 - 开始健康检查...
+2026-03-13T04:06:34.440811 - 尝试恢复 chrome: pkill -f chrome.*headless
+2026-03-13T04:06:34.451571 - chrome: 恢复失败 - 
+2026-03-13T04:06:34.451742 - WARNING: 1个服务异常 - ['chrome']
+2026-03-13T04:11:38.527828 - 开始健康检查...
+2026-03-13T04:11:38.772742 - 尝试恢复 chrome: pkill -f chrome.*headless
+2026-03-13T04:11:38.785311 - chrome: 恢复失败 - 
+2026-03-13T04:11:38.785413 - WARNING: 1个服务异常 - ['chrome']
+2026-03-13T04:16:43.378345 - 开始健康检查...
+2026-03-13T04:16:44.720005 - 尝试恢复 chrome: pkill -f chrome.*headless
+2026-03-13T04:16:44.796193 - chrome: 恢复失败 - 
+2026-03-13T04:16:44.796460 - WARNING: 1个服务异常 - ['chrome']
+2026-03-13T04:21:52.754373 - 开始健康检查...
+2026-03-13T04:21:54.002509 - 尝试恢复 chrome: pkill -f chrome.*headless
+2026-03-13T04:21:54.047553 - chrome: 恢复失败 - 
+2026-03-13T04:21:54.048474 - WARNING: 1个服务异常 - ['chrome']
