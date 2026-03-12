@@ -1,8 +1,18 @@
 {
   "lastChecks": {
-    "system": 1772568575,
-    "status": "ok"
+    "system": 1772570864,
+    "gateway": "running",
+    "cron": "active"
   },
   "status": "healthy",
-  "checkedAt": "2026-03-12T01:49:35+08:00"
+  "memory": {
+    "total": "7.1Gi",
+    "used": "2.5Gi",
+    "available": "4.3Gi"
+  },
+  "disk": {
+    "used": "17G",
+    "percent": "45%"
+  },
+  "checkedAt": "2026-03-12T16:07:44+08:00"
 }
